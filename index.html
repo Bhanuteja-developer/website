@@ -65,7 +65,6 @@ export default function App() {
 
   const handleSaveClick = () => {
     if (!date || !category || items.length === 0 || !paymentMode) {
-      // In a real app, we'd show a toast here. We will just highlight missing fields implicitly.
       return;
     }
     setShowPreview(true);
