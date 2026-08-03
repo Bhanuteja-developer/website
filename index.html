@@ -1,229 +1,346 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lord Dattatreya Spiritual Society</title>
-<style>
-/* Reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+import React, { useState, useRef } from 'react';
 
-/* Body */
-body {
-    font-family: Arial, sans-serif;
-    background-color: rgba(255, 165, 0, 0.6); /* Orange, 60% opacity */
-}
+// Helper function to convert numbers to words for the total amount
+const numberToWords = (amount) => {
+  const units = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"];
+  const teens = ["Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"];
+  const tens = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
 
-/* Header */
-header {
-    background-color: rgb(241, 202, 31);
-    color: white;
-    text-align: center;
-    padding: 45px;
-    font-size: 2.5rem;
-    font-weight: bold;
-    border-bottom: 4px solid rgb(240, 236, 42);
-}
+  if (!amount || amount === 0) return "Zero";
 
-/* Navigation */
-nav {
-    background-color: white;
-    border-bottom: 4px solid rgb(240, 236, 42);
-}
-nav ul {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    list-style: none;
-}
-nav ul li {
-    margin: 0;
-}
-nav ul li a {
-    display: block;
-    padding: 12px 18px;
-    text-decoration: none;
-    color: black;
-    font-weight: bold;
-    /*border: 1px solid black;*/
-    transition: background-color 0.3s, transform 0.2s;
-}
-nav ul li a:hover {
-    background-color: rgb(80, 72, 72);
-    color: orange;
-    transform: scale(1.05);
-}
+  const convertInteger = (num) => {
+    if (num < 10) return units[num];
+    if (num < 20) return teens[num - 10];
+    if (num < 100) return tens[Math.floor(num / 10)] + (num % 10 !== 0 ? " " + units[num % 10] : "");
+    if (num < 1000) return units[Math.floor(num / 100)] + " Hundred" + (num % 100 !== 0 ? " " + convertInteger(num % 100) : "");
+    if (num < 1000000) return convertInteger(Math.floor(num / 1000)) + " Thousand" + (num % 1000 !== 0 ? " " + convertInteger(num % 1000) : "");
+    if (num < 1000000000) return convertInteger(Math.floor(num / 1000000)) + " Million" + (num % 1000000 !== 0 ? " " + convertInteger(num % 1000000) : "");
+    return num.toString();
+  };
 
-/* Banner Slider */
-.banner {
-    width: 100%;
-    overflow: hidden;
-    position: relative;
-    height: 700px;
-}
-.banner-track {
-    display: flex;
-    animation: slide 15s linear infinite;
-}
-.banner img {
-    width: 100%;
-    max-width: 1000px;
-    height: 100%;
-    max-height: 1000px
-    object-fit: cover;
-}
-/*@keyframes slide {
-    0% { transform: translateX(100%); }
-    100% { transform: translateX(-100%); }
-}*/
+  const intPart = Math.floor(amount);
+  return convertInteger(intPart) + " Only";
+};
 
-/* Marquee */
-marquee {
-    background: white;
-    padding: 10px;
-    font-weight: bold;
-    color: darkred;
-}
+// SVG Icons to match the aesthetic without external library dependencies
+const Icons = {
+  Back: () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6"/></svg>,
+  Plus: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>,
+  Upload: () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>,
+  Check: () => <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#7B43F7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+};
 
-/* Image Container */
-.container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 65px;
-    padding: 20px;
-    max-width: 1000px;
-    margin: auto;
-    /*border: 2px solid black;*/
-}
-.container div {
-    /*border: 1px solid black;*/
-    overflow: hidden;
-}
-.container img {
-    width: 100%;
-    height: 400px;
-    object-fit: cover;
-    transition: transform 0.3s;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-.container img:hover {
-    transform: scale(1.05);
-}
+export default function App() {
+  const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
+  const [category, setCategory] = useState('');
+  const [items, setItems] = useState([{ id: Date.now(), name: '', qty: '', amount: '' }]);
+  const [paymentMode, setPaymentMode] = useState('');
+  const [description, setDescription] = useState('');
+  const [fileName, setFileName] = useState('');
+  const [showPreview, setShowPreview] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
-/* Footer */
-footer {
-    background-color: whitesmoke;
-    text-align: center;
-    padding: 15px 0;
-    font-weight: bold;
-    border-top: 2px solid black;
-}
+  const fileInputRef = useRef(null);
 
-/* WhatsApp Button */
-.whatsapp-chat {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: #25D366;
-    color: white;
-    padding: 12px 20px;
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: bold;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-}
-.whatsapp-chat:hover {
-    background-color: #1ebe57;
-}
+  const categories = ["Vegetables", "Grocery", "Clothes", "Travel", "Petrol"];
+  const paymentModes = ["Cash", "G-Pay", "Phone Pe", "Amazon Pay"];
 
-/* Responsive */
-@media (max-width: 768px) {
-    .container {
-        grid-template-columns: repeat(2, 1fr);
+  const handleAddItem = () => {
+    setItems([...items, { id: Date.now(), name: '', qty: '', amount: '' }]);
+  };
+
+  const handleItemChange = (id, field, value) => {
+    setItems(items.map(item => item.id === id ? { ...item, [field]: value } : item));
+  };
+
+  const calculateTotal = () => {
+    return items.reduce((total, item) => {
+      const qty = parseFloat(item.qty) || 0;
+      const amt = parseFloat(item.amount) || 0;
+      return total + (qty * amt);
+    }, 0);
+  };
+
+  const totalAmount = calculateTotal();
+
+  const handleSaveClick = () => {
+    if (!date || !category || items.length === 0 || !paymentMode) {
+      // In a real app, we'd show a toast here. We will just highlight missing fields implicitly.
+      return;
     }
-}
-@media (max-width: 480px) {
-    .container {
-        grid-template-columns: 1fr;
-    }
-}
-.footer {
-    background-color: rgb(203, 58, 58);
-}
-</style>
-</head>
-<body background="https://t3.ftcdn.net/jpg/07/16/31/76/360_F_716317612_a1zeepzhqcEeKYJb48IKWdhRwoYeoxEw.jpg">
+    setShowPreview(true);
+  };
 
-<header>
-    Lord Dattatreya Spiritual Society
-</header>
+  const handleSubmit = () => {
+    setShowPreview(false);
+    setIsSubmitted(true);
+  };
 
-<nav>
-    <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">News</a></li>
-        <li><a href="#">Photo Gallery</a></li>
-        <li><a href="#">Stotras</a></li>
-        <li><a href="#">Up-coming Event</a></li>
-        <li><a href="#">Contact</a></li>
-        <li><a href="#">About Us</a></li>
-    </ul>
-</nav>
+  const resetForm = () => {
+    setDate(new Date().toISOString().split('T')[0]);
+    setCategory('');
+    setItems([{ id: Date.now(), name: '', qty: '', amount: '' }]);
+    setPaymentMode('');
+    setDescription('');
+    setFileName('');
+    setIsSubmitted(false);
+  };
 
-<!-- Banner -->
-<div class="banner">
-    <div class="banner-track">
-        <img src="banner_Dattatreya.jpeg" alt="Lord Dattatreya 1">
+  if (isSubmitted) {
+    return (
+      <div className="max-w-md mx-auto min-h-screen bg-[#F8F9FE] flex flex-col items-center justify-center p-6 text-center font-sans shadow-2xl relative overflow-hidden">
+        <div className="bg-white p-8 rounded-3xl shadow-lg flex flex-col items-center w-full">
+          <div className="bg-purple-50 p-4 rounded-full mb-6">
+            <Icons.Check />
+          </div>
+          <h2 className="text-2xl font-bold text-[#1E1E2D] mb-2">Transaction Saved!</h2>
+          <p className="text-[#A2A2B5] mb-8">Your expense has been successfully recorded in your tracker.</p>
+          <button 
+            onClick={resetForm}
+            className="w-full bg-[#7B43F7] text-white py-4 rounded-2xl font-semibold text-lg shadow-lg hover:opacity-90 transition-opacity"
+          >
+            Add Another Expense
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="max-w-md mx-auto min-h-screen bg-[#F8F9FE] text-[#1E1E2D] font-sans shadow-2xl relative pb-24 overflow-y-auto">
+      {/* Header */}
+      <div className="flex items-center justify-between p-6 bg-white rounded-b-[2rem] shadow-sm sticky top-0 z-10">
+        <button className="p-2 bg-[#F4F5FA] rounded-full text-[#1E1E2D]">
+          <Icons.Back />
+        </button>
+        <h1 className="text-lg font-bold">Add Transaction</h1>
+        <div className="w-10"></div> {/* Spacer for centering */}
+      </div>
+
+      <div className="p-6 space-y-8">
+        
+        {/* Date Selection */}
+        <div>
+          <label className="block text-sm font-semibold text-[#1E1E2D] mb-3">Date of Transaction</label>
+          <input 
+            type="date" 
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+            className="w-full bg-white border-none p-4 rounded-2xl shadow-sm text-[#1E1E2D] font-medium focus:ring-2 focus:ring-[#FF7A45] outline-none transition-all"
+          />
+        </div>
+
+        {/* Category Selection */}
+        <div>
+          <label className="block text-sm font-semibold text-[#1E1E2D] mb-3">Category</label>
+          <div className="flex flex-wrap gap-3">
+            <button 
+              className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all shadow-sm border border-dashed border-[#7B43F7] text-[#7B43F7] hover:bg-purple-50`}
+            >
+              + Add Category
+            </button>
+            {categories.map(cat => (
+              <button 
+                key={cat}
+                onClick={() => setCategory(cat)}
+                className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all shadow-sm ${
+                  category === cat 
+                    ? 'bg-[#FF7A45] text-white shadow-md shadow-orange-200' 
+                    : 'bg-white text-[#A2A2B5] hover:bg-gray-50'
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Items List */}
+        <div>
+          <div className="flex justify-between items-end mb-3">
+            <label className="block text-sm font-semibold text-[#1E1E2D]">Items Details</label>
+            <span className="text-xs text-[#A2A2B5]">S.No / Item / Qty / Amt</span>
+          </div>
+          
+          <div className="space-y-3">
+            {items.map((item, index) => (
+              <div key={item.id} className="flex gap-2 items-center bg-white p-2 rounded-2xl shadow-sm">
+                <div className="w-8 flex justify-center text-xs font-bold text-[#A2A2B5]">
+                  {index + 1}.
+                </div>
+                <input 
+                  type="text" 
+                  placeholder="Item Name" 
+                  value={item.name}
+                  onChange={(e) => handleItemChange(item.id, 'name', e.target.value)}
+                  className="flex-1 bg-[#F4F5FA] border-none px-3 py-2.5 rounded-xl text-sm outline-none focus:ring-1 focus:ring-[#7B43F7]"
+                />
+                <input 
+                  type="number" 
+                  placeholder="Qty" 
+                  value={item.qty}
+                  onChange={(e) => handleItemChange(item.id, 'qty', e.target.value)}
+                  className="w-16 bg-[#F4F5FA] border-none px-2 py-2.5 rounded-xl text-sm text-center outline-none focus:ring-1 focus:ring-[#7B43F7]"
+                />
+                <input 
+                  type="number" 
+                  placeholder="Price" 
+                  value={item.amount}
+                  onChange={(e) => handleItemChange(item.id, 'amount', e.target.value)}
+                  className="w-20 bg-[#F4F5FA] border-none px-2 py-2.5 rounded-xl text-sm text-center outline-none focus:ring-1 focus:ring-[#7B43F7]"
+                />
+              </div>
+            ))}
+          </div>
+          
+          <button 
+            onClick={handleAddItem}
+            className="mt-4 flex items-center gap-2 text-sm font-semibold text-[#7B43F7] hover:text-[#5d2ac7] transition-colors"
+          >
+            <div className="bg-purple-100 p-1 rounded-full"><Icons.Plus /></div>
+            Add More Items
+          </button>
+        </div>
+
+        {/* Total Display */}
+        <div className="bg-gradient-to-r from-[#7B43F7] to-[#9966FF] rounded-3xl p-6 text-white shadow-lg shadow-purple-200">
+          <p className="text-purple-100 text-sm mb-1 font-medium">Total Amount</p>
+          <h2 className="text-4xl font-bold mb-2">${totalAmount.toFixed(2)}</h2>
+          <div className="bg-white/20 px-3 py-1.5 rounded-lg inline-block text-xs font-medium backdrop-blur-sm">
+            {numberToWords(totalAmount)}
+          </div>
+        </div>
+
+        {/* Payment Mode */}
+        <div>
+          <label className="block text-sm font-semibold text-[#1E1E2D] mb-3">Mode of Payment</label>
+          <div className="grid grid-cols-2 gap-3">
+            {paymentModes.map(mode => (
+              <button 
+                key={mode}
+                onClick={() => setPaymentMode(mode)}
+                className={`py-3 px-4 rounded-2xl text-sm font-medium transition-all flex items-center justify-center border-2 ${
+                  paymentMode === mode 
+                    ? 'border-[#7B43F7] bg-purple-50 text-[#7B43F7]' 
+                    : 'border-transparent bg-white text-[#A2A2B5] shadow-sm hover:bg-gray-50'
+                }`}
+              >
+                {mode}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Attach Bills */}
+        <div>
+          <label className="block text-sm font-semibold text-[#1E1E2D] mb-3">Attach Bill</label>
+          <div 
+            onClick={() => fileInputRef.current.click()}
+            className="border-2 border-dashed border-[#D5D5E4] rounded-2xl bg-white p-6 flex flex-col items-center justify-center cursor-pointer hover:border-[#7B43F7] transition-colors"
+          >
+            <input 
+              type="file" 
+              ref={fileInputRef} 
+              className="hidden" 
+              onChange={(e) => setFileName(e.target.files[0]?.name || '')}
+            />
+            <div className="bg-[#F4F5FA] p-3 rounded-full text-[#7B43F7] mb-2">
+              <Icons.Upload />
+            </div>
+            <p className="text-sm font-medium text-[#1E1E2D]">
+              {fileName ? fileName : "Tap to upload receipt"}
+            </p>
+            <p className="text-xs text-[#A2A2B5] mt-1">PDF, JPG, PNG (Max 5MB)</p>
+          </div>
+        </div>
+
+        {/* Description */}
+        <div>
+          <label className="block text-sm font-semibold text-[#1E1E2D] mb-3">Description</label>
+          <textarea 
+            rows="3"
+            placeholder="Write a comment..."
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            className="w-full bg-white border-none p-4 rounded-2xl shadow-sm text-sm text-[#1E1E2D] focus:ring-2 focus:ring-[#FF7A45] outline-none transition-all resize-none"
+          ></textarea>
+        </div>
+      </div>
+
+      {/* Save Button (Fixed at bottom) */}
+      <div className="fixed bottom-0 left-0 right-0 max-w-md mx-auto p-4 bg-gradient-to-t from-[#F8F9FE] via-[#F8F9FE] to-transparent z-10">
+        <button 
+          onClick={handleSaveClick}
+          className="w-full bg-[#FF7A45] text-white py-4 rounded-2xl font-bold text-lg shadow-lg shadow-orange-200 hover:bg-[#e66635] transition-colors"
+        >
+          Save Details
+        </button>
+      </div>
+
+      {/* Preview Modal Overlay */}
+      {showPreview && (
+        <div className="absolute inset-0 z-50 flex items-center justify-center p-4 bg-[#1E1E2D]/40 backdrop-blur-sm">
+          <div className="bg-white w-full rounded-[2rem] p-6 shadow-2xl animate-fade-in-up">
+            <h3 className="text-xl font-bold text-center mb-6 border-b pb-4">Preview Transaction</h3>
+            
+            <div className="space-y-4 mb-8">
+              <div className="flex justify-between">
+                <span className="text-[#A2A2B5] text-sm">Date</span>
+                <span className="font-semibold text-[#1E1E2D] text-sm">{date}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-[#A2A2B5] text-sm">Category</span>
+                <span className="font-semibold text-[#1E1E2D] text-sm">{category || 'None'}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-[#A2A2B5] text-sm">Payment Mode</span>
+                <span className="font-semibold text-[#1E1E2D] text-sm">{paymentMode || 'None'}</span>
+              </div>
+              
+              <div className="pt-4 border-t border-dashed">
+                <span className="text-[#A2A2B5] text-sm block mb-2">Items Summary</span>
+                {items.filter(i => i.name).map((item, idx) => (
+                  <div key={item.id} className="flex justify-between text-sm mb-1">
+                    <span className="text-[#1E1E2D]">{item.qty}x {item.name}</span>
+                    <span className="font-semibold">${(item.qty * item.amount).toFixed(2)}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="pt-4 border-t flex justify-between items-center">
+                <span className="text-[#A2A2B5] font-medium">Total Amount</span>
+                <span className="text-2xl font-bold text-[#7B43F7]">${totalAmount.toFixed(2)}</span>
+              </div>
+            </div>
+
+            <div className="flex gap-3">
+              <button 
+                onClick={() => setShowPreview(false)}
+                className="flex-1 py-3.5 rounded-xl font-semibold text-[#1E1E2D] bg-[#F4F5FA] hover:bg-gray-200 transition-colors"
+              >
+                Edit
+              </button>
+              <button 
+                onClick={handleSubmit}
+                className="flex-1 py-3.5 rounded-xl font-bold text-white bg-[#7B43F7] shadow-lg shadow-purple-200 hover:bg-[#6a35d9] transition-colors"
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Basic animation styles injected directly */}
+      <style>{`
+        @keyframes fade-in-up {
+          0% { opacity: 0; transform: translateY(20px); }
+          100% { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-up {
+          animation: fade-in-up 0.3s ease-out forwards;
+        }
+      `}</style>
     </div>
-</div>
-
-<!-- Marquee -->
-<marquee behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();">
-    Note: Mahur Program has been postponed to 23-Aug-2025
-</marquee>
-
-<!-- Image Grid -->
-<div class="container">
-    <div><img src="banner_lord Dattatreya image.jpg" alt="Datta 1"></div>
-    <div><img src="banner_lord Dattatreya image.jpg" alt="Datta 1"></div>
-    <div><img src="banner_lord Dattatreya image.jpg" alt="Datta 1"></div>
-    <div><img src="banner_lord Dattatreya image.jpg" alt="Datta 1"></div>
-    <div><img src="banner_lord Dattatreya image.jpg" alt="Datta 1"></div>
-    <div><img src="banner_lord Dattatreya image.jpg" alt="Datta 1"></div>
-    <div><img src="banner_lord Dattatreya image.jpg" alt="Datta 1"></div>
-    <div><img src="banner_lord Dattatreya image.jpg" alt="Datta 1"></div>
-    <div><img src="banner_lord Dattatreya image.jpg" alt="Datta 1"></div>
-    
-</div>
-
-<!-- Footer -->
-<footer>
-    <audio src="path/to/your-audio.mp3" autoplay loop></audio>
-    Copyright © L.D.S.S, All Rights Reserved
-
-   <br> <audio controls autoplay loop>
-    <source src="C:\Users\Gurudeva Datta\Desktop\HTML\audio/slogan.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-   </audio>
-
-</footer>
-
-<!-- WhatsApp Button -->
-<a href="https://wa.me/1234567890" class="whatsapp-chat" target="_blank">
-    Chat on WhatsApp
-</a>
-
-
-</body>
-</html>
-
-
-
-
-
-
+  );
+}
