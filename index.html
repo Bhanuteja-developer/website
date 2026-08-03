@@ -1,345 +1,468 @@
-import React, { useState, useRef } from 'react';
-
-// Helper function to convert numbers to words for the total amount
-const numberToWords = (amount) => {
-  const units = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"];
-  const teens = ["Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"];
-  const tens = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
-
-  if (!amount || amount === 0) return "Zero";
-
-  const convertInteger = (num) => {
-    if (num < 10) return units[num];
-    if (num < 20) return teens[num - 10];
-    if (num < 100) return tens[Math.floor(num / 10)] + (num % 10 !== 0 ? " " + units[num % 10] : "");
-    if (num < 1000) return units[Math.floor(num / 100)] + " Hundred" + (num % 100 !== 0 ? " " + convertInteger(num % 100) : "");
-    if (num < 1000000) return convertInteger(Math.floor(num / 1000)) + " Thousand" + (num % 1000 !== 0 ? " " + convertInteger(num % 1000) : "");
-    if (num < 1000000000) return convertInteger(Math.floor(num / 1000000)) + " Million" + (num % 1000000 !== 0 ? " " + convertInteger(num % 1000000) : "");
-    return num.toString();
-  };
-
-  const intPart = Math.floor(amount);
-  return convertInteger(intPart) + " Only";
-};
-
-// SVG Icons to match the aesthetic without external library dependencies
-const Icons = {
-  Back: () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6"/></svg>,
-  Plus: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>,
-  Upload: () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>,
-  Check: () => <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#7B43F7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-};
-
-export default function App() {
-  const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
-  const [category, setCategory] = useState('');
-  const [items, setItems] = useState([{ id: Date.now(), name: '', qty: '', amount: '' }]);
-  const [paymentMode, setPaymentMode] = useState('');
-  const [description, setDescription] = useState('');
-  const [fileName, setFileName] = useState('');
-  const [showPreview, setShowPreview] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-
-  const fileInputRef = useRef(null);
-
-  const categories = ["Vegetables", "Grocery", "Clothes", "Travel", "Petrol"];
-  const paymentModes = ["Cash", "G-Pay", "Phone Pe", "Amazon Pay"];
-
-  const handleAddItem = () => {
-    setItems([...items, { id: Date.now(), name: '', qty: '', amount: '' }]);
-  };
-
-  const handleItemChange = (id, field, value) => {
-    setItems(items.map(item => item.id === id ? { ...item, [field]: value } : item));
-  };
-
-  const calculateTotal = () => {
-    return items.reduce((total, item) => {
-      const qty = parseFloat(item.qty) || 0;
-      const amt = parseFloat(item.amount) || 0;
-      return total + (qty * amt);
-    }, 0);
-  };
-
-  const totalAmount = calculateTotal();
-
-  const handleSaveClick = () => {
-    if (!date || !category || items.length === 0 || !paymentMode) {
-      return;
-    }
-    setShowPreview(true);
-  };
-
-  const handleSubmit = () => {
-    setShowPreview(false);
-    setIsSubmitted(true);
-  };
-
-  const resetForm = () => {
-    setDate(new Date().toISOString().split('T')[0]);
-    setCategory('');
-    setItems([{ id: Date.now(), name: '', qty: '', amount: '' }]);
-    setPaymentMode('');
-    setDescription('');
-    setFileName('');
-    setIsSubmitted(false);
-  };
-
-  if (isSubmitted) {
-    return (
-      <div className="max-w-md mx-auto min-h-screen bg-[#F8F9FE] flex flex-col items-center justify-center p-6 text-center font-sans shadow-2xl relative overflow-hidden">
-        <div className="bg-white p-8 rounded-3xl shadow-lg flex flex-col items-center w-full">
-          <div className="bg-purple-50 p-4 rounded-full mb-6">
-            <Icons.Check />
-          </div>
-          <h2 className="text-2xl font-bold text-[#1E1E2D] mb-2">Transaction Saved!</h2>
-          <p className="text-[#A2A2B5] mb-8">Your expense has been successfully recorded in your tracker.</p>
-          <button 
-            onClick={resetForm}
-            className="w-full bg-[#7B43F7] text-white py-4 rounded-2xl font-semibold text-lg shadow-lg hover:opacity-90 transition-opacity"
-          >
-            Add Another Expense
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="max-w-md mx-auto min-h-screen bg-[#F8F9FE] text-[#1E1E2D] font-sans shadow-2xl relative pb-24 overflow-y-auto">
-      {/* Header */}
-      <div className="flex items-center justify-between p-6 bg-white rounded-b-[2rem] shadow-sm sticky top-0 z-10">
-        <button className="p-2 bg-[#F4F5FA] rounded-full text-[#1E1E2D]">
-          <Icons.Back />
-        </button>
-        <h1 className="text-lg font-bold">Add Transaction</h1>
-        <div className="w-10"></div> {/* Spacer for centering */}
-      </div>
-
-      <div className="p-6 space-y-8">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Finance Tracker</title>
+    
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Load Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #e5e7eb; /* Outer background to contrast the mobile app view */
+        }
         
-        {/* Date Selection */}
-        <div>
-          <label className="block text-sm font-semibold text-[#1E1E2D] mb-3">Date of Transaction</label>
-          <input 
-            type="date" 
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            className="w-full bg-white border-none p-4 rounded-2xl shadow-sm text-[#1E1E2D] font-medium focus:ring-2 focus:ring-[#FF7A45] outline-none transition-all"
-          />
-        </div>
-
-        {/* Category Selection */}
-        <div>
-          <label className="block text-sm font-semibold text-[#1E1E2D] mb-3">Category</label>
-          <div className="flex flex-wrap gap-3">
-            <button 
-              className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all shadow-sm border border-dashed border-[#7B43F7] text-[#7B43F7] hover:bg-purple-50`}
-            >
-              + Add Category
-            </button>
-            {categories.map(cat => (
-              <button 
-                key={cat}
-                onClick={() => setCategory(cat)}
-                className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all shadow-sm ${
-                  category === cat 
-                    ? 'bg-[#FF7A45] text-white shadow-md shadow-orange-200' 
-                    : 'bg-white text-[#A2A2B5] hover:bg-gray-50'
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Items List */}
-        <div>
-          <div className="flex justify-between items-end mb-3">
-            <label className="block text-sm font-semibold text-[#1E1E2D]">Items Details</label>
-            <span className="text-xs text-[#A2A2B5]">S.No / Item / Qty / Amt</span>
-          </div>
-          
-          <div className="space-y-3">
-            {items.map((item, index) => (
-              <div key={item.id} className="flex gap-2 items-center bg-white p-2 rounded-2xl shadow-sm">
-                <div className="w-8 flex justify-center text-xs font-bold text-[#A2A2B5]">
-                  {index + 1}.
-                </div>
-                <input 
-                  type="text" 
-                  placeholder="Item Name" 
-                  value={item.name}
-                  onChange={(e) => handleItemChange(item.id, 'name', e.target.value)}
-                  className="flex-1 bg-[#F4F5FA] border-none px-3 py-2.5 rounded-xl text-sm outline-none focus:ring-1 focus:ring-[#7B43F7]"
-                />
-                <input 
-                  type="number" 
-                  placeholder="Qty" 
-                  value={item.qty}
-                  onChange={(e) => handleItemChange(item.id, 'qty', e.target.value)}
-                  className="w-16 bg-[#F4F5FA] border-none px-2 py-2.5 rounded-xl text-sm text-center outline-none focus:ring-1 focus:ring-[#7B43F7]"
-                />
-                <input 
-                  type="number" 
-                  placeholder="Price" 
-                  value={item.amount}
-                  onChange={(e) => handleItemChange(item.id, 'amount', e.target.value)}
-                  className="w-20 bg-[#F4F5FA] border-none px-2 py-2.5 rounded-xl text-sm text-center outline-none focus:ring-1 focus:ring-[#7B43F7]"
-                />
-              </div>
-            ))}
-          </div>
-          
-          <button 
-            onClick={handleAddItem}
-            className="mt-4 flex items-center gap-2 text-sm font-semibold text-[#7B43F7] hover:text-[#5d2ac7] transition-colors"
-          >
-            <div className="bg-purple-100 p-1 rounded-full"><Icons.Plus /></div>
-            Add More Items
-          </button>
-        </div>
-
-        {/* Total Display */}
-        <div className="bg-gradient-to-r from-[#7B43F7] to-[#9966FF] rounded-3xl p-6 text-white shadow-lg shadow-purple-200">
-          <p className="text-purple-100 text-sm mb-1 font-medium">Total Amount</p>
-          <h2 className="text-4xl font-bold mb-2">${totalAmount.toFixed(2)}</h2>
-          <div className="bg-white/20 px-3 py-1.5 rounded-lg inline-block text-xs font-medium backdrop-blur-sm">
-            {numberToWords(totalAmount)}
-          </div>
-        </div>
-
-        {/* Payment Mode */}
-        <div>
-          <label className="block text-sm font-semibold text-[#1E1E2D] mb-3">Mode of Payment</label>
-          <div className="grid grid-cols-2 gap-3">
-            {paymentModes.map(mode => (
-              <button 
-                key={mode}
-                onClick={() => setPaymentMode(mode)}
-                className={`py-3 px-4 rounded-2xl text-sm font-medium transition-all flex items-center justify-center border-2 ${
-                  paymentMode === mode 
-                    ? 'border-[#7B43F7] bg-purple-50 text-[#7B43F7]' 
-                    : 'border-transparent bg-white text-[#A2A2B5] shadow-sm hover:bg-gray-50'
-                }`}
-              >
-                {mode}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Attach Bills */}
-        <div>
-          <label className="block text-sm font-semibold text-[#1E1E2D] mb-3">Attach Bill</label>
-          <div 
-            onClick={() => fileInputRef.current.click()}
-            className="border-2 border-dashed border-[#D5D5E4] rounded-2xl bg-white p-6 flex flex-col items-center justify-center cursor-pointer hover:border-[#7B43F7] transition-colors"
-          >
-            <input 
-              type="file" 
-              ref={fileInputRef} 
-              className="hidden" 
-              onChange={(e) => setFileName(e.target.files[0]?.name || '')}
-            />
-            <div className="bg-[#F4F5FA] p-3 rounded-full text-[#7B43F7] mb-2">
-              <Icons.Upload />
-            </div>
-            <p className="text-sm font-medium text-[#1E1E2D]">
-              {fileName ? fileName : "Tap to upload receipt"}
-            </p>
-            <p className="text-xs text-[#A2A2B5] mt-1">PDF, JPG, PNG (Max 5MB)</p>
-          </div>
-        </div>
-
-        {/* Description */}
-        <div>
-          <label className="block text-sm font-semibold text-[#1E1E2D] mb-3">Description</label>
-          <textarea 
-            rows="3"
-            placeholder="Write a comment..."
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            className="w-full bg-white border-none p-4 rounded-2xl shadow-sm text-sm text-[#1E1E2D] focus:ring-2 focus:ring-[#FF7A45] outline-none transition-all resize-none"
-          ></textarea>
-        </div>
-      </div>
-
-      {/* Save Button (Fixed at bottom) */}
-      <div className="fixed bottom-0 left-0 right-0 max-w-md mx-auto p-4 bg-gradient-to-t from-[#F8F9FE] via-[#F8F9FE] to-transparent z-10">
-        <button 
-          onClick={handleSaveClick}
-          className="w-full bg-[#FF7A45] text-white py-4 rounded-2xl font-bold text-lg shadow-lg shadow-orange-200 hover:bg-[#e66635] transition-colors"
-        >
-          Save Details
-        </button>
-      </div>
-
-      {/* Preview Modal Overlay */}
-      {showPreview && (
-        <div className="absolute inset-0 z-50 flex items-center justify-center p-4 bg-[#1E1E2D]/40 backdrop-blur-sm">
-          <div className="bg-white w-full rounded-[2rem] p-6 shadow-2xl animate-fade-in-up">
-            <h3 className="text-xl font-bold text-center mb-6 border-b pb-4">Preview Transaction</h3>
-            
-            <div className="space-y-4 mb-8">
-              <div className="flex justify-between">
-                <span className="text-[#A2A2B5] text-sm">Date</span>
-                <span className="font-semibold text-[#1E1E2D] text-sm">{date}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-[#A2A2B5] text-sm">Category</span>
-                <span className="font-semibold text-[#1E1E2D] text-sm">{category || 'None'}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-[#A2A2B5] text-sm">Payment Mode</span>
-                <span className="font-semibold text-[#1E1E2D] text-sm">{paymentMode || 'None'}</span>
-              </div>
-              
-              <div className="pt-4 border-t border-dashed">
-                <span className="text-[#A2A2B5] text-sm block mb-2">Items Summary</span>
-                {items.filter(i => i.name).map((item, idx) => (
-                  <div key={item.id} className="flex justify-between text-sm mb-1">
-                    <span className="text-[#1E1E2D]">{item.qty}x {item.name}</span>
-                    <span className="font-semibold">${(item.qty * item.amount).toFixed(2)}</span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="pt-4 border-t flex justify-between items-center">
-                <span className="text-[#A2A2B5] font-medium">Total Amount</span>
-                <span className="text-2xl font-bold text-[#7B43F7]">${totalAmount.toFixed(2)}</span>
-              </div>
-            </div>
-
-            <div className="flex gap-3">
-              <button 
-                onClick={() => setShowPreview(false)}
-                className="flex-1 py-3.5 rounded-xl font-semibold text-[#1E1E2D] bg-[#F4F5FA] hover:bg-gray-200 transition-colors"
-              >
-                Edit
-              </button>
-              <button 
-                onClick={handleSubmit}
-                className="flex-1 py-3.5 rounded-xl font-bold text-white bg-[#7B43F7] shadow-lg shadow-purple-200 hover:bg-[#6a35d9] transition-colors"
-              >
-                Submit
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Basic animation styles injected directly */}
-      <style>{`
-        @keyframes fade-in-up {
-          0% { opacity: 0; transform: translateY(20px); }
-          100% { opacity: 1; transform: translateY(0); }
+        /* Custom animations */
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
+        
         .animate-fade-in-up {
-          animation: fade-in-up 0.3s ease-out forwards;
+            animation: fadeInUp 0.3s ease-out forwards;
         }
-      `}</style>
+
+        /* Hide scrollbar for cleaner look */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="flex justify-center min-h-screen">
+
+    <div class="w-full max-w-md bg-[#F8F9FE] min-h-screen relative overflow-hidden shadow-2xl text-[#1E1E2D]">
+        
+        <!-- MAIN FORM SCREEN -->
+        <div id="main-screen" class="h-full w-full overflow-y-auto no-scrollbar pb-24">
+            <!-- Header -->
+            <div class="flex items-center justify-between p-6 bg-white rounded-b-[2rem] shadow-sm sticky top-0 z-10">
+                <button class="p-2 bg-[#F4F5FA] rounded-full text-[#1E1E2D]">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+                </button>
+                <h1 class="text-lg font-bold">Add Transaction</h1>
+                <div class="w-10"></div> <!-- Spacer for centering -->
+            </div>
+
+            <div class="p-6 space-y-8">
+                <!-- Date Selection -->
+                <div>
+                    <label class="block text-sm font-semibold text-[#1E1E2D] mb-3">Date of Transaction</label>
+                    <input type="date" id="date-input" class="w-full bg-white border-none p-4 rounded-2xl shadow-sm text-[#1E1E2D] font-medium focus:ring-2 focus:ring-[#FF7A45] outline-none transition-all" />
+                </div>
+
+                <!-- Category Selection -->
+                <div>
+                    <label class="block text-sm font-semibold text-[#1E1E2D] mb-3">Category</label>
+                    <div class="flex flex-wrap gap-3" id="category-container">
+                        <button class="px-5 py-2.5 rounded-full text-sm font-medium transition-all shadow-sm border border-dashed border-[#7B43F7] text-[#7B43F7] hover:bg-purple-50">
+                            + Add Category
+                        </button>
+                        <!-- Categories injected by JS -->
+                    </div>
+                </div>
+
+                <!-- Items List -->
+                <div>
+                    <div class="flex justify-between items-end mb-3">
+                        <label class="block text-sm font-semibold text-[#1E1E2D]">Items Details</label>
+                        <span class="text-xs text-[#A2A2B5]">S.No / Item / Qty / Amt</span>
+                    </div>
+                    
+                    <div id="items-container" class="space-y-3">
+                        <!-- Items injected by JS -->
+                    </div>
+                    
+                    <button id="add-item-btn" class="mt-4 flex items-center gap-2 text-sm font-semibold text-[#7B43F7] hover:text-[#5d2ac7] transition-colors">
+                        <div class="bg-purple-100 p-1 rounded-full">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                        </div>
+                        Add More Items
+                    </button>
+                </div>
+
+                <!-- Total Display -->
+                <div class="bg-gradient-to-r from-[#7B43F7] to-[#9966FF] rounded-3xl p-6 text-white shadow-lg shadow-purple-200">
+                    <p class="text-purple-100 text-sm mb-1 font-medium">Total Amount</p>
+                    <h2 class="text-4xl font-bold mb-2" id="display-total-num">$0.00</h2>
+                    <div class="bg-white/20 px-3 py-1.5 rounded-lg inline-block text-xs font-medium backdrop-blur-sm" id="display-total-words">
+                        Zero
+                    </div>
+                </div>
+
+                <!-- Payment Mode -->
+                <div>
+                    <label class="block text-sm font-semibold text-[#1E1E2D] mb-3">Mode of Payment</label>
+                    <div class="grid grid-cols-2 gap-3" id="payment-container">
+                        <!-- Payment modes injected by JS -->
+                    </div>
+                </div>
+
+                <!-- Attach Bills -->
+                <div>
+                    <label class="block text-sm font-semibold text-[#1E1E2D] mb-3">Attach Bill</label>
+                    <div id="upload-zone" class="border-2 border-dashed border-[#D5D5E4] rounded-2xl bg-white p-6 flex flex-col items-center justify-center cursor-pointer hover:border-[#7B43F7] transition-colors">
+                        <input type="file" id="file-input" class="hidden" />
+                        <div class="bg-[#F4F5FA] p-3 rounded-full text-[#7B43F7] mb-2">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                        </div>
+                        <p class="text-sm font-medium text-[#1E1E2D]" id="file-name-display">
+                            Tap to upload receipt
+                        </p>
+                        <p class="text-xs text-[#A2A2B5] mt-1">PDF, JPG, PNG (Max 5MB)</p>
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div>
+                    <label class="block text-sm font-semibold text-[#1E1E2D] mb-3">Description</label>
+                    <textarea id="description-input" rows="3" placeholder="Write a comment..." class="w-full bg-white border-none p-4 rounded-2xl shadow-sm text-sm text-[#1E1E2D] focus:ring-2 focus:ring-[#FF7A45] outline-none transition-all resize-none"></textarea>
+                </div>
+            </div>
+
+            <!-- Save Button (Fixed at bottom) -->
+            <div class="fixed bottom-0 left-0 right-0 max-w-md mx-auto p-4 bg-gradient-to-t from-[#F8F9FE] via-[#F8F9FE] to-transparent z-10 pointer-events-none">
+                <button id="save-btn" class="pointer-events-auto w-full bg-[#FF7A45] text-white py-4 rounded-2xl font-bold text-lg shadow-lg shadow-orange-200 hover:bg-[#e66635] transition-colors">
+                    Save Details
+                </button>
+            </div>
+        </div>
+
+        <!-- PREVIEW MODAL (Hidden by default) -->
+        <div id="preview-modal" class="hidden absolute inset-0 z-50 flex items-center justify-center p-4 bg-[#1E1E2D]/40 backdrop-blur-sm">
+            <div class="bg-white w-full rounded-[2rem] p-6 shadow-2xl animate-fade-in-up">
+                <h3 class="text-xl font-bold text-center mb-6 border-b pb-4">Preview Transaction</h3>
+                
+                <div class="space-y-4 mb-8">
+                    <div class="flex justify-between">
+                        <span class="text-[#A2A2B5] text-sm">Date</span>
+                        <span class="font-semibold text-[#1E1E2D] text-sm" id="preview-date"></span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-[#A2A2B5] text-sm">Category</span>
+                        <span class="font-semibold text-[#1E1E2D] text-sm" id="preview-category"></span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-[#A2A2B5] text-sm">Payment Mode</span>
+                        <span class="font-semibold text-[#1E1E2D] text-sm" id="preview-payment"></span>
+                    </div>
+                    
+                    <div class="pt-4 border-t border-dashed">
+                        <span class="text-[#A2A2B5] text-sm block mb-2">Items Summary</span>
+                        <div id="preview-items" class="space-y-1">
+                            <!-- Items injected by JS -->
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t flex justify-between items-center">
+                        <span class="text-[#A2A2B5] font-medium">Total Amount</span>
+                        <span class="text-2xl font-bold text-[#7B43F7]" id="preview-total"></span>
+                    </div>
+                </div>
+
+                <div class="flex gap-3">
+                    <button id="edit-btn" class="flex-1 py-3.5 rounded-xl font-semibold text-[#1E1E2D] bg-[#F4F5FA] hover:bg-gray-200 transition-colors">
+                        Edit
+                    </button>
+                    <button id="submit-btn" class="flex-1 py-3.5 rounded-xl font-bold text-white bg-[#7B43F7] shadow-lg shadow-purple-200 hover:bg-[#6a35d9] transition-colors">
+                        Submit
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- SUCCESS SCREEN (Hidden by default) -->
+        <div id="success-screen" class="hidden h-full w-full bg-[#F8F9FE] flex-col items-center justify-center p-6 text-center absolute inset-0 z-40">
+            <div class="bg-white p-8 rounded-3xl shadow-lg flex flex-col items-center w-full animate-fade-in-up">
+                <div class="bg-purple-50 p-4 rounded-full mb-6">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#7B43F7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                </div>
+                <h2 class="text-2xl font-bold text-[#1E1E2D] mb-2">Transaction Saved!</h2>
+                <p class="text-[#A2A2B5] mb-8">Your expense has been successfully recorded in your tracker.</p>
+                <button id="add-another-btn" class="w-full bg-[#7B43F7] text-white py-4 rounded-2xl font-semibold text-lg shadow-lg hover:opacity-90 transition-opacity">
+                    Add Another Expense
+                </button>
+            </div>
+        </div>
+
     </div>
-  );
-}
+
+    <script>
+        // State Management
+        const state = {
+            date: new Date().toISOString().split('T')[0],
+            category: '',
+            items: [{ id: Date.now(), name: '', qty: '', amount: '' }],
+            paymentMode: '',
+            description: '',
+            fileName: '',
+            total: 0
+        };
+
+        const categoriesData = ["Vegetables", "Grocery", "Clothes", "Travel", "Petrol"];
+        const paymentModesData = ["Cash", "G-Pay", "Phone Pe", "Amazon Pay"];
+
+        // DOM Elements
+        const dateInput = document.getElementById('date-input');
+        const categoryContainer = document.getElementById('category-container');
+        const itemsContainer = document.getElementById('items-container');
+        const addItemBtn = document.getElementById('add-item-btn');
+        const displayTotalNum = document.getElementById('display-total-num');
+        const displayTotalWords = document.getElementById('display-total-words');
+        const paymentContainer = document.getElementById('payment-container');
+        
+        const uploadZone = document.getElementById('upload-zone');
+        const fileInput = document.getElementById('file-input');
+        const fileNameDisplay = document.getElementById('file-name-display');
+        const descriptionInput = document.getElementById('description-input');
+        
+        const saveBtn = document.getElementById('save-btn');
+        
+        // Modal & Screens
+        const mainScreen = document.getElementById('main-screen');
+        const previewModal = document.getElementById('preview-modal');
+        const successScreen = document.getElementById('success-screen');
+        
+        const previewDate = document.getElementById('preview-date');
+        const previewCategory = document.getElementById('preview-category');
+        const previewPayment = document.getElementById('preview-payment');
+        const previewItems = document.getElementById('preview-items');
+        const previewTotal = document.getElementById('preview-total');
+        
+        const editBtn = document.getElementById('edit-btn');
+        const submitBtn = document.getElementById('submit-btn');
+        const addAnotherBtn = document.getElementById('add-another-btn');
+
+        // Helper: Convert Number to Words
+        function numberToWords(amount) {
+            const units = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"];
+            const teens = ["Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"];
+            const tens = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
+
+            if (!amount || amount === 0) return "Zero";
+
+            function convertInteger(num) {
+                if (num < 10) return units[num];
+                if (num < 20) return teens[num - 10];
+                if (num < 100) return tens[Math.floor(num / 10)] + (num % 10 !== 0 ? " " + units[num % 10] : "");
+                if (num < 1000) return units[Math.floor(num / 100)] + " Hundred" + (num % 100 !== 0 ? " " + convertInteger(num % 100) : "");
+                if (num < 1000000) return convertInteger(Math.floor(num / 1000)) + " Thousand" + (num % 1000 !== 0 ? " " + convertInteger(num % 1000) : "");
+                if (num < 1000000000) return convertInteger(Math.floor(num / 1000000)) + " Million" + (num % 1000000 !== 0 ? " " + convertInteger(num % 1000000) : "");
+                return num.toString();
+            }
+
+            const intPart = Math.floor(amount);
+            return convertInteger(intPart) + " Only";
+        }
+
+        // Calculate and Update Total
+        function updateTotal() {
+            state.total = state.items.reduce((sum, item) => {
+                const qty = parseFloat(item.qty) || 0;
+                const amt = parseFloat(item.amount) || 0;
+                return sum + (qty * amt);
+            }, 0);
+
+            displayTotalNum.innerText = `$${state.total.toFixed(2)}`;
+            displayTotalWords.innerText = numberToWords(state.total);
+        }
+
+        // Render Categories
+        function renderCategories() {
+            // Keep the "+ Add Category" button
+            const addBtn = categoryContainer.firstElementChild;
+            categoryContainer.innerHTML = '';
+            categoryContainer.appendChild(addBtn);
+
+            categoriesData.forEach(cat => {
+                const btn = document.createElement('button');
+                btn.className = `px-5 py-2.5 rounded-full text-sm font-medium transition-all shadow-sm ${
+                    state.category === cat 
+                        ? 'bg-[#FF7A45] text-white shadow-md shadow-orange-200' 
+                        : 'bg-white text-[#A2A2B5] hover:bg-gray-50'
+                }`;
+                btn.innerText = cat;
+                btn.onclick = () => {
+                    state.category = cat;
+                    renderCategories();
+                };
+                categoryContainer.appendChild(btn);
+            });
+        }
+
+        // Render Payment Modes
+        function renderPaymentModes() {
+            paymentContainer.innerHTML = '';
+            paymentModesData.forEach(mode => {
+                const btn = document.createElement('button');
+                btn.className = `py-3 px-4 rounded-2xl text-sm font-medium transition-all flex items-center justify-center border-2 ${
+                    state.paymentMode === mode 
+                        ? 'border-[#7B43F7] bg-purple-50 text-[#7B43F7]' 
+                        : 'border-transparent bg-white text-[#A2A2B5] shadow-sm hover:bg-gray-50'
+                }`;
+                btn.innerText = mode;
+                btn.onclick = () => {
+                    state.paymentMode = mode;
+                    renderPaymentModes();
+                };
+                paymentContainer.appendChild(btn);
+            });
+        }
+
+        // Render Items List
+        function renderItems() {
+            itemsContainer.innerHTML = '';
+            state.items.forEach((item, index) => {
+                const row = document.createElement('div');
+                row.className = 'flex gap-2 items-center bg-white p-2 rounded-2xl shadow-sm';
+                
+                row.innerHTML = `
+                    <div class="w-8 flex justify-center text-xs font-bold text-[#A2A2B5]">${index + 1}.</div>
+                    <input type="text" placeholder="Item Name" value="${item.name}" data-id="${item.id}" data-field="name" class="item-input flex-1 bg-[#F4F5FA] border-none px-3 py-2.5 rounded-xl text-sm outline-none focus:ring-1 focus:ring-[#7B43F7]">
+                    <input type="number" placeholder="Qty" value="${item.qty}" data-id="${item.id}" data-field="qty" class="item-input w-16 bg-[#F4F5FA] border-none px-2 py-2.5 rounded-xl text-sm text-center outline-none focus:ring-1 focus:ring-[#7B43F7]">
+                    <input type="number" placeholder="Price" value="${item.amount}" data-id="${item.id}" data-field="amount" class="item-input w-20 bg-[#F4F5FA] border-none px-2 py-2.5 rounded-xl text-sm text-center outline-none focus:ring-1 focus:ring-[#7B43F7]">
+                `;
+                itemsContainer.appendChild(row);
+            });
+        }
+
+        // Event Listeners Setup
+        function initApp() {
+            // Init Values
+            dateInput.value = state.date;
+            renderCategories();
+            renderPaymentModes();
+            renderItems();
+            updateTotal();
+
+            // Date Change
+            dateInput.addEventListener('change', (e) => {
+                state.date = e.target.value;
+            });
+
+            // Description Change
+            descriptionInput.addEventListener('input', (e) => {
+                state.description = e.target.value;
+            });
+
+            // Add Item
+            addItemBtn.addEventListener('click', () => {
+                state.items.push({ id: Date.now(), name: '', qty: '', amount: '' });
+                renderItems();
+            });
+
+            // Handle Input Changes dynamically (Event Delegation)
+            itemsContainer.addEventListener('input', (e) => {
+                if (e.target.classList.contains('item-input')) {
+                    const id = parseInt(e.target.getAttribute('data-id'));
+                    const field = e.target.getAttribute('data-field');
+                    
+                    const itemIndex = state.items.findIndex(i => i.id === id);
+                    if (itemIndex > -1) {
+                        state.items[itemIndex][field] = e.target.value;
+                        if(field === 'qty' || field === 'amount') {
+                            updateTotal();
+                        }
+                    }
+                }
+            });
+
+            // File Upload
+            uploadZone.addEventListener('click', () => fileInput.click());
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    state.fileName = e.target.files[0].name;
+                    fileNameDisplay.innerText = state.fileName;
+                } else {
+                    state.fileName = '';
+                    fileNameDisplay.innerText = "Tap to upload receipt";
+                }
+            });
+
+            // Save & Show Preview
+            saveBtn.addEventListener('click', () => {
+                if (!state.date || !state.category || state.items.length === 0 || !state.paymentMode) {
+                    // Simple inline feedback
+                    saveBtn.innerText = "Fill required fields!";
+                    saveBtn.classList.replace('bg-[#FF7A45]', 'bg-red-500');
+                    setTimeout(() => {
+                        saveBtn.innerText = "Save Details";
+                        saveBtn.classList.replace('bg-red-500', 'bg-[#FF7A45]');
+                    }, 2000);
+                    return;
+                }
+
+                // Populate Preview Data
+                previewDate.innerText = state.date;
+                previewCategory.innerText = state.category;
+                previewPayment.innerText = state.paymentMode;
+                previewTotal.innerText = `$${state.total.toFixed(2)}`;
+
+                previewItems.innerHTML = '';
+                state.items.filter(i => i.name).forEach(item => {
+                    const row = document.createElement('div');
+                    row.className = 'flex justify-between text-sm mb-1';
+                    const lineTotal = (parseFloat(item.qty || 0) * parseFloat(item.amount || 0)).toFixed(2);
+                    row.innerHTML = `
+                        <span class="text-[#1E1E2D]">${item.qty}x ${item.name}</span>
+                        <span class="font-semibold">$${lineTotal}</span>
+                    `;
+                    previewItems.appendChild(row);
+                });
+
+                previewModal.classList.remove('hidden');
+            });
+
+            // Edit (Hide Preview)
+            editBtn.addEventListener('click', () => {
+                previewModal.classList.add('hidden');
+            });
+
+            // Submit (Show Success)
+            submitBtn.addEventListener('click', () => {
+                previewModal.classList.add('hidden');
+                successScreen.classList.remove('hidden');
+                mainScreen.style.display = 'none'; // Hide main to prevent scrolling in background
+            });
+
+            // Reset & Add Another
+            addAnotherBtn.addEventListener('click', () => {
+                // Reset State
+                state.date = new Date().toISOString().split('T')[0];
+                state.category = '';
+                state.items = [{ id: Date.now(), name: '', qty: '', amount: '' }];
+                state.paymentMode = '';
+                state.description = '';
+                state.fileName = '';
+                state.total = 0;
+
+                // Reset UI
+                dateInput.value = state.date;
+                descriptionInput.value = '';
+                fileInput.value = '';
+                fileNameDisplay.innerText = "Tap to upload receipt";
+                
+                renderCategories();
+                renderPaymentModes();
+                renderItems();
+                updateTotal();
+
+                // Switch Screens
+                successScreen.classList.add('hidden');
+                mainScreen.style.display = 'block';
+            });
+        }
+
+        // Boot App
+        initApp();
+    </script>
+</body>
+</html>
