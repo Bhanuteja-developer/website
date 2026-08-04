@@ -1,320 +1,609 @@
-<!DOCTYPE html><html class="light" lang="en"><head>
+<!DOCTYPE html><html lang="en"><head>
 <meta charset="utf-8">
-<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport">
-<title>Transactions History - Smart Finance</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<title>New Budget Category - Smart Finance Tracker</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "on-primary": "#ffffff",
-                        "primary-fixed-dim": "#cdbdff",
-                        "on-error": "#ffffff",
-                        "on-error-container": "#93000a",
-                        "on-surface-variant": "#494456",
-                        "on-primary-container": "#fcf6ff",
-                        "secondary": "#ae3203",
-                        "primary-container": "#7b4dff",
-                        "primary": "#622ce5",
-                        "surface-tint": "#6733ea",
-                        "secondary-fixed-dim": "#ffb59f",
-                        "outline": "#7a7487",
-                        "tertiary-fixed": "#ecdcff",
-                        "outline-variant": "#cac3d8",
-                        "inverse-on-surface": "#f3f0ef",
-                        "surface-bright": "#fcf9f8",
-                        "background": "#fcf9f8",
-                        "inverse-surface": "#313030",
-                        "on-tertiary-fixed": "#280057",
-                        "on-secondary-fixed-variant": "#862300",
-                        "surface": "#fcf9f8",
-                        "on-secondary": "#ffffff",
-                        "surface-dim": "#dcd9d9",
-                        "surface-container-low": "#f6f3f2",
-                        "secondary-container": "#fd6a3c",
-                        "inverse-primary": "#cdbdff",
-                        "tertiary": "#732ad3",
-                        "surface-container-highest": "#e5e2e1",
-                        "on-surface": "#1c1b1b",
-                        "on-background": "#1c1b1b",
-                        "on-tertiary-container": "#fdf6ff",
-                        "on-primary-fixed": "#1f005f",
-                        "error": "#ba1a1a",
-                        "on-tertiary": "#ffffff",
-                        "surface-variant": "#e5e2e1",
-                        "surface-container": "#f0eded",
-                        "surface-container-high": "#eae7e7",
-                        "secondary-fixed": "#ffdbd1",
-                        "on-secondary-container": "#5f1600",
-                        "on-tertiary-fixed-variant": "#5f00c0",
-                        "primary-fixed": "#e7deff",
-                        "surface-container-lowest": "#ffffff",
-                        "on-primary-fixed-variant": "#4e00d1",
-                        "tertiary-container": "#8d4aee",
-                        "error-container": "#ffdad6",
-                        "on-secondary-fixed": "#3a0a00",
-                        "tertiary-fixed-dim": "#d6baff"
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px"
-                    },
-                    "spacing": {
-                        "lg": "24px",
-                        "md": "16px",
-                        "gutter": "16px",
-                        "unit": "4px",
-                        "xl": "32px",
-                        "sm": "8px",
-                        "container-margin": "20px",
-                        "xs": "4px"
-                    },
-                    "fontFamily": {
-                        "body-md": ["Inter"],
-                        "label-sm": ["Inter"],
-                        "body-lg": ["Inter"],
-                        "headline-lg-mobile": ["Inter"],
-                        "display-data": ["Inter"],
-                        "headline-md": ["Inter"],
-                        "label-md": ["Inter"],
-                        "headline-lg": ["Inter"]
-                    },
-                    "fontSize": {
-                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
-                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
-                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
-                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
-                        "display-data": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.04em", "fontWeight": "700" }],
-                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
-                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
-                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }]
-                    }
-                }
-            }
-        }
-    </script>
 <style>
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
+        :root {
+            /* Colors */
+            --color-background: #fcf9f8;
+            --color-on-background: #1c1b1b;
+            --color-surface: #fcf9f8;
+            --color-on-surface: #1c1b1b;
+            --color-on-surface-variant: #494456;
+            --color-primary: #622ce5;
+            --color-on-primary: #ffffff;
+            --color-primary-container: #7b4dff;
+            --color-on-primary-container: #fcf6ff;
+            --color-primary-fixed: #e7deff;
+            --color-on-primary-fixed-variant: #4e00d1;
+            --color-surface-variant: #e5e2e1;
+            --color-surface-container: #f0eded;
+            --color-surface-container-low: #f6f3f2;
+            --color-surface-container-high: #eae7e7;
+            --color-outline: #7a7487;
+            --color-outline-variant: #cac3d8;
+
+            /* Spacing */
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-container-margin: 20px;
+
+            /* Radii */
+            --radius-default: 0.25rem;
+            --radius-lg: 0.5rem;
+            --radius-xl: 0.75rem;
+            --radius-2xl: 1.5rem;
+            --radius-full: 9999px;
+
+            /* Typography */
+            --font-family: 'Inter', sans-serif;
+            
+            --font-display-data-size: 48px;
+            --font-display-data-line-height: 56px;
+            --font-display-data-weight: 700;
+            --font-display-data-letter-spacing: -0.04em;
+
+            --font-headline-lg-size: 32px;
+            --font-headline-lg-line-height: 40px;
+            --font-headline-lg-weight: 700;
+            --font-headline-lg-letter-spacing: -0.02em;
+
+            --font-headline-md-size: 20px;
+            --font-headline-md-line-height: 28px;
+            --font-headline-md-weight: 600;
+
+            --font-body-md-size: 16px;
+            --font-body-md-line-height: 24px;
+            --font-body-md-weight: 400;
+
+            --font-label-md-size: 14px;
+            --font-label-md-line-height: 20px;
+            --font-label-md-weight: 600;
+            --font-label-md-letter-spacing: 0.01em;
+
+            --font-label-sm-size: 12px;
+            --font-label-sm-line-height: 16px;
+            --font-label-sm-weight: 500;
         }
-        .no-scrollbar {
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
+
+        /* Reset & Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
         }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--color-background);
+            color: var(--color-on-background);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        button {
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-family: inherit;
+            color: inherit;
+            padding: 0;
+            outline: none;
+        }
+
+        input {
+            font-family: inherit;
+            outline: none;
+        }
+
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Typography Classes */
+        .text-display-data {
+            font-size: var(--font-display-data-size);
+            line-height: var(--font-display-data-line-height);
+            font-weight: var(--font-display-data-weight);
+            letter-spacing: var(--font-display-data-letter-spacing);
+        }
+
+        .text-headline-lg {
+            font-size: var(--font-headline-lg-size);
+            line-height: var(--font-headline-lg-line-height);
+            font-weight: var(--font-headline-lg-weight);
+            letter-spacing: var(--font-headline-lg-letter-spacing);
+        }
+
+        .text-headline-md {
+            font-size: var(--font-headline-md-size);
+            line-height: var(--font-headline-md-line-height);
+            font-weight: var(--font-headline-md-weight);
+        }
+
+        .text-body-md {
+            font-size: var(--font-body-md-size);
+            line-height: var(--font-body-md-line-height);
+            font-weight: var(--font-body-md-weight);
+        }
+
+        .text-label-md {
+            font-size: var(--font-label-md-size);
+            line-height: var(--font-label-md-line-height);
+            font-weight: var(--font-label-md-weight);
+            letter-spacing: var(--font-label-md-letter-spacing);
+        }
+
+        .text-label-sm {
+            font-size: var(--font-label-sm-size);
+            line-height: var(--font-label-sm-line-height);
+            font-weight: var(--font-label-sm-weight);
+        }
+
+        .uppercase { text-transform: uppercase; }
+        .tracking-wider { letter-spacing: 0.05em; }
+        .text-center { text-align: center; }
+        .text-primary { color: var(--color-primary); }
+        .text-on-surface { color: var(--color-on-surface); }
+        .text-on-surface-variant { color: var(--color-on-surface-variant); }
+        .text-outline { color: var(--color-outline); }
+
+        /* Layout & Utilities */
+        .flex { display: flex; }
+        .flex-col { display: flex; flex-direction: column; }
+        .items-center { align-items: center; }
+        .items-baseline { align-items: baseline; }
+        .justify-center { justify-content: center; }
+        .justify-between { justify-content: space-between; }
+        .flex-1 { flex: 1; }
+        .w-full { width: 100%; }
+        .h-full { height: 100%; }
+        .min-h-screen { min-height: 100vh; }
+        .mx-auto { margin-left: auto; margin-right: auto; }
+        .max-w-1200 { max-width: 1200px; }
         
-        /* Swipe Action Animation */
-        .swipe-card {
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        .gap-xs { gap: var(--spacing-xs); }
+        .gap-sm { gap: var(--spacing-sm); }
+        .gap-md { gap: var(--spacing-md); }
+        .gap-xl { gap: var(--spacing-xl); }
+
+        .px-container { padding-left: var(--spacing-container-margin); padding-right: var(--spacing-container-margin); }
+        .p-md { padding: var(--spacing-md); }
+        .p-sm { padding: var(--spacing-sm); }
+        .py-1 { padding-top: 4px; padding-bottom: 4px; }
+        .p-1 { padding: 4px; }
+
+        .rounded-full { border-radius: var(--radius-full); }
+        .rounded-lg { border-radius: var(--radius-lg); }
+        .rounded-xl { border-radius: var(--radius-xl); }
+        .rounded-2xl { border-radius: var(--radius-2xl); }
+
+        /* Components */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 var(--spacing-container-margin);
+            height: 56px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            position: fixed;
+            top: 0;
+            z-index: 50;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.04);
         }
-        .swipe-card:hover {
-            transform: translateX(-80px);
+
+        .icon-button {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-full);
+            transition: background-color 0.2s;
         }
+        .icon-button:hover { background-color: var(--color-surface-variant); }
+
+        .main-content {
+            flex: 1;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 80px; /* Header height + spacing */
+            padding-bottom: 100px; /* Action bar height + spacing */
+            padding-left: var(--spacing-container-margin);
+            padding-right: var(--spacing-container-margin);
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-xl);
+        }
+
+        .card {
+            background-color: #ffffff;
+            border-radius: var(--radius-2xl);
+            padding: var(--spacing-md);
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+
+        .budget-amount-card {
+            align-items: center;
+            justify-content: center;
+        }
+
+        .budget-amount-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-color: var(--color-primary);
+            opacity: 0.05;
+            pointer-events: none;
+        }
+
+        .amount-input-wrapper {
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+            gap: var(--spacing-sm);
+        }
+
+        .amount-input {
+            background: transparent;
+            border: none;
+            text-align: center;
+            color: var(--color-on-surface);
+            padding: 0;
+            width: 140px;
+        }
+        .amount-input::placeholder { color: var(--color-surface-variant); }
+
+        .section-header {
+            font-size: var(--font-headline-md-size);
+            line-height: var(--font-headline-md-line-height);
+            font-weight: var(--font-headline-md-weight);
+            color: var(--color-on-surface);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: var(--spacing-sm);
+        }
+        @media (min-width: 768px) { .category-grid { grid-template-columns: repeat(6, 1fr); } }
+        @media (min-width: 1024px) { .category-grid { grid-template-columns: repeat(8, 1fr); } }
+
+        .category-tile {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-sm);
+            transition: all 0.2s;
+            cursor: pointer;
+            border: 1px solid var(--color-surface-variant);
+            background-color: #ffffff;
+            color: var(--color-on-surface-variant);
+        }
+        .category-tile:active { transform: scale(0.95); }
+        .category-tile:hover { background-color: var(--color-surface-container); }
+
+        .category-tile.active {
+            background-color: var(--color-primary-fixed);
+            border-color: var(--color-primary);
+            color: var(--color-on-primary-fixed-variant);
+        }
+
+        .category-icon-wrapper {
+            border-radius: var(--radius-full);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--color-surface-container-high);
+        }
+        .category-tile.active .category-icon-wrapper {
+            background-color: #ffffff;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .category-tile.custom .category-icon-wrapper {
+            border: 1px dashed var(--color-outline);
+        }
+
+        .frequency-toggle {
+            display: flex;
+            gap: var(--spacing-sm);
+            padding: 4px;
+            background-color: var(--color-surface-container-high);
+            border-radius: var(--radius-xl);
+        }
+
+        .frequency-option {
+            flex: 1;
+            text-align: center;
+            border-radius: var(--radius-lg);
+            padding: 6px 0;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: all 0.2s;
+            color: var(--color-on-surface-variant);
+            font-size: var(--font-label-md-size);
+            font-weight: var(--font-label-md-weight);
+            line-height: var(--font-label-md-line-height);
+        }
+        .frequency-option:hover:not(.active) { background-color: var(--color-surface-variant); }
+        .frequency-option.active {
+            background-color: #ffffff;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            color: var(--color-primary);
+        }
+
+        .rule-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+
+        .rule-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid var(--color-surface-variant);
+            border-radius: var(--radius-xl);
+            padding: 12px;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+        .rule-item:hover { border-color: var(--color-primary); }
+
+        .add-rule-btn {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--color-primary);
+            transition: opacity 0.2s;
+        }
+        .add-rule-btn:hover { opacity: 0.8; }
+
+        .action-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: var(--spacing-container-margin);
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.5);
+            z-index: 50;
+        }
+
+        .btn-primary {
+            width: 100%;
+            height: 48px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, #7B4DFF 0%, #FF6B3D 100%);
+            color: var(--color-on-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            box-shadow: 0px 20px 40px rgba(123, 77, 255, 0.15);
+            transition: all 0.2s;
+            font-size: var(--font-label-md-size);
+            font-weight: var(--font-label-md-weight);
+            letter-spacing: var(--font-label-md-letter-spacing);
+        }
+        .btn-primary:hover { opacity: 0.9; }
+        .btn-primary:active { transform: scale(0.98); }
+
     </style>
 </head>
-<body class="bg-background text-on-background antialiased min-h-screen flex flex-col pt-16 pb-[72px]">
-<!-- TopAppBar from JSON -->
-<header class="bg-surface/80 dark:bg-surface-container-low/80 backdrop-blur-xl fixed top-0 w-full z-50 border-b border-white/20 dark:border-white/5 shadow-sm shadow-[0px_10px_30px_rgba(0,0,0,0.04)] hidden md:block">
-<div class="flex justify-between items-center px-container-margin h-16 w-full max-w-7xl mx-auto">
-<div class="flex items-center gap-sm hover:opacity-80 transition-opacity active:scale-95 transition-transform duration-200 cursor-pointer">
-<img class="w-8 h-8 rounded-full object-cover" data-alt="A small, circular user profile picture of a young professional wearing modern glasses, set against a bright, minimalist background with soft white lighting, fitting a high-end fintech app aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWnDseuJDzXBqrWDiziUXHmD9Ybn5eSiSoOtXgNaS20_3EyCo-AgnZtH8GDboTfJ_eKtoGQ8WtUyuxtF7wSU8caBZB24zY6z3Do-nwRw0-2Zy1gtR3OEY9vML0NPT3bMQmdfB9xYZopQscXAk9jpJAV1ZLDJDHMPk0NcH07ZCUOCYqkIfGyaXOqnogJUuAAig75zUt3rDyT0LU3jyMkRpaZq0UAXOAiA3LvxN3h9AaVSzA0QuRBKY0">
-<span class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim">Smart Finance</span>
-</div>
-<nav class="flex gap-lg">
-<a class="font-label-md text-label-md text-on-surface-variant dark:text-outline-variant hover:opacity-80 transition-opacity" href="#">Dashboard</a>
-<a class="font-label-md text-label-md text-primary dark:text-primary-fixed-dim hover:opacity-80 transition-opacity" href="#">Transactions</a>
-</nav>
-<button class="hover:opacity-80 transition-opacity active:scale-95 transition-transform duration-200">
-<span class="material-symbols-outlined text-on-surface-variant dark:text-outline-variant">notifications</span>
+<body>
+<!-- Header -->
+<header class="header">
+<button aria-label="Go Back" class="icon-button">
+<span class="material-symbols-outlined">arrow_back</span>
 </button>
-</div>
+<h1 class="text-headline-md">Create Budget</h1>
+<div style="width: 40px; height: 40px;"></div> <!-- Spacer -->
 </header>
-<!-- Mobile Header (Contextual back action) -->
-<header class="bg-surface/90 backdrop-blur-xl fixed top-0 w-full z-50 md:hidden border-b border-surface-variant px-container-margin h-16 flex items-center justify-between">
-<button class="p-sm -ml-sm rounded-full hover:bg-surface-variant transition-colors">
-<span class="material-symbols-outlined text-on-surface">arrow_back</span>
+<!-- Main Content Canvas -->
+<main class="main-content">
+<!-- Budget Amount Section -->
+<section class="card budget-amount-card">
+<p class="text-label-md text-on-surface-variant uppercase tracking-wider">Total Amount</p>
+<div class="amount-input-wrapper">
+<span class="text-headline-lg text-primary">₹</span>
+<input class="amount-input text-display-data" id="budgetAmount" placeholder="0" type="number" value="15000">
+</div>
+<p class="text-label-sm text-outline">Available Balance: ₹45,200</p>
+</section>
+<!-- Category Selection Section -->
+<section>
+<h2 class="section-header">Category</h2>
+<div class="category-grid" id="categoryGrid" style="grid-template-columns: repeat(5, 1fr); gap: var(--spacing-xs);">
+<button class="category-tile active" data-category="food" style="padding: var(--spacing-xs); min-width: 0px;">
+<div class="category-icon-wrapper">
+<span class="material-symbols-outlined" style="font-variation-settings: &quot;FILL&quot; 1;">restaurant</span>
+</div>
+<span class="text-label-sm">Food</span>
 </button>
-<h1 class="font-headline-md text-headline-md text-on-surface">Transactions</h1>
-<div class="w-10"></div> <!-- Spacer -->
-</header>
-<main class="flex-grow w-full max-w-7xl mx-auto px-container-margin pt-xl md:pt-lg">
-<!-- Search and Filter Section -->
-<section class="mb-xl">
-<div class="relative w-full h-[56px] bg-[#F8F9FA] rounded-[18px] border border-outline-variant focus-within:border-primary transition-colors flex items-center px-md shadow-[0px_10px_30px_rgba(0,0,0,0.04)] mb-md">
-<span class="material-symbols-outlined text-outline mr-sm">search</span>
-<input class="w-full bg-transparent border-none focus:ring-0 font-body-md text-body-md text-on-surface placeholder:text-outline p-0" placeholder="Search transactions..." type="text">
+<button class="category-tile" data-category="transport" style="padding: var(--spacing-xs); min-width: 0px;">
+<div class="category-icon-wrapper">
+<span class="material-symbols-outlined">directions_car</span>
 </div>
-<!-- Horizontal Filter Chips -->
-<div class="flex overflow-x-auto no-scrollbar gap-sm pb-sm">
-<button class="h-[32px] px-md rounded-full bg-primary-container/10 text-primary font-label-sm text-label-sm whitespace-nowrap flex items-center gap-xs border border-primary/20">
-<span class="material-symbols-outlined text-[16px]">calendar_month</span> Date Range
-                </button>
-<button class="h-[32px] px-md rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm whitespace-nowrap hover:bg-surface-variant transition-colors">
-                    Category
-                </button>
-<button class="h-[32px] px-md rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm whitespace-nowrap hover:bg-surface-variant transition-colors">
-                    Payment Mode
-                </button>
-<button class="h-[32px] px-md rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm whitespace-nowrap hover:bg-surface-variant transition-colors">
-                    Status
-                </button>
+<span class="text-label-sm">Transport</span>
+</button>
+<button class="category-tile" data-category="housing" style="padding: var(--spacing-xs); min-width: 0px;">
+<div class="category-icon-wrapper">
+<span class="material-symbols-outlined">home</span>
+</div>
+<span class="text-label-sm">Housing</span>
+</button>
+<button class="category-tile" data-category="shopping" style="padding: var(--spacing-xs); min-width: 0px;">
+<div class="category-icon-wrapper">
+<span class="material-symbols-outlined">shopping_bag</span>
+</div>
+<span class="text-label-sm">Shopping</span>
+</button>
+<button class="category-tile" data-category="health" style="padding: var(--spacing-xs); min-width: 0px;">
+<div class="category-icon-wrapper">
+<span class="material-symbols-outlined">health_and_safety</span>
+</div>
+<span class="text-label-sm">Health</span>
+</button>
+<button class="category-tile" data-category="medicines" style="padding: var(--spacing-xs); min-width: 0px;">
+<div class="category-icon-wrapper">
+<span class="material-symbols-outlined">medication</span>
+</div>
+<span class="text-label-sm">Medicines</span>
+</button>
+<button class="category-tile" data-category="vegetables" style="padding: var(--spacing-xs); min-width: 0px;">
+<div class="category-icon-wrapper">
+<span class="material-symbols-outlined">eco</span>
+</div>
+<span class="text-label-sm">Vegetables</span>
+</button>
+<button class="category-tile" data-category="clothes" style="padding: var(--spacing-xs); min-width: 0px;">
+<div class="category-icon-wrapper">
+<span class="material-symbols-outlined">checkroom</span>
+</div>
+<span class="text-label-sm">Clothes</span>
+</button>
+<button class="category-tile custom" data-category="custom" style="padding: var(--spacing-xs); min-width: 0px;">
+<div class="category-icon-wrapper">
+<span class="material-symbols-outlined">add</span>
+</div>
+<span class="text-label-sm">Custom</span>
+</button>
 </div>
 </section>
-<!-- Transactions List -->
-<section class="space-y-xl">
-<!-- Group: Today -->
-<div>
-<h2 class="font-label-md text-label-md text-outline mb-md uppercase tracking-wider">Today</h2>
-<div class="space-y-sm">
-<!-- Transaction Card 1 (Swipeable Wrapper) -->
-<div class="relative overflow-hidden rounded-[24px]">
-<!-- Background Swipe Actions -->
-<div class="absolute inset-0 flex justify-end items-center px-lg gap-sm bg-surface-container-high rounded-[24px]">
-<button class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-sm">
-<span class="material-symbols-outlined text-[20px]">edit</span>
-</button>
-<button class="w-10 h-10 rounded-full bg-error text-on-error flex items-center justify-center shadow-sm">
-<span class="material-symbols-outlined text-[20px]">delete</span>
-</button>
+<!-- Period Selection -->
+<section>
+<h2 class="section-header">Frequency</h2>
+<div class="frequency-toggle" id="frequencyToggle">
+<div class="frequency-option" data-freq="daily">Daily</div>
+<div class="frequency-option" data-freq="weekly">Weekly</div>
+<div class="frequency-option active" data-freq="monthly">Monthly</div>
 </div>
-<!-- Foreground Card -->
-<div class="swipe-card relative z-10 bg-white p-[24px] rounded-[24px] shadow-[0px_10px_30px_rgba(0,0,0,0.04)] border-[0.5px] border-white/50 flex items-center justify-between">
-<div class="flex items-center gap-md">
-<div class="w-12 h-12 rounded-full bg-tertiary-container/20 text-tertiary-container flex items-center justify-center">
-<span class="material-symbols-outlined">shopping_cart</span>
+</section>
+<!-- Sub-categories / Rules Section -->
+<section>
+<div class="flex justify-between items-center" style="margin-bottom: var(--spacing-md);">
+<h2 class="text-headline-md text-on-surface">Limits &amp; Rules</h2>
+<button class="add-rule-btn text-label-md" id="addRuleBtn">
+<span class="material-symbols-outlined" style="font-size: 18px;">add</span> Add Rule
+            </button>
 </div>
-<div>
-<h3 class="font-headline-md text-headline-md text-on-surface text-[16px]">Whole Foods Market</h3>
-<p class="font-label-sm text-label-sm text-on-surface-variant">Groceries • 10:42 AM</p>
+<div class="card p-md">
+<div class="rule-list">
+<!-- Rule Item 1 -->
+<div class="rule-item">
+<div class="flex-col">
+<span class="text-body-md text-on-surface">Dining Out</span>
+<span class="text-label-sm text-outline">Max per transaction</span>
 </div>
-</div>
-<div class="text-right">
-<span class="font-headline-md text-headline-md text-on-surface text-[16px]">-$84.20</span>
+<div class="flex items-center gap-sm">
+<span class="text-headline-md text-on-surface">₹2,000</span>
+<span class="material-symbols-outlined text-outline">more_vert</span>
 </div>
 </div>
+<!-- Rule Item 2 -->
+<div class="rule-item">
+<div class="flex-col">
+<span class="text-body-md text-on-surface">Groceries</span>
+<span class="text-label-sm text-outline">Weekly Cap</span>
 </div>
-<!-- Transaction Card 2 -->
-<div class="relative overflow-hidden rounded-[24px]">
-<!-- Background Swipe Actions -->
-<div class="absolute inset-0 flex justify-end items-center px-lg gap-sm bg-surface-container-high rounded-[24px]">
-<button class="w-10 h-10 rounded-full bg-error text-on-error flex items-center justify-center shadow-sm">
-<span class="material-symbols-outlined text-[20px]">delete</span>
-</button>
-</div>
-<!-- Foreground Card -->
-<div class="swipe-card relative z-10 bg-white p-[24px] rounded-[24px] shadow-[0px_10px_30px_rgba(0,0,0,0.04)] border-[0.5px] border-white/50 flex items-center justify-between">
-<div class="flex items-center gap-md">
-<div class="w-12 h-12 rounded-full bg-secondary-container/20 text-secondary flex items-center justify-center">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">directions_car</span>
-</div>
-<div>
-<h3 class="font-headline-md text-headline-md text-on-surface text-[16px]">Uber Ride</h3>
-<p class="font-label-sm text-label-sm text-on-surface-variant">Transport • 08:15 AM</p>
-</div>
-</div>
-<div class="text-right">
-<span class="font-headline-md text-headline-md text-on-surface text-[16px]">-$15.50</span>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Group: Yesterday -->
-<div>
-<h2 class="font-label-md text-label-md text-outline mb-md uppercase tracking-wider">Yesterday, Oct 24</h2>
-<div class="space-y-sm">
-<!-- Transaction Card 3 -->
-<div class="relative overflow-hidden rounded-[24px]">
-<!-- Background Swipe Actions -->
-<div class="absolute inset-0 flex justify-end items-center px-lg gap-sm bg-surface-container-high rounded-[24px]">
-<button class="w-10 h-10 rounded-full bg-error text-on-error flex items-center justify-center shadow-sm">
-<span class="material-symbols-outlined text-[20px]">delete</span>
-</button>
-</div>
-<div class="swipe-card relative z-10 bg-white p-[24px] rounded-[24px] shadow-[0px_10px_30px_rgba(0,0,0,0.04)] border-[0.5px] border-white/50 flex items-center justify-between">
-<div class="flex items-center gap-md">
-<div class="w-12 h-12 rounded-full bg-[#10B981]/10 text-[#10B981] flex items-center justify-center">
-<span class="material-symbols-outlined">payments</span>
-</div>
-<div>
-<h3 class="font-headline-md text-headline-md text-on-surface text-[16px]">Salary Deposit</h3>
-<p class="font-label-sm text-label-sm text-on-surface-variant">Income • 09:00 AM</p>
-</div>
-</div>
-<div class="text-right">
-<span class="font-headline-md text-headline-md text-[#10B981] text-[16px] gap-xs flex items-center">
-                                    +$4,250.00
-                                </span>
-</div>
-</div>
-</div>
-<!-- Transaction Card 4 -->
-<div class="relative overflow-hidden rounded-[24px]">
-<!-- Background Swipe Actions -->
-<div class="absolute inset-0 flex justify-end items-center px-lg gap-sm bg-surface-container-high rounded-[24px]">
-<button class="w-10 h-10 rounded-full bg-error text-on-error flex items-center justify-center shadow-sm">
-<span class="material-symbols-outlined text-[20px]">delete</span>
-</button>
-</div>
-<div class="swipe-card relative z-10 bg-white p-[24px] rounded-[24px] shadow-[0px_10px_30px_rgba(0,0,0,0.04)] border-[0.5px] border-white/50 flex items-center justify-between">
-<div class="flex items-center gap-md">
-<div class="w-12 h-12 rounded-full bg-primary-container/20 text-primary flex items-center justify-center">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">restaurant</span>
-</div>
-<div>
-<h3 class="font-headline-md text-headline-md text-on-surface text-[16px]">Bistro 1908</h3>
-<p class="font-label-sm text-label-sm text-on-surface-variant">Dining • 07:30 PM</p>
-</div>
-</div>
-<div class="text-right">
-<span class="font-headline-md text-headline-md text-on-surface text-[16px]">-$124.00</span>
-</div>
+<div class="flex items-center gap-sm">
+<span class="text-headline-md text-on-surface">₹4,000</span>
+<span class="material-symbols-outlined text-outline">more_vert</span>
 </div>
 </div>
 </div>
 </div>
 </section>
 </main>
-<!-- BottomNavBar from JSON (Rendered only on Mobile for primary destination mapping) -->
-<!-- Suppressed here based on instructions: Navigation shell should be suppressed if page has 'Back' action (which we added for mobile), 
-         but the prompt asks for 'Transactions History' which could be a primary tab. Assuming it maps to a main flow, we will render it as per standard bottom nav on mobile, 
-         though the mobile header has a back button, suggesting a sub-page. The instructions state: "Automatic Suppression: You MUST exclude the navigation shell if the page intent is: Task-Focused: Any sub-page featuring a 'Close' or 'Back' action".
-         Since I added a back button to the mobile header, I should technically suppress the BottomNav to follow the UX Goal. 
-         However, the user might consider "Transactions History" a primary view. I will omit the bottom nav to strictly follow the "Task-Focused" rule due to the back button I implemented. 
-         Wait, let's remove the back button and make it a primary destination to show the component generation. -->
-<script>
-        // Adjust header to remove back button to make it a primary destination
-        document.querySelector('header.md\\:hidden').innerHTML = `
-            <h1 class="font-headline-md text-headline-md text-on-surface">Transactions History</h1>
-        `;
-    </script>
-<nav class="fixed bottom-0 w-full rounded-t-xl z-50 border-t border-white/20 dark:border-white/5 shadow-[0px_-4px_20px_rgba(0,0,0,0.04)] bg-surface/80 dark:bg-surface-container-low/80 backdrop-blur-xl md:hidden">
-<div class="fixed bottom-0 left-0 w-full h-[72px] flex justify-around items-center px-4 pb-safe">
-<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors" href="#">
-<span class="material-symbols-outlined">home</span>
-<span class="font-label-sm text-label-sm mt-1">Home</span>
-</a>
-<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors" href="#">
-<span class="material-symbols-outlined">credit_card</span>
-<span class="font-label-sm text-label-sm mt-1">Cards</span>
-</a>
-<a class="flex flex-col items-center justify-center bg-gradient-to-br from-[#7B4DFF] to-[#FF6B3D] text-on-primary rounded-full -translate-y-6 w-14 h-14 shadow-[0px_20px_40px_rgba(123,77,255,0.15)] active:scale-90 transition-all duration-300" href="#">
-<span class="material-symbols-outlined text-[28px]">add</span>
-</a>
-<a class="flex flex-col items-center justify-center text-primary dark:text-primary-fixed-dim font-bold transition-colors" href="#">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">leaderboard</span>
-<span class="font-label-sm text-label-sm mt-1">Stats</span>
-</a>
-<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors" href="#">
-<span class="material-symbols-outlined">menu</span>
-<span class="font-label-sm text-label-sm mt-1">Menu</span>
-</a>
+<!-- Bottom Action Bar -->
+<div class="action-bar">
+<div class="max-w-1200 mx-auto">
+<button class="btn-primary" id="saveBudgetBtn">
+<span class="material-symbols-outlined">save</span>
+            Save Budget
+        </button>
 </div>
-</nav>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Category Selection Logic
+        const categoryGrid = document.getElementById('categoryGrid');
+        const categoryTiles = categoryGrid.querySelectorAll('.category-tile');
+
+        categoryTiles.forEach(tile => {
+            tile.addEventListener('click', () => {
+                // Remove active class from all
+                categoryTiles.forEach(t => t.classList.remove('active'));
+                // Add active class to clicked
+                tile.classList.add('active');
+            });
+        });
+
+        // Frequency Selection Logic
+        const frequencyToggle = document.getElementById('frequencyToggle');
+        const frequencyOptions = frequencyToggle.querySelectorAll('.frequency-option');
+
+        frequencyOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                frequencyOptions.forEach(opt => opt.classList.remove('active'));
+                option.classList.add('active');
+            });
+        });
+
+        // Add Rule Button Logic
+        const addRuleBtn = document.getElementById('addRuleBtn');
+        addRuleBtn.addEventListener('click', () => {
+            console.log('Add Rule clicked');
+            // Placeholder logic for adding a rule could go here
+            alert('Add Rule functionality placeholder');
+        });
+
+        // Save Budget Logic
+        const saveBudgetBtn = document.getElementById('saveBudgetBtn');
+        saveBudgetBtn.addEventListener('click', () => {
+            const amount = document.getElementById('budgetAmount').value;
+            const activeCategory = document.querySelector('.category-tile.active span').textContent;
+            const activeFreq = document.querySelector('.frequency-option.active').textContent;
+            
+            console.log('Saving Budget:', {
+                amount: amount,
+                category: activeCategory,
+                frequency: activeFreq
+            });
+        });
+    });
+</script>
+
+
 </body></html>
