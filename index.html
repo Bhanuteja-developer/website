@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head>
+<!DOCTYPE html><html lang="en" style=""><head></head><body><svg aria-hidden="true" class="inline-defs-container" style="position:absolute;width:0;height:0;overflow:hidden"></svg>
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
 <title>New Budget Category - Smart Finance Tracker</title>
@@ -419,9 +419,39 @@
         .btn-primary:hover { opacity: 0.9; }
         .btn-primary:active { transform: scale(0.98); }
 
+        /* 3D Card Hover Effects */
+        .card-perspective-wrapper {
+            perspective: 1200px;
+        }
+        .overview-card.tilt-active {
+            transition: transform 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .overview-card.tilt-inactive {
+            transition: transform 0.5s ease-out;
+        }
+        .glare-overlay {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            mix-blend-mode: overlay;
+            z-index: 10;
+            opacity: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.4) 0%, transparent 60%);
+            transition: opacity 0.5s;
+        }
+        .parallax-element {
+            transform: translateZ(40px);
+            transition: transform 0.3s ease;
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            .card-perspective-wrapper { perspective: none; }
+            .overview-card { transform: none !important; transition: none !important; }
+            .parallax-element { transform: none !important; }
+            .glare-overlay { display: none; }
+        }
+
     </style>
-</head>
-<body>
 <!-- Header -->
 <header class="header">
 <button aria-label="Go Back" class="icon-button">
@@ -431,120 +461,81 @@
 <div style="width: 40px; height: 40px;"></div> <!-- Spacer -->
 </header>
 <!-- Main Content Canvas -->
-<main class="main-content">
+<main class="main-content"><section class="flex flex-col gap-xs">
+<h2 class="text-headline-lg font-bold" style="background: linear-gradient(135deg, rgb(123, 77, 255) 0%, rgb(255, 107, 61) 100%) text; -webkit-text-fill-color: transparent; color: transparent;">Budget Planning</h2>
+<p class="text-body-md text-on-surface-variant">Manage your rules and allocations.</p>
+</section>
 <!-- Budget Amount Section -->
-<section class="card budget-amount-card">
-<p class="text-label-md text-on-surface-variant uppercase tracking-wider">Total Amount</p>
-<div class="amount-input-wrapper">
-<span class="text-headline-lg text-primary">₹</span>
-<input class="amount-input text-display-data" id="budgetAmount" placeholder="0" type="number" value="15000">
+<section class="overview-section" style="margin-bottom: var(--spacing-md);"><div class="flex justify-between items-center px-1 mb-6 mt-4"><h2 class="text-label-md uppercase tracking-wider text-on-surface-variant opacity-70">Monthly Overview</h2><div class="flex items-center gap-sm bg-surface-container-high px-3 py-1.5 rounded-xl border border-outline-variant/30"><span class="material-symbols-outlined" style="font-size: 18px;">calendar_today</span><button class="text-label-md font-bold hover:bg-surface-variant transition-colors rounded-lg px-1" aria-label="Select Month">August 2026</button></div></div>
+<div class="card-perspective-wrapper">
+<div class="card overview-card tilt-inactive" id="premium-tilt-card" style="padding: 24px; border-radius: 24px; background: linear-gradient(135deg, rgb(123, 77, 255) 0%, rgb(255, 107, 61) 100%); position: relative; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: rgba(123, 77, 255, 0.3) 0px 20px 40px; color: white; min-height: 260px; display: flex; flex-direction: column; justify-content: space-between; transform-style: preserve-3d; transform: rotateX(4deg) rotateY(-8deg) rotateZ(2deg);"><!-- Top Row -->
+<div class="glare-overlay" id="premium-card-glare" style="opacity: 0; background: radial-gradient(circle at 317.307px 9.44066px, rgba(255, 255, 255, 0.4) 0%, transparent 60%);"></div>
+<div class="flex justify-between items-start parallax-element">
+<div class="flex flex-col gap-sm">
+<div class="flex items-center gap-xs"><span class="text-label-sm font-bold tracking-wider uppercase opacity-90">World Elite</span></div>
+<div class="flex items-center gap-sm"><div style="width: 42px; height: 30px; background: linear-gradient(135deg, #e0e0e0 0%, #bdbdbd 100%); border-radius: 6px; position: relative; overflow: hidden; box-shadow: inset 0 0 4px rgba(0,0,0,0.2);"><div style="position: absolute; inset: 0; border: 0.5px solid rgba(0,0,0,0.1); display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr);"><div style="border: 0.2px solid rgba(0,0,0,0.1);"></div><div style="border: 0.2px solid rgba(0,0,0,0.1);"></div><div style="border: 0.2px solid rgba(0,0,0,0.1);"></div><div style="border: 0.2px solid rgba(0,0,0,0.1);"></div><div style="border: 0.2px solid rgba(0,0,0,0.1);"></div><div style="border: 0.2px solid rgba(0,0,0,0.1);"></div><div style="border: 0.2px solid rgba(0,0,0,0.1);"></div><div style="border: 0.2px solid rgba(0,0,0,0.1);"></div><div style="border: 0.2px solid rgba(0,0,0,0.1);"></div></div></div><span class="material-symbols-outlined" style="color: white; font-size: 20px;">contactless</span></div>
 </div>
-<p class="text-label-sm text-outline">Available Balance: ₹45,200</p>
-</section>
+<div class="text-right">
+<span class="text-label-sm font-bold tracking-wider uppercase opacity-90">Global</span><br>
+<span class="text-label-sm opacity-70 uppercase" style="font-size: 10px;">&nbsp; &nbsp; &nbsp;Premier</span>
+</div>
+</div>
+<!-- Middle Row: Balance -->
+<div class="flex flex-col gap-xs mt-4 parallax-element">
+<span class="text-label-sm uppercase tracking-widest opacity-70" style="font-size: 10px;">Total Balance</span>
+<div class="flex items-center gap-md">
+<span class="text-headline-md" style="font-family: Inter, monospace; letter-spacing: 4px;">**** **** **** 21,000</span>
+</div>
+</div>
+<!-- Bottom Area: Progress & Stats -->
+<div class="flex flex-col gap-sm mt-4 parallax-element">
+<div class="flex justify-between items-end">
+<span class="text-label-sm uppercase tracking-widest opacity-70" style="font-size: 10px;">Credit Utilized</span>
+<span class="text-label-md font-bold">70%</span>
+</div>
+<div class="w-full bg-white/20 rounded-full h-1.5 overflow-hidden mt-1">
+<div style="width: 70%; height: 100%; background: white; box-shadow: 0 0 12px rgba(255,255,255,0.8);"></div>
+</div>
+<div class="flex justify-between items-end mt-4">
+<div class="flex gap-lg">
+<div class="flex flex-col">
+<span class="text-label-sm uppercase opacity-60" style="font-size: 9px;">Limit</span>
+<span class="text-label-md font-bold">13,350&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span>
+</div>
+<div class="flex flex-col">
+<span class="text-label-sm uppercase opacity-60" style="font-size: 9px;">Savings</span>
+<span class="text-label-md font-bold">7,650</span>
+</div>
+</div>
+<div class="flex items-center">
+<div style="width: 28px; height: 28px; background: rgba(235, 0, 27, 0.9); border-radius: 50%;"></div>
+<div style="width: 28px; height: 28px; background: rgba(247, 158, 27, 0.9); border-radius: 50%; margin-left: -14px;"></div>
+</div>
+</div>
+</div></div>
+</div>
+</section><section class="stats-scroll justify-between" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: -16px 0px 0px; padding: 0px;"><div class="stat-card" style="background-color: rgb(255, 255, 255); border: 1px solid rgba(0, 0, 0, 0.05); padding: 16px; display: flex; flex-direction: column; align-items: flex-start; text-align: left; border-radius: 1.5rem; min-height: 100px; justify-content: center;"><div class="stat-icon bg-primary-light" style="background-color: rgb(253, 106, 60); color: rgb(255, 255, 255); border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;"><span class="material-symbols-outlined icon-sm" style="font-size: 18px;">pie_chart</span></div><span class="text-label-sm text-on-surface-variant" style="margin-top: 4px;">Budget</span><span class="text-headline-md text-on-surface font-bold" style="font-size: 16px; line-height: 24px;">₹13,350</span></div><div class="stat-card" style="background-color: rgb(255, 255, 255); border: 1px solid rgba(0, 0, 0, 0.05); padding: 16px; display: flex; flex-direction: column; align-items: flex-start; text-align: left; border-radius: 1.5rem; min-height: 100px; justify-content: center;"><div class="stat-icon bg-primary-light" style="background-color: rgb(26, 115, 232); color: rgb(255, 255, 255); border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;"><span class="material-symbols-outlined icon-sm" style="font-size: 18px;">payments</span></div><span class="text-label-sm text-on-surface-variant" style="margin-top: 4px;">Spent</span><span class="text-headline-md text-on-surface font-bold" style="font-size: 16px; line-height: 24px;">₹8,700</span></div><div class="stat-card" style="background-color: rgb(255, 255, 255); border: 1px solid rgba(0, 0, 0, 0.05); padding: 16px; display: flex; flex-direction: column; align-items: flex-start; text-align: left; border-radius: 1.5rem; min-height: 100px; justify-content: center;"><div class="stat-icon bg-primary-light" style="background-color: rgb(27, 94, 32); color: rgb(255, 255, 255); border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;"><span class="material-symbols-outlined icon-sm" style="font-size: 18px;">savings</span></div><span class="text-label-sm text-on-surface-variant" style="margin-top: 4px;">Left</span><span class="text-headline-md text-on-surface font-bold" style="font-size: 16px; line-height: 24px;">₹4,650</span></div></section>
 <!-- Category Selection Section -->
-<section>
-<h2 class="section-header">Category</h2>
-<div class="category-grid" id="categoryGrid" style="grid-template-columns: repeat(5, 1fr); gap: var(--spacing-xs);">
-<button class="category-tile active" data-category="food" style="padding: var(--spacing-xs); min-width: 0px;">
-<div class="category-icon-wrapper">
-<span class="material-symbols-outlined" style="font-variation-settings: &quot;FILL&quot; 1;">restaurant</span>
-</div>
-<span class="text-label-sm">Food</span>
-</button>
-<button class="category-tile" data-category="transport" style="padding: var(--spacing-xs); min-width: 0px;">
-<div class="category-icon-wrapper">
-<span class="material-symbols-outlined">directions_car</span>
-</div>
-<span class="text-label-sm">Transport</span>
-</button>
-<button class="category-tile" data-category="housing" style="padding: var(--spacing-xs); min-width: 0px;">
-<div class="category-icon-wrapper">
-<span class="material-symbols-outlined">home</span>
-</div>
-<span class="text-label-sm">Housing</span>
-</button>
-<button class="category-tile" data-category="shopping" style="padding: var(--spacing-xs); min-width: 0px;">
-<div class="category-icon-wrapper">
-<span class="material-symbols-outlined">shopping_bag</span>
-</div>
-<span class="text-label-sm">Shopping</span>
-</button>
-<button class="category-tile" data-category="health" style="padding: var(--spacing-xs); min-width: 0px;">
-<div class="category-icon-wrapper">
-<span class="material-symbols-outlined">health_and_safety</span>
-</div>
-<span class="text-label-sm">Health</span>
-</button>
-<button class="category-tile" data-category="medicines" style="padding: var(--spacing-xs); min-width: 0px;">
-<div class="category-icon-wrapper">
-<span class="material-symbols-outlined">medication</span>
-</div>
-<span class="text-label-sm">Medicines</span>
-</button>
-<button class="category-tile" data-category="vegetables" style="padding: var(--spacing-xs); min-width: 0px;">
-<div class="category-icon-wrapper">
-<span class="material-symbols-outlined">eco</span>
-</div>
-<span class="text-label-sm">Vegetables</span>
-</button>
-<button class="category-tile" data-category="clothes" style="padding: var(--spacing-xs); min-width: 0px;">
-<div class="category-icon-wrapper">
-<span class="material-symbols-outlined">checkroom</span>
-</div>
-<span class="text-label-sm">Clothes</span>
-</button>
-<button class="category-tile custom" data-category="custom" style="padding: var(--spacing-xs); min-width: 0px;">
-<div class="category-icon-wrapper">
-<span class="material-symbols-outlined">add</span>
-</div>
-<span class="text-label-sm">Custom</span>
-</button>
-</div>
-</section>
-<!-- Period Selection -->
-<section>
+<section class="">
 <h2 class="section-header">Frequency</h2>
 <div class="frequency-toggle" id="frequencyToggle">
 <div class="frequency-option" data-freq="daily">Daily</div>
 <div class="frequency-option" data-freq="weekly">Weekly</div>
-<div class="frequency-option active" data-freq="monthly">Monthly</div>
+<div class="frequency-option active" data-freq="monthly" style="background: linear-gradient(135deg, rgb(123, 77, 255) 0%, rgb(255, 107, 61) 100%); color: rgb(255, 255, 255);">Monthly</div>
 </div>
-</section>
-<!-- Sub-categories / Rules Section -->
-<section>
+</section><section>
 <div class="flex justify-between items-center" style="margin-bottom: var(--spacing-md);">
 <h2 class="text-headline-md text-on-surface">Limits &amp; Rules</h2>
-<button class="add-rule-btn text-label-md" id="addRuleBtn">
-<span class="material-symbols-outlined" style="font-size: 18px;">add</span> Add Rule
-            </button>
-</div>
-<div class="card p-md">
+<button class="add-rule-btn text-label-md flex items-center gap-xs" style="color: rgb(123, 77, 255);"><span class="material-symbols-outlined" style="font-size: 18px;">add</span> Add Rule</button></div>
 <div class="rule-list">
 <!-- Rule Item 1 -->
-<div class="rule-item">
-<div class="flex-col">
-<span class="text-body-md text-on-surface">Dining Out</span>
-<span class="text-label-sm text-outline">Max per transaction</span>
-</div>
-<div class="flex items-center gap-sm">
-<span class="text-headline-md text-on-surface">₹2,000</span>
-<span class="material-symbols-outlined text-outline">more_vert</span>
-</div>
-</div>
+<div class="rule-item flex-row items-center" style="background-color: rgb(255, 255, 255); position: relative;"><div class="flex-col w-full gap-sm"><div class="flex flex-row items-center justify-between w-full"><div class="flex flex-row items-center" style="width: 50%;"><div class="category-icon-wrapper" style="background: rgba(123, 77, 255, 0.1); margin-right: 12px;"><span class="material-symbols-outlined" style="color: rgb(123, 77, 255); font-size: 20px;">eco</span></div><span class="text-body-md text-on-surface font-bold">Vegetables</span></div><div class="flex flex-row items-center justify-end" style="width: 50%;"><div class="flex flex-col items-end"><span class="text-label-md text-on-surface" style="white-space: nowrap;">₹2,000 / <span class="text-outline font-bold">₹2,500</span></span><span class="text-label-sm text-on-surface-variant" style="color: rgb(46, 125, 50); font-weight: 600;">₹500 left</span></div></div></div><div class="flex flex-row items-center w-full gap-sm"><div class="w-full bg-surface-container-high rounded-full flex-1" style="height: 6px; overflow: hidden; background-color: rgb(229, 226, 225);"><div style="width: 80%; height: 100%; background: linear-gradient(90deg, #7B4DFF 0%, #FF6B3D 100%); border-radius: 9999px;"></div></div><span class="text-label-sm text-on-surface-variant font-bold" style="min-width: 32px; text-align: right;">80%</span></div></div><span class="material-symbols-outlined text-outline" style="position: absolute; top: 12px; right: 12px; cursor: pointer;">more_vert</span></div>
 <!-- Rule Item 2 -->
-<div class="rule-item">
-<div class="flex-col">
-<span class="text-body-md text-on-surface">Groceries</span>
-<span class="text-label-sm text-outline">Weekly Cap</span>
-</div>
-<div class="flex items-center gap-sm">
-<span class="text-headline-md text-on-surface">₹4,000</span>
-<span class="material-symbols-outlined text-outline">more_vert</span>
-</div>
-</div>
-</div>
-</div>
+<div class="rule-item flex-row items-center" style="background-color: rgb(255, 255, 255); position: relative;"><div class="flex-col w-full gap-sm"><div class="flex flex-row items-center justify-between w-full"><div class="flex flex-row items-center" style="width: 50%;"><div class="category-icon-wrapper" style="background: rgba(253, 106, 60, 0.1); margin-right: 12px;"><span class="material-symbols-outlined" style="color: rgb(253, 106, 60); font-size: 20px;">local_gas_station</span></div><span class="text-body-md text-on-surface font-bold">Petrol</span></div><div class="flex flex-row items-center justify-end" style="width: 50%;"><div class="flex flex-col items-end"><span class="text-label-md text-on-surface" style="white-space: nowrap;">₹650 / <span class="text-outline font-bold">₹3,000</span></span><span class="text-label-sm text-on-surface-variant" style="color: rgb(46, 125, 50); font-weight: 600;">₹2,350 left</span></div></div></div><div class="flex flex-row items-center w-full gap-sm"><div class="w-full bg-surface-container-high rounded-full flex-1" style="height: 6px; overflow: hidden; background-color: rgb(229, 226, 225);"><div style="width: 22%; height: 100%; background: linear-gradient(90deg, #7B4DFF 0%, #FF6B3D 100%); border-radius: 9999px;"></div></div><span class="text-label-sm text-on-surface-variant font-bold" style="min-width: 32px; text-align: right;">22%</span></div></div><span class="material-symbols-outlined text-outline" style="position: absolute; top: 12px; right: 12px;">more_vert</span></div>
+<div class="rule-item flex-row items-center" style="background-color: rgb(255, 255, 255); position: relative;"><div class="flex-col w-full gap-sm"><div class="flex flex-row items-center justify-between w-full"><div class="flex flex-row items-center" style="width: 50%;"><div class="category-icon-wrapper" style="background: rgba(123, 77, 255, 0.1); margin-right: 12px;"><span class="material-symbols-outlined" style="color: rgb(123, 77, 255); font-size: 20px;">shopping_basket</span></div><span class="text-body-md text-on-surface font-bold">Grocery</span></div><div class="flex flex-row items-center justify-end" style="width: 50%;"><div class="flex flex-col items-end"><span class="text-label-md text-on-surface" style="white-space: nowrap;">₹5,500 / <span class="text-outline font-bold">₹6,000</span></span><span class="text-label-sm text-on-surface-variant" style="color: rgb(46, 125, 50); font-weight: 600;">₹500 left</span></div></div></div><div class="flex flex-row items-center w-full gap-sm"><div class="w-full bg-surface-container-high rounded-full flex-1" style="height: 6px; overflow: hidden; background-color: rgb(229, 226, 225);"><div style="width: 92%; height: 100%; background: linear-gradient(90deg, #7B4DFF 0%, #FF6B3D 100%); border-radius: 9999px;"></div></div><span class="text-label-sm text-on-surface-variant font-bold" style="min-width: 32px; text-align: right;">92%</span></div></div><span class="material-symbols-outlined text-outline" style="position: absolute; top: 12px; right: 12px;">more_vert</span></div><div class="rule-item flex-row items-center" style="background-color: rgb(255, 255, 255); position: relative;"><div class="flex-col w-full gap-sm"><div class="flex flex-row items-center justify-between w-full"><div class="flex flex-row items-center" style="width: 50%;"><div class="category-icon-wrapper" style="background: rgba(123, 77, 255, 0.1); margin-right: 12px;"><span class="material-symbols-outlined" style="color: rgb(123, 77, 255); font-size: 20px;">directions_car</span></div><span class="text-body-md text-on-surface font-bold">Traveling</span></div><div class="flex flex-row items-center justify-end" style="width: 50%;"><div class="flex flex-col items-end"><span class="text-label-md text-on-surface" style="white-space: nowrap;">₹50 / <span class="text-outline font-bold">₹300</span></span><span class="text-label-sm text-on-surface-variant" style="color: rgb(46, 125, 50); font-weight: 600;">₹250 left</span></div></div></div><div class="flex flex-row items-center w-full gap-sm"><div class="w-full bg-surface-container-high rounded-full flex-1" style="height: 6px; overflow: hidden; background-color: rgb(229, 226, 225);"><div style="width: 17%; height: 100%; background: linear-gradient(90deg, #7B4DFF 0%, #FF6B3D 100%); border-radius: 9999px;"></div></div><span class="text-label-sm text-on-surface-variant font-bold" style="min-width: 32px; text-align: right;">17%</span></div></div><span class="material-symbols-outlined text-outline" style="position: absolute; top: 12px; right: 12px;">more_vert</span></div><div class="rule-item flex-row items-center" style="background-color: rgb(255, 255, 255); position: relative;"><div class="flex-col w-full gap-sm"><div class="flex flex-row items-center justify-between w-full"><div class="flex flex-row items-center" style="width: 50%;"><div class="category-icon-wrapper" style="background: rgba(123, 77, 255, 0.1); margin-right: 12px;"><span class="material-symbols-outlined" style="color: rgb(123, 77, 255); font-size: 20px;">medical_services</span></div><span class="text-body-md text-on-surface font-bold">Medical</span></div><div class="flex flex-row items-center justify-end" style="width: 50%;"><div class="flex flex-col items-end"><span class="text-label-md text-on-surface" style="white-space: nowrap;">₹0 / <span class="text-outline font-bold">₹250</span></span><span class="text-label-sm text-on-surface-variant" style="color: rgb(46, 125, 50); font-weight: 600;">₹250 left</span></div></div></div><div class="flex flex-row items-center w-full gap-sm"><div class="w-full bg-surface-container-high rounded-full flex-1" style="height: 6px; overflow: hidden; background-color: rgb(229, 226, 225);"><div style="width: 0%; height: 100%; background: linear-gradient(90deg, #7B4DFF 0%, #FF6B3D 100%); border-radius: 9999px;"></div></div><span class="text-label-sm text-on-surface-variant font-bold" style="min-width: 32px; text-align: right;">0%</span></div></div><span class="material-symbols-outlined text-outline" style="position: absolute; top: 12px; right: 12px;">more_vert</span></div><div class="rule-item flex-row items-center" style="background-color: rgb(255, 255, 255); position: relative;"><div class="flex-col w-full gap-sm"><div class="flex flex-row items-center justify-between w-full"><div class="flex flex-row items-center" style="width: 50%;"><div class="category-icon-wrapper" style="background: rgba(123, 77, 255, 0.1); margin-right: 12px;"><span class="material-symbols-outlined" style="color: rgb(123, 77, 255); font-size: 20px;">checkroom</span></div><span class="text-body-md text-on-surface font-bold">Clothes</span></div><div class="flex flex-row items-center justify-end" style="width: 50%;"><div class="flex flex-col items-end"><span class="text-label-md text-on-surface" style="white-space: nowrap;">₹100 / <span class="text-outline font-bold">₹800</span></span><span class="text-label-sm text-on-surface-variant" style="color: rgb(46, 125, 50); font-weight: 600;">₹700 left</span></div></div></div><div class="flex flex-row items-center w-full gap-sm"><div class="w-full bg-surface-container-high rounded-full flex-1" style="height: 6px; overflow: hidden; background-color: rgb(229, 226, 225);"><div style="width: 13%; height: 100%; background: linear-gradient(90deg, #7B4DFF 0%, #FF6B3D 100%); border-radius: 9999px;"></div></div><span class="text-label-sm text-on-surface-variant font-bold" style="min-width: 32px; text-align: right;">13%</span></div></div><span class="material-symbols-outlined text-outline" style="position: absolute; top: 12px; right: 12px;">more_vert</span></div><div class="rule-item flex-row items-center" style="background-color: rgb(255, 255, 255); position: relative;"><div class="flex-col w-full gap-sm"><div class="flex flex-row items-center justify-between w-full"><div class="flex flex-row items-center" style="width: 50%;"><div class="category-icon-wrapper" style="background: rgba(123, 77, 255, 0.1); margin-right: 12px;"><span class="material-symbols-outlined" style="color: rgb(123, 77, 255); font-size: 20px;">help_outline</span></div><span class="text-body-md text-on-surface font-bold">Other</span></div><div class="flex flex-row items-center justify-end" style="width: 50%;"><div class="flex flex-col items-end"><span class="text-label-md text-on-surface" style="white-space: nowrap;">₹500 / <span class="text-outline font-bold">₹500</span></span><span class="text-label-sm text-on-surface-variant" style="color: rgb(46, 125, 50); font-weight: 600;">₹0 left</span></div></div></div><div class="flex flex-row items-center w-full gap-sm"><div class="w-full bg-surface-container-high rounded-full flex-1" style="height: 6px; overflow: hidden; background-color: rgb(229, 226, 225);"><div style="width: 100%; height: 100%; background: linear-gradient(90deg, #7B4DFF 0%, #FF6B3D 100%); border-radius: 9999px;"></div></div><span class="text-label-sm text-on-surface-variant font-bold" style="min-width: 32px; text-align: right;">100%</span></div></div><span class="material-symbols-outlined text-outline" style="position: absolute; top: 12px; right: 12px;">more_vert</span></div></div>
 </section>
+<!-- Period Selection -->
+<!-- Sub-categories / Rules Section -->
 </main>
 <!-- Bottom Action Bar -->
 <div class="action-bar">
@@ -559,50 +550,159 @@
     document.addEventListener('DOMContentLoaded', () => {
         // Category Selection Logic
         const categoryGrid = document.getElementById('categoryGrid');
-        const categoryTiles = categoryGrid.querySelectorAll('.category-tile');
-
-        categoryTiles.forEach(tile => {
-            tile.addEventListener('click', () => {
-                // Remove active class from all
-                categoryTiles.forEach(t => t.classList.remove('active'));
-                // Add active class to clicked
-                tile.classList.add('active');
+        if (categoryGrid) {
+            const categoryTiles = categoryGrid.querySelectorAll('.category-tile');
+            categoryTiles.forEach(tile => {
+                tile.addEventListener('click', () => {
+                    categoryTiles.forEach(t => t.classList.remove('active'));
+                    tile.classList.add('active');
+                });
             });
-        });
+        }
 
         // Frequency Selection Logic
         const frequencyToggle = document.getElementById('frequencyToggle');
-        const frequencyOptions = frequencyToggle.querySelectorAll('.frequency-option');
-
-        frequencyOptions.forEach(option => {
-            option.addEventListener('click', () => {
-                frequencyOptions.forEach(opt => opt.classList.remove('active'));
-                option.classList.add('active');
+        if (frequencyToggle) {
+            const frequencyOptions = frequencyToggle.querySelectorAll('.frequency-option');
+            frequencyOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    frequencyOptions.forEach(opt => opt.classList.remove('active'));
+                    option.classList.add('active');
+                });
             });
-        });
+        }
 
         // Add Rule Button Logic
         const addRuleBtn = document.getElementById('addRuleBtn');
-        addRuleBtn.addEventListener('click', () => {
-            console.log('Add Rule clicked');
-            // Placeholder logic for adding a rule could go here
-            alert('Add Rule functionality placeholder');
-        });
+        if (addRuleBtn) {
+            addRuleBtn.addEventListener('click', () => {
+                console.log('Add Rule clicked');
+                alert('Add Rule functionality placeholder');
+            });
+        }
 
         // Save Budget Logic
         const saveBudgetBtn = document.getElementById('saveBudgetBtn');
-        saveBudgetBtn.addEventListener('click', () => {
-            const amount = document.getElementById('budgetAmount').value;
-            const activeCategory = document.querySelector('.category-tile.active span').textContent;
-            const activeFreq = document.querySelector('.frequency-option.active').textContent;
-            
-            console.log('Saving Budget:', {
-                amount: amount,
-                category: activeCategory,
-                frequency: activeFreq
+        if (saveBudgetBtn) {
+            saveBudgetBtn.addEventListener('click', () => {
+                console.log('Saving Budget');
             });
-        });
+        }
+
+        // 3D Card Tilt Logic
+        const card = document.getElementById('premium-tilt-card');
+        const glare = document.getElementById('premium-card-glare');
+        
+        if (card && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            const handleMove = (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX || (e.touches && e.touches[0].clientX);
+                const y = e.clientY || (e.touches && e.touches[0].clientY);
+                
+                if (!x || !y) return;
+
+                const cardX = x - rect.left;
+                const cardY = y - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const percentX = (cardX - centerX) / centerX;
+                const percentY = -((cardY - centerY) / centerY);
+                
+                const maxRotateX = 15;
+                const maxRotateY = 15;
+                
+                card.style.transform = `rotateX(${percentY * maxRotateX}deg) rotateY(${percentX * maxRotateY}deg)`;
+                
+                if (glare) {
+                    glare.style.opacity = '1';
+                    glare.style.background = `radial-gradient(circle at ${cardX}px ${cardY}px, rgba(255,255,255,0.4) 0%, transparent 60%)`;
+                }
+            };
+
+            const handleEnter = () => {
+                card.classList.remove('tilt-inactive');
+                card.classList.add('tilt-active');
+            };
+
+            const handleLeave = () => {
+                card.classList.remove('tilt-active');
+                card.classList.add('tilt-inactive');
+                card.style.transform = 'rotateX(4deg) rotateY(-8deg) rotateZ(2deg)';
+                if (glare) {
+                    glare.style.opacity = '0';
+                }
+            };
+
+            card.addEventListener('mouseenter', handleEnter);
+            card.addEventListener('mousemove', handleMove);
+            card.addEventListener('mouseleave', handleLeave);
+            
+            card.addEventListener('touchstart', handleEnter, {passive: true});
+            card.addEventListener('touchmove', handleMove, {passive: true});
+            card.addEventListener('touchend', handleLeave);
+            
+            // Initial state based on the original design
+            handleLeave();
+        }
     });
+</script>
+<!-- Bottom Sheet Overlay -->
+<div class="fixed inset-0 z-[100] hidden" id="edit-limit-overlay">
+<!-- Backdrop -->
+<div class="absolute inset-0 bg-inverse-surface/60 backdrop-blur-md opacity-0 transition-opacity duration-300" id="edit-limit-backdrop"></div>
+<!-- Bottom Sheet Container -->
+<div class="absolute bottom-0 w-full max-w-md left-1/2 -translate-x-1/2 bg-surface/90 backdrop-blur-2xl rounded-t-[24px] shadow-[0px_-10px_40px_rgba(0,0,0,0.1)] flex flex-col translate-y-full transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)]" id="edit-limit-sheet" style="max-height: 85vh;"><!-- Drag Handle -->
+<div class="w-full flex justify-center pt-md pb-sm cursor-grab">
+<div class="w-12 h-1.5 bg-outline-variant/50 rounded-full"></div>
+</div>
+<!-- Header -->
+<div class="flex justify-between items-center px-lg pb-md border-b border-outline-variant/20">
+<h2 class="text-headline-md text-on-surface">Edit Category Limit</h2>
+<button aria-label="Close" class="w-10 h-10 rounded-full flex items-center justify-center bg-surface-container hover:bg-surface-variant transition-colors" id="close-limit-sheet">
+<span class="material-symbols-outlined text-on-surface-variant">close</span>
+</button>
+</div>
+<!-- Action Area -->
+<div class="p-lg border-t border-outline-variant/20 bg-surface/50 backdrop-blur-md">
+<button class="btn-primary w-full">
+    Update Limit
+    <span class="material-symbols-outlined">check_circle</span>
+</button>
+</div></div>
+</div><script class="">
+(function() {
+  const menuIcon = document.querySelector('main.main-content > section:nth-child(5) .rule-item:nth-child(1) > span.material-symbols-outlined');
+  const overlay = document.getElementById('edit-limit-overlay');
+  const backdrop = document.getElementById('edit-limit-backdrop');
+  const sheet = document.getElementById('edit-limit-sheet');
+  const closeBtn = document.getElementById('close-limit-sheet');
+
+  function openSheet() {
+    overlay.classList.remove('hidden');
+    // Force reflow
+    overlay.offsetHeight;
+    backdrop.classList.replace('opacity-0', 'opacity-100');
+    sheet.classList.replace('translate-y-full', 'translate-y-0');
+  }
+
+  function closeSheet() {
+    backdrop.classList.replace('opacity-100', 'opacity-0');
+    sheet.classList.replace('translate-y-0', 'translate-y-full');
+    setTimeout(() => {
+      overlay.classList.add('hidden');
+    }, 400);
+  }
+
+  if (menuIcon) {
+    menuIcon.style.cursor = 'pointer';
+    menuIcon.addEventListener('click', openSheet);
+  }
+  
+  if (closeBtn) closeBtn.addEventListener('click', closeSheet);
+  if (backdrop) backdrop.addEventListener('click', closeSheet);
+})();
 </script>
 
 
