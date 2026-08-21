@@ -749,7 +749,7 @@
 <main>
 <!-- Balance Card -->
 <section class="balance-card-perspective-container" style="perspective: 1000px;">
-<div class="balance-card" id="main-balance-card" style="background: linear-gradient(135deg, #a67c00 0%, #bf953f 15%, #fcf6ba 35%, #b38728 55%, #fbf5b7 80%, #aa771c 100%); box-shadow: rgba(0, 0, 0, 0.4) 0px 20px 40px -10px, rgba(255, 255, 255, 0.5) 0px 1px 1px inset, rgba(0, 0, 0, 0.2) 0px -1px 2px inset; border: 1px solid rgba(255, 255, 255, 0.3); position: relative; overflow: hidden; padding: 24px; border-radius: 24px; aspect-ratio: 1.586 / 1; display: flex; flex-direction: column; justify-content: space-between; font-family: 'JetBrains Mono', 'Roboto Mono', monospace; cursor: pointer; transform: rotateX(4deg) rotateY(-6deg) rotateZ(1deg) scale(1); transition: transform 0.15s ease-out, box-shadow 0.3s ease; transform-style: preserve-3d;">
+<div class="balance-card" id="main-balance-card" style="background: linear-gradient(135deg, #a67c00 0%, #bf953f 15%, #fcf6ba 35%, #b38728 55%, #fbf5b7 80%, #aa771c 100%); box-shadow: rgba(0, 0, 0, 0.4) 0px 40px 60px, rgba(255, 255, 255, 0.8) 0px 0px 20px inset, 0 0 35px 12px rgba(255, 215, 0, 0.7); border: 1px solid rgba(255, 255, 255, 0.3); position: relative; overflow: hidden; padding: 24px; border-radius: 24px; aspect-ratio: 1.586 / 1; display: flex; flex-direction: column; justify-content: space-between; font-family: 'JetBrains Mono', 'Roboto Mono', monospace; cursor: pointer; transform: rotateX(15deg) rotateY(-20deg) rotateZ(2deg) scale(1); transition: transform 0.15s ease-out, box-shadow 0.3s ease; transform-style: preserve-3d;">
     
     <!-- Specular Highlight Overlay (Light reflection) -->
     <div style="position: absolute; inset: 0px; background: linear-gradient(105deg, transparent 20%, rgba(255, 255, 255, 0.5) 25%, rgba(255, 255, 255, 0.9) 30%, transparent 35%, transparent 65%, rgba(255, 255, 255, 0.3) 70%, transparent 75%); pointer-events: none; mix-blend-mode: overlay; transform: translateZ(1px); border-radius: 24px;"></div>
@@ -1144,19 +1144,19 @@
         const x = (clientX - rect.left) / rect.width - 0.5;
         const y = (clientY - rect.top) / rect.height - 0.5;
         
-        const rotateY = x * 20;
-        const rotateX = y * -20;
+        const rotateY = -20 + (x * 15);
+        const rotateX = 15 + (y * -15);
         const scale = isPressed ? 0.95 : 1.02;
 
-        card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(${scale})`;
+        card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(2deg) scale(${scale})`;
     }
 
     function handleLeave() {
         if (!card) return;
         isPressed = false;
         card.classList.remove('is-glowing');
-        // Reset to subtle left tilt
-        card.style.transform = `rotateX(4deg) rotateY(-6deg) rotateZ(1deg) scale(1)`;
+        // Reset to default presentation left tilt
+        card.style.transform = `rotateX(15deg) rotateY(-20deg) rotateZ(2deg) scale(1)`;
     }
 
     function handleDown() {
@@ -1176,8 +1176,8 @@
     }
 
     if (card) {
-        // Initialize subtle left tilt
-        card.style.transform = `rotateX(4deg) rotateY(-6deg) rotateZ(1deg) scale(1)`;
+        // Initialize default presentation left tilt
+        card.style.transform = `rotateX(15deg) rotateY(-20deg) rotateZ(2deg) scale(1)`;
 
         card.addEventListener('mousemove', handleMove);
         card.addEventListener('mouseleave', handleLeave);
