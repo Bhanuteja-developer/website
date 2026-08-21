@@ -217,8 +217,8 @@
             transform-style: preserve-3d;
         }
         
-        /* Golden Glow Effect on Hover / Touch */
-        .balance-card:hover, .balance-card.is-tilted {
+        /* Golden Glow Effect on Touch/Scratch only */
+        .balance-card.is-glowing {
             box-shadow: rgba(0, 0, 0, 0.4) 0px 40px 60px, rgba(255, 255, 255, 0.8) 0px 0px 20px inset, 0 0 35px 12px rgba(255, 215, 0, 0.7) !important;
         }
         
@@ -1115,8 +1115,6 @@
     function handleMove(e) {
         if (!card) return;
         
-        card.classList.add('is-tilted'); // Adds the golden glow dynamically
-        
         let clientX, clientY;
         if (e.type === 'touchmove' || e.type === 'touchstart') {
             clientX = e.touches[0].clientX;
@@ -1141,19 +1139,25 @@
     function handleLeave() {
         if (!card) return;
         isPressed = false;
-        card.classList.remove('is-tilted'); // Removes golden glow dynamically
+        card.classList.remove('is-glowing');
         // Reset to subtle left tilt
         card.style.transform = `rotateX(4deg) rotateY(-6deg) rotateZ(1deg) scale(1)`;
     }
 
     function handleDown() {
         isPressed = true;
-        if(card) card.style.transition = 'transform 0.05s ease-out, box-shadow 0.2s ease-out';
+        if(card) {
+            card.style.transition = 'transform 0.05s ease-out, box-shadow 0.2s ease-out';
+            card.classList.add('is-glowing');
+        }
     }
 
     function handleUp() {
         isPressed = false;
-        if(card) card.style.transition = 'transform 0.1s ease-out, box-shadow 0.3s ease';
+        if(card) {
+            card.style.transition = 'transform 0.1s ease-out, box-shadow 0.3s ease';
+            card.classList.remove('is-glowing');
+        }
     }
 
     if (card) {
