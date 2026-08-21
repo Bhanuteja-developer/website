@@ -1,9 +1,11 @@
-<!DOCTYPE html><html lang="en" style=""><head></head><body><svg aria-hidden="true" class="inline-defs-container" style="position:absolute;width:0;height:0;overflow:hidden"></svg>
+<!DOCTYPE html>
+<html lang="en">
+<head>
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport">
 <title>Smart Finance Tracker - Home Dashboard</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
 <style>
         :root {
             /* Colors */
@@ -211,9 +213,13 @@
             position: relative;
             overflow: hidden;
             padding: var(--spacing-md);
-            /* Interactive settings will be managed by JS */
-            transition: transform 0.1s ease-out, box-shadow 0.1s ease-out;
+            transition: transform 0.15s ease-out, box-shadow 0.3s ease;
             transform-style: preserve-3d;
+        }
+        
+        /* Golden Glow Effect on Hover / Touch */
+        .balance-card:hover, .balance-card.is-tilted {
+            box-shadow: rgba(0, 0, 0, 0.4) 0px 40px 60px, rgba(255, 255, 255, 0.8) 0px 0px 20px inset, 0 0 35px 12px rgba(255, 215, 0, 0.7) !important;
         }
         
         .balance-card-perspective-container {
@@ -254,12 +260,7 @@
             -webkit-user-select: none;
         }
 
-        @media (hover: hover) {
-            .obscured-amount:hover {
-                filter: blur(0px);
-                opacity: 1;
-            }
-        }
+        /* Note: Removed the auto-hover un-blur so it relies entirely on the JS scratch interaction */
 
         .obscured-amount.revealed {
             filter: blur(0px);
@@ -322,7 +323,6 @@
             box-shadow: 0 0 12px 4px rgba(255, 255, 255, 0.9);
             z-index: 2;
         }
-
 
         /* Stats Scroll */
         .stats-scroll {
@@ -725,12 +725,14 @@
         
         button { font-family: inherit; }
     </style>
+</head>
+<body>
 <!-- TopAppBar -->
 <header>
 <div class="header-content">
 <div class="flex items-center gap-sm">
 <div class="profile-img-container">
-<img alt="Profile" class="" data-alt="A close-up profile photo of a professional young adult in soft studio lighting. High key, modern aesthetic with a clean white background. Sophisticated and energetic vibe." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTkMFu0bM26Zjxj_fC-ApgBFAOFfHoTz6jAzwMxgaMFwrUvAyT06rqLYb41RRRLXBEYFKZfwpv3TTOF8M3aCjgDDxv5aArr1gRQlFaCW_NWl9EYMwH13oyh6NfkF15zD3668F1TsmtfMKpwYUR04pSUlDCVFGMmhIap0gHtxQnAn3S2EoYOHcIktcXRO0a9486R368OadtQESXSarE_gM-Cks2jrJxKtzSX7oW2rVW9DVN4Hw-TbEG">
+<img alt="Profile" class="" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTkMFu0bM26Zjxj_fC-ApgBFAOFfHoTz6jAzwMxgaMFwrUvAyT06rqLYb41RRRLXBEYFKZfwpv3TTOF8M3aCjgDDxv5aArr1gRQlFaCW_NWl9EYMwH13oyh6NfkF15zD3668F1TsmtfMKpwYUR04pSUlDCVFGMmhIap0gHtxQnAn3S2EoYOHcIktcXRO0a9486R368OadtQESXSarE_gM-Cks2jrJxKtzSX7oW2rVW9DVN4Hw-TbEG">
 </div>
 <div>
 <h1 class="text-label-sm text-on-surface-variant">Good Morning,</h1>
@@ -738,18 +740,56 @@
 </div>
 </div>
 <button class="icon-btn">
-<span class="material-symbols-outlined" style="font-variation-settings: &quot;FILL&quot; 0;">notifications</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">notifications</span>
 </button>
 </div>
 </header>
-<!-- Main Content Canvas -->
+
 <main>
 <!-- Balance Card -->
 <section class="balance-card-perspective-container" style="perspective: 1000px;">
-<div class="balance-card" id="main-balance-card" style="background: linear-gradient(135deg, rgb(245, 227, 150) 0%, rgb(212, 175, 55) 20%, rgb(249, 241, 192) 40%, rgb(197, 160, 40) 60%, rgb(230, 190, 88) 80%, rgb(184, 134, 11) 100%); box-shadow: rgba(0, 0, 0, 0.3) 0px 30px 60px, rgba(255, 255, 255, 0.6) 0px 0px 20px inset; border: 1px solid rgba(255, 255, 255, 0.7); position: relative; overflow: hidden; padding: 24px; border-radius: 24px; aspect-ratio: 1.586 / 1; display: flex; flex-direction: column; justify-content: space-between; font-family: &quot;JetBrains Mono&quot;, &quot;Roboto Mono&quot;, monospace; cursor: pointer; transform: rotateX(10deg) rotateY(-15deg) rotateZ(2deg); transition: transform 0.15s ease-out; transform-style: preserve-3d;"><div style="position: absolute; inset: 0px; background: linear-gradient(125deg, transparent 0%, rgba(255, 255, 255, 0.5) 25%, rgba(255, 255, 255, 0.8) 30%, rgba(255, 255, 255, 0.5) 35%, transparent 100%); pointer-events: none; mix-blend-mode: overlay; transform: translateZ(1px);" data-stitch-orig-opacity="0.9" class=""></div>
-<div class="twinkle-container" id="twinkle-container"><div class="twinkle-particle" style="top: 92.3333%; left: 19.9779%; transform: scale(1.02195);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 52.3332%; left: 54.2624%; transform: scale(1.0837);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 91.0689%; left: 37.4355%; transform: scale(0.910552);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 38.7662%; left: 6.25226%; transform: scale(1.10943);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 5.49829%; left: 37.517%; transform: scale(1.17066);"><div class="twinkle-particle-core"></div></div></div>
-<div class="flex justify-between items-start" style="position: relative; z-index: 2; transform: translateZ(20px);"><div class="flex flex-col"><span class="text-label-sm font-bold" style="color: rgb(28, 27, 27); letter-spacing: 0.1em; text-transform: uppercase; font-size: 10px; font-family: inherit;">Smart Finance</span></div><div class="flex items-center gap-xs" style="background: rgba(0, 0, 0, 0.1); backdrop-filter: blur(8px); padding: 2px 8px; border-radius: 9999px; border: 1px solid rgba(0, 0, 0, 0.1); display: flex; align-items: center; gap: 4px;"><span class="material-symbols-outlined" style="font-size: 12px; color: rgb(28, 27, 27);">trending_up</span><span class="text-label-sm font-semibold" style="color: rgb(28, 27, 27); font-size: 10px;">+2.4%</span></div></div><div style="position: relative; z-index: 2; margin-top: 12px; transform: translateZ(10px);"><div style="width: 42px; height: 32px; background: linear-gradient(135deg, #b8860b 0%, #ffd700 50%, #b8860b 100%); border-radius: 6px; position: relative; box-shadow: inset 0 0 5px rgba(0,0,0,0.3);"><div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; border: 1px solid rgba(0,0,0,0.2); border-radius: 6px;"></div><div style="position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: rgba(0,0,0,0.3);"></div><div style="position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: rgba(0,0,0,0.3);"></div></div></div><div class="flex flex-col" style="position: relative; z-index: 2; margin-top: auto; transform: translateZ(30px);"><span class="text-label-sm" style="color: rgba(28, 27, 27, 0.7); letter-spacing: 0.05em; text-transform: uppercase; font-size: 9px; margin-bottom: 2px; margin-top: 8px; font-family: inherit;">AVAILABLE BALANCE</span><span class="text-headline-lg font-medium" style="color: rgb(28, 27, 27); font-size: 24px; letter-spacing: 2px; font-family: &quot;Courier New&quot;, Courier, monospace; text-shadow: rgba(255, 255, 255, 0.3) 0px 1px 1px;">*** *** *** <span class="obscured-amount">12,300</span></span></div><div class="flex justify-between items-end" style="position: relative; z-index: 2; margin-top: 16px; transform: translateZ(20px);"><div class="flex flex-col"><span class="text-label-sm" style="color: rgb(49, 48, 48); letter-spacing: 0.1em; text-transform: uppercase; font-size: 10px; font-family: inherit;">Card Holder</span><span class="text-label-md font-semibold" style="color: rgb(28, 27, 27); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px; font-family: inherit;">CM BHANUTEJA</span></div><div class="flex flex-col items-center"><span class="text-label-sm" style="color: rgb(49, 48, 48); font-size: 8px; letter-spacing: 0.05em; text-transform: uppercase;">Expires</span><span class="text-label-md font-semibold" style="color: rgb(28, 27, 27); letter-spacing: 0.05em; margin-top: 2px; font-family: inherit;">31/08/26</span></div><div class="flex items-center" style="position: relative; width: 40px; height: 24px;"><div style="width: 24px; height: 24px; background: rgb(235, 0, 27); border-radius: 50%; position: absolute; left: 0px; opacity: 0.9;"></div><div style="width: 24px; height: 24px; background: rgb(247, 158, 27); border-radius: 50%; position: absolute; right: 0px; opacity: 0.7;"></div></div></div></div>
+<div class="balance-card" id="main-balance-card" style="background: linear-gradient(135deg, rgb(245, 227, 150) 0%, rgb(212, 175, 55) 20%, rgb(249, 241, 192) 40%, rgb(197, 160, 40) 60%, rgb(230, 190, 88) 80%, rgb(184, 134, 11) 100%); box-shadow: rgba(0, 0, 0, 0.3) 0px 30px 60px, rgba(255, 255, 255, 0.6) 0px 0px 20px inset; border: 1px solid rgba(255, 255, 255, 0.7); position: relative; overflow: hidden; padding: 24px; border-radius: 24px; aspect-ratio: 1.586 / 1; display: flex; flex-direction: column; justify-content: space-between; font-family: 'JetBrains Mono', 'Roboto Mono', monospace; cursor: pointer; transform: rotateX(4deg) rotateY(-6deg) rotateZ(1deg) scale(1); transition: transform 0.15s ease-out, box-shadow 0.3s ease; transform-style: preserve-3d;">
+    <div style="position: absolute; inset: 0px; background: linear-gradient(125deg, transparent 0%, rgba(255, 255, 255, 0.5) 25%, rgba(255, 255, 255, 0.8) 30%, rgba(255, 255, 255, 0.5) 35%, transparent 100%); pointer-events: none; mix-blend-mode: overlay; transform: translateZ(1px);"></div>
+    <div class="twinkle-container" id="twinkle-container"></div>
+    <div class="flex justify-between items-start" style="position: relative; z-index: 2; transform: translateZ(20px);">
+        <div class="flex flex-col">
+            <span class="text-label-sm font-bold" style="color: rgb(28, 27, 27); letter-spacing: 0.1em; text-transform: uppercase; font-size: 10px; font-family: inherit;">Smart Finance</span>
+        </div>
+        <div class="flex items-center gap-xs" style="background: rgba(0, 0, 0, 0.1); backdrop-filter: blur(8px); padding: 2px 8px; border-radius: 9999px; border: 1px solid rgba(0, 0, 0, 0.1); display: flex; align-items: center; gap: 4px;">
+            <span class="material-symbols-outlined" style="font-size: 12px; color: rgb(28, 27, 27);">trending_up</span>
+            <span class="text-label-sm font-semibold" style="color: rgb(28, 27, 27); font-size: 10px;">+2.4%</span>
+        </div>
+    </div>
+    <div style="position: relative; z-index: 2; margin-top: 12px; transform: translateZ(10px);">
+        <div style="width: 42px; height: 32px; background: linear-gradient(135deg, #b8860b 0%, #ffd700 50%, #b8860b 100%); border-radius: 6px; position: relative; box-shadow: inset 0 0 5px rgba(0,0,0,0.3);">
+            <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; border: 1px solid rgba(0,0,0,0.2); border-radius: 6px;"></div>
+            <div style="position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: rgba(0,0,0,0.3);"></div>
+            <div style="position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: rgba(0,0,0,0.3);"></div>
+        </div>
+    </div>
+    <div class="flex flex-col" style="position: relative; z-index: 2; margin-top: auto; transform: translateZ(30px);">
+        <span class="text-label-sm" style="color: rgba(28, 27, 27, 0.7); letter-spacing: 0.05em; text-transform: uppercase; font-size: 9px; margin-bottom: 2px; margin-top: 8px; font-family: inherit;">AVAILABLE BALANCE</span>
+        <span class="text-headline-lg font-medium" style="color: rgb(28, 27, 27); font-size: 24px; letter-spacing: 2px; font-family: 'Courier New', Courier, monospace; text-shadow: rgba(255, 255, 255, 0.3) 0px 1px 1px;">
+            *** *** *** <span class="obscured-amount">12,300</span>
+        </span>
+    </div>
+    <div class="flex justify-between items-end" style="position: relative; z-index: 2; margin-top: 16px; transform: translateZ(20px);">
+        <div class="flex flex-col">
+            <span class="text-label-sm" style="color: rgb(49, 48, 48); letter-spacing: 0.1em; text-transform: uppercase; font-size: 10px; font-family: inherit;">Card Holder</span>
+            <span class="text-label-md font-semibold" style="color: rgb(28, 27, 27); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px; font-family: inherit;">CM BHANUTEJA</span>
+        </div>
+        <div class="flex flex-col items-center">
+            <span class="text-label-sm" style="color: rgb(49, 48, 48); font-size: 8px; letter-spacing: 0.05em; text-transform: uppercase;">Expires</span>
+            <span class="text-label-md font-semibold" style="color: rgb(28, 27, 27); letter-spacing: 0.05em; margin-top: 2px; font-family: inherit;">31/08/26</span>
+        </div>
+        <div class="flex items-center" style="position: relative; width: 40px; height: 24px;">
+            <div style="width: 24px; height: 24px; background: rgb(235, 0, 27); border-radius: 50%; position: absolute; left: 0px; opacity: 0.9;"></div>
+            <div style="width: 24px; height: 24px; background: rgb(247, 158, 27); border-radius: 50%; position: absolute; right: 0px; opacity: 0.7;"></div>
+        </div>
+    </div>
+</div>
 </section>
+
 <!-- Stats Scroll -->
 <section class="chart-section">
 <div class="flex justify-between items-center">
@@ -779,6 +819,7 @@
 </div>
 </div>
 </section>
+
 <!-- Quick Statistics Bento -->
 <section class="flex flex-col gap-md"><h3 class="text-headline-md text-on-surface">Quick Statistics</h3>
 <div class="grid-2">
@@ -791,6 +832,7 @@
 <span class="text-headline-md text-error font-bold">-₹8,700</span>
 </div>
 </div></section>
+
 <!-- Financial Overview -->
 <section class="chart-section">
 <div class="flex justify-between items-center">
@@ -806,38 +848,27 @@
 <stop offset="100%" stop-color="#FF6B3D"></stop>
 </linearGradient>
 </defs>
-<!-- Mon -->
 <rect fill="url(#barGrad)" height="40" rx="4" width="20" x="10" y="60"></rect>
-<!-- Tue -->
 <rect fill="url(#barGrad)" height="70" rx="4" width="20" x="60" y="30"></rect>
-<!-- Wed -->
 <rect fill="url(#barGrad)" height="50" rx="4" width="20" x="110" y="50"></rect>
-<!-- Thu -->
 <rect fill="url(#barGrad)" height="85" rx="4" width="20" x="160" y="15"></rect>
-<!-- Fri -->
 <rect fill="url(#barGrad)" height="60" rx="4" width="20" x="210" y="40"></rect>
-<!-- Sat -->
 <rect fill="url(#barGrad)" height="30" rx="4" width="20" x="260" y="70"></rect>
-<!-- Sun -->
 <rect fill="url(#barGrad)" height="45" rx="4" width="20" x="310" y="55"></rect>
 </svg>
 </div>
 <div class="chart-labels text-label-sm" style="margin-top: 8px;">
-<span class="">Mon</span>
-<span class="">Tue</span>
-<span class="">Wed</span>
-<span class="">Thu</span>
-<span class="">Fri</span>
-<span class="">Sat</span>
-<span class="">Sun</span>
+<span class="">Mon</span><span class="">Tue</span><span class="">Wed</span>
+<span class="">Thu</span><span class="">Fri</span><span class="">Sat</span><span class="">Sun</span>
 </div>
 </div>
-</section><section class="chart-section">
+</section>
+
+<section class="chart-section">
 <div class="flex justify-between items-center">
 <h3 class="text-headline-md text-on-surface">Financial Overview</h3>
 <span class="text-label-sm badge">This Month</span>
 </div>
-<!-- Line Chart -->
 <div class="chart-container">
 <h4 class="text-label-md text-on-surface-variant">Monthly Spending Trend</h4>
 <div class="line-chart-container">
@@ -857,15 +888,12 @@
 </svg>
 </div>
 <div class="chart-labels text-label-sm">
-<span class="">1st</span>
-<span class="">8th</span>
-<span class="">15th</span>
-<span class="">22nd</span>
-<span class="">30th</span>
+<span class="">1st</span><span class="">8th</span><span class="">15th</span><span class="">22nd</span><span class="">30th</span>
 </div>
 </div>
-<!-- Category Breakdown -->
-</section><section class="chart-section" id="category-section">
+</section>
+
+<section class="chart-section" id="category-section">
 <div class="flex justify-between items-center">
 <h4 class="text-label-md text-on-surface-variant">Spending by Category</h4>
 <div class="segmented-control">
@@ -888,64 +916,22 @@
 </div>
 </div>
 <div class="legend-list">
-<div class="legend-item">
-<div class="legend-label"><div class="legend-dot" style="background-color: #7B4DFF;"></div>Groceries</div>
-<span class="font-medium text-on-surface">45%</span>
-</div>
-<div class="legend-item">
-<div class="legend-label"><div class="legend-dot" style="background-color: #FF6B3D;"></div>Entertainment</div>
-<span class="font-medium text-on-surface">25%</span>
-</div>
-<div class="legend-item">
-<div class="legend-label"><div class="legend-dot" style="background-color: #009688;"></div>Transport</div>
-<span class="font-medium text-on-surface">15%</span>
-</div>
-<div class="legend-item">
-<div class="legend-label"><div class="legend-dot" style="background-color: #cac3d8;"></div>Others</div>
-<span class="font-medium text-on-surface">15%</span>
-</div>
+<div class="legend-item"><div class="legend-label"><div class="legend-dot" style="background-color: #7B4DFF;"></div>Groceries</div><span class="font-medium text-on-surface">45%</span></div>
+<div class="legend-item"><div class="legend-label"><div class="legend-dot" style="background-color: #FF6B3D;"></div>Entertainment</div><span class="font-medium text-on-surface">25%</span></div>
+<div class="legend-item"><div class="legend-label"><div class="legend-dot" style="background-color: #009688;"></div>Transport</div><span class="font-medium text-on-surface">15%</span></div>
+<div class="legend-item"><div class="legend-label"><div class="legend-dot" style="background-color: #cac3d8;"></div>Others</div><span class="font-medium text-on-surface">15%</span></div>
 </div>
 </div>
 <!-- Bar Chart View -->
 <div class="bar-chart-view" id="view-bar" style="display: none;">
-<div class="bar-item">
-<div class="bar-item-header">
-<span class="bar-label"><div class="legend-dot" style="background-color: #7B4DFF;"></div>Groceries</span>
-<span class="font-medium text-on-surface">45%</span>
+<div class="bar-item"><div class="bar-item-header"><span class="bar-label"><div class="legend-dot" style="background-color: #7B4DFF;"></div>Groceries</span><span class="font-medium text-on-surface">45%</span></div><div class="bar-track"><div class="bar-fill" style="width: 45%;"></div></div></div>
+<div class="bar-item"><div class="bar-item-header"><span class="bar-label"><div class="legend-dot" style="background-color: #FF6B3D;"></div>Entertainment</span><span class="font-medium text-on-surface">25%</span></div><div class="bar-track"><div class="bar-fill" style="width: 25%;"></div></div></div>
+<div class="bar-item"><div class="bar-item-header"><span class="bar-label"><div class="legend-dot" style="background-color: #009688;"></div>Transport</span><span class="font-medium text-on-surface">15%</span></div><div class="bar-track"><div class="bar-fill" style="width: 15%;"></div></div></div>
+<div class="bar-item"><div class="bar-item-header"><span class="bar-label"><div class="legend-dot" style="background-color: #cac3d8;"></div>Others</span><span class="font-medium text-on-surface">15%</span></div><div class="bar-track"><div class="bar-fill" style="width: 15%;"></div></div></div>
 </div>
-<div class="bar-track">
-<div class="bar-fill" style="width: 45%;"></div>
-</div>
-</div>
-<div class="bar-item">
-<div class="bar-item-header">
-<span class="bar-label"><div class="legend-dot" style="background-color: #FF6B3D;"></div>Entertainment</span>
-<span class="font-medium text-on-surface">25%</span>
-</div>
-<div class="bar-track">
-<div class="bar-fill" style="width: 25%;"></div>
-</div>
-</div>
-<div class="bar-item">
-<div class="bar-item-header">
-<span class="bar-label"><div class="legend-dot" style="background-color: #009688;"></div>Transport</span>
-<span class="font-medium text-on-surface">15%</span>
-</div>
-<div class="bar-track">
-<div class="bar-fill" style="width: 15%;"></div>
-</div>
-</div>
-<div class="bar-item">
-<div class="bar-item-header">
-<span class="bar-label"><div class="legend-dot" style="background-color: #cac3d8;"></div>Others</span>
-<span class="font-medium text-on-surface">15%</span>
-</div>
-<div class="bar-track">
-<div class="bar-fill" style="width: 15%;"></div>
-</div>
-</div>
-</div>
-</section><section class="chart-section">
+</section>
+
+<section class="chart-section">
 <div class="flex justify-between items-center">
 <h3 class="text-headline-md text-on-surface">Yearly Analysis</h3>
 <span class="text-label-sm badge">This Month</span>
@@ -959,83 +945,51 @@
 <div class="chart-labels text-label-sm" style="margin-top: 8px;"><span class="">Jan</span><span class="">Feb</span><span class="">Mar</span><span class="">Apr</span><span class="">May</span><span class="">Jun</span><span class="">Jul</span><span class="">Aug</span><span class="">Sep</span><span class="">Oct</span><span class="">Nov</span><span class="">Dec</span></div>
 </div>
 </section>
+
 <!-- Recent Transactions -->
 <section class="flex flex-col gap-md pb-xl">
 <div class="flex justify-between items-center">
 <h3 class="text-headline-md text-on-surface">Recent Transactions</h3>
-<button class="text-label-md text-primary" style="background: none; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; cursor: pointer;">See All</button>
+<button class="text-label-md text-primary" style="background: none; border: none; cursor: pointer;">See All</button>
 </div>
 <div class="transactions-card">
-<!-- Transaction Item -->
 <div class="transaction-item">
 <div class="flex items-center gap-md">
-<div class="tx-icon">
-<span class="material-symbols-outlined">shopping_bag</span>
-</div>
-<div class="flex flex-col">
-<span class="text-body-md font-medium text-on-surface">Whole Foods</span>
-<span class="text-label-sm text-on-surface-variant">Groceries • Today, 10:24 AM</span>
-</div>
+<div class="tx-icon"><span class="material-symbols-outlined">shopping_bag</span></div>
+<div class="flex flex-col"><span class="text-body-md font-medium text-on-surface">Whole Foods</span><span class="text-label-sm text-on-surface-variant">Groceries • Today, 10:24 AM</span></div>
 </div>
 <span class="text-body-md font-semibold text-on-surface">-₹124.50</span>
 </div>
 <hr class="divider">
-<!-- Transaction Item -->
 <div class="transaction-item">
 <div class="flex items-center gap-md">
-<div class="tx-icon">
-<span class="material-symbols-outlined">subscriptions</span>
-</div>
-<div class="flex flex-col">
-<span class="text-body-md font-medium text-on-surface">Netflix</span>
-<span class="text-label-sm text-on-surface-variant">Entertainment • Yesterday</span>
-</div>
+<div class="tx-icon"><span class="material-symbols-outlined">subscriptions</span></div>
+<div class="flex flex-col"><span class="text-body-md font-medium text-on-surface">Netflix</span><span class="text-label-sm text-on-surface-variant">Entertainment • Yesterday</span></div>
 </div>
 <span class="text-body-md font-semibold text-on-surface">-₹15.99</span>
 </div>
 </div>
 </section>
 </main>
+
 <!-- BottomNavBar -->
 <nav class="bottom-nav">
-<button class="nav-item active">
-<span class="material-symbols-outlined" style="font-variation-settings: &quot;FILL&quot; 1;">home</span>
-<span class="text-label-sm" style="margin-top: 4px;">Home</span>
-</button>
-<button class="nav-item">
-<span class="material-symbols-outlined" style="font-variation-settings: &quot;FILL&quot; 0;">account_balance_wallet</span>
-<span class="text-label-sm" style="margin-top: 4px;">Budget</span>
-</button>
-<!-- FAB Add Button -->
-<button class="fab">
-<span class="material-symbols-outlined" style="font-variation-settings: &quot;FILL&quot; 0;">add</span>
-</button>
-<button class="nav-item">
-<span class="material-symbols-outlined" style="font-variation-settings: &quot;FILL&quot; 0;">leaderboard</span>
-<span class="text-label-sm" style="margin-top: 4px;">Stats</span>
-</button>
-<button class="nav-item">
-<span class="material-symbols-outlined" style="font-variation-settings: &quot;FILL&quot; 0;">history</span>
-<span class="text-label-sm" style="margin-top: 4px;">History</span>
-</button>
+<button class="nav-item active"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span><span class="text-label-sm" style="margin-top: 4px;">Home</span></button>
+<button class="nav-item"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">account_balance_wallet</span><span class="text-label-sm" style="margin-top: 4px;">Budget</span></button>
+<button class="fab"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">add</span></button>
+<button class="nav-item"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">leaderboard</span><span class="text-label-sm" style="margin-top: 4px;">Stats</span></button>
+<button class="nav-item"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">history</span><span class="text-label-sm" style="margin-top: 4px;">History</span></button>
 </nav>
+
 <!-- Desktop Navigation Fallback -->
 <nav class="desktop-nav">
 <div class="flex flex-col gap-sm">
-<button class="desktop-nav-item active text-label-md">
-<span class="material-symbols-outlined" style="font-variation-settings: &quot;FILL&quot; 1;">home</span>
-            Home
-        </button>
-<button class="desktop-nav-item text-label-md">
-<span class="material-symbols-outlined">credit_card</span>
-            Cards
-        </button>
-<button class="desktop-nav-item text-label-md">
-<span class="material-symbols-outlined">leaderboard</span>
-            Stats
-        </button>
+<button class="desktop-nav-item active text-label-md"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>Home</button>
+<button class="desktop-nav-item text-label-md"><span class="material-symbols-outlined">credit_card</span>Cards</button>
+<button class="desktop-nav-item text-label-md"><span class="material-symbols-outlined">leaderboard</span>Stats</button>
 </div>
 </nav>
+
 <script>
     function switchView(view) {
         const ringView = document.getElementById('view-ring');
@@ -1056,7 +1010,6 @@
         }
     }
     
-    // Twinkle effect for balance card
     document.addEventListener("DOMContentLoaded", function() {
         const container = document.getElementById('twinkle-container');
         if (!container) return;
@@ -1093,11 +1046,10 @@
             core.className = 'twinkle-particle-core';
             twinkle.appendChild(core);
 
-            // Calculate position with some randomness within the grid cell
             const cellW = 100 / gridCols;
             const cellH = 100 / gridRows;
             
-            const randomX = Math.random() * 0.8 + 0.1; // 10% to 90% of cell
+            const randomX = Math.random() * 0.8 + 0.1;
             const randomY = Math.random() * 0.8 + 0.1;
             
             const top = spot.r * cellH + (cellH * randomY);
@@ -1106,63 +1058,53 @@
             twinkle.style.top = `${top}%`;
             twinkle.style.left = `${left}%`;
             
-            // Randomize size slightly
             const scale = Math.random() * 0.5 + 0.75;
             twinkle.style.transform = `scale(${scale})`;
 
             container.appendChild(twinkle);
 
-            // Clean up and handle cooldown
             setTimeout(() => {
                 twinkle.remove();
                 activeTwinkles--;
-                
-                // 10 second cooldown for this specific spot
-                setTimeout(() => {
-                    cooldowns.delete(spot.id);
-                }, 10000);
-            }, 2000); // 2s animation duration
+                setTimeout(() => { cooldowns.delete(spot.id); }, 10000);
+            }, 2000);
         }
 
-        // Spawn initially
         for (let i = 0; i < maxTwinkles; i++) {
             setTimeout(createTwinkle, Math.random() * 2000);
         }
-
-        // Continuously try to spawn
         setInterval(createTwinkle, 800);
         
-        // Balance Reveal Interaction setup
+        // Balance Reveal Interaction setup (Toggle logic)
         const obscuredAmount = document.querySelector('.obscured-amount');
         if (obscuredAmount) {
-            let revealTimeout;
+            let interactionStarted = false;
             
-            const reveal = () => {
-                obscuredAmount.classList.add('revealed');
-                clearTimeout(revealTimeout);
-            };
-
-            const hide = () => {
-                revealTimeout = setTimeout(() => {
-                    obscuredAmount.classList.remove('revealed');
-                }, 1500);
-            };
-
-            obscuredAmount.addEventListener('touchstart', reveal, {passive: true});
-            obscuredAmount.addEventListener('touchmove', reveal, {passive: true});
-            obscuredAmount.addEventListener('touchend', hide);
-            
-            let isMousedown = false;
-            obscuredAmount.addEventListener('mousedown', () => { isMousedown = true; reveal(); });
-            window.addEventListener('mouseup', () => { 
-                if (isMousedown) {
-                    isMousedown = false;
-                    hide();
+            const handleScratchToggle = () => {
+                // If it hasn't been toggled during this drag/click motion, toggle it once.
+                if (!interactionStarted) {
+                    interactionStarted = true;
+                    obscuredAmount.classList.toggle('revealed');
                 }
+            };
+
+            const resetInteraction = () => {
+                interactionStarted = false;
+            };
+
+            // Triggers toggle when clicking or dragging over it
+            obscuredAmount.addEventListener('mousedown', handleScratchToggle);
+            obscuredAmount.addEventListener('touchstart', handleScratchToggle, {passive: true});
+            
+            obscuredAmount.addEventListener('mousemove', (e) => {
+                // Only count as scratch drag if mouse button is held down
+                if (e.buttons === 1) handleScratchToggle();
             });
-            obscuredAmount.addEventListener('mousemove', () => {
-                if (isMousedown) reveal();
-            });
+            obscuredAmount.addEventListener('touchmove', handleScratchToggle, {passive: true});
+            
+            // Resets ability to toggle once mouse/finger is lifted
+            window.addEventListener('mouseup', resetInteraction);
+            window.addEventListener('touchend', resetInteraction);
         }
     });
 
@@ -1172,6 +1114,8 @@
 
     function handleMove(e) {
         if (!card) return;
+        
+        card.classList.add('is-tilted'); // Adds the golden glow dynamically
         
         let clientX, clientY;
         if (e.type === 'touchmove' || e.type === 'touchstart') {
@@ -1184,14 +1128,11 @@
 
         const rect = card.getBoundingClientRect();
         
-        // Calculate position relative to card center (normalized between -1 and 1)
         const x = (clientX - rect.left) / rect.width - 0.5;
         const y = (clientY - rect.top) / rect.height - 0.5;
         
-        // Adjust these values to increase/decrease tilt intensity
-        const rotateY = x * 20; // max rotation degrees
+        const rotateY = x * 20;
         const rotateX = y * -20;
-        
         const scale = isPressed ? 0.95 : 1.02;
 
         card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(${scale})`;
@@ -1200,34 +1141,31 @@
     function handleLeave() {
         if (!card) return;
         isPressed = false;
-        // Reset to default isometric-ish view or flat depending on preference
-        // Returning to a subtle tilt for aesthetics
-        card.style.transform = `rotateX(5deg) rotateY(-5deg) scale(1)`;
+        card.classList.remove('is-tilted'); // Removes golden glow dynamically
+        // Reset to subtle left tilt
+        card.style.transform = `rotateX(4deg) rotateY(-6deg) rotateZ(1deg) scale(1)`;
     }
 
     function handleDown() {
         isPressed = true;
-        if(card) card.style.transition = 'transform 0.05s ease-out';
+        if(card) card.style.transition = 'transform 0.05s ease-out, box-shadow 0.2s ease-out';
     }
 
     function handleUp() {
         isPressed = false;
-        if(card) card.style.transition = 'transform 0.1s ease-out';
+        if(card) card.style.transition = 'transform 0.1s ease-out, box-shadow 0.3s ease';
     }
 
     if (card) {
-        // Initialize with a subtle tilt
-        card.style.transform = `rotateX(5deg) rotateY(-5deg) scale(1)`;
+        // Initialize subtle left tilt
+        card.style.transform = `rotateX(4deg) rotateY(-6deg) rotateZ(1deg) scale(1)`;
 
-        // Mouse events
         card.addEventListener('mousemove', handleMove);
         card.addEventListener('mouseleave', handleLeave);
         card.addEventListener('mousedown', (e) => { handleDown(); handleMove(e); });
         card.addEventListener('mouseup', handleUp);
 
-        // Touch events
         card.addEventListener('touchmove', (e) => {
-             // Prevent scrolling while tilting the card
             e.preventDefault(); 
             handleMove(e);
         }, { passive: false });
@@ -1235,6 +1173,5 @@
         card.addEventListener('touchend', () => { handleUp(); handleLeave(); });
     }
 </script>
-
-
-</body></html>
+</body>
+</html>
