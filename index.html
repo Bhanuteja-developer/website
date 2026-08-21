@@ -732,7 +732,7 @@
 <div class="header-content">
 <div class="flex items-center gap-sm">
 <div class="profile-img-container">
-<img alt="Profile" class="" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTkMFu0bM26Zjxj_fC-ApgBFAOFfHoTz6jAzwMxgaMFwrUvAyT06rqLYb41RRRLXBEYFKZfwpv3TTOF8M3aCjgDDxv5aArr1gRQlFaCW_NWl9EYMwH13oyh6NfkF15zD3668F1TsmtfMKpwYUR04pSUlDCVFGMmhIap0gHtxQnAn3S2EoYOHcIktcXRO0a9486R368OadtQESXSarE_gM-Cks2jrJxKtzSX7oW2rVW9DVN4Hw-TbEG">
+<img alt="Profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTkMFu0bM26Zjxj_fC-ApgBFAOFfHoTz6jAzwMxgaMFwrUvAyT06rqLYb41RRRLXBEYFKZfwpv3TTOF8M3aCjgDDxv5aArr1gRQlFaCW_NWl9EYMwH13oyh6NfkF15zD3668F1TsmtfMKpwYUR04pSUlDCVFGMmhIap0gHtxQnAn3S2EoYOHcIktcXRO0a9486R368OadtQESXSarE_gM-Cks2jrJxKtzSX7oW2rVW9DVN4Hw-TbEG">
 </div>
 <div>
 <h1 class="text-label-sm text-on-surface-variant">Good Morning,</h1>
@@ -745,46 +745,61 @@
 </div>
 </header>
 
+<!-- Main Content -->
 <main>
 <!-- Balance Card -->
 <section class="balance-card-perspective-container" style="perspective: 1000px;">
-<div class="balance-card" id="main-balance-card" style="background: linear-gradient(135deg, rgb(245, 227, 150) 0%, rgb(212, 175, 55) 20%, rgb(249, 241, 192) 40%, rgb(197, 160, 40) 60%, rgb(230, 190, 88) 80%, rgb(184, 134, 11) 100%); box-shadow: rgba(0, 0, 0, 0.3) 0px 30px 60px, rgba(255, 255, 255, 0.6) 0px 0px 20px inset; border: 1px solid rgba(255, 255, 255, 0.7); position: relative; overflow: hidden; padding: 24px; border-radius: 24px; aspect-ratio: 1.586 / 1; display: flex; flex-direction: column; justify-content: space-between; font-family: 'JetBrains Mono', 'Roboto Mono', monospace; cursor: pointer; transform: rotateX(4deg) rotateY(-6deg) rotateZ(1deg) scale(1); transition: transform 0.15s ease-out, box-shadow 0.3s ease; transform-style: preserve-3d;">
-    <div style="position: absolute; inset: 0px; background: linear-gradient(125deg, transparent 0%, rgba(255, 255, 255, 0.5) 25%, rgba(255, 255, 255, 0.8) 30%, rgba(255, 255, 255, 0.5) 35%, transparent 100%); pointer-events: none; mix-blend-mode: overlay; transform: translateZ(1px);"></div>
+<div class="balance-card" id="main-balance-card" style="background: linear-gradient(135deg, #a67c00 0%, #bf953f 15%, #fcf6ba 35%, #b38728 55%, #fbf5b7 80%, #aa771c 100%); box-shadow: rgba(0, 0, 0, 0.4) 0px 20px 40px -10px, rgba(255, 255, 255, 0.5) 0px 1px 1px inset, rgba(0, 0, 0, 0.2) 0px -1px 2px inset; border: 1px solid rgba(255, 255, 255, 0.3); position: relative; overflow: hidden; padding: 24px; border-radius: 24px; aspect-ratio: 1.586 / 1; display: flex; flex-direction: column; justify-content: space-between; font-family: 'JetBrains Mono', 'Roboto Mono', monospace; cursor: pointer; transform: rotateX(4deg) rotateY(-6deg) rotateZ(1deg) scale(1); transition: transform 0.15s ease-out, box-shadow 0.3s ease; transform-style: preserve-3d;">
+    
+    <!-- Specular Highlight Overlay (Light reflection) -->
+    <div style="position: absolute; inset: 0px; background: linear-gradient(105deg, transparent 20%, rgba(255, 255, 255, 0.5) 25%, rgba(255, 255, 255, 0.9) 30%, transparent 35%, transparent 65%, rgba(255, 255, 255, 0.3) 70%, transparent 75%); pointer-events: none; mix-blend-mode: overlay; transform: translateZ(1px); border-radius: 24px;"></div>
+    
+    <!-- Matte Vignette (Corner darkening for realism) -->
+    <div style="position: absolute; inset: 0px; background: radial-gradient(circle at 50% 50%, transparent 40%, rgba(0,0,0,0.2) 150%); pointer-events: none; transform: translateZ(0px); border-radius: 24px;"></div>
+
     <div class="twinkle-container" id="twinkle-container"></div>
+    
     <div class="flex justify-between items-start" style="position: relative; z-index: 2; transform: translateZ(20px);">
         <div class="flex flex-col">
-            <span class="text-label-sm font-bold" style="color: rgb(28, 27, 27); letter-spacing: 0.1em; text-transform: uppercase; font-size: 10px; font-family: inherit;">Smart Finance</span>
+            <span class="text-label-sm font-bold" style="color: rgba(30, 25, 15, 0.85); letter-spacing: 0.1em; text-transform: uppercase; font-size: 10px; font-family: inherit;">Smart Finance</span>
         </div>
-        <div class="flex items-center gap-xs" style="background: rgba(0, 0, 0, 0.1); backdrop-filter: blur(8px); padding: 2px 8px; border-radius: 9999px; border: 1px solid rgba(0, 0, 0, 0.1); display: flex; align-items: center; gap: 4px;">
-            <span class="material-symbols-outlined" style="font-size: 12px; color: rgb(28, 27, 27);">trending_up</span>
-            <span class="text-label-sm font-semibold" style="color: rgb(28, 27, 27); font-size: 10px;">+2.4%</span>
+        <div class="flex items-center gap-xs" style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(8px); padding: 2px 8px; border-radius: 9999px; border: 1px solid rgba(255, 255, 255, 0.25); display: flex; align-items: center; gap: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+            <span class="material-symbols-outlined" style="font-size: 12px; color: rgba(30, 25, 15, 0.9);">trending_up</span>
+            <span class="text-label-sm font-semibold" style="color: rgba(30, 25, 15, 0.9); font-size: 10px;">+2.4%</span>
         </div>
     </div>
+    
+    <!-- Realistic EMV Chip -->
     <div style="position: relative; z-index: 2; margin-top: 12px; transform: translateZ(10px);">
-        <div style="width: 42px; height: 32px; background: linear-gradient(135deg, #b8860b 0%, #ffd700 50%, #b8860b 100%); border-radius: 6px; position: relative; box-shadow: inset 0 0 5px rgba(0,0,0,0.3);">
-            <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; border: 1px solid rgba(0,0,0,0.2); border-radius: 6px;"></div>
-            <div style="position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: rgba(0,0,0,0.3);"></div>
-            <div style="position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: rgba(0,0,0,0.3);"></div>
+        <div style="width: 42px; height: 32px; background: linear-gradient(135deg, #cfb06c 0%, #f3e0aa 50%, #a48135 100%); border-radius: 6px; position: relative; box-shadow: inset 0 0 5px rgba(0,0,0,0.4), 0 1px 2px rgba(255,255,255,0.5);">
+            <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; border: 1px solid rgba(0,0,0,0.25); border-radius: 6px;"></div>
+            <div style="position: absolute; top: 30%; left: 0; right: 0; height: 1px; background: rgba(0,0,0,0.25); box-shadow: 0 1px 0 rgba(255,255,255,0.4);"></div>
+            <div style="position: absolute; top: 70%; left: 0; right: 0; height: 1px; background: rgba(0,0,0,0.25); box-shadow: 0 1px 0 rgba(255,255,255,0.4);"></div>
+            <div style="position: absolute; left: 30%; top: 0; bottom: 0; width: 1px; background: rgba(0,0,0,0.25); box-shadow: 1px 0 0 rgba(255,255,255,0.4);"></div>
+            <div style="position: absolute; left: 70%; top: 0; bottom: 0; width: 1px; background: rgba(0,0,0,0.25); box-shadow: 1px 0 0 rgba(255,255,255,0.4);"></div>
+            <div style="position: absolute; left: 30%; right: 30%; top: 30%; bottom: 30%; border: 1px solid rgba(0,0,0,0.15); border-radius: 2px;"></div>
         </div>
     </div>
+    
     <div class="flex flex-col" style="position: relative; z-index: 2; margin-top: auto; transform: translateZ(30px);">
-        <span class="text-label-sm" style="color: rgba(28, 27, 27, 0.7); letter-spacing: 0.05em; text-transform: uppercase; font-size: 9px; margin-bottom: 2px; margin-top: 8px; font-family: inherit;">AVAILABLE BALANCE</span>
-        <span class="text-headline-lg font-medium" style="color: rgba(50, 50, 50, 0.9); font-size: 24px; letter-spacing: 2px; font-family: 'Courier New', Courier, monospace; text-shadow: -1px -1px 1px rgba(255, 255, 255, 0.6), 1px 1px 2px rgba(0, 0, 0, 0.8), 0 0 1px rgba(0,0,0,0.4);">
+        <span class="text-label-sm" style="color: rgba(40, 35, 25, 0.7); letter-spacing: 0.05em; text-transform: uppercase; font-size: 9px; margin-bottom: 2px; margin-top: 8px; font-family: inherit;">AVAILABLE BALANCE</span>
+        <span class="text-headline-lg font-medium" style="color: rgba(50, 45, 35, 0.95); font-size: 24px; letter-spacing: 2px; font-family: 'Courier New', Courier, monospace; text-shadow: -1px -1px 1px rgba(255, 255, 255, 0.7), 1px 1px 2px rgba(0, 0, 0, 0.7), 0 0 1px rgba(0,0,0,0.3);">
             *** *** *** <span class="obscured-amount">12,300</span>
         </span>
     </div>
+    
     <div class="flex justify-between items-end" style="position: relative; z-index: 2; margin-top: 16px; transform: translateZ(20px);">
         <div class="flex flex-col">
-            <span class="text-label-sm" style="color: rgb(49, 48, 48); letter-spacing: 0.1em; text-transform: uppercase; font-size: 10px; font-family: inherit;">Card Holder</span>
-            <span class="text-label-md font-semibold" style="color: rgba(50, 50, 50, 0.9); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px; font-family: 'Courier New', Courier, monospace; text-shadow: -1px -1px 1px rgba(255, 255, 255, 0.6), 1px 1px 2px rgba(0, 0, 0, 0.8), 0 0 1px rgba(0,0,0,0.4);">CM BHANUTEJA</span>
+            <span class="text-label-sm" style="color: rgba(40, 35, 25, 0.7); letter-spacing: 0.1em; text-transform: uppercase; font-size: 10px; font-family: inherit;">Card Holder</span>
+            <span class="text-label-md font-semibold" style="color: rgba(50, 45, 35, 0.95); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px; font-family: 'Courier New', Courier, monospace; text-shadow: -1px -1px 1px rgba(255, 255, 255, 0.7), 1px 1px 2px rgba(0, 0, 0, 0.7), 0 0 1px rgba(0,0,0,0.3);">CM BHANUTEJA</span>
         </div>
         <div class="flex flex-col items-center">
-            <span class="text-label-sm" style="color: rgb(49, 48, 48); font-size: 8px; letter-spacing: 0.05em; text-transform: uppercase;">Expires</span>
-            <span class="text-label-md font-semibold" style="color: rgba(50, 50, 50, 0.9); letter-spacing: 0.05em; margin-top: 2px; font-family: 'Courier New', Courier, monospace; text-shadow: -1px -1px 1px rgba(255, 255, 255, 0.6), 1px 1px 2px rgba(0, 0, 0, 0.8), 0 0 1px rgba(0,0,0,0.4);">31/08/26</span>
+            <span class="text-label-sm" style="color: rgba(40, 35, 25, 0.7); font-size: 8px; letter-spacing: 0.05em; text-transform: uppercase;">Expires</span>
+            <span class="text-label-md font-semibold" style="color: rgba(50, 45, 35, 0.95); letter-spacing: 0.05em; margin-top: 2px; font-family: 'Courier New', Courier, monospace; text-shadow: -1px -1px 1px rgba(255, 255, 255, 0.7), 1px 1px 2px rgba(0, 0, 0, 0.7), 0 0 1px rgba(0,0,0,0.3);">31/08/26</span>
         </div>
         <div class="flex items-center" style="position: relative; width: 40px; height: 24px;">
-            <div style="width: 24px; height: 24px; background: rgb(235, 0, 27); border-radius: 50%; position: absolute; left: 0px; opacity: 0.9;"></div>
-            <div style="width: 24px; height: 24px; background: rgb(247, 158, 27); border-radius: 50%; position: absolute; right: 0px; opacity: 0.7;"></div>
+            <div style="width: 24px; height: 24px; background: rgba(235, 0, 27, 0.95); border-radius: 50%; position: absolute; left: 0px; mix-blend-mode: multiply;"></div>
+            <div style="width: 24px; height: 24px; background: rgba(247, 158, 27, 0.95); border-radius: 50%; position: absolute; right: 0px; mix-blend-mode: multiply;"></div>
         </div>
     </div>
 </div>
