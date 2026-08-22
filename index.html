@@ -806,31 +806,34 @@
 </section>
 
 <!-- Stats Scroll -->
-<section class="chart-section">
-<div class="flex justify-between items-center">
-<h3 class="text-headline-md text-on-surface font-bold">Budget - Planning</h3>
-<span class="material-symbols-outlined text-on-surface-variant" style="cursor: pointer;">chevron_right</span></div>
-<div class="stats-scroll justify-between" style="margin-left: 0; margin-right: 0; padding-left: 0; padding-right: 0; gap: 8px;">
-<div class="stat-card" style="background-color: rgb(255, 255, 255); border: 1px solid rgba(0, 0, 0, 0.05); min-width: 100px; padding: 12px 8px;">
-<div class="stat-icon" style="background-color: rgb(253, 106, 60); color: rgb(255, 255, 255);">
+<section class="chart-section" style="background: linear-gradient(135deg, #a67c00 0%, #bf953f 15%, #fcf6ba 35%, #b38728 55%, #fbf5b7 80%, #aa771c 100%); box-shadow: rgba(0, 0, 0, 0.2) 0px 15px 30px, rgba(255, 255, 255, 0.8) 0px 0px 20px inset, 0 0 25px 8px rgba(255, 215, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.5); position: relative; overflow: hidden;">
+<!-- Matte Vignette for Realism -->
+<div style="position: absolute; inset: 0px; background: radial-gradient(circle at 50% 50%, transparent 40%, rgba(0,0,0,0.15) 150%); pointer-events: none; border-radius: 24px;"></div>
+
+<div class="flex justify-between items-center" style="position: relative; z-index: 2;">
+<h3 class="text-headline-md font-bold" style="color: rgba(40, 35, 25, 0.95); text-shadow: 0 1px 1px rgba(255, 255, 255, 0.6);">Budget - Planning</h3>
+<span class="material-symbols-outlined" style="cursor: pointer; color: rgba(40, 35, 25, 0.8);">chevron_right</span></div>
+<div class="stats-scroll justify-between" style="margin-left: 0; margin-right: 0; padding-left: 0; padding-right: 0; gap: 8px; position: relative; z-index: 2;">
+<div class="stat-card" style="background: rgba(255, 255, 255, 0.35); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.6); min-width: 100px; padding: 12px 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+<div class="stat-icon" style="background-color: rgb(253, 106, 60); color: rgb(255, 255, 255); box-shadow: 0 2px 5px rgba(253, 106, 60, 0.3);">
 <span class="material-symbols-outlined icon-sm" style="color: white;">pie_chart</span>
 </div>
-<span class="text-label-sm text-on-surface-variant">Budget</span>
-<span class="text-headline-md text-on-surface">₹13,350</span>
+<span class="text-label-sm font-semibold" style="color: rgba(50, 45, 35, 0.85); text-transform: uppercase; font-size: 10px; letter-spacing: 0.05em;">Budget</span>
+<span class="text-headline-md" style="color: rgba(30, 25, 15, 0.95); font-family: 'Courier New', Courier, monospace; font-weight: bold; text-shadow: -1px -1px 1px rgba(255, 255, 255, 0.7), 1px 1px 2px rgba(0, 0, 0, 0.3);">₹13,350</span>
 </div>
-<div class="stat-card" style="background-color: rgb(255, 255, 255); border: 1px solid rgba(0, 0, 0, 0.05); min-width: 100px; padding: 12px 8px;">
-<div class="stat-icon bg-primary-light" style="background-color: rgb(26, 115, 232); color: rgb(255, 255, 255);">
+<div class="stat-card" style="background: rgba(255, 255, 255, 0.35); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.6); min-width: 100px; padding: 12px 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+<div class="stat-icon bg-primary-light" style="background-color: rgb(26, 115, 232); color: rgb(255, 255, 255); box-shadow: 0 2px 5px rgba(26, 115, 232, 0.3);">
 <span class="material-symbols-outlined icon-sm">account_balance_wallet</span>
 </div>
-<span class="text-label-sm text-on-surface-variant">Spent</span>
-<span class="text-headline-md text-on-surface">₹8,700</span>
+<span class="text-label-sm font-semibold" style="color: rgba(50, 45, 35, 0.85); text-transform: uppercase; font-size: 10px; letter-spacing: 0.05em;">Spent</span>
+<span class="text-headline-md" style="color: rgba(30, 25, 15, 0.95); font-family: 'Courier New', Courier, monospace; font-weight: bold; text-shadow: -1px -1px 1px rgba(255, 255, 255, 0.7), 1px 1px 2px rgba(0, 0, 0, 0.3);">₹8,700</span>
 </div>
-<div class="stat-card" style="background-color: rgb(255, 255, 255); border: 1px solid rgba(0, 0, 0, 0.05); min-width: 100px; padding: 12px 8px;">
-<div class="stat-icon" style="background-color: var(--color-primary); color: white;">
+<div class="stat-card" style="background: rgba(255, 255, 255, 0.35); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.6); min-width: 100px; padding: 12px 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+<div class="stat-icon" style="background-color: var(--color-primary); color: white; box-shadow: 0 2px 5px rgba(98, 44, 229, 0.3);">
 <span class="material-symbols-outlined icon-sm">savings</span>
 </div>
-<span class="text-label-sm text-on-surface-variant">Left</span>
-<span class="text-headline-md text-on-surface">₹4,650</span>
+<span class="text-label-sm font-semibold" style="color: rgba(50, 45, 35, 0.85); text-transform: uppercase; font-size: 10px; letter-spacing: 0.05em;">Left</span>
+<span class="text-headline-md" style="color: rgba(30, 25, 15, 0.95); font-family: 'Courier New', Courier, monospace; font-weight: bold; text-shadow: -1px -1px 1px rgba(255, 255, 255, 0.7), 1px 1px 2px rgba(0, 0, 0, 0.3);">₹4,650</span>
 </div>
 </div>
 </section>
