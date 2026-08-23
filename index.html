@@ -1230,25 +1230,38 @@ function showAllWeeks() {
     if (!allWeeksView) {
         allWeeksView = document.createElement('div');
         allWeeksView.id = 'all-weeks-view';
-        allWeeksView.className = 'stats-scroll';
-        allWeeksView.style.cssText = 'display: flex; gap: 16px; overflow-x: auto; padding: 8px 0; margin-top: 8px;';
+        allWeeksView.style.cssText = 'display: flex; flex-direction: column; gap: 16px; margin-top: 16px;';
 
-        // Clone charts from W1 to W4 (and placeholders for W5/W6 if they existed in DOM)
+        const summaries = ['₹4,200', '₹5,100', '₹3,800', '₹4,900', '₹4,500', '₹1,200'];
+
         const weekIds = ['view-week1', 'view-week2', 'view-week3', 'view-week4', 'view-week5', 'view-week6'];
-        weekIds.forEach(id => {
+        weekIds.forEach((id, index) => {
             const original = document.getElementById(id);
             if (original) {
+                const card = document.createElement('div');
+                card.style.cssText = 'background-color: var(--color-surface-container-low); border-radius: 16px; padding: 16px; border: 1px solid rgba(0, 0, 0, 0.05);';
+                
+                const header = document.createElement('div');
+                header.style.cssText = 'display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;';
+                
+                const label = document.createElement('span');
+                label.className = 'text-label-md font-bold text-on-surface';
+                label.textContent = id.replace('view-week', 'Week ');
+                
+                const stat = document.createElement('span');
+                stat.className = 'text-label-md font-bold text-primary';
+                stat.textContent = summaries[index];
+                
+                header.appendChild(label);
+                header.appendChild(stat);
+                card.appendChild(header);
+
                 const clone = original.cloneNode(true);
                 clone.style.display = 'block';
-                clone.style.minWidth = '280px';
-                clone.style.flexShrink = '0';
-                // Add a label for the week
-                const label = document.createElement('div');
-                label.className = 'text-label-md font-bold text-primary';
-                label.textContent = id.replace('view-', '').toUpperCase();
-                label.style.marginBottom = '4px';
-                clone.prepend(label);
-                allWeeksView.appendChild(clone);
+                clone.style.marginTop = '0';
+                card.appendChild(clone);
+                
+                allWeeksView.appendChild(card);
             }
         });
         chartSection.appendChild(allWeeksView);
