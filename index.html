@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head>
+<!DOCTYPE html><html lang="en" style=""><head>
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <title>Add New Expense - Smart Finance</title>
@@ -18,6 +18,7 @@
         --surface-variant: #f0eded;
         --on-surface-variant: #494456;
         --surface-container-low: #f6f3f2;
+        --surface-container-high: #ece7e7;
         
         --outline: #7a7487;
         --outline-variant: #cac3d8;
@@ -180,37 +181,44 @@
         color: var(--outline-variant);
     }
 
-    /* Categories */
+    /* Categories Horizontal Bar */
     .category-list {
         display: flex;
-        gap: 16px;
+        gap: 12px;
         overflow-x: auto;
-        padding-bottom: 8px;
+        padding-bottom: 4px;
     }
     .category-btn {
-        height: 36px;
+        height: 38px;
         padding: 0 16px;
         border-radius: 999px;
         font-size: 14px;
         font-weight: 600;
         display: flex;
         align-items: center;
-        gap: 4px;
+        gap: 6px;
         white-space: nowrap;
-        transition: all 0.2s;
+        transition: all 0.2s ease;
+        flex-shrink: 0;
     }
     .category-add {
         border: 1px solid rgba(98, 44, 229, 0.3);
         color: var(--primary);
     }
     .category-active {
-        background: var(--gradient);
-        color: var(--on-primary);
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        background: var(--gradient) !important;
+        color: var(--on-primary) !important;
+        border-color: transparent !important;
+        box-shadow: 0 4px 12px rgba(123, 77, 255, 0.28);
     }
     .category-inactive {
+        background: #ffffff;
         border: 1px solid var(--outline-variant);
         color: var(--on-surface-variant);
+    }
+    .category-inactive:hover {
+        border-color: var(--primary);
+        color: var(--primary);
     }
 
     /* Table */
@@ -440,6 +448,14 @@
         transform: translateY(-24px);
         box-shadow: var(--gradient-shadow);
     }
+
+    /* Dropdown item styling */
+    .category-dropdown-item {
+        transition: all 0.15s ease;
+    }
+    .category-dropdown-item:hover {
+        background: rgba(98, 44, 229, 0.05);
+    }
 </style>
 </head>
 <body>
@@ -459,9 +475,9 @@
 <main class="main-content">
 <h1 class="page-title" style="background: linear-gradient(to right, rgb(123, 77, 255), rgb(255, 107, 61)) text; -webkit-text-fill-color: transparent;">Add New Expense</h1>
 <p style="font-size: 14px; color: var(--outline); margin-top: -8px;" class="">Please select the Expense Date &amp; Category</p>
-<!-- Date Picker / Calendar Card (August 2026 with Sep 5 active or similar) -->
+<!-- Date Picker / Calendar Card -->
 <section class="card">
-<div class="calendar-header">
+<div class="calendar-header" style="margin-bottom: 20px;">
 <span class="">August 2026</span>
 <div style="display: flex; gap: 8px; color: var(--outline);">
 <span class="material-symbols-outlined" style="font-size: 20px; cursor: pointer;">chevron_left</span>
@@ -519,167 +535,213 @@
 </div>
 </section>
 <!-- Category Dropdown Section -->
-<section class="card" style="position: relative; padding: 16px;">
-<h2 class="section-title" style="margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">Select - Category<button style="color: var(--primary); font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 2px;" class=""><span class="material-symbols-outlined" style="font-size: 16px;">add</span>Add New Category</button></h2>
-<div class="category-dropdown-container" style="position: relative;">
-<div class="selected-category-card" style="display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; background: #ffffff; border: 1.5px solid var(--primary); border-radius: 16px; box-shadow: 0 4px 12px rgba(98, 44, 229, 0.08); cursor: pointer;">
+<section class="card" style="position: relative; z-index: 40; padding: 16px; overflow: visible;">
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+<h2 class="section-title" style="margin-bottom: 0px;">Select - Category</h2>
+
+</div>
+<div class="category-dropdown-container" id="category-dropdown-wrapper" style="position: relative; width: 100%;">
+<!-- Trigger Button -->
+<button aria-expanded="false" aria-haspopup="listbox" class="selected-category-card" id="category-dropdown-trigger" onclick="toggleCategoryDropdown(event)" style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; min-height: 56px; background: rgb(255, 255, 255); border-color: var(--outline-variant); border-radius: 16px; box-shadow: rgba(0, 0, 0, 0.04) 0px 4px 14px; cursor: pointer; transition: 0.2s; outline: none;" type="button">
 <div style="display: flex; align-items: center; gap: 12px;">
-<div style="width: 36px; height: 36px; border-radius: 10px; background: var(--gradient); display: flex; align-items: center; justify-content: center; color: white;">
+<div id="selected-category-icon-bg" style="width: 42px; height: 42px; border-radius: 12px; background: var(--gradient); display: flex; align-items: center; justify-content: center; color: white; box-shadow: 0 4px 10px rgba(123, 77, 255, 0.25); transition: all 0.2s; flex-shrink: 0;">
+<span class="material-symbols-outlined" id="selected-category-icon" style="font-size: 22px;">local_grocery_store</span>
+</div>
+<div style="text-align: left;">
+<div id="selected-category-title" style="font-size: 15px; font-weight: 700; color: var(--on-surface); line-height: 1.2;" class="">Grocery</div>
+<div id="selected-category-subtitle" style="font-size: 12px; color: var(--outline); margin-top: 2px;" class="">Daily essentials &amp; food</div>
+</div>
+</div>
+<span class="material-symbols-outlined" id="dropdown-chevron" style="color: var(--primary); font-size: 24px; transition: transform 0.25s; transform: rotate(0deg);">expand_more</span>
+</button>
+<!-- Dropdown Menu -->
+<div class="hide-scrollbar" id="category-dropdown-menu" role="listbox" style="display: none; position: absolute; top: calc(100% + 8px); left: 0px; width: 100%; background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(20px); border: 1.5px solid var(--outline-variant); border-radius: 18px; box-shadow: rgba(123, 77, 255, 0.16) 0px 20px 45px, rgba(0, 0, 0, 0.08) 0px 4px 16px; z-index: 100; max-height: 310px; overflow-y: auto; padding: 8px; flex-direction: column; gap: 4px;">
+<!-- Quick Add Category Option inside Menu -->
+<button onclick="promptAddCategory(event)" style="display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px 12px; border-radius: 12px; background: rgba(98, 44, 229, 0.05); border: 1px dashed rgba(98, 44, 229, 0.35); color: var(--primary); font-weight: 600; font-size: 13px; margin-bottom: 4px; cursor: pointer;" type="button" class="">
+<span class="material-symbols-outlined" style="font-size: 18px;">add_circle</span>
+<span class="">+ Add Custom Category</span>
+</button>
+<!-- Category Items -->
+<div class="category-dropdown-item" data-category="Grocery" data-icon="local_grocery_store" data-subtitle="Daily essentials &amp; food" onclick="selectCategory('Grocery', 'local_grocery_store', 'Daily essentials &amp; food', this)" style="display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; min-height: 48px; border-radius: 12px; cursor: pointer; background: rgba(98, 44, 229, 0.08); color: var(--primary); font-weight: 600; border: 1px solid rgba(98, 44, 229, 0.2);">
+<div style="display: flex; align-items: center; gap: 12px;">
+<div class="item-icon-box" style="width: 36px; height: 36px; border-radius: 10px; background: var(--gradient); display: flex; align-items: center; justify-content: center; color: white; box-shadow: rgba(123, 77, 255, 0.28) 0px 3px 8px;">
 <span class="material-symbols-outlined" style="font-size: 20px;">local_grocery_store</span>
 </div>
-<div>
-<div style="font-size: 15px; font-weight: 600; color: var(--on-surface);" class="">Grocery</div>
-<div style="font-size: 12px; color: var(--outline);" class="">Selected Category</div>
+<div style="display: flex; flex-direction: column; text-align: left;">
+<span style="font-size: 14px; font-weight: 600;" class="">Grocery</span>
+<span style="font-size: 11px; color: var(--outline);" class="">Daily essentials &amp; food</span>
 </div>
 </div>
-<span class="material-symbols-outlined" style="color: var(--primary); font-size: 24px;">expand_more</span>
+<span class="material-symbols-outlined check-mark" style="font-size: 20px; color: var(--primary); display: inline-block;">check</span>
 </div>
-<div class="category-dropdown-menu" style="display: none; position: absolute; top: calc(100% + 8px); left: 0; width: 100%; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(16px); border: 1px solid var(--surface-variant); border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); z-index: 100; max-height: 240px; overflow-y: auto; padding: 8px;">
-<div class="category-dropdown-item" style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 10px; cursor: pointer; background: rgba(98, 44, 229, 0.05); color: var(--primary); font-weight: 600;">
-<span class="material-symbols-outlined" style="font-size: 18px;">local_grocery_store</span> Grocery
+<div class="category-dropdown-item" data-category="Vegetables" data-icon="eco" data-subtitle="Fresh vegetables &amp; greens" onclick="selectCategory('Vegetables', 'eco', 'Fresh vegetables &amp; greens', this)" style="display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; min-height: 48px; border-radius: 12px; cursor: pointer; color: var(--on-surface); font-weight: 500; border: 1px solid transparent; background: transparent;">
+<div style="display: flex; align-items: center; gap: 12px;">
+<div class="item-icon-box" style="width: 36px; height: 36px; border-radius: 10px; background: var(--surface-container-high); display: flex; align-items: center; justify-content: center; color: var(--on-surface-variant); box-shadow: none;">
+<span class="material-symbols-outlined" style="font-size: 20px;">eco</span>
 </div>
-<div class="category-dropdown-item" style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 10px; cursor: pointer; color: var(--on-surface-variant);">
-<span class="material-symbols-outlined" style="font-size: 18px;">eco</span> Vegetables
+<div style="display: flex; flex-direction: column; text-align: left;">
+<span style="font-size: 14px;" class="">Vegetables</span>
+<span style="font-size: 11px; color: var(--outline);" class="">Fresh vegetables &amp; greens</span>
 </div>
-<div class="category-dropdown-item" style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 10px; cursor: pointer; color: var(--on-surface-variant);">
-<span class="material-symbols-outlined" style="font-size: 18px;">checkroom</span> Clothes
 </div>
-<div class="category-dropdown-item" style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 10px; cursor: pointer; color: var(--on-surface-variant);">
-<span class="material-symbols-outlined" style="font-size: 18px;">local_gas_station</span> Petrol
+<span class="material-symbols-outlined check-mark" style="font-size: 20px; color: var(--primary); display: none;">check</span>
 </div>
-<div class="category-dropdown-item" style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 10px; cursor: pointer; color: var(--on-surface-variant);">
-<span class="material-symbols-outlined" style="font-size: 18px;">flight</span> Travelling
+<div class="category-dropdown-item" data-category="Clothes" data-icon="checkroom" data-subtitle="Apparel &amp; laundry" onclick="selectCategory('Clothes', 'checkroom', 'Apparel &amp; laundry', this)" style="display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; min-height: 48px; border-radius: 12px; cursor: pointer; color: var(--on-surface); font-weight: 500; border: 1px solid transparent; background: transparent;">
+<div style="display: flex; align-items: center; gap: 12px;">
+<div class="item-icon-box" style="width: 36px; height: 36px; border-radius: 10px; background: var(--surface-container-high); display: flex; align-items: center; justify-content: center; color: var(--on-surface-variant); box-shadow: none;">
+<span class="material-symbols-outlined" style="font-size: 20px;">checkroom</span>
 </div>
-<div class="category-dropdown-item" style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 10px; cursor: pointer; color: var(--on-surface-variant);">
-<span class="material-symbols-outlined" style="font-size: 18px;">medical_services</span> Doctor &amp; Medicines
+<div style="display: flex; flex-direction: column; text-align: left;">
+<span style="font-size: 14px;" class="">Clothes</span>
+<span style="font-size: 11px; color: var(--outline);" class="">Apparel &amp; laundry</span>
 </div>
-<div class="category-dropdown-item" style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 10px; cursor: pointer; color: var(--on-surface-variant);">
-<span class="material-symbols-outlined" style="font-size: 18px;">water_drop</span> Water
 </div>
-<div class="category-dropdown-item" style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 10px; cursor: pointer; color: var(--on-surface-variant);">
-<span class="material-symbols-outlined" style="font-size: 18px;">electric_bolt</span> Electricity
+<span class="material-symbols-outlined check-mark" style="font-size: 20px; color: var(--primary); display: none;">check</span>
 </div>
-<div class="category-dropdown-item" style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 10px; cursor: pointer; color: var(--on-surface-variant);">
-<span class="material-symbols-outlined" style="font-size: 18px;">more_horiz</span> Other
+<div class="category-dropdown-item" data-category="Petrol" data-icon="local_gas_station" data-subtitle="Fuel &amp; vehicle maintenance" onclick="selectCategory('Petrol', 'local_gas_station', 'Fuel &amp; vehicle maintenance', this)" style="display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; min-height: 48px; border-radius: 12px; cursor: pointer; color: var(--on-surface); font-weight: 500; border: 1px solid transparent; background: transparent;">
+<div style="display: flex; align-items: center; gap: 12px;">
+<div class="item-icon-box" style="width: 36px; height: 36px; border-radius: 10px; background: var(--surface-container-high); display: flex; align-items: center; justify-content: center; color: var(--on-surface-variant); box-shadow: none;">
+<span class="material-symbols-outlined" style="font-size: 20px;">local_gas_station</span>
+</div>
+<div style="display: flex; flex-direction: column; text-align: left;">
+<span style="font-size: 14px;" class="">Petrol</span>
+<span style="font-size: 11px; color: var(--outline);" class="">Fuel &amp; vehicle maintenance</span>
+</div>
+</div>
+<span class="material-symbols-outlined check-mark" style="font-size: 20px; color: var(--primary); display: none;">check</span>
+</div>
+<div class="category-dropdown-item" data-category="Travelling" data-icon="flight" data-subtitle="Flights, transit &amp; trips" onclick="selectCategory('Travelling', 'flight', 'Flights, transit &amp; trips', this)" style="display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; min-height: 48px; border-radius: 12px; cursor: pointer; color: var(--on-surface); font-weight: 500; border: 1px solid transparent; background: transparent;">
+<div style="display: flex; align-items: center; gap: 12px;">
+<div class="item-icon-box" style="width: 36px; height: 36px; border-radius: 10px; background: var(--surface-container-high); display: flex; align-items: center; justify-content: center; color: var(--on-surface-variant); box-shadow: none;">
+<span class="material-symbols-outlined" style="font-size: 20px;">flight</span>
+</div>
+<div style="display: flex; flex-direction: column; text-align: left;">
+<span style="font-size: 14px;" class="">Travelling</span>
+<span style="font-size: 11px; color: var(--outline);" class="">Flights, transit &amp; trips</span>
+</div>
+</div>
+<span class="material-symbols-outlined check-mark" style="font-size: 20px; color: var(--primary); display: none;">check</span>
+</div>
+<div class="category-dropdown-item" data-category="Doctor &amp; Medicines" data-icon="medical_services" data-subtitle="Healthcare &amp; pharmacy" onclick="selectCategory('Doctor &amp; Medicines', 'medical_services', 'Healthcare &amp; pharmacy', this)" style="display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; min-height: 48px; border-radius: 12px; cursor: pointer; color: var(--on-surface); font-weight: 500; border: 1px solid transparent; background: transparent;">
+<div style="display: flex; align-items: center; gap: 12px;">
+<div class="item-icon-box" style="width: 36px; height: 36px; border-radius: 10px; background: var(--surface-container-high); display: flex; align-items: center; justify-content: center; color: var(--on-surface-variant); box-shadow: none;">
+<span class="material-symbols-outlined" style="font-size: 20px;">medical_services</span>
+</div>
+<div style="display: flex; flex-direction: column; text-align: left;">
+<span style="font-size: 14px;" class="">Doctor &amp; Medicines</span>
+<span style="font-size: 11px; color: var(--outline);" class="">Healthcare &amp; pharmacy</span>
+</div>
+</div>
+<span class="material-symbols-outlined check-mark" style="font-size: 20px; color: var(--primary); display: none;">check</span>
+</div>
+<div class="category-dropdown-item" data-category="Water" data-icon="water_drop" data-subtitle="Water utility &amp; supplies" onclick="selectCategory('Water', 'water_drop', 'Water utility &amp; supplies', this)" style="display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; min-height: 48px; border-radius: 12px; cursor: pointer; color: var(--on-surface); font-weight: 500; border: 1px solid transparent; background: transparent;">
+<div style="display: flex; align-items: center; gap: 12px;">
+<div class="item-icon-box" style="width: 36px; height: 36px; border-radius: 10px; background: var(--surface-container-high); display: flex; align-items: center; justify-content: center; color: var(--on-surface-variant); box-shadow: none;">
+<span class="material-symbols-outlined" style="font-size: 20px;">water_drop</span>
+</div>
+<div style="display: flex; flex-direction: column; text-align: left;">
+<span style="font-size: 14px;" class="">Water</span>
+<span style="font-size: 11px; color: var(--outline);" class="">Water utility &amp; supplies</span>
+</div>
+</div>
+<span class="material-symbols-outlined check-mark" style="font-size: 20px; color: var(--primary); display: none;">check</span>
+</div>
+<div class="category-dropdown-item" data-category="Electricity" data-icon="electric_bolt" data-subtitle="Electricity power bills" onclick="selectCategory('Electricity', 'electric_bolt', 'Electricity power bills', this)" style="display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; min-height: 48px; border-radius: 12px; cursor: pointer; color: var(--on-surface); font-weight: 500; border: 1px solid transparent; background: transparent;">
+<div style="display: flex; align-items: center; gap: 12px;">
+<div class="item-icon-box" style="width: 36px; height: 36px; border-radius: 10px; background: var(--surface-container-high); display: flex; align-items: center; justify-content: center; color: var(--on-surface-variant); box-shadow: none;">
+<span class="material-symbols-outlined" style="font-size: 20px;">electric_bolt</span>
+</div>
+<div style="display: flex; flex-direction: column; text-align: left;">
+<span style="font-size: 14px;" class="">Electricity</span>
+<span style="font-size: 11px; color: var(--outline);" class="">Electricity power bills</span>
+</div>
+</div>
+<span class="material-symbols-outlined check-mark" style="font-size: 20px; color: var(--primary); display: none;">check</span>
+</div>
+<div class="category-dropdown-item" data-category="Other" data-icon="more_horiz" data-subtitle="Miscellaneous expenses" onclick="selectCategory('Other', 'more_horiz', 'Miscellaneous expenses', this)" style="display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; min-height: 48px; border-radius: 12px; cursor: pointer; color: var(--on-surface); font-weight: 500; border: 1px solid transparent; background: transparent;">
+<div style="display: flex; align-items: center; gap: 12px;">
+<div class="item-icon-box" style="width: 36px; height: 36px; border-radius: 10px; background: var(--surface-container-high); display: flex; align-items: center; justify-content: center; color: var(--on-surface-variant); box-shadow: none;">
+<span class="material-symbols-outlined" style="font-size: 20px;">more_horiz</span>
+</div>
+<div style="display: flex; flex-direction: column; text-align: left;">
+<span style="font-size: 14px;" class="">Other</span>
+<span style="font-size: 11px; color: var(--outline);" class="">Miscellaneous expenses</span>
+</div>
+</div>
+<span class="material-symbols-outlined check-mark" style="font-size: 20px; color: var(--primary); display: none;">check</span>
 </div>
 </div>
 </div>
 </section>
 <!-- Category Horizontal Selector -->
-<section>
-<h2 class="section-title">Select - Category</h2>
-<div class="category-list hide-scrollbar">
-<button class="category-btn category-inactive" style="border: 2px dashed transparent; background-image: linear-gradient(white, white), linear-gradient(135deg, rgb(123, 77, 255), rgb(255, 107, 61)); background-origin: border-box; background-clip: padding-box, border-box; border-radius: 999px; display: flex; align-items: center; gap: 4px;">
-<div style="background: linear-gradient(135deg, rgb(123, 77, 255), rgb(255, 107, 61)) text; -webkit-text-fill-color: transparent; display: flex; align-items: center; gap: 4px;" class="">
-<span class="material-symbols-outlined" style="font-size: 18px;">add</span>Add Category
-</div>
-</button>
-<button class="category-btn category-active">
-<span class="material-symbols-outlined" style="font-size: 18px;">local_grocery_store</span>
-                Grocery
-            </button>
-<button class="category-btn category-inactive">
-<span class="material-symbols-outlined" style="font-size: 18px;">eco</span>
-                Vegetables
-            </button>
-<button class="category-btn category-inactive">
-<span class="material-symbols-outlined" style="font-size: 18px;">checkroom</span>
-                Clothes
-            </button>
-<button class="category-btn category-inactive">
-<span class="material-symbols-outlined" style="font-size: 18px;">local_gas_station</span>
-                Petrol
-            </button>
-<button class="category-btn category-inactive">
-<span class="material-symbols-outlined" style="font-size: 18px;">flight</span>
-                Travelling
-            </button>
-<button class="category-btn category-inactive">
-<span class="material-symbols-outlined" style="font-size: 18px;">medical_services</span>
-                Doctor &amp; Medicines
-            </button>
-<button class="category-btn category-inactive">
-<span class="material-symbols-outlined" style="font-size: 18px;">water_drop</span>
-                Water
-            </button>
-<button class="category-btn category-inactive">
-<span class="material-symbols-outlined" style="font-size: 18px;">electric_bolt</span>
-                Electricity
-            </button>
-<button class="category-btn category-inactive">
-<span class="material-symbols-outlined" style="font-size: 18px;">more_horiz</span>
-                Other
-            </button>
-</div>
-</section>
+
 <!-- Item Table Card -->
-<section class="card">
+<section class="" style="background: transparent; box-shadow: none; border: none; padding: 0;">
 <div class="table-header-row">
 <h2 class="section-title" id="items-table-title" style="margin-bottom: 0px;">Grocery Items</h2>
 <button class="add-row-btn">
 <span class="material-symbols-outlined" style="font-size: 18px;">add</span> Add Row
-            </button>
+</button>
 </div>
-<div class="table-container">
-<table>
-<thead>
-<tr style="background: linear-gradient(to right, rgb(123, 77, 255), rgb(255, 107, 61)); color: white;">
-<th class="td-sno" style="background: transparent; color: inherit;">S.NO</th>
-<th style="background: transparent; color: inherit;" class="">ITEMS</th>
-<th style="background: transparent; color: inherit;" class="">QTY</th>
-<th style="text-align: right; background: transparent; color: inherit;" class="">AMOUNT</th>
-</tr>
-</thead>
+<div class="table-container" style="overflow-x: auto; width: 100%; margin: 0px; padding: 0px; border-radius: 0px; background: var(--surface); box-shadow: var(--card-shadow); border: 1px solid rgba(0, 0, 0, 0.03);">
+<table style="width: 100%; min-width: 100%; border-collapse: collapse; table-layout: fixed; margin: 0px; padding: 0px; border-radius: 0px;" class="">
+<thead><tr style="background: linear-gradient(to right, rgb(123, 77, 255), rgb(255, 107, 61)); color: white; border-radius: 0px;"><th style="width: 14%; text-align: center; background: transparent; color: inherit; padding: 10px 4px; font-size: 11px; font-weight: 600; border-radius: 0; border: none;" class="">S.NO</th><th style="width: 36%; text-align: left; background: transparent; color: inherit; padding: 10px 8px; font-size: 11px; font-weight: 600; border-radius: 0; border: none;" class="">ITEMS</th><th style="width: 25%; text-align: left; background: transparent; color: inherit; padding: 10px 8px; font-size: 11px; font-weight: 600; border-radius: 0; border: none;" class="">QTY</th><th style="width: 25%; text-align: right; background: transparent; color: inherit; padding: 10px 12px 10px 4px; font-size: 11px; font-weight: 600; border-radius: 0; border: none;" class="">AMOUNT</th></tr></thead>
 <tbody>
-<tr>
-<td class="td-sno">1</td>
-<td class=""><div class="td-flex"><span class="">Poha</span><span class="material-symbols-outlined" style="font-size: 18px; color: var(--outline-variant);">mic</span></div></td>
-<td class=""><div class="td-flex"><span class="">20 kg</span><span class="material-symbols-outlined" style="font-size: 18px; color: var(--outline-variant);">mic</span></div></td>
-<td class="td-right">₹400.00</td>
+<tr style="border-bottom: 1px solid var(--surface-variant);">
+<td style="text-align: center; color: var(--outline-variant); padding: 10px 4px; font-size: 14px;" class="">1</td>
+<td style="padding: 10px 8px; font-size: 14px;" class=""><div class="td-flex" style="display: flex; align-items: center; justify-content: space-between; gap: 4px;"><span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" class="">Poha</span><span class="material-symbols-outlined" style="font-size: 16px; color: var(--outline-variant); flex-shrink: 0;">mic</span></div></td>
+<td style="padding: 10px 8px; font-size: 14px;" class=""><div class="td-flex" style="display: flex; align-items: center; justify-content: space-between; gap: 4px;"><span style="white-space: nowrap;" class="">20 kg</span><span class="material-symbols-outlined" style="font-size: 16px; color: var(--outline-variant); flex-shrink: 0;">mic</span></div></td>
+<td class="td-right" style="text-align: right; font-weight: 600; font-size: 14px; padding: 10px 10px 10px 4px; white-space: nowrap;">₹400.00</td>
 </tr>
-<tr>
-<td class="td-sno">2</td>
-<td class=""><div class="td-flex"><span class="">Rava (Mota)</span><span class="material-symbols-outlined" style="font-size: 18px; color: var(--outline-variant);">mic</span></div></td>
-<td class=""><div class="td-flex"><span class="">20 kg</span><span class="material-symbols-outlined" style="font-size: 18px; color: var(--outline-variant);">mic</span></div></td>
-<td class="td-right">₹600.00</td>
+<tr style="border-bottom: 1px solid var(--surface-variant);">
+<td style="text-align: center; color: var(--outline-variant); padding: 10px 4px; font-size: 14px;" class="">2</td>
+<td style="padding: 10px 8px; font-size: 14px;" class=""><div class="td-flex" style="display: flex; align-items: center; justify-content: space-between; gap: 4px;"><span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" class="">Rava (Mota)</span><span class="material-symbols-outlined" style="font-size: 16px; color: var(--outline-variant); flex-shrink: 0;">mic</span></div></td>
+<td style="padding: 10px 8px; font-size: 14px;" class=""><div class="td-flex" style="display: flex; align-items: center; justify-content: space-between; gap: 4px;"><span style="white-space: nowrap;" class="">20 kg</span><span class="material-symbols-outlined" style="font-size: 16px; color: var(--outline-variant); flex-shrink: 0;">mic</span></div></td>
+<td class="td-right" style="text-align: right; font-weight: 600; font-size: 14px; padding: 10px 10px 10px 4px; white-space: nowrap;">₹600.00</td>
 </tr>
-<tr>
-<td class="td-sno">3</td>
-<td class=""><div class="td-flex"><span class="">Sugar</span><span class="material-symbols-outlined" style="font-size: 18px; color: var(--outline-variant);">mic</span></div></td>
-<td class=""><div class="td-flex"><span class="">35 kg</span><span class="material-symbols-outlined" style="font-size: 18px; color: var(--outline-variant);">mic</span></div></td>
-<td class="td-right">₹1400.00</td>
+<tr style="border-bottom: 1px solid var(--surface-variant);">
+<td style="text-align: center; color: var(--outline-variant); padding: 10px 4px; font-size: 14px;" class="">3</td>
+<td style="padding: 10px 8px; font-size: 14px;" class=""><div class="td-flex" style="display: flex; align-items: center; justify-content: space-between; gap: 4px;"><span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" class="">Sugar</span><span class="material-symbols-outlined" style="font-size: 16px; color: var(--outline-variant); flex-shrink: 0;">mic</span></div></td>
+<td style="padding: 10px 8px; font-size: 14px;" class=""><div class="td-flex" style="display: flex; align-items: center; justify-content: space-between; gap: 4px;"><span style="white-space: nowrap;" class="">35 kg</span><span class="material-symbols-outlined" style="font-size: 16px; color: var(--outline-variant); flex-shrink: 0;">mic</span></div></td>
+<td class="td-right" style="text-align: right; font-weight: 600; font-size: 14px; padding: 10px 10px 10px 4px; white-space: nowrap;">₹1400.00</td>
 </tr>
 </tbody>
 </table>
 </div>
 </section>
 <!-- Live Total -->
-<section class="total-section" style="padding: 0px 8px; margin-top: -8px;">
-<div class="total-amount" style="font-size: 40px; background: linear-gradient(135deg, rgb(123, 77, 255), rgb(255, 107, 61)) text; -webkit-text-fill-color: transparent;">₹25.50</div>
-<div class="total-words" style="background: linear-gradient(135deg, rgb(123, 77, 255), rgb(255, 107, 61)) text; -webkit-text-fill-color: transparent;">Twenty-Five Rupees and Fifty Paise</div>
-</section>
+<section class="total-section" style="background: rgb(255, 255, 255); border: 1px solid rgba(0, 0, 0, 0.04); border-radius: 20px; box-shadow: rgba(0, 0, 0, 0.06) 4px 6px 16px; padding: 18px 20px; display: flex; flex-direction: column; align-items: flex-end; gap: 6px; position: relative; overflow: hidden;"><div style="position: absolute; right: -24px; bottom: -24px; width: 96px; height: 96px; background: radial-gradient(circle, rgba(123, 77, 255, 0.12) 0%, rgba(255, 107, 61, 0) 70%); border-radius: 50%; pointer-events: none;"></div><div style="display: flex; align-items: center; gap: 6px;"><span class="material-symbols-outlined" style="font-size: 14px; color: var(--primary);">payments</span><span style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--outline);" class="">Total Amount</span></div><div class="total-amount" style="font-size: 42px; font-weight: 800; line-height: 1.1; letter-spacing: -0.03em; font-feature-settings: &quot;tnum&quot;; background: linear-gradient(135deg, rgb(123, 77, 255), rgb(255, 107, 61)) text; -webkit-text-fill-color: transparent;">₹25.50</div><div style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; background: rgba(98, 44, 229, 0.06); border: 1px solid rgba(98, 44, 229, 0.12); border-radius: 9999px; margin-top: 2px;"><span class="material-symbols-outlined" style="font-size: 13px; color: var(--primary);">sell</span><span class="total-words" style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--primary); margin-top: 0px;">Twenty-Five Rupees and Fifty Paise</span></div></section>
 <!-- Payment Mode -->
-<section>
-<h2 class="section-title">Payment Mode</h2>
-<div class="payment-grid">
-<div class="payment-card payment-inactive" style="background-color: white; border: 1px solid var(--surface-variant); border-radius: 12px; box-shadow: rgba(123, 77, 255, 0.08) 4px 8px 24px;">
-<span class="material-symbols-outlined" style="font-size: 24px; color: white; background: linear-gradient(135deg, rgb(123, 77, 255), rgb(255, 107, 61)); border-radius: 50%; padding: 8px;">credit_card</span>
-<span class="payment-label">Credit Card</span>
+<section class="card" style="box-shadow: rgba(123, 77, 255, 0.08) 0px 10px 25px -5px, rgba(0, 0, 0, 0.04) 0px 4px 12px; border: 1px solid rgba(202, 195, 216, 0.3);">
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+<h2 class="section-title" style="margin-bottom: 0px;">Payment Mode</h2>
+<span style="font-size: 11px; font-weight: 600; color: var(--outline); letter-spacing: 0.02em;" class="">Select method</span>
 </div>
-<div class="payment-card payment-inactive" style="background-color: white; border: 1px solid var(--surface-variant); border-radius: 12px; box-shadow: rgba(123, 77, 255, 0.08) 4px 8px 24px;">
-<span class="material-symbols-outlined" style="font-size: 24px; color: white; background: linear-gradient(135deg, rgb(123, 77, 255), rgb(255, 107, 61)); border-radius: 50%; padding: 8px;">payments</span>
-<span class="payment-label">Cash</span>
+<div class="payment-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;"><button type="button" class="payment-card payment-inactive" style="background: rgb(255, 255, 255); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 16px; padding: 14px 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; cursor: pointer; transition: 0.2s; box-shadow: rgba(0, 0, 0, 0.08) -4px -4px 10px, rgba(0, 0, 0, 0.08) 4px 6px 14px;">
+<div style="width: 44px; height: 44px; border-radius: 12px; background: var(--gradient); display: flex; align-items: center; justify-content: center; color: white; box-shadow: 0 4px 10px rgba(123, 77, 255, 0.28);">
+<span class="material-symbols-outlined" style="font-size: 22px;">credit_card</span>
 </div>
-<div class="payment-card payment-inactive" style="background-color: white; border: 1px solid var(--surface-variant); border-radius: 12px; box-shadow: rgba(123, 77, 255, 0.08) 4px 8px 24px;">
-<span class="material-symbols-outlined" style="font-size: 24px; color: white; background: linear-gradient(135deg, rgb(123, 77, 255), rgb(255, 107, 61)); border-radius: 50%; padding: 8px;">qr_code_scanner</span>
-<span class="payment-label">UPI</span>
+<span class="payment-label" style="font-size: 13px; font-weight: 600; color: var(--on-surface);">Credit Card</span>
+</button>
+<button type="button" class="payment-card payment-inactive" style="background: rgb(255, 255, 255); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 16px; padding: 14px 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; cursor: pointer; transition: 0.2s; box-shadow: rgba(0, 0, 0, 0.08) -4px -4px 10px, rgba(0, 0, 0, 0.08) 4px 6px 14px;">
+<div style="width: 44px; height: 44px; border-radius: 12px; background: var(--gradient); display: flex; align-items: center; justify-content: center; color: white; box-shadow: 0 4px 10px rgba(123, 77, 255, 0.28);">
+<span class="material-symbols-outlined" style="font-size: 22px;">payments</span>
 </div>
+<span class="payment-label" style="font-size: 13px; font-weight: 600; color: var(--on-surface);">Cash</span>
+</button>
+<button type="button" class="payment-card payment-inactive" style="background: rgb(255, 255, 255); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 16px; padding: 14px 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; cursor: pointer; transition: 0.2s; box-shadow: rgba(0, 0, 0, 0.08) -4px -4px 10px, rgba(0, 0, 0, 0.08) 4px 6px 14px;">
+<div style="width: 44px; height: 44px; border-radius: 12px; background: var(--gradient); display: flex; align-items: center; justify-content: center; color: white; box-shadow: 0 4px 10px rgba(123, 77, 255, 0.28);">
+<span class="material-symbols-outlined" style="font-size: 22px;">qr_code_scanner</span>
 </div>
+<span class="payment-label" style="font-size: 13px; font-weight: 600; color: var(--on-surface);">UPI</span>
+</button></div>
 </section>
 <!-- Bill Upload -->
-<section>
-<h2 class="section-title">Bill Receipt</h2>
-<div class="receipt-upload" style="background-color: var(--surface); border: 1px solid var(--surface-variant); box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px, rgba(0, 0, 0, 0.05) 0px 20px 25px -5px;">
+<section><div class="receipt-upload" style="background-color: var(--surface); border: 1px solid var(--surface-variant); box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px, rgba(0, 0, 0, 0.05) 0px 20px 25px -5px; border-radius: 20px; padding: 20px;">
+<div style="width: 100%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--surface-variant); padding-bottom: 12px; margin-bottom: 4px;">
+<h2 class="section-title" style="margin-bottom: 0px; font-weight: 700;">Bill Receipt</h2>
+<span style="font-size: 11px; font-weight: 600; color: var(--outline);" class="">Optional</span>
+</div>
 <div class="receipt-icons">
 <div class="receipt-icon-circle">
 <span class="material-symbols-outlined">photo_camera</span>
@@ -692,8 +754,7 @@
 <span class="receipt-title">Upload Receipt</span>
 <span class="receipt-subtitle">Tap to scan or select file</span>
 </div>
-</div>
-</section>
+</div></section>
 <!-- Description -->
 <section class="card" style="box-shadow: rgba(123, 77, 255, 0.2) 0px 10px 30px -5px, rgba(255, 107, 61, 0.15) 0px 10px 20px -5px;">
 <h2 class="section-title">Description (Optional)</h2>
@@ -702,8 +763,8 @@
 <!-- Save Button -->
 <button class="save-btn">
 <span class="material-symbols-outlined" style="font-size: 20px;">check</span>
-        Save Expense
-    </button>
+Save Expense
+</button>
 </main>
 <!-- BottomNavBar -->
 <nav class="bottom-nav">
@@ -727,6 +788,129 @@
 <span class="">History</span>
 </button>
 </nav>
+<script>
+  let isDropdownOpen = false;
+
+  function toggleCategoryDropdown(event) {
+    if (event) {
+      event.stopPropagation();
+    }
+    const menu = document.getElementById('category-dropdown-menu');
+    const chevron = document.getElementById('dropdown-chevron');
+    const trigger = document.getElementById('category-dropdown-trigger');
+
+    isDropdownOpen = !isDropdownOpen;
+
+    if (isDropdownOpen) {
+      menu.style.display = 'flex';
+      chevron.style.transform = 'rotate(180deg)';
+      trigger.style.borderColor = 'var(--primary)';
+      trigger.setAttribute('aria-expanded', 'true');
+    } else {
+      closeCategoryDropdown();
+    }
+  }
+
+  function closeCategoryDropdown() {
+    const menu = document.getElementById('category-dropdown-menu');
+    const chevron = document.getElementById('dropdown-chevron');
+    const trigger = document.getElementById('category-dropdown-trigger');
+
+    if (menu) menu.style.display = 'none';
+    if (chevron) chevron.style.transform = 'rotate(0deg)';
+    if (trigger) {
+      trigger.style.borderColor = 'var(--outline-variant)';
+      trigger.setAttribute('aria-expanded', 'false');
+    }
+    isDropdownOpen = false;
+  }
+
+  function selectCategory(name, icon, subtitle, itemEl) {
+    // 1. Update Display Card
+    const titleEl = document.getElementById('selected-category-title');
+    const subEl = document.getElementById('selected-category-subtitle');
+    const iconEl = document.getElementById('selected-category-icon');
+    const tableTitle = document.getElementById('items-table-title');
+
+    if (titleEl) titleEl.textContent = name;
+    if (subEl) subEl.textContent = subtitle || (name + ' category');
+    if (iconEl) iconEl.textContent = icon;
+    if (tableTitle) tableTitle.textContent = name + ' Items';
+
+    // 2. Update Dropdown Items Active State
+    const dropdownItems = document.querySelectorAll('.category-dropdown-item');
+    dropdownItems.forEach(el => {
+      const isMatch = el.getAttribute('data-category') === name;
+      const check = el.querySelector('.check-mark');
+      const iconBox = el.querySelector('.item-icon-box');
+
+      if (isMatch) {
+        el.style.background = 'rgba(98, 44, 229, 0.08)';
+        el.style.color = 'var(--primary)';
+        el.style.fontWeight = '600';
+        el.style.border = '1px solid rgba(98, 44, 229, 0.2)';
+        if (check) check.style.display = 'inline-block';
+        if (iconBox) {
+          iconBox.style.background = 'var(--gradient)';
+          iconBox.style.color = 'white';
+          iconBox.style.boxShadow = '0 3px 8px rgba(123, 77, 255, 0.28)';
+        }
+      } else {
+        el.style.background = 'transparent';
+        el.style.color = 'var(--on-surface)';
+        el.style.fontWeight = '500';
+        el.style.border = '1px solid transparent';
+        if (check) check.style.display = 'none';
+        if (iconBox) {
+          iconBox.style.background = 'var(--surface-container-high)';
+          iconBox.style.color = 'var(--on-surface-variant)';
+          iconBox.style.boxShadow = 'none';
+        }
+      }
+    });
+
+    // 3. Update Horizontal List Chips
+    const chips = document.querySelectorAll('#horizontal-category-list .category-btn[data-cat-name]');
+    chips.forEach(chip => {
+      if (chip.getAttribute('data-cat-name') === name) {
+        chip.className = 'category-btn category-active';
+        chip.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      } else {
+        chip.className = 'category-btn category-inactive';
+      }
+    });
+
+    // 4. Close Dropdown
+    closeCategoryDropdown();
+  }
+
+  function handleChipClick(name, icon, subtitle) {
+    selectCategory(name, icon, subtitle);
+  }
+
+  function promptAddCategory(event) {
+    if (event) event.stopPropagation();
+    const newCat = prompt('Enter new category name:');
+    if (newCat && newCat.trim()) {
+      const trimmed = newCat.trim();
+      selectCategory(trimmed, 'category', 'Custom Category');
+    }
+  }
+
+  // Close dropdown on tap outside
+  document.addEventListener('click', function(e) {
+    const wrapper = document.getElementById('category-dropdown-wrapper');
+    if (wrapper && !wrapper.contains(e.target)) {
+      closeCategoryDropdown();
+    }
+  });
+</script>
+
+
+
+
+
+
 
 
 </body></html>
