@@ -478,61 +478,59 @@
 <!-- Date Picker / Calendar Card -->
 <section class="card">
 <div class="calendar-header" style="margin-bottom: 20px;">
-<span class="">August 2026</span>
+<span class="">September 2026</span>
 <div style="display: flex; gap: 8px; color: var(--outline);">
 <span class="material-symbols-outlined" style="font-size: 20px; cursor: pointer;">chevron_left</span>
 <span class="material-symbols-outlined" style="font-size: 20px; cursor: pointer;">chevron_right</span>
 </div>
 </div>
-<div class="calendar-grid">
-<div class="calendar-day-header">M</div>
+<div class="calendar-grid"><div class="calendar-day-header">M</div>
 <div class="calendar-day-header">T</div>
 <div class="calendar-day-header">W</div>
 <div class="calendar-day-header">T</div>
 <div class="calendar-day-header">F</div>
 <div class="calendar-day-header">S</div>
 <div class="calendar-day-header">S</div>
-<!-- Week 1 -->
-<div class="calendar-date muted">27</div>
-<div class="calendar-date muted">28</div>
-<div class="calendar-date muted">29</div>
-<div class="calendar-date muted">30</div>
+<!-- Week 1: Sep 1 is Tuesday, Sep 5 is Saturday -->
 <div class="calendar-date muted">31</div>
 <div class="calendar-date">1</div>
 <div class="calendar-date">2</div>
-<!-- Week 2 -->
 <div class="calendar-date">3</div>
 <div class="calendar-date">4</div>
 <div class="calendar-date active">5</div>
 <div class="calendar-date">6</div>
+<!-- Week 2 -->
 <div class="calendar-date">7</div>
 <div class="calendar-date">8</div>
 <div class="calendar-date">9</div>
-<!-- Week 3 -->
 <div class="calendar-date">10</div>
 <div class="calendar-date">11</div>
 <div class="calendar-date">12</div>
 <div class="calendar-date">13</div>
+<!-- Week 3 -->
 <div class="calendar-date">14</div>
 <div class="calendar-date">15</div>
 <div class="calendar-date">16</div>
-<!-- Week 4 -->
 <div class="calendar-date">17</div>
 <div class="calendar-date">18</div>
 <div class="calendar-date">19</div>
 <div class="calendar-date">20</div>
+<!-- Week 4 -->
 <div class="calendar-date">21</div>
 <div class="calendar-date">22</div>
 <div class="calendar-date">23</div>
-<!-- Week 5 -->
 <div class="calendar-date">24</div>
 <div class="calendar-date">25</div>
 <div class="calendar-date">26</div>
 <div class="calendar-date">27</div>
+<!-- Week 5 -->
 <div class="calendar-date">28</div>
 <div class="calendar-date">29</div>
 <div class="calendar-date">30</div>
-</div>
+<div class="calendar-date muted">1</div>
+<div class="calendar-date muted">2</div>
+<div class="calendar-date muted">3</div>
+<div class="calendar-date muted">4</div></div>
 </section>
 <!-- Category Dropdown Section -->
 <section class="card" style="position: relative; z-index: 40; padding: 16px; overflow: visible;">
@@ -683,7 +681,7 @@
 <span class="material-symbols-outlined" style="font-size: 18px;">add</span> Add Row
 </button>
 </div>
-<div class="table-container" style="overflow-x: auto; width: 100%; margin: 0px; padding: 0px; border-radius: 0px; background: var(--surface); box-shadow: var(--card-shadow); border: 1px solid rgba(0, 0, 0, 0.03);">
+<div class="table-container" style="overflow-x: auto; width: 100%; margin: 0px; padding: 0px; border-radius: 16px; background: var(--surface); box-shadow: rgba(0, 0, 0, 0.08) 0px 10px 20px -3px, rgba(0, 0, 0, 0.04) 0px 4px 6px -2px; border: 1px solid rgba(0, 0, 0, 0.04);">
 <table style="width: 100%; min-width: 100%; border-collapse: collapse; table-layout: fixed; margin: 0px; padding: 0px; border-radius: 0px;" class="">
 <thead><tr style="background: linear-gradient(to right, rgb(123, 77, 255), rgb(255, 107, 61)); color: white; border-radius: 0px;"><th style="width: 14%; text-align: center; background: transparent; color: inherit; padding: 10px 4px; font-size: 11px; font-weight: 600; border-radius: 0px; border-width: medium; border-style: none; border-color: currentcolor; border-image: none;" class="">S.NO</th><th style="width: 36%; text-align: left; background: transparent; color: inherit; padding: 10px 8px; font-size: 11px; font-weight: 600; border-radius: 0px; border-width: medium; border-style: none; border-color: currentcolor; border-image: none;" class="">ITEMS</th><th style="width: 25%; text-align: left; background: transparent; color: inherit; padding: 10px 8px; font-size: 11px; font-weight: 600; border-radius: 0px; border-width: medium; border-style: none; border-color: currentcolor; border-image: none;" class="">QTY</th><th style="width: 25%; text-align: right; background: transparent; color: inherit; padding: 10px 12px 10px 4px; font-size: 11px; font-weight: 600; border-radius: 0px; border-width: medium; border-style: none; border-color: currentcolor; border-image: none;" class="">AMOUNT</th></tr></thead>
 <tbody>
@@ -706,7 +704,33 @@
 <td class="td-right" style="text-align: right; font-weight: 600; font-size: 14px; padding: 10px 10px 10px 4px; white-space: nowrap;">₹1400.00</td>
 </tr>
 </tbody>
-<tfoot style="background: linear-gradient(135deg, rgba(123, 77, 255, 0.12), rgba(255, 107, 61, 0.12)); font-weight: 700; border-top: 1px solid var(--outline-variant);" class=""><tr><td colspan="3" style="padding: 14px 10px; font-size: 13px; font-weight: 700; color: var(--on-surface); text-transform: uppercase; letter-spacing: 0.05em;" class=""><div style="display: flex; flex-direction: column; gap: 2px;"><div style="display: flex; align-items: center; gap: 6px;"><span style="color: var(--primary); font-weight: 700;" class="">Total Amount</span></div><div style="font-size: 11px; font-weight: 500; color: var(--on-surface-variant); text-transform: none; letter-spacing: 0.01em; margin-left: 0px; text-align: left; white-space: nowrap;" class="">Two Thousand Four Hundred Rupees Only</div></div></td><td class="td-right" style="text-align: right; font-weight: 700; font-size: 16px; color: var(--primary); padding: 14px 10px 14px 4px; white-space: nowrap; vertical-align: middle;">₹2,400.00</td></tr></tfoot></table>
+<tfoot style="background: linear-gradient(135deg, rgba(123, 77, 255, 0.12), rgba(255, 107, 61, 0.12)); font-weight: 700; border-top: 1px solid var(--outline-variant); border-bottom: 3px solid transparent; border-image: linear-gradient(90deg, rgb(123, 77, 255), rgb(255, 107, 61)) 1 / 1 / 0 stretch;" class=""><tr><td colspan="3" style="padding: 14px 10px; font-size: 13px; font-weight: 700; color: var(--on-surface); text-transform: uppercase; letter-spacing: 0.05em;" class=""><div style="display: flex; flex-direction: column; gap: 2px;"><div style="display: flex; align-items: center; gap: 6px;"><span style="color: var(--primary); font-weight: 700;" class="">Total Amount</span></div><div style="font-size: 11px; font-weight: 500; color: var(--on-surface-variant); text-transform: none; letter-spacing: 0.01em; margin-left: 0px; text-align: left; white-space: nowrap;" class="">Two Thousand Four Hundred Rupees Only</div></div></td><td class="td-right" style="text-align: right; font-weight: 700; font-size: 16px; color: var(--primary); padding: 14px 10px 14px 4px; white-space: nowrap; vertical-align: middle;">₹2,400.00</td></tr></tfoot></table>
+</div>
+</section><!-- Payment Mode -->
+<section class="card" style="box-shadow: none; border: 1px solid rgba(202, 195, 216, 0.3); padding: 16px 16px 32px; margin-top: 24px; margin-bottom: 36px;">
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+<h2 class="section-title" style="margin-bottom: 0px; font-size: 15px; font-weight: 700;">Payment Mode</h2>
+<span style="font-size: 11px; font-weight: 600; color: var(--outline); letter-spacing: 0.02em;" class="">Select method</span>
+</div>
+<div class="payment-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 8px;">
+<button type="button" class="payment-card payment-inactive" style="background: rgb(255, 255, 255); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 16px; padding: 14px 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; cursor: pointer; transition: 0.2s; box-shadow: rgba(0, 0, 0, 0.08) -4px -4px 10px, rgba(0, 0, 0, 0.08) 4px 6px 14px;">
+<div style="width: 44px; height: 44px; border-radius: 12px; background: var(--gradient); display: flex; align-items: center; justify-content: center; color: white; box-shadow: 0 4px 10px rgba(123, 77, 255, 0.28);">
+<span class="material-symbols-outlined" style="font-size: 22px;">credit_card</span>
+</div>
+<span class="payment-label" style="font-size: 13px; font-weight: 600; color: var(--on-surface);">Credit Card</span>
+</button>
+<button type="button" class="payment-card payment-inactive" style="background: rgb(255, 255, 255); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 16px; padding: 14px 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; cursor: pointer; transition: 0.2s; box-shadow: rgba(0, 0, 0, 0.08) -4px -4px 10px, rgba(0, 0, 0, 0.08) 4px 6px 14px;">
+<div style="width: 44px; height: 44px; border-radius: 12px; background: var(--gradient); display: flex; align-items: center; justify-content: center; color: white; box-shadow: 0 4px 10px rgba(123, 77, 255, 0.28);">
+<span class="material-symbols-outlined" style="font-size: 22px;">payments</span>
+</div>
+<span class="payment-label" style="font-size: 13px; font-weight: 600; color: var(--on-surface);">Cash</span>
+</button>
+<button type="button" class="payment-card payment-inactive" style="background: rgb(255, 255, 255); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 16px; padding: 14px 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; cursor: pointer; transition: 0.2s; box-shadow: rgba(0, 0, 0, 0.08) -4px -4px 10px, rgba(0, 0, 0, 0.08) 4px 6px 14px;">
+<div style="width: 44px; height: 44px; border-radius: 12px; background: var(--gradient); display: flex; align-items: center; justify-content: center; color: white; box-shadow: 0 4px 10px rgba(123, 77, 255, 0.28);">
+<span class="material-symbols-outlined" style="font-size: 22px;">qr_code_scanner</span>
+</div>
+<span class="payment-label" style="font-size: 13px; font-weight: 600; color: var(--on-surface);">UPI</span>
+</button>
 </div>
 </section>
 <!-- Live Total -->
@@ -714,7 +738,7 @@
 <!-- Payment Mode -->
 
 <!-- Bill Upload -->
-<section class="card" style="position: relative; z-index: 20; padding: 16px; box-shadow: rgba(123, 77, 255, 0.2) 0px 12px 28px -6px, rgba(255, 107, 61, 0.16) 0px 8px 18px -4px, rgba(0, 0, 0, 0.04) 0px 2px 6px; border-color: rgba(123, 77, 255, 0.12);">
+<section class="card" style="position: relative; z-index: 20; padding: 16px; background: var(--surface); border-radius: var(--radius-card); box-shadow: rgba(0, 0, 0, 0.08) 0px 10px 25px -5px, rgba(0, 0, 0, 0.04) 0px 8px 10px -6px, rgba(123, 77, 255, 0.06) 0px 12px 30px; border: 1px solid rgba(0, 0, 0, 0.04);">
   <!-- Header with Title & Badge -->
   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
     <div style="display: flex; align-items: center; gap: 8px;">
@@ -758,7 +782,7 @@
   </div>
 </section>
 <!-- Description -->
-<section class="card" style="position: relative; z-index: 30; padding: 16px; overflow: visible; box-shadow: rgba(123, 77, 255, 0.22) 0px 10px 25px -5px, rgba(255, 107, 61, 0.18) 0px 8px 14px -6px, rgba(123, 77, 255, 0.08) 0px 0px 0px 1px;">
+<section class="card" style="position: relative; z-index: 30; padding: 16px; overflow: visible; box-shadow: rgba(0, 0, 0, 0.06) 0px 4px 14px;">
 <h2 class="section-title">Expense Description (Optional)</h2>
 <textarea class="description-input" placeholder="Add notes about this expense..." style="height: 76px; min-height: 76px; padding: 12px 16px;" rows="2"></textarea>
 </section>
@@ -907,6 +931,12 @@ Save Expense
     }
   });
 </script>
+
+
+
+
+
+
 
 
 
