@@ -1,954 +1,1958 @@
-<!DOCTYPE html><html lang="en" style=""><head>
-<meta charset="utf-8">
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
-<title>Add New Expense - Smart Finance</title>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<style>
-    :root {
-        --primary: #622ce5;
-        --primary-dim: #cdbdff;
-        --on-primary: #ffffff;
-        --primary-container: #e7deff;
-        --on-primary-container: #1f005f;
-        
-        --surface: #ffffff;
-        --on-surface: #1c1b1b;
-        --surface-variant: #f0eded;
-        --on-surface-variant: #494456;
-        --surface-container-low: #f6f3f2;
-        --surface-container-high: #ece7e7;
-        
-        --outline: #7a7487;
-        --outline-variant: #cac3d8;
-        
-        --gradient: linear-gradient(135deg, #7B4DFF, #FF6B3D);
-        --gradient-shadow: 0px 20px 40px rgba(123,77,255,0.15);
-        --card-shadow: 0px 10px 30px rgba(0,0,0,0.04);
-        
-        --radius-card: 24px;
-        --radius-btn: 18px;
-        
-        --font-inter: 'Inter', sans-serif;
-    }
-
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-    }
-
-    body {
-        font-family: var(--font-inter);
-        background-color: var(--surface);
-        color: var(--on-surface);
-        font-size: 16px;
-        line-height: 1.5;
-        min-height: 100vh;
-        -webkit-font-smoothing: antialiased;
-    }
-
-    button {
-        background: none;
-        border: none;
-        font-family: inherit;
-        cursor: pointer;
-        color: inherit;
-    }
-
-    .hide-scrollbar::-webkit-scrollbar { display: none; }
-    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-    /* Layout & Header */
-    .header {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        z-index: 50;
-        background: rgba(255, 255, 255, 0.8);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border-bottom: 1px solid rgba(0,0,0,0.05);
-        box-shadow: var(--card-shadow);
-    }
-    
-    .header-content {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        height: 64px;
-        padding: 0 20px;
-        max-width: 1280px;
-        margin: 0 auto;
-    }
-
-    .avatar {
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        overflow: hidden;
-        background: var(--surface-variant);
-    }
-    .avatar img { width: 100%; height: 100%; object-fit: cover; }
-
-    .brand-title {
-        font-size: 20px;
-        font-weight: 700;
-        color: var(--primary);
-    }
-
-    .header-icons {
-        color: var(--on-surface-variant);
-    }
-
-    /* Main Container */
-    .main-content {
-        padding: 88px 20px 104px;
-        max-width: 1280px;
-        margin: 0 auto;
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-    }
-
-    .page-title {
-        font-size: 24px;
-        font-weight: 700;
-        letter-spacing: -0.02em;
-    }
-
-    @media (min-width: 768px) {
-        .page-title { font-size: 32px; }
-    }
-
-    /* Cards */
-    .card {
-        background: var(--surface);
-        border-radius: var(--radius-card);
-        box-shadow: var(--card-shadow);
-        border: 1px solid rgba(0,0,0,0.03);
-        padding: 16px;
-    }
-
-    .section-title {
-        font-size: 14px;
-        font-weight: 600;
-        margin-bottom: 8px;
-        color: var(--on-surface);
-    }
-
-    /* Calendar */
-    .calendar-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 12px;
-        font-size: 14px;
-        font-weight: 600;
-    }
-    .calendar-grid {
-        display: grid;
-        grid-template-columns: repeat(7, 1fr);
-        gap: 4px;
-        text-align: center;
-    }
-    .calendar-day-header {
-        font-size: 12px;
-        color: var(--outline);
-        font-weight: 500;
-        padding-bottom: 4px;
-    }
-    .calendar-date {
-        padding: 8px 0;
-        font-size: 14px;
-        border-radius: 50%;
-        width: 36px;
-        height: 36px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto;
-        cursor: pointer;
-    }
-    .calendar-date.active {
-        background: var(--gradient);
-        color: white;
-        font-weight: 700;
-        box-shadow: 0 4px 10px rgba(123,77,255,0.3);
-    }
-    .calendar-date.muted {
-        color: var(--outline-variant);
-    }
-
-    /* Categories Horizontal Bar */
-    .category-list {
-        display: flex;
-        gap: 12px;
-        overflow-x: auto;
-        padding-bottom: 4px;
-    }
-    .category-btn {
-        height: 38px;
-        padding: 0 16px;
-        border-radius: 999px;
-        font-size: 14px;
-        font-weight: 600;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        white-space: nowrap;
-        transition: all 0.2s ease;
-        flex-shrink: 0;
-    }
-    .category-add {
-        border: 1px solid rgba(98, 44, 229, 0.3);
-        color: var(--primary);
-    }
-    .category-active {
-        background: var(--gradient) !important;
-        color: var(--on-primary) !important;
-        border-color: transparent !important;
-        box-shadow: 0 4px 12px rgba(123, 77, 255, 0.28);
-    }
-    .category-inactive {
-        background: #ffffff;
-        border: 1px solid var(--outline-variant);
-        color: var(--on-surface-variant);
-    }
-    .category-inactive:hover {
-        border-color: var(--primary);
-        color: var(--primary);
-    }
-
-    /* Table */
-    .table-header-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 16px;
-    }
-    .add-row-btn {
-        color: var(--primary);
-        font-size: 14px;
-        font-weight: 600;
-        display: flex;
-        align-items: center;
-        gap: 4px;
-    }
-    .table-container {
-        overflow-x: auto;
-    }
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        min-width: 400px;
-        text-align: left;
-    }
-    th {
-        font-size: 12px;
-        color: var(--outline);
-        font-weight: 500;
-        padding: 8px;
-        border-bottom: 1px solid var(--outline-variant);
-        background: var(--surface-container-low);
-    }
-    td {
-        padding: 8px;
-        border-bottom: 1px solid var(--surface-variant);
-        font-size: 16px;
-    }
-    .td-flex {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-    .td-right {
-        text-align: right;
-        font-weight: 500;
-        font-size: 14px;
-    }
-    .td-sno { color: var(--outline-variant); width: 48px; }
-
-    /* Total */
-    .total-section {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        padding: 0 8px;
-    }
-    .total-amount {
-        font-size: 48px;
-        font-weight: 700;
-        color: var(--primary);
-        letter-spacing: -0.04em;
-    }
-    .total-words {
-        font-size: 12px;
-        color: var(--outline-variant);
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        margin-top: 4px;
-    }
-
-    /* Payment Mode */
-    .payment-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 16px;
-    }
-    .payment-card {
-        border-radius: 12px;
-        padding: 8px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        cursor: pointer;
-        box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-    }
-    .payment-active {
-        background: rgba(98, 44, 229, 0.1);
-        border: 2px solid var(--primary);
-        color: var(--primary);
-    }
-    .payment-inactive {
-        background: var(--surface);
-        border: 1px solid var(--surface-variant);
-        color: var(--on-surface-variant);
-    }
-    .payment-label {
-        font-size: 14px;
-        font-weight: 600;
-    }
-
-    /* Bill Receipt */
-    .receipt-upload {
-        border: 2px dashed var(--outline-variant);
-        border-radius: 12px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 16px;
-        padding: 24px;
-        background: var(--surface-container-low);
-        text-align: center;
-        cursor: pointer;
-    }
-    .receipt-icons {
-        display: flex;
-        gap: 16px;
-        color: var(--primary);
-    }
-    .receipt-icon-circle {
-        width: 48px;
-        height: 48px;
-        border-radius: 50%;
-        background: var(--primary-container);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    .receipt-title {
-        display: block;
-        font-size: 14px;
-        font-weight: 600;
-        color: var(--on-surface);
-    }
-    .receipt-subtitle {
-        font-size: 12px;
-        color: var(--outline);
-    }
-
-    /* Description */
-    .description-input {
-        width: 100%;
-        height: 128px;
-        background: #F8F9FA;
-        border: 1px solid var(--surface-variant);
-        border-radius: 12px;
-        padding: 16px;
-        font-family: inherit;
-        font-size: 16px;
-        resize: none;
-    }
-    .description-input:focus {
-        outline: none;
-        border-color: var(--primary);
-    }
-
-    /* Save Button */
-    .save-btn {
-        height: 48px;
-        border-radius: var(--radius-btn);
-        background: var(--gradient);
-        color: var(--on-primary);
-        font-size: 14px;
-        font-weight: 600;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 4px;
-        width: 100%;
-        box-shadow: var(--gradient-shadow);
-        margin-top: 8px;
-        margin-bottom: 16px;
-        transition: transform 0.2s;
-    }
-    .save-btn:active {
-        transform: scale(0.98);
-    }
-
-    /* Bottom Nav */
-    .bottom-nav {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 72px;
-        background: rgba(255, 255, 255, 0.8);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        padding: 0 16px;
-        padding-bottom: env(safe-area-inset-bottom);
-        border-top-left-radius: 12px;
-        border-top-right-radius: 12px;
-        box-shadow: 0px -4px 20px rgba(0,0,0,0.04);
-        z-index: 50;
-    }
-    @media (min-width: 768px) {
-        .bottom-nav { display: none; }
-    }
-    .nav-item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        color: var(--on-surface-variant);
-    }
-    .nav-item span:last-child {
-        font-size: 12px;
-        font-weight: 500;
-        margin-top: 4px;
-    }
-    .nav-fab {
-        background: var(--gradient);
-        color: var(--on-primary);
-        width: 56px;
-        height: 56px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transform: translateY(-24px);
-        box-shadow: var(--gradient-shadow);
-    }
-
-    /* Dropdown item styling */
-    .category-dropdown-item {
-        transition: all 0.15s ease;
-    }
-    .category-dropdown-item:hover {
-        background: rgba(98, 44, 229, 0.05);
-    }
-</style>
-</head>
-<body>
-<!-- TopAppBar -->
-<header class="header">
-<div class="header-content">
-<div class="avatar">
-<img alt="Avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwUn74rezF-Eii5Fa7qKbK81lRUpZlEF4Y_HK2nLlTpEIeZ7L4j0UtoO7gn6rOWEt8zzXPgp3AWR0PfxcmNQeO7ujNak99QrgQITzb4Pu7lFW7wGQlSK0qWYJwAtQNNUOn5PbEtyk756D1Q8jk0C7clSzVsu7MmGkemRh9yGFXNDCqDEvtPFDKjtg2ENeZJ_vb3SVSGqk31-tepRjYsFu_fnLsM88Qx3q-UcjEa68d_YWAwAqe1tAG" class="">
-</div>
-<div class="brand-title">Smart Finance</div>
-<div class="header-icons">
-<span class="material-symbols-outlined">notifications</span>
-</div>
-</div>
-</header>
-<!-- Main Content -->
-<main class="main-content">
-<h1 class="page-title" style="background: linear-gradient(to right, rgb(123, 77, 255), rgb(255, 107, 61)) text; -webkit-text-fill-color: transparent;">Add New Expense</h1>
-<p style="font-size: 14px; color: var(--outline); margin-top: -8px;" class="">Please select the Expense Date &amp; Category</p>
-<!-- Date Picker / Calendar Card -->
-<section class="card">
-<div class="calendar-header" style="margin-bottom: 20px;">
-<span class="">September 2026</span>
-<div style="display: flex; gap: 8px; color: var(--outline);">
-<span class="material-symbols-outlined" style="font-size: 20px; cursor: pointer;">chevron_left</span>
-<span class="material-symbols-outlined" style="font-size: 20px; cursor: pointer;">chevron_right</span>
-</div>
-</div>
-<div class="calendar-grid"><div class="calendar-day-header">M</div>
-<div class="calendar-day-header">T</div>
-<div class="calendar-day-header">W</div>
-<div class="calendar-day-header">T</div>
-<div class="calendar-day-header">F</div>
-<div class="calendar-day-header">S</div>
-<div class="calendar-day-header">S</div>
-<!-- Week 1: Sep 1 is Tuesday, Sep 5 is Saturday -->
-<div class="calendar-date muted">31</div>
-<div class="calendar-date">1</div>
-<div class="calendar-date">2</div>
-<div class="calendar-date">3</div>
-<div class="calendar-date">4</div>
-<div class="calendar-date active">5</div>
-<div class="calendar-date">6</div>
-<!-- Week 2 -->
-<div class="calendar-date">7</div>
-<div class="calendar-date">8</div>
-<div class="calendar-date">9</div>
-<div class="calendar-date">10</div>
-<div class="calendar-date">11</div>
-<div class="calendar-date">12</div>
-<div class="calendar-date">13</div>
-<!-- Week 3 -->
-<div class="calendar-date">14</div>
-<div class="calendar-date">15</div>
-<div class="calendar-date">16</div>
-<div class="calendar-date">17</div>
-<div class="calendar-date">18</div>
-<div class="calendar-date">19</div>
-<div class="calendar-date">20</div>
-<!-- Week 4 -->
-<div class="calendar-date">21</div>
-<div class="calendar-date">22</div>
-<div class="calendar-date">23</div>
-<div class="calendar-date">24</div>
-<div class="calendar-date">25</div>
-<div class="calendar-date">26</div>
-<div class="calendar-date">27</div>
-<!-- Week 5 -->
-<div class="calendar-date">28</div>
-<div class="calendar-date">29</div>
-<div class="calendar-date">30</div>
-<div class="calendar-date muted">1</div>
-<div class="calendar-date muted">2</div>
-<div class="calendar-date muted">3</div>
-<div class="calendar-date muted">4</div></div>
-</section>
-<!-- Category Dropdown Section -->
-<section class="card" style="position: relative; z-index: 40; padding: 16px; overflow: visible;">
-<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-<h2 class="section-title" style="margin-bottom: 0px;">Select - Category</h2>
-
-</div>
-<div class="category-dropdown-container" id="category-dropdown-wrapper" style="position: relative; width: 100%;">
-<!-- Trigger Button -->
-<button aria-expanded="false" aria-haspopup="listbox" class="selected-category-card" id="category-dropdown-trigger" onclick="toggleCategoryDropdown(event)" style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; min-height: 56px; background: rgb(255, 255, 255); border-color: var(--outline-variant); border-radius: 16px; box-shadow: rgba(0, 0, 0, 0.04) 0px 4px 14px; cursor: pointer; transition: 0.2s; outline: none;" type="button">
-<div style="display: flex; align-items: center; gap: 12px;">
-<div id="selected-category-icon-bg" style="width: 42px; height: 42px; border-radius: 12px; background: var(--gradient); display: flex; align-items: center; justify-content: center; color: white; box-shadow: 0 4px 10px rgba(123, 77, 255, 0.25); transition: all 0.2s; flex-shrink: 0;">
-<span class="material-symbols-outlined" id="selected-category-icon" style="font-size: 22px;">local_grocery_store</span>
-</div>
-<div style="text-align: left;">
-<div id="selected-category-title" style="font-size: 15px; font-weight: 700; color: var(--on-surface); line-height: 1.2;" class="">Grocery</div>
-<div id="selected-category-subtitle" style="font-size: 12px; color: var(--outline); margin-top: 2px;" class="">Daily essentials &amp; food</div>
-</div>
-</div>
-<span class="material-symbols-outlined" id="dropdown-chevron" style="color: var(--primary); font-size: 24px; transition: transform 0.25s; transform: rotate(0deg);">expand_more</span>
-</button>
-<!-- Dropdown Menu -->
-<div class="hide-scrollbar" id="category-dropdown-menu" role="listbox" style="display: none; position: absolute; top: calc(100% + 8px); left: 0px; width: 100%; background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(20px); border: 1.5px solid var(--outline-variant); border-radius: 18px; box-shadow: rgba(123, 77, 255, 0.16) 0px 20px 45px, rgba(0, 0, 0, 0.08) 0px 4px 16px; z-index: 100; max-height: 310px; overflow-y: auto; padding: 8px; flex-direction: column; gap: 4px;">
-<!-- Quick Add Category Option inside Menu -->
-<button onclick="promptAddCategory(event)" style="display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px 12px; border-radius: 12px; background: rgba(98, 44, 229, 0.05); border: 1px dashed rgba(98, 44, 229, 0.35); color: var(--primary); font-weight: 600; font-size: 13px; margin-bottom: 4px; cursor: pointer;" type="button" class="">
-<span class="material-symbols-outlined" style="font-size: 18px;">add_circle</span>
-<span class="">+ Add Custom Category</span>
-</button>
-<!-- Category Items -->
-<div class="category-dropdown-item" data-category="Grocery" data-icon="local_grocery_store" data-subtitle="Daily essentials &amp; food" onclick="selectCategory('Grocery', 'local_grocery_store', 'Daily essentials &amp; food', this)" style="display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; min-height: 48px; border-radius: 12px; cursor: pointer; background: rgba(98, 44, 229, 0.08); color: var(--primary); font-weight: 600; border: 1px solid rgba(98, 44, 229, 0.2);">
-<div style="display: flex; align-items: center; gap: 12px;">
-<div class="item-icon-box" style="width: 36px; height: 36px; border-radius: 10px; background: var(--gradient); display: flex; align-items: center; justify-content: center; color: white; box-shadow: rgba(123, 77, 255, 0.28) 0px 3px 8px;">
-<span class="material-symbols-outlined" style="font-size: 20px;">local_grocery_store</span>
-</div>
-<div style="display: flex; flex-direction: column; text-align: left;">
-<span style="font-size: 14px; font-weight: 600;" class="">Grocery</span>
-<span style="font-size: 11px; color: var(--outline);" class="">Daily essentials &amp; food</span>
-</div>
-</div>
-<span class="material-symbols-outlined check-mark" style="font-size: 20px; color: var(--primary); display: inline-block;">check</span>
-</div>
-<div class="category-dropdown-item" data-category="Vegetables" data-icon="eco" data-subtitle="Fresh vegetables &amp; greens" onclick="selectCategory('Vegetables', 'eco', 'Fresh vegetables &amp; greens', this)" style="display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; min-height: 48px; border-radius: 12px; cursor: pointer; color: var(--on-surface); font-weight: 500; border: 1px solid transparent; background: transparent;">
-<div style="display: flex; align-items: center; gap: 12px;">
-<div class="item-icon-box" style="width: 36px; height: 36px; border-radius: 10px; background: var(--surface-container-high); display: flex; align-items: center; justify-content: center; color: var(--on-surface-variant); box-shadow: none;">
-<span class="material-symbols-outlined" style="font-size: 20px;">eco</span>
-</div>
-<div style="display: flex; flex-direction: column; text-align: left;">
-<span style="font-size: 14px;" class="">Vegetables</span>
-<span style="font-size: 11px; color: var(--outline);" class="">Fresh vegetables &amp; greens</span>
-</div>
-</div>
-<span class="material-symbols-outlined check-mark" style="font-size: 20px; color: var(--primary); display: none;">check</span>
-</div>
-<div class="category-dropdown-item" data-category="Clothes" data-icon="checkroom" data-subtitle="Apparel &amp; laundry" onclick="selectCategory('Clothes', 'checkroom', 'Apparel &amp; laundry', this)" style="display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; min-height: 48px; border-radius: 12px; cursor: pointer; color: var(--on-surface); font-weight: 500; border: 1px solid transparent; background: transparent;">
-<div style="display: flex; align-items: center; gap: 12px;">
-<div class="item-icon-box" style="width: 36px; height: 36px; border-radius: 10px; background: var(--surface-container-high); display: flex; align-items: center; justify-content: center; color: var(--on-surface-variant); box-shadow: none;">
-<span class="material-symbols-outlined" style="font-size: 20px;">checkroom</span>
-</div>
-<div style="display: flex; flex-direction: column; text-align: left;">
-<span style="font-size: 14px;" class="">Clothes</span>
-<span style="font-size: 11px; color: var(--outline);" class="">Apparel &amp; laundry</span>
-</div>
-</div>
-<span class="material-symbols-outlined check-mark" style="font-size: 20px; color: var(--primary); display: none;">check</span>
-</div>
-<div class="category-dropdown-item" data-category="Petrol" data-icon="local_gas_station" data-subtitle="Fuel &amp; vehicle maintenance" onclick="selectCategory('Petrol', 'local_gas_station', 'Fuel &amp; vehicle maintenance', this)" style="display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; min-height: 48px; border-radius: 12px; cursor: pointer; color: var(--on-surface); font-weight: 500; border: 1px solid transparent; background: transparent;">
-<div style="display: flex; align-items: center; gap: 12px;">
-<div class="item-icon-box" style="width: 36px; height: 36px; border-radius: 10px; background: var(--surface-container-high); display: flex; align-items: center; justify-content: center; color: var(--on-surface-variant); box-shadow: none;">
-<span class="material-symbols-outlined" style="font-size: 20px;">local_gas_station</span>
-</div>
-<div style="display: flex; flex-direction: column; text-align: left;">
-<span style="font-size: 14px;" class="">Petrol</span>
-<span style="font-size: 11px; color: var(--outline);" class="">Fuel &amp; vehicle maintenance</span>
-</div>
-</div>
-<span class="material-symbols-outlined check-mark" style="font-size: 20px; color: var(--primary); display: none;">check</span>
-</div>
-<div class="category-dropdown-item" data-category="Travelling" data-icon="flight" data-subtitle="Flights, transit &amp; trips" onclick="selectCategory('Travelling', 'flight', 'Flights, transit &amp; trips', this)" style="display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; min-height: 48px; border-radius: 12px; cursor: pointer; color: var(--on-surface); font-weight: 500; border: 1px solid transparent; background: transparent;">
-<div style="display: flex; align-items: center; gap: 12px;">
-<div class="item-icon-box" style="width: 36px; height: 36px; border-radius: 10px; background: var(--surface-container-high); display: flex; align-items: center; justify-content: center; color: var(--on-surface-variant); box-shadow: none;">
-<span class="material-symbols-outlined" style="font-size: 20px;">flight</span>
-</div>
-<div style="display: flex; flex-direction: column; text-align: left;">
-<span style="font-size: 14px;" class="">Travelling</span>
-<span style="font-size: 11px; color: var(--outline);" class="">Flights, transit &amp; trips</span>
-</div>
-</div>
-<span class="material-symbols-outlined check-mark" style="font-size: 20px; color: var(--primary); display: none;">check</span>
-</div>
-<div class="category-dropdown-item" data-category="Doctor &amp; Medicines" data-icon="medical_services" data-subtitle="Healthcare &amp; pharmacy" onclick="selectCategory('Doctor &amp; Medicines', 'medical_services', 'Healthcare &amp; pharmacy', this)" style="display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; min-height: 48px; border-radius: 12px; cursor: pointer; color: var(--on-surface); font-weight: 500; border: 1px solid transparent; background: transparent;">
-<div style="display: flex; align-items: center; gap: 12px;">
-<div class="item-icon-box" style="width: 36px; height: 36px; border-radius: 10px; background: var(--surface-container-high); display: flex; align-items: center; justify-content: center; color: var(--on-surface-variant); box-shadow: none;">
-<span class="material-symbols-outlined" style="font-size: 20px;">medical_services</span>
-</div>
-<div style="display: flex; flex-direction: column; text-align: left;">
-<span style="font-size: 14px;" class="">Doctor &amp; Medicines</span>
-<span style="font-size: 11px; color: var(--outline);" class="">Healthcare &amp; pharmacy</span>
-</div>
-</div>
-<span class="material-symbols-outlined check-mark" style="font-size: 20px; color: var(--primary); display: none;">check</span>
-</div>
-<div class="category-dropdown-item" data-category="Water" data-icon="water_drop" data-subtitle="Water utility &amp; supplies" onclick="selectCategory('Water', 'water_drop', 'Water utility &amp; supplies', this)" style="display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; min-height: 48px; border-radius: 12px; cursor: pointer; color: var(--on-surface); font-weight: 500; border: 1px solid transparent; background: transparent;">
-<div style="display: flex; align-items: center; gap: 12px;">
-<div class="item-icon-box" style="width: 36px; height: 36px; border-radius: 10px; background: var(--surface-container-high); display: flex; align-items: center; justify-content: center; color: var(--on-surface-variant); box-shadow: none;">
-<span class="material-symbols-outlined" style="font-size: 20px;">water_drop</span>
-</div>
-<div style="display: flex; flex-direction: column; text-align: left;">
-<span style="font-size: 14px;" class="">Water</span>
-<span style="font-size: 11px; color: var(--outline);" class="">Water utility &amp; supplies</span>
-</div>
-</div>
-<span class="material-symbols-outlined check-mark" style="font-size: 20px; color: var(--primary); display: none;">check</span>
-</div>
-<div class="category-dropdown-item" data-category="Electricity" data-icon="electric_bolt" data-subtitle="Electricity power bills" onclick="selectCategory('Electricity', 'electric_bolt', 'Electricity power bills', this)" style="display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; min-height: 48px; border-radius: 12px; cursor: pointer; color: var(--on-surface); font-weight: 500; border: 1px solid transparent; background: transparent;">
-<div style="display: flex; align-items: center; gap: 12px;">
-<div class="item-icon-box" style="width: 36px; height: 36px; border-radius: 10px; background: var(--surface-container-high); display: flex; align-items: center; justify-content: center; color: var(--on-surface-variant); box-shadow: none;">
-<span class="material-symbols-outlined" style="font-size: 20px;">electric_bolt</span>
-</div>
-<div style="display: flex; flex-direction: column; text-align: left;">
-<span style="font-size: 14px;" class="">Electricity</span>
-<span style="font-size: 11px; color: var(--outline);" class="">Electricity power bills</span>
-</div>
-</div>
-<span class="material-symbols-outlined check-mark" style="font-size: 20px; color: var(--primary); display: none;">check</span>
-</div>
-<div class="category-dropdown-item" data-category="Other" data-icon="more_horiz" data-subtitle="Miscellaneous expenses" onclick="selectCategory('Other', 'more_horiz', 'Miscellaneous expenses', this)" style="display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; min-height: 48px; border-radius: 12px; cursor: pointer; color: var(--on-surface); font-weight: 500; border: 1px solid transparent; background: transparent;">
-<div style="display: flex; align-items: center; gap: 12px;">
-<div class="item-icon-box" style="width: 36px; height: 36px; border-radius: 10px; background: var(--surface-container-high); display: flex; align-items: center; justify-content: center; color: var(--on-surface-variant); box-shadow: none;">
-<span class="material-symbols-outlined" style="font-size: 20px;">more_horiz</span>
-</div>
-<div style="display: flex; flex-direction: column; text-align: left;">
-<span style="font-size: 14px;" class="">Other</span>
-<span style="font-size: 11px; color: var(--outline);" class="">Miscellaneous expenses</span>
-</div>
-</div>
-<span class="material-symbols-outlined check-mark" style="font-size: 20px; color: var(--primary); display: none;">check</span>
-</div>
-</div>
-</div>
-</section>
-<!-- Category Horizontal Selector -->
-
-<!-- Item Table Card -->
-<section class="" style="background: transparent; box-shadow: none; border: none; padding: 0;">
-<div class="table-header-row">
-<h2 class="section-title" id="items-table-title" style="margin-bottom: 0px;">Grocery</h2>
-<button class="add-row-btn">
-<span class="material-symbols-outlined" style="font-size: 18px;">add</span> Add Row
-</button>
-</div>
-<div class="table-container" style="overflow-x: auto; width: 100%; margin: 0px; padding: 0px; border-radius: 16px; background: var(--surface); box-shadow: rgba(0, 0, 0, 0.08) 0px 10px 20px -3px, rgba(0, 0, 0, 0.04) 0px 4px 6px -2px; border: 1px solid rgba(0, 0, 0, 0.04);">
-<table style="width: 100%; min-width: 100%; border-collapse: collapse; table-layout: fixed; margin: 0px; padding: 0px; border-radius: 0px;" class="">
-<thead><tr style="background: linear-gradient(to right, rgb(123, 77, 255), rgb(255, 107, 61)); color: white; border-radius: 0px;"><th style="width: 14%; text-align: center; background: transparent; color: inherit; padding: 10px 4px; font-size: 11px; font-weight: 600; border-radius: 0px; border-width: medium; border-style: none; border-color: currentcolor; border-image: none;" class="">S.NO</th><th style="width: 36%; text-align: left; background: transparent; color: inherit; padding: 10px 8px; font-size: 11px; font-weight: 600; border-radius: 0px; border-width: medium; border-style: none; border-color: currentcolor; border-image: none;" class="">ITEMS</th><th style="width: 25%; text-align: left; background: transparent; color: inherit; padding: 10px 8px; font-size: 11px; font-weight: 600; border-radius: 0px; border-width: medium; border-style: none; border-color: currentcolor; border-image: none;" class="">QTY</th><th style="width: 25%; text-align: right; background: transparent; color: inherit; padding: 10px 12px 10px 4px; font-size: 11px; font-weight: 600; border-radius: 0px; border-width: medium; border-style: none; border-color: currentcolor; border-image: none;" class="">AMOUNT</th></tr></thead>
-<tbody>
-<tr style="border-bottom: 1px solid var(--surface-variant);">
-<td style="text-align: center; color: var(--outline-variant); padding: 10px 4px; font-size: 14px;" class="">1</td>
-<td style="padding: 10px 8px; font-size: 14px;" class=""><div class="td-flex" style="display: flex; align-items: center; justify-content: space-between; gap: 4px;"><span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" class="">Poha</span><span class="material-symbols-outlined" style="font-size: 16px; color: var(--outline-variant); flex-shrink: 0;">mic</span></div></td>
-<td style="padding: 10px 8px; font-size: 14px;" class=""><div class="td-flex" style="display: flex; align-items: center; justify-content: space-between; gap: 4px;"><span style="white-space: nowrap;" class="">20 kg</span><span class="material-symbols-outlined" style="font-size: 16px; color: var(--outline-variant); flex-shrink: 0;">mic</span></div></td>
-<td class="td-right" style="text-align: right; font-weight: 600; font-size: 14px; padding: 10px 10px 10px 4px; white-space: nowrap;">₹400.00</td>
-</tr>
-<tr style="border-bottom: 1px solid var(--surface-variant);">
-<td style="text-align: center; color: var(--outline-variant); padding: 10px 4px; font-size: 14px;" class="">2</td>
-<td style="padding: 10px 8px; font-size: 14px;" class=""><div class="td-flex" style="display: flex; align-items: center; justify-content: space-between; gap: 4px;"><span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" class="">Rava (Mota)</span><span class="material-symbols-outlined" style="font-size: 16px; color: var(--outline-variant); flex-shrink: 0;">mic</span></div></td>
-<td style="padding: 10px 8px; font-size: 14px;" class=""><div class="td-flex" style="display: flex; align-items: center; justify-content: space-between; gap: 4px;"><span style="white-space: nowrap;" class="">20 kg</span><span class="material-symbols-outlined" style="font-size: 16px; color: var(--outline-variant); flex-shrink: 0;">mic</span></div></td>
-<td class="td-right" style="text-align: right; font-weight: 600; font-size: 14px; padding: 10px 10px 10px 4px; white-space: nowrap;">₹600.00</td>
-</tr>
-<tr style="border-bottom: 1px solid var(--surface-variant);">
-<td style="text-align: center; color: var(--outline-variant); padding: 10px 4px; font-size: 14px;" class="">3</td>
-<td style="padding: 10px 8px; font-size: 14px;" class=""><div class="td-flex" style="display: flex; align-items: center; justify-content: space-between; gap: 4px;"><span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" class="">Sugar</span><span class="material-symbols-outlined" style="font-size: 16px; color: var(--outline-variant); flex-shrink: 0;">mic</span></div></td>
-<td style="padding: 10px 8px; font-size: 14px;" class=""><div class="td-flex" style="display: flex; align-items: center; justify-content: space-between; gap: 4px;"><span style="white-space: nowrap;" class="">35 kg</span><span class="material-symbols-outlined" style="font-size: 16px; color: var(--outline-variant); flex-shrink: 0;">mic</span></div></td>
-<td class="td-right" style="text-align: right; font-weight: 600; font-size: 14px; padding: 10px 10px 10px 4px; white-space: nowrap;">₹1400.00</td>
-</tr>
-</tbody>
-<tfoot style="background: linear-gradient(135deg, rgba(123, 77, 255, 0.12), rgba(255, 107, 61, 0.12)); font-weight: 700; border-top: 1px solid var(--outline-variant); border-bottom: 3px solid transparent; border-image: linear-gradient(90deg, rgb(123, 77, 255), rgb(255, 107, 61)) 1 / 1 / 0 stretch;" class=""><tr><td colspan="3" style="padding: 14px 10px; font-size: 13px; font-weight: 700; color: var(--on-surface); text-transform: uppercase; letter-spacing: 0.05em;" class=""><div style="display: flex; flex-direction: column; gap: 2px;"><div style="display: flex; align-items: center; gap: 6px;"><span style="color: var(--primary); font-weight: 700;" class="">Total Amount</span></div><div style="font-size: 11px; font-weight: 500; color: var(--on-surface-variant); text-transform: none; letter-spacing: 0.01em; margin-left: 0px; text-align: left; white-space: nowrap;" class="">Two Thousand Four Hundred Rupees Only</div></div></td><td class="td-right" style="text-align: right; font-weight: 700; font-size: 16px; color: var(--primary); padding: 14px 10px 14px 4px; white-space: nowrap; vertical-align: middle;">₹2,400.00</td></tr></tfoot></table>
-</div>
-</section><!-- Payment Mode -->
-<section class="card" style="box-shadow: none; border: 1px solid rgba(202, 195, 216, 0.3); padding: 16px 16px 24px; margin-top: 20px; margin-bottom: 12px;">
-<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-<h2 class="section-title" style="margin-bottom: 0px; font-size: 15px; font-weight: 700;">Payment Mode</h2>
-<span style="font-size: 11px; font-weight: 600; color: var(--outline); letter-spacing: 0.02em;" class="">Select method</span>
-</div>
-<div class="payment-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 8px;">
-<button type="button" class="payment-card payment-inactive" style="background: rgb(255, 255, 255); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 16px; padding: 14px 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; cursor: pointer; transition: 0.2s; box-shadow: rgba(0, 0, 0, 0.08) -4px -4px 10px, rgba(0, 0, 0, 0.08) 4px 6px 14px;">
-<div style="width: 44px; height: 44px; border-radius: 12px; background: var(--gradient); display: flex; align-items: center; justify-content: center; color: white; box-shadow: 0 4px 10px rgba(123, 77, 255, 0.28);">
-<span class="material-symbols-outlined" style="font-size: 22px;">credit_card</span>
-</div>
-<span class="payment-label" style="font-size: 13px; font-weight: 600; color: var(--on-surface);">Credit Card</span>
-</button>
-<button type="button" class="payment-card payment-inactive" style="background: rgb(255, 255, 255); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 16px; padding: 14px 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; cursor: pointer; transition: 0.2s; box-shadow: rgba(0, 0, 0, 0.08) -4px -4px 10px, rgba(0, 0, 0, 0.08) 4px 6px 14px;">
-<div style="width: 44px; height: 44px; border-radius: 12px; background: var(--gradient); display: flex; align-items: center; justify-content: center; color: white; box-shadow: 0 4px 10px rgba(123, 77, 255, 0.28);">
-<span class="material-symbols-outlined" style="font-size: 22px;">payments</span>
-</div>
-<span class="payment-label" style="font-size: 13px; font-weight: 600; color: var(--on-surface);">Cash</span>
-</button>
-<button type="button" class="payment-card payment-inactive" style="background: rgb(255, 255, 255); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 16px; padding: 14px 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; cursor: pointer; transition: 0.2s; box-shadow: rgba(0, 0, 0, 0.08) -4px -4px 10px, rgba(0, 0, 0, 0.08) 4px 6px 14px;">
-<div style="width: 44px; height: 44px; border-radius: 12px; background: var(--gradient); display: flex; align-items: center; justify-content: center; color: white; box-shadow: 0 4px 10px rgba(123, 77, 255, 0.28);">
-<span class="material-symbols-outlined" style="font-size: 22px;">qr_code_scanner</span>
-</div>
-<span class="payment-label" style="font-size: 13px; font-weight: 600; color: var(--on-surface);">UPI</span>
-</button>
-</div>
-</section>
-<!-- Live Total -->
-
-<!-- Payment Mode -->
-
-<!-- Bill Upload -->
-<section class="card" style="position: relative; z-index: 20; padding: 16px; background: var(--surface); border-radius: var(--radius-card); box-shadow: rgba(0, 0, 0, 0.08) 0px 10px 25px -5px, rgba(0, 0, 0, 0.04) 0px 8px 10px -6px, rgba(123, 77, 255, 0.06) 0px 12px 30px; border: 1px solid rgba(0, 0, 0, 0.04); margin-top: 0px;">
-  <!-- Header with Title & Badge -->
-  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-    <div style="display: flex; align-items: center; gap: 8px;">
-      <h2 class="section-title" style="margin-bottom: 0px; font-size: 15px; font-weight: 700;">Bill Receipt</h2>
-      
-    </div>
-    <span style="font-size: 11px; font-weight: 500; color: var(--outline);" class="">Max 5MB • JPG, PNG, PDF</span>
-  </div>
-
-  <!-- Fast Action Pills: Camera & Browse -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LDSS - Mahoor List</title>
   
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- React and ReactDOM -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  
+  <!-- Babel for on-the-fly JSX transpilation -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-  <!-- Drop Zone Area -->
-  <div style="border: 1.5px dashed var(--outline-variant); border-radius: 14px; background: #faf9fb; padding: 18px 14px; text-align: center; cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; align-items: center; gap: 6px;">
-    <div style="width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, rgba(123, 77, 255, 0.12), rgba(255, 107, 61, 0.15)); display: flex; align-items: center; justify-content: center; color: var(--primary); margin-bottom: 2px;">
-      <span class="material-symbols-outlined" style="font-size: 22px;">cloud_upload</span>
-    </div>
-    <div style="font-size: 13px; font-weight: 600; color: var(--on-surface);" class="">Drag &amp; drop receipt or tap to upload</div>
-    <div style="font-size: 11px; color: var(--outline);" class="">Receipt auto-scan extracts items &amp; totals</div>
-  </div>
+  <!-- HTML2PDF for true PDF downloading -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
-  <!-- Uploaded Receipt Preview Card -->
-  <div style="margin-top: 14px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;" class=""><span style="font-size: 12px; font-weight: 600; color: var(--on-surface-variant);" class="">Attached Bills (1 of 5)</span><div style="display: flex; gap: 4px; align-items: center;"><span style="width: 14px; height: 5px; border-radius: 99px; background: var(--primary); display: inline-block;"></span><span style="width: 5px; height: 5px; border-radius: 99px; background: var(--outline-variant); display: inline-block;"></span><span style="width: 5px; height: 5px; border-radius: 99px; background: var(--outline-variant); display: inline-block;"></span><span style="width: 5px; height: 5px; border-radius: 99px; background: var(--outline-variant); display: inline-block;"></span><span style="width: 5px; height: 5px; border-radius: 99px; background: var(--outline-variant); display: inline-block;"></span></div></div><div style="margin-top: 12px; padding: 10px 12px; background: var(--surface-container-low); border: 1px solid var(--outline-variant); border-radius: 12px; display: flex; align-items: center; justify-content: space-between; gap: 10px;">
-    <div style="display: flex; align-items: center; gap: 10px; min-width: 0;">
-      <div style="width: 38px; height: 38px; border-radius: 10px; background: var(--gradient); display: flex; align-items: center; justify-content: center; color: white; flex-shrink: 0; box-shadow: 0 2px 6px rgba(123, 77, 255, 0.25);">
-        <span class="material-symbols-outlined" style="font-size: 20px;">receipt_long</span>
-      </div>
-      <div style="display: flex; flex-direction: column; min-width: 0; text-align: left;">
-        <div style="display: flex; align-items: center; gap: 6px;">
-          <span style="font-size: 13px; font-weight: 600; color: var(--on-surface); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" class="">D-Mart_Receipt_Aug05.jpg</span>
-          <span style="font-size: 10px; font-weight: 600; color: rgb(22, 163, 74); background: rgba(22, 163, 74, 0.12); padding: 1px 6px; border-radius: 4px; display: inline-flex; align-items: center; gap: 2px; flex-shrink: 0;" class="">
-            <span class="material-symbols-outlined" style="font-size: 11px;">check_circle</span> Attached
-          </span>
+  <style>
+    /* Hide scrollbar for category navigation */
+    .scrollbar-hide::-webkit-scrollbar { display: none; }
+    .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+    
+    /* Print Styles */
+    @media print {
+      .no-print { display: none !important; }
+      body { background-color: white !important; }
+      .shadow-sm, .shadow-md, .shadow-2xl { box-shadow: none !important; }
+      input { border: none !important; background: transparent !important; }
+      .border { border: 1px solid #ddd !important; }
+    }
+  </style>
+</head>
+<body class="bg-[#FCF9F2]">
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect, useRef } = React;
+
+    const Icons = {
+      ArrowRight: (props) => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+      ),
+      TablePlus: (props) => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M12 3v18"></path><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M3 9h18"></path><path d="M3 15h18"></path><path d="M15 12h-6"></path></svg>
+      ),
+      TableMinus: (props) => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M12 3v18"></path><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M3 9h18"></path><path d="M3 15h18"></path><path d="M15 12h-6"></path></svg>
+      ),
+      FileExcel: (props) => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><path d="M8 13h2"></path><path d="M8 17h2"></path><path d="M14 13h2"></path><path d="M14 17h2"></path></svg>
+      ),
+      FilePdf: (props) => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><path d="M10 13v6"></path><path d="M10 13h2.5a1.5 1.5 0 0 1 1.5 1.5v1a1.5 1.5 0 0 1-1.5 1.5H10"></path></svg>
+      ),
+      Save: (props) => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path><path d="M17 21v-8H7v8"></path><path d="M7 3v5h8"></path></svg>
+      ),
+      FolderOpen: (props) => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="m6 14 1.45-2.9A2 2 0 0 1 9.24 10H20a2 2 0 0 1 1.94 2.5l-1.55 6a2 2 0 0 1-1.94 1.5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9L11 6h5a2 2 0 0 1 2 2v2"></path></svg>
+      ),
+      MoreVertical: (props) => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" {...props}><circle cx="12" cy="5" r="1.6"></circle><circle cx="12" cy="12" r="1.6"></circle><circle cx="12" cy="19" r="1.6"></circle></svg>
+      ),
+      GripVertical: (props) => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" {...props}><circle cx="9" cy="6" r="1.6"></circle><circle cx="15" cy="6" r="1.6"></circle><circle cx="9" cy="12" r="1.6"></circle><circle cx="15" cy="12" r="1.6"></circle><circle cx="9" cy="18" r="1.6"></circle><circle cx="15" cy="18" r="1.6"></circle></svg>
+      ),
+      Search: (props) => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+        </svg>
+      ),
+      Close: (props) => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
+          <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+        </svg>
+      ),
+      Mic: (props) => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+          <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
+          <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+          <line x1="12" x2="12" y1="19" y2="22" />
+        </svg>
+      ),
+      MicActive: (props) => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="red" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="animate-pulse" {...props}>
+          <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
+          <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+          <line x1="12" x2="12" y1="19" y2="22" />
+        </svg>
+      ),
+      Trash: (props) => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+          <path d="M18 6 6 18" />
+          <path d="m6 6 12 12" />
+        </svg>
+      ),
+      Plus: (props) => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+          <path d="M5 12h14" />
+          <path d="M12 5v14" />
+        </svg>
+      ),
+      Undo: (props) => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
+          <path d="M3 7v6h6" />
+          <path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13" />
+        </svg>
+      ),
+      Redo: (props) => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
+          <path d="M21 7v6h-6" />
+          <path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3l3 2.7" />
+        </svg>
+      ),
+      ShoppingCart: (props) => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+          <circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/>
+        </svg>
+      ),
+      Vegetables: (props) => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+          <path d="M2.27 21.7s9.87-2 13.73-6.19a5.52 5.52 0 0 0-8.18-8.18c-4.34 4-6.32 14.15-6.32 14.15z"/><path d="M7.14 9.14 5.39 7.39"/><path d="M11 13 9.25 11.25"/><path d="M18.5 7.5c-2-2-4-2-4-2s0-2 2-4c2 0 4 2 4 2s2 0 2 4c0 2-2 4-2 4z"/>
+        </svg>
+      ),
+      Temple: (props) => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+          <path d="M3 22h18" />
+          <path d="M5 22v-8l7-5 7 5v8" />
+          <path d="M12 9V2" />
+          <path d="m12 2 4 2.5-4 2.5" />
+          <path d="M10 22v-4a2 2 0 0 1 4 0v4" />
+        </svg>
+      ),
+      Flame: (props) => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" {...props}>
+          {/* Flat 2-tier stacked base matching image_549f76.png */}
+          <rect x="5" y="15" width="14" height="4" rx="1" />
+          <rect x="7" y="10" width="10" height="4" rx="1" />
+          {/* Static cutout flame */}
+          <path d="M12 2 C15 5 16 7 16 9.5 C16 10 15 10 14.5 9.5 C14 9 13.5 8 12 8 C10.5 8 10 9 9.5 9.5 C9 10 8 10 8 9.5 C8 7 9 5 12 2 Z" />
+        </svg>
+      ),
+      Grid: (props) => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+          <rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/>
+        </svg>
+      ),
+      WhatsApp: (props) => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" {...props}>
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
+        </svg>
+      )
+    };
+
+    const INITIAL_DATA = [
+      {
+        id: 'cat-1',
+        title: '1. Kirana Items',
+        items: [
+          { id: '1-1', name: 'Poha', quantity: '20 kg', purchaseQuantity: '', oldStock: '' },
+          { id: '1-2', name: 'Rava (Mota)', quantity: '20 kg', purchaseQuantity: '', oldStock: '' },
+          { id: '1-3', name: 'Sugar', quantity: '35 kg', purchaseQuantity: '', oldStock: '' },
+          { id: '1-4', name: 'Kaju (4 pieces)', quantity: '1 kg', purchaseQuantity: '', oldStock: '' },
+          { id: '1-5', name: 'Badam', quantity: '500 g', purchaseQuantity: '', oldStock: '' },
+          { id: '1-6', name: 'Elachi', quantity: '200 g', purchaseQuantity: '', oldStock: '' },
+          { id: '1-7', name: 'Water melon seeds', quantity: '250 g', purchaseQuantity: '', oldStock: '' },
+          { id: '1-8', name: 'Kismiss', quantity: '1 kg', purchaseQuantity: '', oldStock: '' },
+          { id: '1-9', name: 'Bheemseni karpoor', quantity: '1 small box', purchaseQuantity: '', oldStock: '' },
+          { id: '1-10', name: 'Patanjali Bellam (Sambar - 1 kg, Hawan - ?)', quantity: '2 kg', purchaseQuantity: '', oldStock: '' },
+          { id: '1-11', name: 'Ghee (* Food - 1 kg * Sweat - 5 kg)', quantity: '6 kg', purchaseQuantity: '', oldStock: '' },
+          { id: '1-12', name: 'Peasar papu', quantity: '15 kg', purchaseQuantity: '', oldStock: '' },
+          { id: '1-13', name: 'Chinta pandu', quantity: '1 kg', purchaseQuantity: '', oldStock: '' },
+          { id: '1-14', name: 'Dhaniya powder', quantity: '4 kg', purchaseQuantity: '', oldStock: '' },
+          { id: '1-15', name: 'Palli', quantity: '3 kg', purchaseQuantity: '', oldStock: '' },
+          { id: '1-16', name: 'Sambar Powder', quantity: '800 g', purchaseQuantity: '', oldStock: '' },
+          { id: '1-17', name: 'Hing', quantity: '1 small box', purchaseQuantity: '', oldStock: '' },
+          { id: '1-18', name: 'Minapapu', quantity: '1 kg', purchaseQuantity: '', oldStock: '' },
+          { id: '1-19', name: 'Chenga papu', quantity: '1 kg', purchaseQuantity: '', oldStock: '' },
+          { id: '1-20', name: 'Aavalu', quantity: '500 g', purchaseQuantity: '', oldStock: '' },
+          { id: '1-21', name: 'Jelakara', quantity: '500 g', purchaseQuantity: '', oldStock: '' },
+          { id: '1-22', name: 'Endu Mirchi', quantity: '250 g', purchaseQuantity: '', oldStock: '' },
+          { id: '1-23', name: 'Oil', quantity: '2 Tin', purchaseQuantity: '', oldStock: '' },
+          { id: '1-24', name: 'Garam masala', quantity: '200 g', purchaseQuantity: '', oldStock: '' },
+          { id: '1-25', name: 'Sabji masala', quantity: '600 g', purchaseQuantity: '', oldStock: '' },
+          { id: '1-26', name: 'Dodu salt', quantity: '4 kg', purchaseQuantity: '', oldStock: '' },
+          { id: '1-27', name: 'Normal salt', quantity: "10 no's", purchaseQuantity: '', oldStock: '' },
+          { id: '1-28', name: 'Mirchi powder (Low spice)', quantity: '2 kg', purchaseQuantity: '', oldStock: '' },
+          { id: '1-29', name: 'Pasupu', quantity: '250 g', purchaseQuantity: '', oldStock: '' },
+          { id: '1-30', name: 'Aava powder', quantity: '1 kg', purchaseQuantity: '', oldStock: '' },
+          { id: '1-31', name: 'Kitchen Mop clothes', quantity: "15 no's", purchaseQuantity: '', oldStock: '' },
+          { id: '1-32', name: 'Surf', quantity: '3 kg', purchaseQuantity: '', oldStock: '' },
+          { id: '1-33', name: 'Scrubbers', quantity: '1 sheet', purchaseQuantity: '', oldStock: '' },
+          { id: '1-34', name: 'Dustbin covers', quantity: "10 no's", purchaseQuantity: '', oldStock: '' },
+          { id: '1-35', name: 'Rice', quantity: '5 bags', purchaseQuantity: '', oldStock: '' },
+          { id: '1-36', name: 'Coffe powder', quantity: "10 pkt's @ each 20 Rs/-", purchaseQuantity: '', oldStock: '' },
+          { id: '1-37', name: 'Tea powder (leaf + dust)', quantity: '500 g', purchaseQuantity: '', oldStock: '' },
+          { id: '1-38', name: 'Papad', quantity: '10 kg', purchaseQuantity: '', oldStock: '' },
+          { id: '1-39', name: 'Hanuman Baba Food', quantity: '10 kg', purchaseQuantity: '', oldStock: '' },
+          { id: '1-40', name: 'Ginger', quantity: '250 g', purchaseQuantity: '', oldStock: '' },
+          { id: '1-41', name: 'Biryani leaf', quantity: '100 g', purchaseQuantity: '', oldStock: '' },
+          { id: '1-42', name: 'Anasa Flower', quantity: '50 g', purchaseQuantity: '', oldStock: '' },
+          { id: '1-43', name: 'Lavangalu', quantity: '50 g', purchaseQuantity: '', oldStock: '' },
+          { id: '1-44', name: 'Miryala', quantity: '50 g', purchaseQuantity: '', oldStock: '' },
+          { id: '1-45', name: 'Dalchini', quantity: '250 g', purchaseQuantity: '', oldStock: '' },
+          { id: '1-46', name: 'Food plates', quantity: '?', purchaseQuantity: '', oldStock: '' },
+          { id: '1-47', name: 'Tiffin Plates', quantity: '?', purchaseQuantity: '', oldStock: '' },
+          { id: '1-48', name: 'Water glasses', quantity: '?', purchaseQuantity: '', oldStock: '' },
+          { id: '1-49', name: 'Tea Glasses', quantity: '?', purchaseQuantity: '', oldStock: '' },
+          { id: '1-50', name: 'Dopalu', quantity: '?', purchaseQuantity: '', oldStock: '' },
+          { id: '1-51', name: 'Plastic Spoons', quantity: '?', purchaseQuantity: '', oldStock: '' },
+        ]
+      },
+      {
+        id: 'cat-2',
+        title: '2. Vegetable',
+        items: [
+          { id: '2-1', name: 'Tamato', quantity: '2 carat', purchaseQuantity: '', oldStock: '' },
+          { id: '2-2', name: 'Potato', quantity: '10 kg', purchaseQuantity: '', oldStock: '' },
+          { id: '2-3', name: 'Brinjal', quantity: '1 carat', purchaseQuantity: '', oldStock: '' },
+          { id: '2-4', name: 'Munakaya', quantity: '1 kg', purchaseQuantity: '', oldStock: '' },
+          { id: '2-5', name: 'Green mirchi', quantity: '2 kg', purchaseQuantity: '', oldStock: '' },
+          { id: '2-6', name: 'Karevepaku', quantity: '20 Rs/-', purchaseQuantity: '', oldStock: '' },
+          { id: '2-7', name: 'kothmer', quantity: "10 no's", purchaseQuantity: '', oldStock: '' },
+          { id: '2-8', name: "Aanapakaya (Big - 4 no's OR Small - 8 no's)", quantity: "Big - 4 no's (OR) Small - 8 no's", purchaseQuantity: '', oldStock: '' },
+          { id: '2-9', name: 'Dosakaya', quantity: '10 kg', purchaseQuantity: '', oldStock: '' },
+          { id: '2-10', name: 'Keera', quantity: '5 kg', purchaseQuantity: '', oldStock: '' },
+          { id: '2-11', name: 'Bendakaya', quantity: '2 kg', purchaseQuantity: '', oldStock: '' },
+        ]
+      },
+      {
+        id: 'cat-3',
+        title: '3. Mahoor',
+        items: [
+          { id: '3-1', name: 'Milk', quantity: '?', purchaseQuantity: '', oldStock: '' },
+          { id: '3-2', name: 'Curd', quantity: '?', purchaseQuantity: '', oldStock: '' },
+          { id: '3-3', name: 'Cylinder', quantity: '2 Domestic, 2 Commercial', purchaseQuantity: '', oldStock: '' },
+        ]
+      },
+      {
+        id: 'cat-4',
+        title: '4. Hawan Items',
+        items: [
+          { id: '4-1', name: 'Samedhalu', quantity: '3 set', purchaseQuantity: '', oldStock: '' },
+          { id: '4-2', name: 'Gomaya sticks', quantity: '4 pkt', purchaseQuantity: '', oldStock: '' },
+          { id: '4-3', name: 'swasari kwath', quantity: '1 pkt', purchaseQuantity: '', oldStock: '' },
+          { id: '4-4', name: 'Havan powder', quantity: '250 g', purchaseQuantity: '', oldStock: '' },
+          { id: '4-5', name: 'Karpoor', quantity: '?', purchaseQuantity: '', oldStock: '' },
+          { id: '4-6', name: 'Veebhuthi', quantity: '1 pkt', purchaseQuantity: '', oldStock: '' },
+          { id: '4-7', name: 'kumkuma', quantity: '1 pkt', purchaseQuantity: '', oldStock: '' },
+          { id: '4-8', name: 'Ricle floor (Mugu)', quantity: 'Sufficient', purchaseQuantity: '', oldStock: '' },
+          { id: '4-9', name: 'Gandham - patanjali', quantity: '1 no', purchaseQuantity: '', oldStock: '' },
+          { id: '4-10', name: 'Agarbathi', quantity: '1 pkt', purchaseQuantity: '', oldStock: '' },
+          { id: '4-11', name: 'Pasupu', quantity: '1 pkt', purchaseQuantity: '', oldStock: '' },
+          { id: '4-12', name: 'Rose water', quantity: 'small bottle', purchaseQuantity: '', oldStock: '' },
+          { id: '4-13', name: 'Match boxes', quantity: 'Sufficient', purchaseQuantity: '', oldStock: '' },
+          { id: '4-14', name: 'Black Nuvulu', quantity: '100 g', purchaseQuantity: '', oldStock: '' },
+          { id: '4-15', name: 'Pelalu', quantity: '100 g', purchaseQuantity: '', oldStock: '' },
+          { id: '4-16', name: 'Breaking coconuts', quantity: "3 no's", purchaseQuantity: '', oldStock: '' },
+          { id: '4-17', name: 'Purnahuti set', quantity: '1 set', purchaseQuantity: '', oldStock: '' },
+          { id: '4-18', name: 'Red Cloth (Purnahuti)', quantity: '1 no', purchaseQuantity: '', oldStock: '' },
+          { id: '4-19', name: 'Kudaka (Homam)', quantity: '1 no - big', purchaseQuantity: '', oldStock: '' },
+          { id: '4-20', name: 'Darba Pullalu', quantity: '?', purchaseQuantity: '', oldStock: '' },
+        ]
+      },
+      {
+        id: 'cat-5',
+        title: '5. Other Items',
+        items: [
+          { id: '5-1', name: 'Papad Jali (Big)', quantity: '1 no', purchaseQuantity: '', oldStock: '' },
+          { id: '5-2', name: 'Gas Regulator', quantity: '2 no', purchaseQuantity: '', oldStock: '' },
+          { id: '5-3', name: 'Cutter machine blade', quantity: 'Two number', purchaseQuantity: '', oldStock: '' },
+        ]
+      }
+    ];
+
+    function App() {
+      const [data, setData] = useState(() => {
+        const saved = localStorage.getItem('smartInventoryData');
+        if (saved) {
+          try {
+            const parsedData = JSON.parse(saved);
+            return parsedData.map(cat => 
+              cat.id === 'cat-4' && cat.title === '4. Pooja Items' 
+                ? { ...cat, title: '4. Hawan Items' } 
+                : cat
+            );
+          } catch (e) {
+            return INITIAL_DATA;
+          }
+        }
+        return INITIAL_DATA;
+      });
+
+      const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+      const [isAddTableModalOpen, setIsAddTableModalOpen] = useState(false);
+      const [newTableTitle, setNewTableTitle] = useState('');
+      
+      const [isDeleteTableModalOpen, setIsDeleteTableModalOpen] = useState(false);
+      const [tableToDelete, setTableToDelete] = useState('');
+      const [showDeleteWarning, setShowDeleteWarning] = useState(false);
+
+      const [past, setPast] = useState([]);
+      const [future, setFuture] = useState([]);
+      const [toastMessage, setToastMessage] = useState(null);
+      const [listeningState, setListeningState] = useState(null); 
+      const [selectedRow, setSelectedRow] = useState(null);
+      const [itemToDelete, setItemToDelete] = useState(null);
+      const [activeCategory, setActiveCategory] = useState('cat-1');
+      const [searchQuery, setSearchQuery] = useState('');
+
+      // --- Column Resizing / Column Management State ---
+      const [colWidths, setColWidths] = useState({
+        sno: 40,
+        items: 280,
+        actual: 120,
+        oldStock: 110,
+        purchaseQuantity: 130,
+        actions: 70
+      });
+      // Order of columns as they appear left-to-right (supports inserting/removing columns)
+      const [colOrder, setColOrder] = useState(['sno', 'items', 'actual', 'oldStock', 'purchaseQuantity', 'actions']);
+      // Display labels for each column header
+      const [colLabels, setColLabels] = useState({
+        sno: 'S.NO',
+        items: 'ITEMS',
+        actual: 'ACTUAL QTY',
+        oldStock: 'OLD STOCK',
+        purchaseQuantity: 'PURCHASE QTY',
+        actions: 'ACTIONS'
+      });
+      // Maps a column key to the underlying item field it reads/writes (custom columns use their own key as the field)
+      const [colFieldMap, setColFieldMap] = useState({
+        items: 'name',
+        actual: 'quantity',
+        oldStock: 'oldStock',
+        purchaseQuantity: 'purchaseQuantity'
+      });
+      const [hiddenCols, setHiddenCols] = useState([]);
+      const [colClipboard, setColClipboard] = useState(null); // { colKey, field, values: { itemId: value } }
+      const [colMenuOpen, setColMenuOpen] = useState(null); // colKey whose options menu is open
+      const [columnFilters, setColumnFilters] = useState({}); // { colKey: string[] of selected/checked values }
+      const [filterPanelOpen, setFilterPanelOpen] = useState(null); // colKey whose Excel-style filter card is open
+      const [filterSearch, setFilterSearch] = useState('');
+      const [filterDraftSelected, setFilterDraftSelected] = useState(null); // Set draft while panel is open
+      const [isSaving, setIsSaving] = useState(false);
+      const fileInputRef = useRef(null);
+
+      // --- Table Heading 3-dot menu / Swap Item (drag-to-reorder) state ---
+      const [tableMenuOpen, setTableMenuOpen] = useState(null); // categoryId whose 3-dot menu is open
+      const [swapModeCategories, setSwapModeCategories] = useState({}); // { categoryId: true/false }
+      const [draggedItem, setDraggedItem] = useState(null); // { categoryId, itemId }
+      const [heldHandleItemId, setHeldHandleItemId] = useState(null); // itemId currently held (green highlight)
+
+      const [selectedCol, setSelectedCol] = useState(null);
+      const [isResizing, setIsResizing] = useState(null);
+      const startXRef = useRef(null);
+      const startWidthRef = useRef(null);
+
+      useEffect(() => {
+        const handleMove = (e) => {
+          if (!isResizing) return;
+          const clientX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+          const deltaX = clientX - startXRef.current;
+          const newWidth = Math.max(40, startWidthRef.current + deltaX); // Min width 40px
+          setColWidths(prev => ({ ...prev, [isResizing]: newWidth }));
+        };
+
+        const handleEnd = () => {
+          if (isResizing) {
+            setIsResizing(null);
+            document.body.style.cursor = 'default';
+          }
+        };
+
+        if (isResizing) {
+          document.body.style.cursor = 'col-resize';
+          window.addEventListener('mousemove', handleMove);
+          window.addEventListener('mouseup', handleEnd);
+          window.addEventListener('touchmove', handleMove, { passive: false });
+          window.addEventListener('touchend', handleEnd);
+        }
+
+        return () => {
+          window.removeEventListener('mousemove', handleMove);
+          window.removeEventListener('mouseup', handleEnd);
+          window.removeEventListener('touchmove', handleMove);
+          window.removeEventListener('touchend', handleEnd);
+        };
+      }, [isResizing]);
+
+      const startResize = (e, colKey) => {
+        e.stopPropagation();
+        setIsResizing(colKey);
+        startXRef.current = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+        startWidthRef.current = colWidths[colKey];
+      };
+
+      const handleColSelect = (colKey) => {
+        if (selectedCol === colKey && colMenuOpen === colKey) {
+          setColMenuOpen(null);
+          setSelectedCol(null);
+        } else {
+          setSelectedCol(colKey);
+          setColMenuOpen(colKey);
+        }
+      };
+
+      const closeColMenu = () => {
+        setColMenuOpen(null);
+        setSelectedCol(null);
+      };
+      
+      // Global deselect listener
+      useEffect(() => {
+        const handleClickOutside = (e) => {
+          // Deselect if we are not resizing and didn't click on a header or its options menu
+          if (!isResizing && !e.target.closest('.cursor-pointer') && !e.target.closest('[data-col-menu]')) {
+            setSelectedCol(null);
+            setColMenuOpen(null);
+            setFilterPanelOpen(null);
+            setFilterDraftSelected(null);
+            setTableMenuOpen(null);
+          }
+        };
+        window.addEventListener('click', handleClickOutside);
+        return () => window.removeEventListener('click', handleClickOutside);
+      }, [isResizing]);
+
+      const getHeaderClasses = (colKey) => {
+        const isCentered = colKey === 'sno' || colKey === 'actions';
+        const alignment = isCentered ? 'justify-center' : 'justify-start pl-2 sm:pl-3';
+        return `shrink-0 flex items-center relative cursor-pointer transition-colors select-none ${alignment} ${selectedCol === colKey ? 'bg-orange-200/60' : 'hover:bg-orange-100/50'}`;
+      };
+
+      const visibleColOrder = () => colOrder.filter(k => !hiddenCols.includes(k));
+
+      const renderResizeHandles = (colKey) => {
+        if (selectedCol !== colKey) return null;
+
+        const visible = visibleColOrder();
+        const idx = visible.indexOf(colKey);
+        const prevCol = idx > 0 ? visible[idx - 1] : null;
+
+        return (
+          <>
+            {/* Left Handle */}
+            {prevCol && (
+              <div 
+                onMouseDown={(e) => startResize(e, prevCol)}
+                onTouchStart={(e) => startResize(e, prevCol)}
+                className="absolute -left-2 top-0 bottom-0 w-4 bg-orange-500 cursor-col-resize z-20 shadow-md flex items-center justify-center hover:bg-orange-600 active:bg-orange-700 transition-colors"
+              >
+                <div className="w-0.5 h-1/3 bg-white rounded-full"></div>
+              </div>
+            )}
+            {/* Right Handle */}
+            <div 
+              onMouseDown={(e) => startResize(e, colKey)}
+              onTouchStart={(e) => startResize(e, colKey)}
+              className="absolute -right-2 top-0 bottom-0 w-4 bg-orange-500 cursor-col-resize z-20 shadow-md flex items-center justify-center hover:bg-orange-600 active:bg-orange-700 transition-colors"
+            >
+              <div className="w-0.5 h-1/3 bg-white rounded-full"></div>
+            </div>
+          </>
+        );
+      };
+
+      // Smart Math Engine for Unit Conversion and Subtraction
+      const calculatePurchaseQty = (actual, old) => {
+        try {
+          if (!actual) return '';
+          // If no old stock, purchase qty equals actual qty
+          if (!old || old.trim() === '') return actual; 
+
+          const parse = (str) => {
+            // Convert fractions (1/2) to decimals (0.5) for math
+            let s = String(str).toLowerCase().trim().replace(/1\/2/g, '0.5').replace(/1\/4/g, '0.25').replace(/3\/4/g, '0.75');
+            const match = s.match(/^([\d\.]+)\s*(.*)$/);
+            if (!match) return null;
+            
+            const num = parseFloat(match[1]);
+            if (isNaN(num)) return null;
+            
+            let rawUnit = match[2].trim();
+            // Normalize plurals (e.g., "no's", "tins" -> "no", "tin") for comparison
+            let type = rawUnit.replace(/[^a-z]/g, '');
+            if (type.endsWith('s')) type = type.slice(0, -1);
+
+            let base = num;
+            // Standardize metric units
+            if (['kg', 'kilogram'].includes(type)) { base = num * 1000; type = 'weight'; }
+            else if (['g', 'gm', 'gram'].includes(type)) { base = num; type = 'weight'; }
+            else if (['l', 'liter', 'litre'].includes(type)) { base = num * 1000; type = 'volume'; }
+            else if (['ml', 'milliliter'].includes(type)) { base = num; type = 'volume'; }
+            
+            return { base, type, origUnit: match[2].trim() || '' };
+          };
+
+          const a = parse(actual);
+          const o = parse(old);
+
+          // Only proceed if types match securely (can't subtract bags from kgs)
+          if (!a || !o || a.type !== o.type) return null;
+
+          const diff = a.base - o.base;
+          if (diff <= 0) return '0 ' + a.origUnit;
+
+          // Format back cleanly based on outcome volume
+          if (a.type === 'weight') {
+            if (diff >= 1000) return parseFloat((diff / 1000).toFixed(3)) + ' kg';
+            return parseFloat(diff.toFixed(2)) + ' g';
+          }
+          if (a.type === 'volume') {
+            if (diff >= 1000) return parseFloat((diff / 1000).toFixed(3)) + ' l';
+            return parseFloat(diff.toFixed(2)) + ' ml';
+          }
+
+          // Non-metric fallback
+          return parseFloat(diff.toFixed(2)) + (a.origUnit ? ' ' + a.origUnit : '');
+        } catch (e) {
+          return null;
+        }
+      };
+
+      const getIconForCategory = (id) => {
+        if(id === 'cat-1') return Icons.ShoppingCart;
+        if(id === 'cat-2') return Icons.Vegetables;
+        if(id === 'cat-3') return Icons.Temple;
+        if(id === 'cat-4') return Icons.Flame;
+        return Icons.Grid;
+      };
+
+      const categoryNavItems = data.map(cat => ({
+        id: cat.id,
+        name: cat.title.replace(/^\d+\.\s*/, ''),
+        icon: getIconForCategory(cat.id)
+      }));
+
+      const scrollToCategory = (categoryId) => {
+        setActiveCategory(categoryId);
+        const element = document.getElementById(categoryId);
+        if (element) {
+          const stickyBar = document.getElementById('sticky-top-bar');
+          const headerOffset = stickyBar ? stickyBar.getBoundingClientRect().bottom : 230; 
+          const elementPosition = element.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+          
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth"
+          });
+        }
+      };
+
+      const recognitionRef = useRef(null);
+      const globalHeaderScrollRef = useRef(null);
+      const [showGlobalHeader, setShowGlobalHeader] = useState(false);
+
+      useEffect(() => {
+        const handleScroll = () => {
+          const stickyBar = document.getElementById('sticky-top-bar');
+          const headerOffset = stickyBar ? stickyBar.getBoundingClientRect().bottom : 230; 
+          
+          let currentActiveId = activeCategory;
+          let shouldShowGlobal = false;
+          let activeScrollId = null;
+
+          for (const cat of data) {
+            const element = document.getElementById(cat.id);
+            const headerElement = document.getElementById(`native-header-${cat.id}`);
+            
+            if (element) {
+              const rect = element.getBoundingClientRect();
+              if (rect.top <= headerOffset + 50 && rect.bottom >= headerOffset) {
+                currentActiveId = cat.id;
+              }
+              
+              if (headerElement) {
+                const headerRect = headerElement.getBoundingClientRect();
+                // If native header hides above sticky bar, but table items are still visible below
+                if (headerRect.bottom <= headerOffset && rect.bottom > headerOffset + 40) {
+                  shouldShowGlobal = true;
+                  activeScrollId = cat.id;
+                }
+              }
+            }
+          }
+
+          if (currentActiveId !== activeCategory) {
+            setActiveCategory(currentActiveId);
+            const navElement = document.getElementById(`nav-${currentActiveId}`);
+            if (navElement && navElement.parentElement) {
+              const container = navElement.parentElement;
+              const scrollLeft = navElement.offsetLeft - (container.clientWidth / 2) + (navElement.clientWidth / 2);
+              container.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+            }
+          }
+          
+          setShowGlobalHeader(prev => prev !== shouldShowGlobal ? shouldShowGlobal : prev);
+          
+          // Sync the horizontal scroll instantly if visible
+          if (shouldShowGlobal && activeScrollId && globalHeaderScrollRef.current) {
+            const activeContainer = document.getElementById(`scroll-container-${activeScrollId}`);
+            if (activeContainer) {
+              globalHeaderScrollRef.current.scrollLeft = activeContainer.scrollLeft;
+            }
+          }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+      }, [activeCategory, data]);
+
+      useEffect(() => {
+        const handleScroll = () => {
+          const headerOffset = 240; 
+          let currentActiveId = activeCategory;
+
+          for (const cat of categoryNavItems) {
+            const element = document.getElementById(cat.id);
+            if (element) {
+              const rect = element.getBoundingClientRect();
+              if (rect.top <= headerOffset + 50 && rect.bottom >= headerOffset) {
+                currentActiveId = cat.id;
+              }
+            }
+          }
+
+          if (currentActiveId !== activeCategory) {
+            setActiveCategory(currentActiveId);
+            const navElement = document.getElementById(`nav-${currentActiveId}`);
+            if (navElement && navElement.parentElement) {
+              const container = navElement.parentElement;
+              const scrollLeft = navElement.offsetLeft - (container.clientWidth / 2) + (navElement.clientWidth / 2);
+              container.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+            }
+          }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+      }, [activeCategory]);
+
+      useEffect(() => {
+        localStorage.setItem('smartInventoryData', JSON.stringify(data));
+      }, [data]);
+
+      const showToast = (message) => {
+        setToastMessage(message);
+        setTimeout(() => setToastMessage(null), 3000);
+      };
+
+      const updateData = (updaterFn) => {
+        setData(prevData => {
+          const nextData = updaterFn(prevData);
+          setPast(prevPast => [...prevPast, prevData]);
+          setFuture([]);
+          return nextData;
+        });
+      };
+
+      const handleUndo = () => {
+        if (past.length === 0) return;
+        const previous = past[past.length - 1];
+        setPast(past.slice(0, past.length - 1));
+        setFuture([data, ...future]);
+        setData(previous);
+      };
+
+      const handleRedo = () => {
+        if (future.length === 0) return;
+        const next = future[0];
+        setFuture(future.slice(1));
+        setPast([...past, data]);
+        setData(next);
+      };
+
+      const toggleVoiceInput = (categoryId, itemId, field) => {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SpeechRecognition) {
+          showToast("Voice recognition is not supported in this browser.");
+          return;
+        }
+
+        if (listeningState && listeningState.categoryId === categoryId && listeningState.itemId === itemId && listeningState.field === field) {
+          if (recognitionRef.current) recognitionRef.current.stop();
+          setListeningState(null);
+          return;
+        }
+
+        if (recognitionRef.current) recognitionRef.current.stop();
+
+        const recognition = new SpeechRecognition();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = 'en-US'; 
+
+        recognition.onstart = () => setListeningState({ categoryId, itemId, field });
+        recognition.onresult = (event) => handleVoiceResult(categoryId, itemId, field, event.results[0][0].transcript);
+        recognition.onerror = () => setListeningState(null);
+        recognition.onend = () => setListeningState(null);
+
+        recognitionRef.current = recognition;
+        try { recognition.start(); } catch (e) { setListeningState(null); }
+      };
+
+      const handleVoiceResult = (categoryId, itemId, field, transcript) => {
+        if (categoryId === 'search') {
+          setSearchQuery(prev => prev.trim().length > 0 ? `${prev} ${transcript}` : transcript);
+          return;
+        }
+
+        updateData(prevData => prevData.map(category => {
+          if (category.id !== categoryId) return category;
+          return {
+            ...category,
+            items: category.items.map(item => {
+              if (item.id !== itemId) return item;
+              const currentValue = item[field] || '';
+              const newValue = currentValue.trim().length > 0 ? `${currentValue} ${transcript}` : transcript;
+              
+              const updatedItem = { ...item, [field]: newValue };
+
+              // Auto-calculate on voice input
+              if (field === 'quantity' || field === 'oldStock') {
+                const actual = updatedItem.quantity;
+                const old = updatedItem.oldStock;
+                const calc = calculatePurchaseQty(actual, old);
+                if (calc !== null) updatedItem.purchaseQuantity = calc;
+              }
+
+              return updatedItem;
+            })
+          };
+        }));
+      };
+
+      const handleInputChange = (categoryId, itemId, field, value) => {
+        updateData(prevData => prevData.map(category => {
+          if (category.id !== categoryId) return category;
+          return {
+            ...category,
+            items: category.items.map(item => {
+              if (item.id !== itemId) return item;
+              
+              const updatedItem = { ...item, [field]: value };
+              
+              // Auto-calculate on typing
+              if (field === 'quantity' || field === 'oldStock') {
+                const actual = updatedItem.quantity;
+                const old = updatedItem.oldStock;
+                const calc = calculatePurchaseQty(actual, old);
+                if (calc !== null) updatedItem.purchaseQuantity = calc;
+              }
+
+              return updatedItem;
+            })
+          };
+        }));
+      };
+
+      // --- Column Actions: Cut / Copy / Paste / Clear / Insert / Delete / Sort / Hide / Unhide ---
+      const getColLabel = (colKey) => colLabels[colKey] || colKey;
+
+      const handleColCopy = (colKey) => {
+        const field = colFieldMap[colKey] || colKey;
+        const values = {};
+        data.forEach(cat => cat.items.forEach(item => { values[item.id] = item[field] || ''; }));
+        setColClipboard({ colKey, field, values });
+        showToast(`Copied column "${getColLabel(colKey)}"`);
+      };
+
+      const handleColClear = (colKey, silent) => {
+        const field = colFieldMap[colKey] || colKey;
+        updateData(prevData => prevData.map(cat => ({
+          ...cat,
+          items: cat.items.map(item => ({ ...item, [field]: '' }))
+        })));
+        if (!silent) showToast(`Cleared column "${getColLabel(colKey)}"`);
+      };
+
+      const handleColCut = (colKey) => {
+        handleColCopy(colKey);
+        handleColClear(colKey, true);
+        showToast(`Cut column "${getColLabel(colKey)}"`);
+      };
+
+      const handleColPaste = (colKey) => {
+        if (!colClipboard) { showToast('Nothing to paste'); return; }
+        const field = colFieldMap[colKey] || colKey;
+        updateData(prevData => prevData.map(cat => ({
+          ...cat,
+          items: cat.items.map(item => ({
+            ...item,
+            [field]: Object.prototype.hasOwnProperty.call(colClipboard.values, item.id) ? colClipboard.values[item.id] : (item[field] || '')
+          }))
+        })));
+        showToast(`Pasted into column "${getColLabel(colKey)}"`);
+      };
+
+      const handleSortColumn = (colKey, direction) => {
+        const field = colFieldMap[colKey] || colKey;
+        updateData(prevData => prevData.map(cat => {
+          const sortedItems = [...cat.items].sort((a, b) => {
+            const av = (a[field] || '').toString();
+            const bv = (b[field] || '').toString();
+            const an = parseFloat(av);
+            const bn = parseFloat(bv);
+            let cmp;
+            if (!isNaN(an) && !isNaN(bn) && av.trim() !== '' && bv.trim() !== '') {
+              cmp = an - bn;
+            } else {
+              cmp = av.localeCompare(bv, undefined, { sensitivity: 'base', numeric: true });
+            }
+            return direction === 'asc' ? cmp : -cmp;
+          });
+          return { ...cat, items: sortedItems };
+        }));
+        showToast(`Sorted "${getColLabel(colKey)}" ${direction === 'asc' ? 'ascending' : 'descending'}`);
+      };
+
+      const BLANK_TOKEN = '__BLANK__';
+
+      // Returns the sorted list of distinct values for a column, with a trailing (Blanks) entry if applicable
+      const getColumnValueList = (colKey) => {
+        const field = colFieldMap[colKey] || colKey;
+        const values = new Set();
+        let hasBlank = false;
+        data.forEach(cat => cat.items.forEach(item => {
+          const v = (item[field] || '').toString().trim();
+          if (v === '') { hasBlank = true; } else { values.add(v); }
+        }));
+        const sorted = Array.from(values).sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }));
+        return hasBlank ? [...sorted, BLANK_TOKEN] : sorted;
+      };
+
+      const openFilterPanel = (colKey) => {
+        const fullList = getColumnValueList(colKey);
+        const existing = columnFilters[colKey];
+        const initialSelected = existing ? new Set(existing) : new Set(fullList);
+        setFilterDraftSelected(initialSelected);
+        setFilterSearch('');
+        setFilterPanelOpen(colKey);
+      };
+
+      const applyColumnFilter = (colKey) => {
+        const fullList = getColumnValueList(colKey);
+        const draft = filterDraftSelected || new Set(fullList);
+        setColumnFilters(prev => {
+          const next = { ...prev };
+          if (draft.size >= fullList.length) {
+            delete next[colKey]; // everything selected = no filter
+          } else {
+            next[colKey] = Array.from(draft);
+          }
+          return next;
+        });
+        setFilterPanelOpen(null);
+        setFilterDraftSelected(null);
+        showToast(`Filter applied on "${getColLabel(colKey)}"`);
+      };
+
+      const clearColumnFilterPanel = (colKey) => {
+        setColumnFilters(prev => {
+          const next = { ...prev };
+          delete next[colKey];
+          return next;
+        });
+        setFilterPanelOpen(null);
+        setFilterDraftSelected(null);
+        showToast(`Cleared filter on "${getColLabel(colKey)}"`);
+      };
+
+      const cancelFilterPanel = () => {
+        setFilterPanelOpen(null);
+        setFilterDraftSelected(null);
+      };
+
+      const renderFilterPanel = (colKey) => {
+        const fullList = getColumnValueList(colKey);
+        const searchLower = filterSearch.trim().toLowerCase();
+        const visibleList = searchLower === ''
+          ? fullList
+          : fullList.filter(v => (v === BLANK_TOKEN ? '(blanks)' : v.toLowerCase()).includes(searchLower));
+
+        const draft = filterDraftSelected || new Set(fullList);
+        const allVisibleChecked = visibleList.length > 0 && visibleList.every(v => draft.has(v));
+
+        const toggleValue = (v) => {
+          setFilterDraftSelected(prev => {
+            const next = new Set(prev || fullList);
+            if (next.has(v)) next.delete(v); else next.add(v);
+            return next;
+          });
+        };
+
+        const toggleSelectAll = () => {
+          setFilterDraftSelected(prev => {
+            const next = new Set(prev || fullList);
+            if (allVisibleChecked) {
+              visibleList.forEach(v => next.delete(v));
+            } else {
+              visibleList.forEach(v => next.add(v));
+            }
+            return next;
+          });
+        };
+
+        return (
+          <div
+            data-col-menu="true"
+            onClick={(e) => e.stopPropagation()}
+            className="absolute top-full left-0 mt-1 w-56 bg-white rounded-lg shadow-2xl border border-stone-200 z-40 p-2 no-print normal-case text-stone-700"
+          >
+            <div className="relative mb-2">
+              <input
+                type="text"
+                value={filterSearch}
+                onChange={(e) => setFilterSearch(e.target.value)}
+                placeholder="Search"
+                className="w-full text-xs border border-stone-300 rounded px-2 py-1.5 pr-7 focus:outline-none focus:ring-1 focus:ring-orange-400"
+              />
+              <Icons.Search className="w-3.5 h-3.5 text-stone-400 absolute right-2 top-1/2 -translate-y-1/2" />
+            </div>
+
+            <label className="flex items-center gap-2 px-1 py-1 text-xs font-semibold border-b border-stone-100 mb-1 cursor-pointer">
+              <input type="checkbox" checked={allVisibleChecked} onChange={toggleSelectAll} className="accent-orange-500" />
+              (Select All)
+            </label>
+
+            <div className="max-h-40 overflow-y-auto flex flex-col gap-0.5 pr-1">
+              {visibleList.length === 0 ? (
+                <div className="text-xs text-stone-400 px-1 py-2 text-center">No matches</div>
+              ) : visibleList.map(v => (
+                <label key={v} className="flex items-center gap-2 px-1 py-0.5 text-xs hover:bg-orange-50 rounded cursor-pointer">
+                  <input type="checkbox" checked={draft.has(v)} onChange={() => toggleValue(v)} className="accent-orange-500" />
+                  <span className="truncate">{v === BLANK_TOKEN ? '(Blanks)' : v}</span>
+                </label>
+              ))}
+            </div>
+
+            <div className="flex items-center justify-between gap-2 mt-2 pt-2 border-t border-stone-100">
+              <button onClick={() => clearColumnFilterPanel(colKey)} className="text-[11px] font-semibold text-stone-400 hover:text-red-500">Clear</button>
+              <div className="flex gap-1.5">
+                <button onClick={cancelFilterPanel} className="text-xs font-semibold px-2.5 py-1 rounded border border-stone-200 text-stone-500 hover:bg-stone-50">Cancel</button>
+                <button onClick={() => applyColumnFilter(colKey)} className="text-xs font-semibold px-2.5 py-1 rounded bg-orange-500 text-white hover:bg-orange-600">OK</button>
+              </div>
+            </div>
+          </div>
+        );
+      };
+
+      const handleHideColumn = (colKey) => {
+        if (colKey === 'sno' || colKey === 'actions') { showToast("This column can't be hidden"); return; }
+        setHiddenCols(prev => prev.includes(colKey) ? prev : [...prev, colKey]);
+        showToast(`Hid column "${getColLabel(colKey)}"`);
+      };
+
+      const handleUnhideColumn = (colKey) => {
+        setHiddenCols(prev => prev.filter(k => k !== colKey));
+        showToast(`Unhid column "${getColLabel(colKey)}"`);
+      };
+
+      const handleInsertColumn = (colKey, side) => {
+        const label = window.prompt('Name for the new column:', 'New Column');
+        if (label === null) return; // cancelled
+        const newKey = `col_${Date.now()}`;
+        setColOrder(prev => {
+          const idx = prev.indexOf(colKey);
+          const insertAt = side === 'left' ? idx : idx + 1;
+          const next = [...prev];
+          next.splice(insertAt, 0, newKey);
+          return next;
+        });
+        setColLabels(prev => ({ ...prev, [newKey]: (label.trim() || 'New Column').toUpperCase() }));
+        setColWidths(prev => ({ ...prev, [newKey]: 130 }));
+        setColFieldMap(prev => ({ ...prev, [newKey]: newKey }));
+        updateData(prevData => prevData.map(cat => ({
+          ...cat,
+          items: cat.items.map(item => ({ ...item, [newKey]: '' }))
+        })));
+        showToast('Column inserted');
+      };
+
+      const handleDeleteColumn = (colKey) => {
+        if (colKey === 'sno' || colKey === 'actions') { showToast("This column can't be deleted"); return; }
+        if (!window.confirm(`Delete column "${getColLabel(colKey)}"? This will remove its data from every row.`)) return;
+        const field = colFieldMap[colKey] || colKey;
+        setColOrder(prev => prev.filter(k => k !== colKey));
+        setHiddenCols(prev => prev.filter(k => k !== colKey));
+        updateData(prevData => prevData.map(cat => ({
+          ...cat,
+          items: cat.items.map(item => {
+            const rest = { ...item };
+            delete rest[field];
+            return rest;
+          })
+        })));
+        showToast(`Deleted column "${getColLabel(colKey)}"`);
+      };
+
+      const runColAction = (action, colKey) => {
+        if (action === 'filter') {
+          openFilterPanel(colKey);
+          setColMenuOpen(null);
+          return;
+        }
+        switch (action) {
+          case 'cut': handleColCut(colKey); break;
+          case 'copy': handleColCopy(colKey); break;
+          case 'paste': handleColPaste(colKey); break;
+          case 'clear': handleColClear(colKey); break;
+          case 'insertLeft': handleInsertColumn(colKey, 'left'); break;
+          case 'insertRight': handleInsertColumn(colKey, 'right'); break;
+          case 'delete': handleDeleteColumn(colKey); break;
+          case 'sortAsc': handleSortColumn(colKey, 'asc'); break;
+          case 'sortDesc': handleSortColumn(colKey, 'desc'); break;
+          case 'hide': handleHideColumn(colKey); break;
+          case 'unhide': handleUnhideColumn(colKey); break;
+          default: break;
+        }
+        closeColMenu();
+      };
+
+      const renderColMenu = (colKey) => {
+        const isData = colKey !== 'sno' && colKey !== 'actions';
+        const isHidden = hiddenCols.includes(colKey);
+        const itemClass = "w-full text-left px-3 py-1.5 text-xs font-semibold text-stone-600 hover:bg-orange-50 disabled:opacity-30 disabled:hover:bg-transparent disabled:cursor-not-allowed transition-colors";
+        return (
+          <div
+            data-col-menu="true"
+            onClick={(e) => e.stopPropagation()}
+            className="absolute top-full left-0 mt-1 w-40 bg-white rounded-lg shadow-2xl border border-stone-200 z-30 py-1 no-print normal-case"
+          >
+            <button disabled={!isData} onClick={() => runColAction('cut', colKey)} className={itemClass}>Cut</button>
+            <button disabled={!isData} onClick={() => runColAction('copy', colKey)} className={itemClass}>Copy</button>
+            <button disabled={!isData || !colClipboard} onClick={() => runColAction('paste', colKey)} className={itemClass}>Paste</button>
+            <button disabled={!isData} onClick={() => runColAction('clear', colKey)} className={itemClass}>Clear</button>
+            <div className="my-1 border-t border-stone-100"></div>
+            <button onClick={() => runColAction('insertLeft', colKey)} className={itemClass}>Insert (Left)</button>
+            <button onClick={() => runColAction('insertRight', colKey)} className={itemClass}>Insert (Right)</button>
+            <button disabled={!isData} onClick={() => runColAction('delete', colKey)} className={`${itemClass} text-red-500`}>Delete</button>
+            <div className="my-1 border-t border-stone-100"></div>
+            <button disabled={!isData} onClick={() => runColAction('sortAsc', colKey)} className={itemClass}>Sort Ascending</button>
+            <button disabled={!isData} onClick={() => runColAction('sortDesc', colKey)} className={itemClass}>Sort Descending</button>
+            <div className="my-1 border-t border-stone-100"></div>
+            <button disabled={!isData} onClick={() => runColAction('filter', colKey)} className={itemClass}>{columnFilters[colKey] ? 'Filter (active)' : 'Filter'}</button>
+            <div className="my-1 border-t border-stone-100"></div>
+            <button disabled={isHidden} onClick={() => runColAction('hide', colKey)} className={itemClass}>Hide</button>
+            <button disabled={!isHidden} onClick={() => runColAction('unhide', colKey)} className={itemClass}>Unhide</button>
+          </div>
+        );
+      };
+
+      // Generic header cell (used by both the sticky global header and each category's native header)
+      const renderHeaderCell = (colKey) => {
+        const width = colWidths[colKey] ?? 130;
+        const isHidden = hiddenCols.includes(colKey);
+        const isFirstVisible = visibleColOrder()[0] === colKey;
+
+        if (isHidden) {
+          return (
+            <div
+              key={colKey}
+              onClick={(e) => { e.stopPropagation(); handleColSelect(colKey); }}
+              style={{ width: 12, minWidth: 12 }}
+              title={`${getColLabel(colKey)} (hidden) — click to manage`}
+              className="shrink-0 relative border-l border-orange-300/60 bg-orange-100 hover:bg-orange-200 cursor-pointer flex items-center justify-center"
+            >
+              <span className="text-orange-400 text-[9px] leading-none">⋮</span>
+              {colMenuOpen === colKey && renderColMenu(colKey)}
+              {filterPanelOpen === colKey && renderFilterPanel(colKey)}
+            </div>
+          );
+        }
+
+        return (
+          <div
+            key={colKey}
+            onClick={() => handleColSelect(colKey)}
+            style={{ width, minWidth: width }}
+            className={`${!isFirstVisible ? 'border-l border-orange-200/60' : ''} ${getHeaderClasses(colKey)}`}
+          >
+            <span className="w-full text-left flex items-center gap-1 truncate">
+              {getColLabel(colKey)}
+              {columnFilters[colKey] && <span title="Filter active" className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0"></span>}
+            </span>
+            {renderResizeHandles(colKey)}
+            {colMenuOpen === colKey && renderColMenu(colKey)}
+            {filterPanelOpen === colKey && renderFilterPanel(colKey)}
+          </div>
+        );
+      };
+
+      // Generic row cell (used for every row in every category)
+      const renderRowCell = (colKey, category, item, index) => {
+        const width = colWidths[colKey] ?? 130;
+        const isHidden = hiddenCols.includes(colKey);
+
+        if (isHidden) {
+          return <div key={colKey} style={{ width: 12, minWidth: 12 }} className="shrink-0 border-l border-orange-100/40 bg-orange-50/60"></div>;
+        }
+
+        if (colKey === 'sno') {
+          return (
+            <div key={colKey} style={{ width, minWidth: width }} className={`shrink-0 flex items-center justify-center text-sm text-stone-400 font-semibold pt-1.5 transition-colors ${selectedCol === 'sno' ? 'bg-orange-200/40 shadow-[inset_0_0_0_1px_rgba(251,146,60,0.2)]' : ''}`}>
+              {index + 1}
+            </div>
+          );
+        }
+
+        if (colKey === 'actions') {
+          return (
+            <div key={colKey} style={{ width, minWidth: width }} className={`shrink-0 flex items-center justify-evenly pt-1.5 px-1 no-print border-l border-orange-100/40 transition-colors ${selectedCol === 'actions' ? 'bg-orange-200/40 shadow-[inset_0_0_0_1px_rgba(251,146,60,0.2)]' : ''}`}>
+              <button onClick={(e) => { e.stopPropagation(); insertRowAfter(category.id, index); }} className="text-stone-300 hover:text-orange-500 p-1">
+                <Icons.Plus className="w-4 h-4" />
+              </button>
+              <button onClick={(e) => { e.stopPropagation(); requestDeleteRow(category.id, item.id); }} className="text-stone-300 hover:text-red-400 p-1">
+                <Icons.Trash className="w-4 h-4" />
+              </button>
+            </div>
+          );
+        }
+
+        const field = colFieldMap[colKey] || colKey;
+        return (
+          <div key={colKey} style={{ width, minWidth: width }} className={`shrink-0 px-1 sm:px-2 relative border-l border-orange-100/40 transition-colors ${selectedCol === colKey ? 'bg-orange-200/40 shadow-[inset_0_0_0_1px_rgba(251,146,60,0.2)]' : ''}`}>
+            <input
+              type="text"
+              value={item[field] || ''}
+              onChange={(e) => handleInputChange(category.id, item.id, field, e.target.value)}
+              placeholder={getColLabel(colKey)}
+              className="w-full bg-transparent border-none text-sm font-medium text-stone-800 placeholder-stone-300 focus:outline-none focus:ring-0 pr-7 py-1.5"
+            />
+            <button
+              onClick={(e) => { e.stopPropagation(); toggleVoiceInput(category.id, item.id, field); }}
+              className="absolute right-2 sm:right-3 top-1/2 transform -translate-y-1/2 text-stone-300 hover:text-orange-500 p-0.5 no-print"
+            >
+              {checkIsListening(category.id, item.id, field) ? <Icons.MicActive className="w-3.5 h-3.5" /> : <Icons.Mic className="w-3.5 h-3.5" />}
+            </button>
+          </div>
+        );
+      };
+
+      const addRow = (categoryId) => {
+        updateData(prevData => prevData.map(category => {
+          if (category.id !== categoryId) return category;
+          const newItem = { id: `item-${Date.now()}`, name: '', quantity: '', purchaseQuantity: '', oldStock: '' };
+          return { ...category, items: [...category.items, newItem] };
+        }));
+      };
+
+      const insertRowAfter = (categoryId, index) => {
+        updateData(prevData => prevData.map(category => {
+          if (category.id !== categoryId) return category;
+          const newItem = { id: `item-${Date.now()}`, name: '', quantity: '', purchaseQuantity: '', oldStock: '' };
+          const newItems = [...category.items];
+          newItems.splice(index + 1, 0, newItem);
+          return { ...category, items: newItems };
+        }));
+      };
+
+      const requestDeleteRow = (categoryId, itemId) => setItemToDelete({ categoryId, itemId });
+
+      // --- Table Heading: "Swap Item (Up & Down)" toggle + drag-to-reorder ---
+      const toggleSwapMode = (categoryId) => {
+        setSwapModeCategories(prev => ({ ...prev, [categoryId]: !prev[categoryId] }));
+      };
+
+      const renderTableMenu = (categoryId) => {
+        const enabled = !!swapModeCategories[categoryId];
+        return (
+          <div
+            data-col-menu="true"
+            onClick={(e) => e.stopPropagation()}
+            className="absolute top-full right-0 mt-1 w-60 bg-white rounded-lg shadow-2xl border border-stone-200 z-40 p-3 no-print text-stone-700"
+          >
+            <div className="flex items-center justify-between gap-3">
+              <span className="text-xs font-semibold">Swap Item (Up & Down)</span>
+              <button
+                onClick={() => toggleSwapMode(categoryId)}
+                className={`relative w-10 h-5 rounded-full shrink-0 transition-colors ${enabled ? 'bg-emerald-500' : 'bg-stone-300'}`}
+                title={enabled ? 'Turn off' : 'Turn on'}
+              >
+                <span className={`absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full shadow transition-transform ${enabled ? 'translate-x-5' : ''}`}></span>
+              </button>
+            </div>
+            {enabled && (
+              <p className="text-[10px] text-stone-400 mt-2 leading-snug">Hold the six dots next to any row and drag it up or down to reorder.</p>
+            )}
+          </div>
+        );
+      };
+
+      const handleRowDragStart = (e, categoryId, itemId) => {
+        setDraggedItem({ categoryId, itemId });
+        setHeldHandleItemId(itemId);
+        e.dataTransfer.effectAllowed = 'move';
+        try { e.dataTransfer.setData('text/plain', itemId); } catch (err) {}
+      };
+
+      const handleRowDragOver = (e, categoryId) => {
+        if (!draggedItem || draggedItem.categoryId !== categoryId) return;
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+      };
+
+      const handleRowDrop = (e, categoryId, targetItemId) => {
+        e.preventDefault();
+        if (!draggedItem || draggedItem.categoryId !== categoryId || draggedItem.itemId === targetItemId) {
+          setDraggedItem(null);
+          setHeldHandleItemId(null);
+          return;
+        }
+        updateData(prevData => prevData.map(cat => {
+          if (cat.id !== categoryId) return cat;
+          const items = [...cat.items];
+          const fromIdx = items.findIndex(i => i.id === draggedItem.itemId);
+          const toIdx = items.findIndex(i => i.id === targetItemId);
+          if (fromIdx === -1 || toIdx === -1) return cat;
+          const [moved] = items.splice(fromIdx, 1);
+          items.splice(toIdx, 0, moved);
+          return { ...cat, items };
+        }));
+        setDraggedItem(null);
+        setHeldHandleItemId(null);
+      };
+
+      const handleRowDragEnd = () => {
+        setDraggedItem(null);
+        setHeldHandleItemId(null);
+      };
+
+      const confirmDeleteRow = () => {
+        if (!itemToDelete) return;
+        updateData(prevData => prevData.map(category => {
+          if (category.id !== itemToDelete.categoryId) return category;
+          return { ...category, items: category.items.filter(item => item.id !== itemToDelete.itemId) };
+        }));
+        setItemToDelete(null); 
+      };
+
+      const generateCSVContent = () => {
+        let csv = "\uFEFF"; 
+        data.forEach(cat => {
+          csv += `"${cat.title.replace(/"/g, '""')}"\n`;
+          csv += `"S.NO","ITEMS","ACTUAL QUANTITY","OLD STOCK","PURCHASE QUANTITY"\n`;
+          
+          if (cat.items.length === 0) {
+            csv += `"","No items","","",""\n`;
+          } else {
+            cat.items.forEach((item, index) => {
+              const safeName = (item.name || '').replace(/"/g, '""');
+              const safeQty = (item.quantity || '').replace(/"/g, '""');
+              const safePurchase = (item.purchaseQuantity || '').replace(/"/g, '""');
+              const safeOld = (item.oldStock || '').replace(/"/g, '""');
+              csv += `"${index + 1}","${safeName}","${safeQty}","${safeOld}","${safePurchase}"\n`;
+            });
+          }
+          csv += `\n`; 
+        });
+        return csv;
+      };
+
+      const downloadCSV = () => {
+        const csv = generateCSVContent();
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.setAttribute('href', url);
+        a.setAttribute('download', 'LDSS_Mahoor_List.csv');
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        showToast("Excel file downloaded successfully!");
+        setIsSidebarOpen(false);
+      };
+
+      const getExcelFilename = () => {
+        const now = new Date();
+        const pad = (n) => String(n).padStart(2, '0');
+        const datePart = `${pad(now.getDate())}-${pad(now.getMonth() + 1)}-${now.getFullYear()}`;
+        const timePart = `${pad(now.getHours())}-${pad(now.getMinutes())}-${pad(now.getSeconds())}`;
+        return `LDSS_Mahoor_List_${datePart}_${timePart}.xlsx`;
+      };
+
+      const buildWorkbookFromData = () => {
+        const wb = XLSX.utils.book_new();
+        const dataCols = colOrder.filter(k => k !== 'sno' && k !== 'actions');
+        const usedNames = {};
+
+        const source = data.length > 0 ? data : [{ title: 'Sheet1', items: [] }];
+        source.forEach(cat => {
+          const header = ['S.NO', ...dataCols.map(k => getColLabel(k))];
+          const rows = cat.items.map((item, idx) => [
+            idx + 1,
+            ...dataCols.map(k => item[colFieldMap[k] || k] || '')
+          ]);
+          const ws = XLSX.utils.aoa_to_sheet([header, ...rows]);
+
+          let sheetName = (cat.title || 'Sheet').replace(/[\\/\?\*\[\]:]/g, '').trim().substring(0, 28) || 'Sheet';
+          if (usedNames[sheetName]) {
+            usedNames[sheetName] += 1;
+            sheetName = `${sheetName} (${usedNames[sheetName]})`;
+          } else {
+            usedNames[sheetName] = 1;
+          }
+          XLSX.utils.book_append_sheet(wb, ws, sheetName);
+        });
+        return wb;
+      };
+
+      const handleSaveExcel = () => {
+        if (typeof XLSX === 'undefined') {
+          showToast('Excel library failed to load. Check your connection.');
+          return;
+        }
+        setIsSaving(true);
+        try {
+          const wb = buildWorkbookFromData();
+          const filename = getExcelFilename();
+          XLSX.writeFile(wb, filename);
+          showToast(`Saved as "${filename}"`);
+        } catch (err) {
+          console.error(err);
+          showToast('Failed to save Excel file.');
+        }
+        setTimeout(() => setIsSaving(false), 1300);
+      };
+
+      const handleOpenFileClick = () => {
+        if (fileInputRef.current) fileInputRef.current.click();
+        setIsSidebarOpen(false);
+      };
+
+      const handleFileSelected = (e) => {
+        const file = e.target.files && e.target.files[0];
+        e.target.value = '';
+        if (!file) return;
+        if (typeof XLSX === 'undefined') {
+          showToast('Excel library failed to load. Check your connection.');
+          return;
+        }
+        const reader = new FileReader();
+        reader.onload = (evt) => {
+          try {
+            const bytes = new Uint8Array(evt.target.result);
+            const wb = XLSX.read(bytes, { type: 'array' });
+
+            const dataCols = colOrder.filter(k => k !== 'sno' && k !== 'actions');
+            const labelToKey = {};
+            dataCols.forEach(k => { labelToKey[getColLabel(k).toUpperCase().trim()] = k; });
+
+            let nextColOrder = [...colOrder];
+            let nextColLabels = { ...colLabels };
+            let nextColFieldMap = { ...colFieldMap };
+
+            const newCategories = wb.SheetNames.map((sheetName, sIdx) => {
+              const sheet = wb.Sheets[sheetName];
+              const rows = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: '' });
+              if (rows.length === 0) {
+                return { id: `cat-${Date.now()}-${sIdx}`, title: sheetName, items: [] };
+              }
+
+              const headerRow = rows[0].map(h => (h || '').toString().toUpperCase().trim());
+              const colKeysForRow = headerRow.map((label, colIdx) => {
+                if (colIdx === 0) return 'sno';
+                if (labelToKey[label]) return labelToKey[label];
+                const newKey = `col_${Date.now()}_${sIdx}_${colIdx}`;
+                nextColOrder = [...nextColOrder.filter(k => k !== 'actions'), newKey, 'actions'];
+                nextColLabels[newKey] = label || `COLUMN ${colIdx}`;
+                nextColFieldMap[newKey] = newKey;
+                labelToKey[label] = newKey;
+                return newKey;
+              });
+
+              const items = rows.slice(1).map((row, rIdx) => {
+                const item = { id: `item-${Date.now()}-${sIdx}-${rIdx}`, name: '', quantity: '', oldStock: '', purchaseQuantity: '' };
+                colKeysForRow.forEach((colKey, colIdx) => {
+                  if (colKey === 'sno') return;
+                  const field = nextColFieldMap[colKey] || colKey;
+                  const cell = row[colIdx];
+                  item[field] = cell === undefined || cell === null ? '' : cell.toString();
+                });
+                return item;
+              });
+
+              return { id: `cat-${Date.now()}-${sIdx}`, title: sheetName, items };
+            });
+
+            setColOrder(nextColOrder);
+            setColLabels(nextColLabels);
+            setColFieldMap(nextColFieldMap);
+            updateData(() => newCategories);
+            showToast(`Opened "${file.name}" successfully!`);
+          } catch (err) {
+            console.error(err);
+            showToast('Failed to open file. Please select a valid Excel file.');
+          }
+        };
+        reader.readAsArrayBuffer(file);
+      };
+
+      const downloadPDF = () => {
+        setIsSidebarOpen(false);
+        showToast("Generating PDF... Please wait.");
+
+        setTimeout(() => {
+          const pdfContainer = document.createElement('div');
+          pdfContainer.style.padding = '20px';
+          pdfContainer.style.fontFamily = 'sans-serif';
+          
+          let htmlContent = `
+            <div style="text-align:center; margin-bottom:20px;">
+              <h1 style="color:#ea580c; font-size:24px; font-weight:bold; margin:0;">LDSS - Mahoor List</h1>
+              <p style="color:#78716c; font-size:12px; margin-top:4px;">Generated on ${new Date().toLocaleDateString()}</p>
+            </div>
+          `;
+          
+          data.forEach(cat => {
+            htmlContent += `
+              <h2 style="background-color:#ea580c; color:white; padding:8px 12px; margin-top:24px; margin-bottom:0; font-size:14px; font-weight:bold; border-radius:8px 8px 0 0;">${cat.title}</h2>
+              <table style="width:100%; border-collapse: collapse; text-align:left; font-size:12px;">
+                <thead>
+                  <tr style="background-color:#ffedd5; color:#9a3412;">
+                    <th style="padding:8px 12px; border:1px solid #fdba74; width:8%;">S.NO</th>
+                    <th style="padding:8px 12px; border:1px solid #fdba74; width:32%;">ITEMS</th>
+                    <th style="padding:8px 12px; border:1px solid #fdba74; width:20%;">ACTUAL QTY</th>
+                    <th style="padding:8px 12px; border:1px solid #fdba74; width:20%;">OLD STOCK</th>
+                    <th style="padding:8px 12px; border:1px solid #fdba74; width:20%;">PURCHASE QTY</th>
+                  </tr>
+                </thead>
+                <tbody>
+            `;
+            
+            if (cat.items.length === 0) {
+              htmlContent += `<tr><td colspan="5" style="text-align:center; padding:12px; color:#a8a29e; border:1px solid #fdba74;">No items</td></tr>`;
+            } else {
+              cat.items.forEach((item, idx) => {
+                const rowBg = idx % 2 === 0 ? '#fff' : '#fff7ed';
+                htmlContent += `
+                  <tr style="background-color:${rowBg};">
+                    <td style="padding:8px 12px; border:1px solid #fdba74; color:#57534e;">${idx + 1}</td>
+                    <td style="padding:8px 12px; border:1px solid #fdba74; font-weight:bold; color:#1c1917;">${item.name || ''}</td>
+                    <td style="padding:8px 12px; border:1px solid #fdba74; color:#44403c;">${item.quantity || ''}</td>
+                    <td style="padding:8px 12px; border:1px solid #fdba74; color:#44403c;">${item.oldStock || ''}</td>
+                    <td style="padding:8px 12px; border:1px solid #fdba74; color:#44403c;">${item.purchaseQuantity || ''}</td>
+                  </tr>
+                `;
+              });
+            }
+            htmlContent += `</tbody></table>`;
+          });
+          
+          pdfContainer.innerHTML = htmlContent;
+          
+          const opt = {
+            margin:       10,
+            filename:     'LDSS_Mahoor_List.pdf',
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2, useCORS: true },
+            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+          };
+          
+          html2pdf().set(opt).from(pdfContainer).save().then(() => {
+            showToast("PDF Downloaded successfully!");
+          }).catch(err => {
+            showToast("Error generating PDF.");
+            console.error(err);
+          });
+        }, 400); 
+      };
+
+      const shareViaWhatsApp = async () => {
+        const csv = generateCSVContent();
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        const file = new File([blob], 'LDSS_Mahoor_List.csv', { type: 'text/csv' });
+        
+        setIsSidebarOpen(false);
+
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          try {
+            await navigator.share({
+              title: 'LDSS - Mahoor List',
+              text: 'Here is the generated Mahoor List Excel file.',
+              files: [file]
+            });
+            showToast("Opening share menu...");
+          } catch (err) {
+            if (err.name !== 'AbortError') {
+               showToast("Sharing failed or not supported for files.");
+            }
+          }
+        } else {
+           showToast("Downloading file... Please attach it in WhatsApp manually.");
+           setTimeout(() => {
+              const url = URL.createObjectURL(blob);
+              const a = document.createElement('a');
+              a.href = url;
+              a.download = 'LDSS_Mahoor_List.csv';
+              a.click();
+              URL.revokeObjectURL(url);
+           }, 1500);
+        }
+      };
+
+      const handleCreateTable = () => {
+        if (!newTableTitle.trim()) return;
+        
+        const newId = `cat-${Date.now()}`;
+        const nextNum = data.length + 1;
+        const formattedTitle = `${nextNum}. ${newTableTitle}`;
+        
+        updateData(prev => [...prev, {
+          id: newId,
+          title: formattedTitle,
+          items: []
+        }]);
+        
+        setNewTableTitle('');
+        setIsAddTableModalOpen(false);
+        setIsSidebarOpen(false);
+        showToast(`New table "${formattedTitle}" added!`);
+        
+        setTimeout(() => {
+          scrollToCategory(newId);
+        }, 100);
+      };
+
+      const handleDeleteTable = () => {
+        updateData(prev => prev.filter(cat => cat.id !== tableToDelete));
+        
+        if (activeCategory === tableToDelete && data.length > 1) {
+           const newActive = data.find(c => c.id !== tableToDelete);
+           if(newActive) setActiveCategory(newActive.id);
+        }
+        
+        setTableToDelete('');
+        setShowDeleteWarning(false);
+        setIsDeleteTableModalOpen(false);
+        setIsSidebarOpen(false);
+        showToast("Table deleted permanently.");
+      };
+
+      const checkIsListening = (categoryId, itemId, field) => {
+        return listeningState && 
+               listeningState.categoryId === categoryId && 
+               listeningState.itemId === itemId && 
+               listeningState.field === field;
+      };
+
+      const activeColumnFilters = Object.entries(columnFilters).filter(([, v]) => Array.isArray(v));
+      const trimmedSearch = searchQuery.trim().toLowerCase();
+      const displayedData = (trimmedSearch === '' && activeColumnFilters.length === 0)
+        ? data
+        : data.map(category => ({
+            ...category,
+            items: category.items.filter(item => {
+              const matchesSearch = trimmedSearch === '' || colOrder.some(colKey => {
+                if (colKey === 'sno' || colKey === 'actions') return false;
+                const field = colFieldMap[colKey] || colKey;
+                return (item[field] || '').toString().toLowerCase().includes(trimmedSearch);
+              });
+              const matchesFilters = activeColumnFilters.every(([colKey, selectedValues]) => {
+                const field = colFieldMap[colKey] || colKey;
+                const raw = (item[field] || '').toString().trim();
+                const normalized = raw === '' ? BLANK_TOKEN : raw;
+                return selectedValues.includes(normalized);
+              });
+              return matchesSearch && matchesFilters;
+            })
+          })).filter(category => category.items.length > 0);
+
+      return (
+        <div className="min-h-screen bg-[#FCF9F2] text-stone-800 font-sans pb-16">
+          
+          {/* Sidebar Overlay */}
+          <div className={`fixed inset-0 z-[60] flex transition-opacity duration-300 no-print ${isSidebarOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
+            <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setIsSidebarOpen(false)}></div>
+            
+            <div className={`relative w-24 sm:w-28 bg-gradient-to-b from-orange-600 to-orange-700 border-r border-orange-500/50 h-full shadow-2xl flex flex-col items-center py-6 gap-6 transform transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] overflow-y-auto scrollbar-hide ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+              
+              <div className="relative cursor-pointer hover:scale-105 transition-transform">
+                <img src="https://cdn.wallpapersafari.com/15/40/zlOjX4.jpg" alt="Profile" className="w-10 h-10 rounded-full object-cover border border-orange-300/40" />
+                <div className="absolute bottom-0 right-0 w-3 h-3 bg-[#a2ff00] border-2 border-orange-600 rounded-full"></div>
+              </div>
+
+              <div className="flex flex-col gap-6 items-center w-full mt-2 pb-6">
+                
+                <div className="flex flex-col items-center gap-1.5 cursor-pointer group" onClick={() => setIsSidebarOpen(false)}>
+                  <button className="text-orange-100 group-hover:text-white p-2.5 rounded-xl group-hover:bg-white/20 transition-all">
+                    <Icons.ArrowRight className="w-6 h-6" />
+                  </button>
+                  <span className="text-[10px] text-orange-200 group-hover:text-white font-semibold tracking-wide">Back</span>
+                </div>
+                
+                <div className="w-12 h-px bg-orange-300/30 my-1"></div>
+
+                <div className="flex flex-col items-center gap-1.5 cursor-pointer group" onClick={handleOpenFileClick}>
+                  <button className="text-orange-100 group-hover:text-white p-2.5 rounded-xl group-hover:bg-white/20 transition-all">
+                    <Icons.FolderOpen className="w-6 h-6" />
+                  </button>
+                  <span className="text-[10px] text-orange-200 group-hover:text-white font-semibold tracking-wide whitespace-nowrap">Open File</span>
+                </div>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept=".xlsx,.xls,.csv"
+                  onChange={handleFileSelected}
+                  className="hidden"
+                />
+
+                <div className="flex flex-col items-center gap-1.5 cursor-pointer group" onClick={() => setIsAddTableModalOpen(true)}>
+                  <button className="text-orange-100 group-hover:text-white p-2.5 rounded-xl group-hover:bg-white/20 transition-all">
+                    <Icons.TablePlus className="w-6 h-6" />
+                  </button>
+                  <span className="text-[10px] text-orange-200 group-hover:text-white font-semibold tracking-wide whitespace-nowrap">Add Table</span>
+                </div>
+
+                <div className="flex flex-col items-center gap-1.5 cursor-pointer group" onClick={() => setIsDeleteTableModalOpen(true)}>
+                  <button className="text-orange-100 group-hover:text-white p-2.5 rounded-xl group-hover:bg-red-500/80 transition-all">
+                    <Icons.TableMinus className="w-6 h-6" />
+                  </button>
+                  <span className="text-[10px] text-orange-200 group-hover:text-white font-semibold tracking-wide whitespace-nowrap">Delete Table</span>
+                </div>
+
+                <div className="flex flex-col items-center gap-1.5 cursor-pointer group" onClick={downloadCSV}>
+                  <button className="text-orange-100 group-hover:text-white p-2.5 rounded-xl group-hover:bg-white/20 transition-all">
+                    <Icons.FileExcel className="w-6 h-6" />
+                  </button>
+                  <span className="text-[10px] text-orange-200 group-hover:text-white font-semibold tracking-wide whitespace-nowrap">Export Excel</span>
+                </div>
+
+                <div className="flex flex-col items-center gap-1.5 cursor-pointer group" onClick={downloadPDF}>
+                  <button className="bg-white/20 text-white p-2.5 rounded-xl group-hover:bg-white/30 transition-all shadow-lg border border-white/20 relative">
+                    <Icons.FilePdf className="w-6 h-6" />
+                  </button>
+                  <span className="text-[10px] text-white font-bold tracking-wide whitespace-nowrap drop-shadow-md">Print PDF</span>
+                </div>
+
+                <div className="flex flex-col items-center gap-1.5 cursor-pointer group" onClick={shareViaWhatsApp}>
+                  <button className="bg-white/20 text-[#4ade80] p-2.5 rounded-xl group-hover:bg-[#25D366] group-hover:text-white transition-all shadow-lg border border-white/20 relative">
+                    <Icons.WhatsApp className="w-6 h-6" />
+                  </button>
+                  <span className="text-[10px] text-white font-bold tracking-wide whitespace-nowrap drop-shadow-md">Share WA</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Add Table Modal */}
+          {isAddTableModalOpen && (
+            <div className="fixed inset-0 z-[70] flex items-center justify-center bg-stone-900/40 backdrop-blur-sm p-4 transition-opacity no-print">
+              <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden border border-stone-100">
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-stone-800 mb-2 flex items-center gap-2">
+                    <Icons.TablePlus className="w-5 h-5 text-orange-500" /> New Table Category
+                  </h3>
+                  <p className="text-stone-500 text-sm mb-4">Enter a heading for the new inventory table.</p>
+                  <input 
+                    type="text" 
+                    autoFocus
+                    placeholder="e.g. Kitchen Setup, Decorations..." 
+                    value={newTableTitle}
+                    onChange={(e) => setNewTableTitle(e.target.value)}
+                    onKeyDown={(e) => e.key === 'Enter' && handleCreateTable()}
+                    className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-stone-800 font-medium focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all"
+                  />
+                </div>
+                <div className="flex bg-[#FCF9F2] p-4 gap-3 justify-end border-t border-stone-100">
+                  <button onClick={() => setIsAddTableModalOpen(false)} className="px-5 py-2 text-sm font-semibold text-stone-600 bg-white border border-stone-200 rounded-xl hover:bg-stone-50 shadow-sm transition-colors">Cancel</button>
+                  <button onClick={handleCreateTable} className="px-5 py-2 text-sm font-semibold text-white bg-gradient-to-r from-orange-500 to-amber-500 rounded-xl hover:from-orange-600 hover:to-amber-600 shadow-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed" disabled={!newTableTitle.trim()}>Create Table</button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Delete Table Modal */}
+          {isDeleteTableModalOpen && (
+            <div className="fixed inset-0 z-[70] flex items-center justify-center bg-stone-900/40 backdrop-blur-sm p-4 transition-opacity no-print">
+              <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden border border-stone-100">
+                
+                {!showDeleteWarning ? (
+                  <>
+                    <div className="p-6">
+                      <h3 className="text-xl font-bold text-stone-800 mb-2 flex items-center gap-2">
+                        <Icons.TableMinus className="w-5 h-5 text-red-500" /> Delete Table
+                      </h3>
+                      <p className="text-stone-500 text-sm mb-4">Select a table you wish to remove.</p>
+                      
+                      <div className="max-h-60 overflow-y-auto space-y-2 pr-2 scrollbar-hide">
+                        {data.map(cat => (
+                          <div 
+                            key={cat.id} 
+                            onClick={() => setTableToDelete(cat.id)}
+                            className={`p-3 rounded-xl border cursor-pointer transition-all ${tableToDelete === cat.id ? 'border-red-500 bg-red-50 shadow-sm' : 'border-stone-200 hover:border-red-200 hover:bg-stone-50'}`}
+                          >
+                            <span className={`text-sm font-bold ${tableToDelete === cat.id ? 'text-red-700' : 'text-stone-700'}`}>{cat.title}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="flex bg-[#FCF9F2] p-4 gap-3 justify-end border-t border-stone-100">
+                      <button onClick={() => { setIsDeleteTableModalOpen(false); setTableToDelete(''); }} className="px-5 py-2 text-sm font-semibold text-stone-600 bg-white border border-stone-200 rounded-xl hover:bg-stone-50 shadow-sm transition-colors">Cancel</button>
+                      <button 
+                        onClick={() => setShowDeleteWarning(true)} 
+                        className="px-5 py-2 text-sm font-semibold text-white bg-red-500 rounded-xl hover:bg-red-600 shadow-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed" 
+                        disabled={!tableToDelete}
+                      >
+                        Next
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="p-6 text-center">
+                      <div className="w-16 h-16 bg-red-100 text-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <Icons.Trash className="w-8 h-8" />
+                      </div>
+                      <h3 className="text-xl font-bold text-stone-800 mb-2">Are you absolutely sure?</h3>
+                      <p className="text-stone-500 text-sm mb-4">
+                        This table will be permanently deleted along with all its data. This action cannot be undone.
+                      </p>
+                    </div>
+                    <div className="flex bg-red-50 p-4 gap-3 justify-end border-t border-red-100">
+                      <button onClick={() => setShowDeleteWarning(false)} className="px-5 py-2 text-sm font-semibold text-stone-600 bg-white border border-stone-200 rounded-xl hover:bg-stone-50 shadow-sm transition-colors">Back</button>
+                      <button 
+                        onClick={handleDeleteTable} 
+                        className="px-5 py-2 text-sm font-semibold text-white bg-red-600 rounded-xl hover:bg-red-700 shadow-sm transition-all"
+                      >
+                        Proceed
+                      </button>
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
+          )}
+
+          {toastMessage && (
+            <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-[90] bg-stone-800 text-white px-4 py-3 rounded-xl shadow-2xl text-sm transition-all text-center w-11/12 max-w-sm font-medium">
+              {toastMessage}
+            </div>
+          )}
+
+          <div id="sticky-top-bar" className="sticky top-0 z-40 shadow-sm border-b border-orange-100/50 no-print">
+            <header className="bg-gradient-to-r from-orange-600 to-amber-500 text-white shadow-md relative z-20">
+              <div className="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
+                <div className="w-16 flex items-center">
+                  <img 
+                    src="https://cdn.wallpapersafari.com/15/40/zlOjX4.jpg" 
+                    alt="Lord Dattatreya" 
+                    onClick={() => setIsSidebarOpen(true)}
+                    className="h-11 w-11 rounded-full object-cover border-2 border-white/40 shadow-sm cursor-pointer hover:scale-105 hover:border-white transition-all active:scale-95" 
+                    title="Open Menu"
+                  />
+                </div>
+                <div className="flex items-center gap-2">
+                  <h1 className="text-xl font-extrabold tracking-wide drop-shadow-sm">LDSS - Mahoor List</h1>
+                </div>
+                <div className="w-16 flex items-center justify-end">
+                  <button
+                    onClick={handleSaveExcel}
+                    title="Save as Excel"
+                    className="relative w-11 h-11 flex items-center justify-center rounded-full bg-white/15 hover:bg-white/25 active:scale-90 transition-all animate-pulse"
+                  >
+                    {isSaving && <span className="absolute inset-0 rounded-full bg-white animate-ping"></span>}
+                    <Icons.Save className="w-5 h-5 text-white relative z-10" />
+                  </button>
+                </div>
+              </div>
+            </header>
+
+            <div className="px-4 py-3 bg-[#FCF9F2]/85 backdrop-blur-xl relative z-10 border-b border-stone-200/40">
+              <div className="relative flex items-center w-full h-[46px] rounded-2xl bg-white/70 shadow-[0_4px_16px_-4px_rgba(0,0,0,0.05)] border border-white focus-within:bg-white focus-within:shadow-[0_4px_20px_-4px_rgba(249,115,22,0.2)] focus-within:border-orange-200 transition-all duration-300">
+                <div className="pl-4 pr-2 text-stone-400">
+                  <Icons.Search />
+                </div>
+                <input
+                  type="text"
+                  placeholder="Search items, quantities..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="flex-1 bg-transparent border-none focus:ring-0 text-sm font-semibold text-stone-800 placeholder-stone-400 h-full w-full outline-none"
+                />
+                {searchQuery && (
+                  <button onClick={() => setSearchQuery('')} className="p-2 text-stone-400 hover:text-stone-600 transition-colors">
+                    <Icons.Close />
+                  </button>
+                )}
+                <div className="h-6 w-px bg-stone-200 mx-1"></div>
+                <button
+                  onClick={(e) => { e.stopPropagation(); toggleVoiceInput('search', 'global', 'query'); }}
+                  className={`pr-4 pl-2 h-full flex items-center justify-center transition-colors ${checkIsListening('search', 'global', 'query') ? 'text-red-500' : 'text-stone-400 hover:text-orange-500'}`}
+                >
+                  {checkIsListening('search', 'global', 'query') ? <Icons.MicActive className="w-5 h-5" /> : <Icons.Mic className="w-5 h-5" />}
+                </button>
+              </div>
+            </div>
+
+            <div className="max-w-4xl mx-auto px-2 py-2 bg-[#FCF9F2]/90 backdrop-blur-md relative z-10 shadow-sm border-b border-stone-200/50">
+              <div className="flex items-center justify-between px-2 mb-1.5">
+                <h2 className="text-[10px] font-bold text-stone-400 uppercase tracking-widest">Category</h2>
+                <div className="flex items-center gap-1 bg-white rounded-full px-1 py-0.5 border border-stone-200 shadow-sm">
+                  <button onClick={handleUndo} disabled={past.length === 0} className={`p-1 rounded-full ${past.length === 0 ? 'text-stone-300' : 'text-stone-500 hover:text-orange-500'}`}><Icons.Undo /></button>
+                  <div className="w-px h-3 bg-stone-200"></div>
+                  <button onClick={handleRedo} disabled={future.length === 0} className={`p-1 rounded-full ${future.length === 0 ? 'text-stone-300' : 'text-stone-500 hover:text-orange-500'}`}><Icons.Redo /></button>
+                </div>
+              </div>
+              <div className="flex gap-2 sm:gap-4 overflow-x-auto pb-1 scrollbar-hide snap-x px-1">
+                {categoryNavItems.map(cat => (
+                  <div 
+                    key={cat.id} 
+                    id={`nav-${cat.id}`}
+                    onClick={() => scrollToCategory(cat.id)} 
+                    className="flex flex-col items-center gap-1 cursor-pointer snap-start min-w-[56px]"
+                  >
+                    <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 active:scale-95 ${activeCategory === cat.id ? 'bg-gradient-to-br from-orange-500 to-amber-500 text-white shadow-md border-0' : 'bg-white text-orange-400 border border-stone-200 shadow-sm'}`}>
+                      <cat.icon className="w-5 h-5" />
+                    </div>
+                    <span className={`text-[9px] font-bold tracking-wide transition-colors ${activeCategory === cat.id ? 'text-orange-600' : 'text-stone-400'}`}>
+                      {cat.name}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Global Sub-Heading (Sticky Columns) */}
+            <div className={`overflow-hidden bg-[#FCF9F2]/95 backdrop-blur-sm ${showGlobalHeader ? 'block' : 'hidden'} border-t border-orange-200/60 shadow-md`}>
+              <div className="max-w-4xl mx-auto px-3 sm:px-4 py-1">
+                <div className="border-x border-orange-100/60 rounded-t-sm">
+                  <div ref={globalHeaderScrollRef} className="overflow-x-hidden bg-white">
+                    <div className="flex bg-orange-50 text-orange-800 text-[11px] font-bold py-2 tracking-wider w-max border-b border-orange-100/60">
+                      {colOrder.map(colKey => renderHeaderCell(colKey))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <main className="max-w-4xl mx-auto p-3 sm:p-4 mt-2 space-y-8">
+            {displayedData.length === 0 ? (
+              <div className="text-center py-20 flex flex-col items-center justify-center">
+                <div className="w-20 h-20 bg-orange-100/50 rounded-full flex items-center justify-center mb-4 text-orange-400">
+                  <Icons.Search className="w-10 h-10" />
+                </div>
+                <h3 className="text-lg font-bold text-stone-700">No items found</h3>
+                <p className="text-sm text-stone-500 mt-1">Try adjusting your search query.</p>
+              </div>
+            ) : (
+              displayedData.map((category) => (
+                <div key={category.id} id={category.id} className="bg-white rounded-2xl shadow-sm border border-orange-100/60 overflow-hidden">
+                  
+                  <div className="bg-gradient-to-r from-orange-500 to-amber-500 text-white px-4 py-3 relative flex items-center justify-center">
+                    <h2 className="text-lg font-extrabold text-center drop-shadow-sm">{category.title}</h2>
+                    <button
+                      onClick={(e) => { e.stopPropagation(); setTableMenuOpen(prev => prev === category.id ? null : category.id); }}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-white/90 hover:text-white p-1.5 rounded-full hover:bg-white/15 transition-colors cursor-pointer no-print"
+                      title="Table options"
+                    >
+                      <Icons.MoreVertical className="w-5 h-5" />
+                    </button>
+                    {tableMenuOpen === category.id && renderTableMenu(category.id)}
+                  </div>
+
+                  <div 
+                    id={`scroll-container-${category.id}`} 
+                    className="overflow-x-auto scrollbar-hide"
+                    onScroll={(e) => {
+                      if (globalHeaderScrollRef.current) {
+                        globalHeaderScrollRef.current.scrollLeft = e.currentTarget.scrollLeft;
+                      }
+                    }}
+                  >
+                    <div className="w-max">
+                      <div id={`native-header-${category.id}`} className="flex bg-orange-50 text-orange-800 text-[11px] font-bold py-2 border-b border-orange-100/60 tracking-wider">
+                        {colOrder.map(colKey => renderHeaderCell(colKey))}
+                      </div>
+
+                      <div className="divide-y divide-stone-100/80">
+                        {category.items.length === 0 ? (
+                          <div className="p-6 text-center text-stone-400 text-sm font-medium bg-[#FCF9F2]">No items in this category.</div>
+                        ) : (
+                          category.items.map((item, index) => (
+                            <div
+                              key={item.id}
+                              onClick={() => setSelectedRow(item.id)}
+                              onDragOver={(e) => handleRowDragOver(e, category.id)}
+                              onDrop={(e) => handleRowDrop(e, category.id, item.id)}
+                              className={`flex items-start py-2 transition-all duration-300 cursor-pointer ${selectedRow === item.id ? 'bg-gradient-to-r from-orange-200/90 via-orange-100/80 to-orange-50/50 relative z-10 shadow-[inset_6px_0_0_0_#ea580c,0_4px_12px_-2px_rgba(234,88,12,0.15)] border-y border-orange-300/80' : 'bg-[#FCF9F2] hover:bg-orange-50/50'}`}
+                            >
+                              {swapModeCategories[category.id] && (
+                                <div
+                                  draggable="true"
+                                  onDragStart={(e) => { e.stopPropagation(); handleRowDragStart(e, category.id, item.id); }}
+                                  onDragEnd={(e) => { e.stopPropagation(); handleRowDragEnd(); }}
+                                  onMouseDown={(e) => { e.stopPropagation(); setHeldHandleItemId(item.id); }}
+                                  onMouseUp={(e) => { e.stopPropagation(); setHeldHandleItemId(null); }}
+                                  onTouchStart={(e) => { e.stopPropagation(); setHeldHandleItemId(item.id); }}
+                                  onTouchEnd={(e) => { e.stopPropagation(); setHeldHandleItemId(null); }}
+                                  title="Hold and drag to move up/down"
+                                  className={`no-print shrink-0 w-6 self-stretch flex items-center justify-center cursor-grab active:cursor-grabbing rounded transition-colors ${heldHandleItemId === item.id ? 'bg-green-200' : ''}`}
+                                >
+                                  <Icons.GripVertical className="w-4 h-4 text-stone-400" />
+                                </div>
+                              )}
+                              {colOrder.map(colKey => renderRowCell(colKey, category, item, index))}
+                            </div>
+                          ))
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-[#FCF9F2] p-3 flex justify-center no-print border-t border-orange-100/40">
+                    <button onClick={() => addRow(category.id)} className="flex items-center gap-1 text-sm font-semibold text-orange-600 bg-orange-100/50 hover:bg-orange-100 px-4 py-2 rounded-full transition-colors w-full justify-center sm:w-auto shadow-sm">
+                      <Icons.Plus className="w-4 h-4" /> Add New Detail
+                    </button>
+                  </div>
+                  
+                </div>
+              ))
+            )}
+          </main>
+          
+          {/* Delete Row Confirmation Modal */}
+          {itemToDelete && (
+            <div className="fixed inset-0 z-[80] flex items-center justify-center bg-stone-900/40 backdrop-blur-sm p-4 transition-opacity no-print">
+              <div className="bg-white rounded-2xl shadow-2xl w-full max-w-xs overflow-hidden border border-stone-100 text-center p-6">
+                <div className="w-12 h-12 bg-red-100 text-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Icons.Trash className="w-6 h-6" />
+                </div>
+                <h3 className="text-lg font-bold text-stone-800 mb-2">Delete Row?</h3>
+                <p className="text-stone-500 text-sm mb-6">Are you sure you want to remove this item?</p>
+                <div className="flex gap-3 justify-center">
+                  <button onClick={() => setItemToDelete(null)} className="px-5 py-2 text-sm font-semibold text-stone-600 bg-stone-50 border border-stone-200 rounded-xl hover:bg-stone-100 transition-colors">Cancel</button>
+                  <button onClick={confirmDeleteRow} className="px-5 py-2 text-sm font-semibold text-white bg-red-500 rounded-xl hover:bg-red-600 shadow-sm transition-all">Delete</button>
+                </div>
+              </div>
+            </div>
+          )}
+
         </div>
-        <span style="font-size: 11px; color: var(--outline); margin-top: 1px;" class="">1.4 MB • Scanned &amp; Verified</span>
-      </div>
-    </div>
-    <button type="button" title="Remove file" style="color: var(--outline); padding: 4px; border-radius: 6px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: color 0.15s; flex-shrink: 0;" class="">
-      <span class="material-symbols-outlined" style="font-size: 18px;">close</span>
-    </button>
-  </div>
-</section>
-<!-- Description -->
-<section class="card" style="position: relative; z-index: 30; padding: 16px; overflow: visible; box-shadow: rgba(0, 0, 0, 0.06) 0px 4px 14px; margin-top: 24px;">
-<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;"><h2 class="section-title" style="margin-bottom: 0px; font-size: 15px; font-weight: 700;">Expense Description (Optional)</h2><span style="font-size: 11px; font-weight: 500; color: var(--outline);" class="">Notes &amp; tags</span></div>
-<textarea class="description-input" placeholder="Add notes about this expense..." style="height: 76px; min-height: 76px; padding: 12px 16px;" rows="2"></textarea>
-</section>
-<!-- Save Button -->
-<button class="save-btn">
-<span class="material-symbols-outlined" style="font-size: 20px;">check</span>
-Save Expense
-</button>
-</main>
-<!-- BottomNavBar -->
-<nav class="bottom-nav">
-<button class="nav-item">
-<span class="material-symbols-outlined" style="font-variation-settings: &quot;FILL&quot; 0;">home</span>
-<span class="">Home</span>
-</button>
-<button class="nav-item">
-<span class="material-symbols-outlined" style="font-variation-settings: &quot;FILL&quot; 0;">account_balance_wallet</span>
-<span class="">Budget</span>
-</button>
-<button class="nav-fab">
-<span class="material-symbols-outlined" style="font-size: 28px; font-variation-settings: &quot;FILL&quot; 0;">add</span>
-</button>
-<button class="nav-item">
-<span class="material-symbols-outlined" style="font-variation-settings: &quot;FILL&quot; 0;">leaderboard</span>
-<span class="">Stats</span>
-</button>
-<button class="nav-item">
-<span class="material-symbols-outlined" style="font-variation-settings: &quot;FILL&quot; 0;">history</span>
-<span class="">History</span>
-</button>
-</nav>
-<script>
-  let isDropdownOpen = false;
-
-  function toggleCategoryDropdown(event) {
-    if (event) {
-      event.stopPropagation();
+      );
     }
-    const menu = document.getElementById('category-dropdown-menu');
-    const chevron = document.getElementById('dropdown-chevron');
-    const trigger = document.getElementById('category-dropdown-trigger');
 
-    isDropdownOpen = !isDropdownOpen;
-
-    if (isDropdownOpen) {
-      menu.style.display = 'flex';
-      chevron.style.transform = 'rotate(180deg)';
-      trigger.style.borderColor = 'var(--primary)';
-      trigger.setAttribute('aria-expanded', 'true');
-    } else {
-      closeCategoryDropdown();
-    }
-  }
-
-  function closeCategoryDropdown() {
-    const menu = document.getElementById('category-dropdown-menu');
-    const chevron = document.getElementById('dropdown-chevron');
-    const trigger = document.getElementById('category-dropdown-trigger');
-
-    if (menu) menu.style.display = 'none';
-    if (chevron) chevron.style.transform = 'rotate(0deg)';
-    if (trigger) {
-      trigger.style.borderColor = 'var(--outline-variant)';
-      trigger.setAttribute('aria-expanded', 'false');
-    }
-    isDropdownOpen = false;
-  }
-
-  function selectCategory(name, icon, subtitle, itemEl) {
-    // 1. Update Display Card
-    const titleEl = document.getElementById('selected-category-title');
-    const subEl = document.getElementById('selected-category-subtitle');
-    const iconEl = document.getElementById('selected-category-icon');
-    const tableTitle = document.getElementById('items-table-title');
-
-    if (titleEl) titleEl.textContent = name;
-    if (subEl) subEl.textContent = subtitle || (name + ' category');
-    if (iconEl) iconEl.textContent = icon;
-    if (tableTitle) tableTitle.textContent = name + ' Items';
-
-    // 2. Update Dropdown Items Active State
-    const dropdownItems = document.querySelectorAll('.category-dropdown-item');
-    dropdownItems.forEach(el => {
-      const isMatch = el.getAttribute('data-category') === name;
-      const check = el.querySelector('.check-mark');
-      const iconBox = el.querySelector('.item-icon-box');
-
-      if (isMatch) {
-        el.style.background = 'rgba(98, 44, 229, 0.08)';
-        el.style.color = 'var(--primary)';
-        el.style.fontWeight = '600';
-        el.style.border = '1px solid rgba(98, 44, 229, 0.2)';
-        if (check) check.style.display = 'inline-block';
-        if (iconBox) {
-          iconBox.style.background = 'var(--gradient)';
-          iconBox.style.color = 'white';
-          iconBox.style.boxShadow = '0 3px 8px rgba(123, 77, 255, 0.28)';
-        }
-      } else {
-        el.style.background = 'transparent';
-        el.style.color = 'var(--on-surface)';
-        el.style.fontWeight = '500';
-        el.style.border = '1px solid transparent';
-        if (check) check.style.display = 'none';
-        if (iconBox) {
-          iconBox.style.background = 'var(--surface-container-high)';
-          iconBox.style.color = 'var(--on-surface-variant)';
-          iconBox.style.boxShadow = 'none';
-        }
-      }
-    });
-
-    // 3. Update Horizontal List Chips
-    const chips = document.querySelectorAll('#horizontal-category-list .category-btn[data-cat-name]');
-    chips.forEach(chip => {
-      if (chip.getAttribute('data-cat-name') === name) {
-        chip.className = 'category-btn category-active';
-        chip.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-      } else {
-        chip.className = 'category-btn category-inactive';
-      }
-    });
-
-    // 4. Close Dropdown
-    closeCategoryDropdown();
-  }
-
-  function handleChipClick(name, icon, subtitle) {
-    selectCategory(name, icon, subtitle);
-  }
-
-  function promptAddCategory(event) {
-    if (event) event.stopPropagation();
-    const newCat = prompt('Enter new category name:');
-    if (newCat && newCat.trim()) {
-      const trimmed = newCat.trim();
-      selectCategory(trimmed, 'category', 'Custom Category');
-    }
-  }
-
-  // Close dropdown on tap outside
-  document.addEventListener('click', function(e) {
-    const wrapper = document.getElementById('category-dropdown-wrapper');
-    if (wrapper && !wrapper.contains(e.target)) {
-      closeCategoryDropdown();
-    }
-  });
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</body></html>
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>
