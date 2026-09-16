@@ -1,998 +1,1446 @@
-<!DOCTYPE html><html lang="en" style=""><head><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"><style class="">
-  .segmented-control .segmented-btn.active {
-    background-color: white !important;
-    color: var(--color-primary) !important;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
-    font-weight: 700 !important;
-  }
-  .segmented-control .segmented-btn:not(.active) {
-    background: transparent !important;
-  }
-</style></head><body><svg aria-hidden="true" class="inline-defs-container" style="position:absolute;width:0;height:0;overflow:hidden"></svg>
+<!DOCTYPE html><html lang="en"><head>
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport">
 <title>Smart Finance Tracker - Home Dashboard</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<!-- Google Fonts: Inter & Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
 <style>
-        :root {
-            /* Colors */
-            --color-primary: #622ce5;
-            --color-primary-container: #7b4dff;
-            --color-on-primary: #ffffff;
-            --color-secondary: #ae3203;
-            --color-secondary-container: #fd6a3c;
-            --color-on-secondary: #ffffff;
-            --color-tertiary: #732ad3;
-            --color-tertiary-container: #8d4aee;
-            --color-on-tertiary: #ffffff;
-            --color-error: #ba1a1a;
-            --color-background: #fcf9f8;
-            --color-on-background: #1c1b1b;
-            --color-surface: #fcf9f8;
-            --color-on-surface: #1c1b1b;
-            --color-surface-variant: #e5e2e1;
-            --color-on-surface-variant: #494456;
-            --color-surface-container-low: #f6f3f2;
-            --color-surface-container: #f0eded;
-            --color-outline: #7a7487;
-            --color-outline-variant: #cac3d8;
+    :root {
+      /* Theme Design Tokens */
+      --primary: #622ce5;
+      --primary-container: #7b4dff;
+      --primary-light: rgba(123, 77, 255, 0.1);
+      --primary-gradient: linear-gradient(135deg, #7b4dff 0%, #ff6b3d 100%);
+      --accent-orange: #ff6b3d;
+      --accent-green: #10b981;
+      --accent-red: #ef4444;
+      --accent-blue: #1a73e8;
+      --accent-purple: #9d4edd;
+      
+      --bg-main: #fcf9f8;
+      --surface-white: #ffffff;
+      --surface-card: #ffffff;
+      --surface-container-low: #f6f3f2;
+      --surface-container: #f0eded;
+      --surface-container-high: #e6e1e1;
+      
+      --text-on-surface: #1c1b1b;
+      --text-muted: #7a7487;
+      --text-subtle: #9e9aa8;
+      --border-subtle: rgba(0, 0, 0, 0.05);
+      --border-card: rgba(202, 195, 216, 0.35);
+      
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.03);
+      --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.04);
+      --shadow-lg: 0 20px 40px rgba(123, 77, 255, 0.18);
+      
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-xl: 24px;
+      --radius-full: 9999px;
+    }
 
-            /* Spacing */
-            --spacing-xs: 4px;
-            --spacing-sm: 8px;
-            --spacing-md: 16px;
-            --spacing-lg: 24px;
-            --spacing-xl: 32px;
-            --spacing-container-margin: 20px;
-            --spacing-unit: 4px;
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-            /* Typography */
-            --font-family: 'Inter', sans-serif;
-            --font-body-md-size: 16px;
-            --font-body-md-lh: 24px;
-            --font-body-md-weight: 400;
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-on-surface);
+      line-height: 1.4;
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: 96px;
+      overflow-x: hidden;
+    }
 
-            --font-label-sm-size: 12px;
-            --font-label-sm-lh: 16px;
-            --font-label-sm-weight: 500;
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 22px;
+      line-height: 1;
+      display: inline-block;
+      text-transform: none;
+      letter-spacing: normal;
+      word-wrap: normal;
+      white-space: nowrap;
+      direction: ltr;
+      vertical-align: middle;
+      font-feature-settings: 'liga';
+      -webkit-font-feature-settings: 'liga';
+    }
 
-            --font-headline-md-size: 20px;
-            --font-headline-md-lh: 28px;
-            --font-headline-md-weight: 600;
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      z-index: 50;
+      background: rgba(252, 249, 248, 0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+    }
 
-            --font-label-md-size: 14px;
-            --font-label-md-lh: 20px;
-            --font-label-md-weight: 600;
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 20px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
 
-            --font-headline-lg-size: 32px;
-            --font-headline-lg-lh: 40px;
-            --font-headline-lg-weight: 700;
-        }
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+    .profile-img-container {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid #ffffff;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      flex-shrink: 0;
+    }
 
-        body {
-            font-family: var(--font-family);
-            background-color: var(--color-background);
-            color: var(--color-on-background);
-            font-size: var(--font-body-md-size);
-            line-height: var(--font-body-md-lh);
-            font-weight: var(--font-body-md-weight);
-            -webkit-tap-highlight-color: transparent;
-            -webkit-font-smoothing: antialiased;
-            min-height: 100vh;
-            padding-bottom: 90px;
-        }
+    .profile-img-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
 
-        .material-symbols-outlined {
-            font-family: 'Material Symbols Outlined';
-            font-weight: normal;
-            font-style: normal;
-            font-size: 24px;
-            line-height: 1;
-            letter-spacing: normal;
-            text-transform: none;
-            display: inline-block;
-            white-space: nowrap;
-            word-wrap: normal;
-            direction: ltr;
-            font-feature-settings: 'liga';
-            -webkit-font-feature-settings: 'liga';
-            -webkit-font-smoothing: antialiased;
-        }
+    .user-name-group h1 {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-muted);
+      line-height: 1.2;
+    }
 
-        /* Typography Classes */
-        .text-body-md { font-size: var(--font-body-md-size); line-height: var(--font-body-md-lh); font-weight: var(--font-body-md-weight); }
-        .text-label-sm { font-size: var(--font-label-sm-size); line-height: var(--font-label-sm-lh); font-weight: var(--font-label-sm-weight); }
-        .text-headline-md { font-size: var(--font-headline-md-size); line-height: var(--font-headline-md-lh); font-weight: var(--font-headline-md-weight); }
-        .text-label-md { font-size: var(--font-label-md-size); line-height: var(--font-label-md-lh); font-weight: var(--font-label-md-weight); }
-        .text-headline-lg { font-size: var(--font-headline-lg-size); line-height: var(--font-headline-lg-lh); font-weight: var(--font-headline-lg-weight); letter-spacing: -0.02em;}
-        
-        .font-medium { font-weight: 500; }
-        .font-semibold { font-weight: 600; }
-        .font-bold { font-weight: 700; }
+    .user-name-group h2 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: 0.02em;
+    }
 
-        /* Colors */
-        .text-on-surface-variant { color: var(--color-on-surface-variant); }
-        .text-primary { color: var(--color-primary); }
-        .text-on-primary { color: var(--color-on-primary); }
-        .text-on-surface { color: var(--color-on-surface); }
-        .text-tertiary { color: var(--color-tertiary); }
-        .text-secondary-container { color: var(--color-secondary-container); }
-        .text-error { color: var(--color-error); }
+    .btn-logout-icon {
+      background: transparent;
+      border: none;
+      color: var(--accent-red);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      transition: background-color 0.2s, transform 0.15s;
+    }
 
-        /* Layout */
-        .flex { display: flex; }
-        .flex-col { display: flex; flex-direction: column; }
-        .items-center { align-items: center; }
-        .justify-between { justify-content: space-between; }
-        .justify-center { justify-content: center; }
-        .justify-around { justify-content: space-around; }
-        
-        .gap-unit { gap: var(--spacing-unit); }
-        .gap-xs { gap: var(--spacing-xs); }
-        .gap-sm { gap: var(--spacing-sm); }
-        .gap-md { gap: var(--spacing-md); }
+    .btn-logout-icon:hover {
+      background-color: rgba(239, 68, 68, 0.08);
+    }
 
-        .w-full { width: 100%; }
-        .h-full { height: 100%; }
+    .btn-logout-icon:active {
+      transform: scale(0.92);
+    }
 
-        /* Header */
-        header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 50;
-            background-color: rgba(252, 249, 248, 0.8);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.04);
-        }
-        
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 var(--spacing-container-margin);
-            height: 64px;
-            max-width: 1280px;
-            margin: 0 auto;
-        }
+    /* Container */
+    main {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
 
-        .profile-img-container {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            overflow: hidden;
-            flex-shrink: 0;
-            border: 2px solid white;
-            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.04);
-        }
-        
-        .profile-img-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+    /* Common Card Box */
+    .card-box {
+      background-color: var(--surface-card);
+      border-radius: var(--radius-xl);
+      padding: 16px;
+      border: 1px solid var(--border-card);
+      box-shadow: var(--shadow-md);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
 
-        .icon-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: var(--color-surface-container-low);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--color-on-surface-variant);
-            border: none;
-            cursor: pointer;
-            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.04);
-            transition: opacity 0.2s, transform 0.2s;
-        }
+    .card-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-        .icon-btn:active {
-            transform: scale(0.95);
-        }
+    .card-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-on-surface);
+      letter-spacing: 0.01em;
+    }
 
-        /* Main Content */
-        main {
-            padding-top: 88px;
-            padding-left: var(--spacing-container-margin);
-            padding-right: var(--spacing-container-margin);
-            max-width: 1280px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            padding-bottom: var(--spacing-lg);
-            gap: var(--spacing-md);
-        }
+    /* Segmented Controls */
+    .segmented-control {
+      display: flex;
+      background-color: var(--surface-container-low);
+      border-radius: 10px;
+      padding: 2px;
+    }
 
-        /* Balance Card */
-        .balance-card {
-            border-radius: 24px;
-            background: linear-gradient(135deg, #7B4DFF, #FF6B3D);
-            color: var(--color-on-primary);
-            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.04);
-            position: relative;
-            overflow: hidden;
-            padding: var(--spacing-md);
-            /* Interactive settings will be managed by JS */
-            transition: transform 0.1s ease-out, box-shadow 0.1s ease-out;
-            transform-style: preserve-3d;
-        }
-        
-        .balance-card-perspective-container {
-            perspective: 1000px;
-        }
+    .segmented-btn {
+      background: transparent;
+      border: none;
+      padding: 4px 14px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-muted);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
 
-        .balance-card::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: rgba(255, 255, 255, 0.05);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
+    .segmented-btn.active {
+      background-color: #ffffff;
+      color: var(--primary);
+      font-weight: 700;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    }
 
-        .balance-card:hover::before {
-            opacity: 1;
-        }
+    /* 3D Interactive Obsidian Card */
+    .perspective-wrapper {
+      perspective: 1000px;
+      width: 100%;
+    }
 
-        .balance-card-content {
-            position: relative;
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-            gap: var(--spacing-sm);
-        }
+    .balance-card {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1.586 / 1;
+      border-radius: 24px;
+      background: linear-gradient(135deg, #24252a 0%, #0d0e12 35%, #2c2d35 60%, #0b0c0e 100%);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.12), inset 0 1px 2px rgba(255, 255, 255, 0.3);
+      padding: 22px 24px;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      transform-style: preserve-3d;
+      transform: rotateX(4deg) rotateY(-4deg) scale(1);
+      transition: transform 0.15s ease-out;
+      cursor: pointer;
+      font-family: 'JetBrains Mono', monospace;
+    }
 
-        .opacity-90 { opacity: 0.9; }
-        
-        /* Obscured Balance Amount */
-        .obscured-amount {
-            filter: blur(8px);
-            opacity: 0.85;
-            transition: filter 0.3s ease-out, opacity 0.3s ease-out;
-            cursor: crosshair;
-            display: inline-block;
-            user-select: none;
-            -webkit-user-select: none;
-        }
+    .card-overlay-sheen {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(125deg, transparent 0%, rgba(255, 255, 255, 0.15) 25%, rgba(255, 255, 255, 0.35) 30%, rgba(255, 255, 255, 0.08) 36%, transparent 100%);
+      pointer-events: none;
+      mix-blend-mode: overlay;
+      transform: translateZ(1px);
+    }
 
-        @media (hover: hover) {
-            .obscured-amount:hover {
-                filter: blur(0px);
-                opacity: 1;
-            }
-        }
+    .twinkle-container {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1;
+    }
 
-        .obscured-amount.revealed {
-            filter: blur(0px);
-            opacity: 1;
-        }
-        
-        /* Twinkle Effect */
-        .twinkle-container {
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            z-index: 1;
-            overflow: hidden;
-        }
+    .twinkle-particle {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      animation: realistic-twinkle 2.2s ease-in-out forwards;
+    }
 
-        @keyframes realistic-twinkle {
-            0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 0; }
-            30% { transform: translate(-50%, -50%) scale(1.2) rotate(45deg); opacity: 1; filter: blur(0px); }
-            50% { transform: translate(-50%, -50%) scale(1) rotate(90deg); opacity: 0.8; filter: blur(1px); }
-            100% { transform: translate(-50%, -50%) scale(0) rotate(180deg); opacity: 0; filter: blur(2px); }
-        }
+    @keyframes realistic-twinkle {
+      0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 0; }
+      30% { transform: translate(-50%, -50%) scale(1.2) rotate(45deg); opacity: 1; }
+      50% { transform: translate(-50%, -50%) scale(1) rotate(90deg); opacity: 0.8; }
+      100% { transform: translate(-50%, -50%) scale(0) rotate(180deg); opacity: 0; }
+    }
 
-        .twinkle-particle {
-            position: absolute;
-            width: 24px;
-            height: 24px;
-            animation: realistic-twinkle 2s ease-in-out forwards;
-        }
+    .twinkle-particle::before, .twinkle-particle::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      background: radial-gradient(circle, #ffffff 0%, rgba(255,255,255,0.85) 30%, rgba(255,255,255,0) 80%);
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      box-shadow: 0 0 6px 1px rgba(255, 255, 255, 0.7);
+    }
 
-        .twinkle-particle::before, .twinkle-particle::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,255,255,0.8) 20%, rgba(255,255,255,0) 80%);
-            transform: translate(-50%, -50%);
-            border-radius: 50%;
-            box-shadow: 0 0 8px 2px rgba(255,255,255,0.6);
-        }
+    .twinkle-particle::before { width: 100%; height: 2px; }
+    .twinkle-particle::after { width: 2px; height: 100%; }
 
-        .twinkle-particle::before {
-            width: 100%;
-            height: 2px;
-        }
+    .twinkle-particle-core {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 5px;
+      height: 5px;
+      background: #ffffff;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 0 10px 3px rgba(255, 255, 255, 0.9);
+    }
 
-        .twinkle-particle::after {
-            width: 2px;
-            height: 100%;
-        }
+    .card-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 2;
+      transform: translateZ(20px);
+    }
 
-        .twinkle-particle-core {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 6px;
-            height: 6px;
-            background: white;
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            box-shadow: 0 0 12px 4px rgba(255, 255, 255, 0.9);
-            z-index: 2;
-        }
+    .card-brand {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #ffffff;
+    }
 
+    .card-growth-pill {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 3px 8px;
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 10px;
+      font-weight: 600;
+      color: #4ade80;
+    }
 
-        /* Stats Scroll */
-        .stats-scroll {
-            display: flex;
-            gap: var(--spacing-md);
-            overflow-x: auto;
-            padding-bottom: var(--spacing-unit);
-            margin-left: calc(-1 * var(--spacing-container-margin));
-            margin-right: calc(-1 * var(--spacing-container-margin));
-            padding-left: var(--spacing-container-margin);
-            padding-right: var(--spacing-container-margin);
-            scroll-snap-type: x mandatory;
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
+    .card-chip {
+      width: 44px;
+      height: 32px;
+      background: linear-gradient(135deg, #e4c360 0%, #fff4be 50%, #b28a1c 100%);
+      border-radius: 6px;
+      position: relative;
+      box-shadow: inset 0 0 4px rgba(0,0,0,0.4), 0 2px 4px rgba(0,0,0,0.3);
+      z-index: 2;
+      transform: translateZ(14px);
+    }
 
-        .stats-scroll::-webkit-scrollbar { display: none; }
+    .card-chip::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border: 1px solid rgba(0, 0, 0, 0.25);
+      border-radius: 6px;
+    }
 
-        .stat-card {
-            scroll-snap-align: center;
-            flex-shrink: 0;
-            flex: 1;
-            min-width: 120px;
-            background-color: white;
-            border-radius: 24px;
-            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            display: flex;
-            flex-direction: column;
-            gap: var(--spacing-unit);
-            padding: var(--spacing-sm);
-        }
+    .chip-line-h {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: rgba(0,0,0,0.3);
+    }
 
-        .stat-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: var(--spacing-xs);
-        }
+    .chip-line-v {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: rgba(0,0,0,0.3);
+    }
 
-        .bg-primary-light { background-color: rgba(98, 44, 229, 0.1); }
-        .bg-tertiary-light { background-color: rgba(115, 42, 211, 0.1); }
-        .bg-secondary-light { background-color: rgba(253, 106, 60, 0.1); }
-        
-        .icon-sm { font-size: 18px; }
-        .icon-xs { font-size: 16px; }
+    .card-balance-block {
+      z-index: 2;
+      transform: translateZ(26px);
+      margin-top: 4px;
+    }
 
-        /* Quick Stats */
-        .grid-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: var(--spacing-md);
-        }
+    .card-balance-label {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 2px;
+    }
 
-        .quick-stat {
-            background-color: white;
-            border-radius: 24px;
-            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            display: flex;
-            flex-direction: column;
-            gap: var(--spacing-xs);
-            padding: var(--spacing-sm);
-        }
+    .card-balance-value {
+      font-size: 23px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      font-family: 'Courier New', Courier, monospace;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    }
 
-        /* Chart Section */
-        .chart-section {
-            background-color: white;
-            border-radius: 24px;
-            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            padding: var(--spacing-md);
-            display: flex;
-            flex-direction: column;
-            gap: var(--spacing-md);
-        }
+    .obscured-amount {
+      cursor: pointer;
+      display: inline-block;
+      transition: filter 0.25s ease, opacity 0.25s ease;
+      filter: blur(0px);
+    }
 
-        .badge {
-            background-color: rgba(123, 77, 255, 0.1);
-            color: var(--color-primary-container);
-            padding: var(--spacing-unit) var(--spacing-sm);
-            border-radius: 9999px;
-        }
+    .card-bottom-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      z-index: 2;
+      transform: translateZ(22px);
+    }
 
-        .chart-container {
-            width: 100%;
-            position: relative;
-        }
-        
-        .line-chart-container {
-            height: 140px;
-            width: 100%;
-            margin-top: var(--spacing-sm);
-        }
-        
-        .chart-labels {
-            display: flex;
-            justify-content: space-between;
-            margin-top: var(--spacing-sm);
-            color: var(--color-on-surface-variant);
-        }
-        
-        .category-breakdown {
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-md);
-            margin-top: var(--spacing-sm);
-            transition: opacity 0.3s;
-        }
-        
-        .donut-container {
-            width: 100px;
-            height: 100px;
-            flex-shrink: 0;
-            position: relative;
-        }
-        
-        .donut-center {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-        }
-        
-        .legend-list {
-            display: flex;
-            flex-direction: column;
-            gap: var(--spacing-xs);
-            flex: 1;
-        }
-        
-        .legend-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: var(--font-label-sm-size);
-        }
-        
-        .legend-label {
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-xs);
-            color: var(--color-on-surface-variant);
-        }
-        
-        .legend-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-        }
+    .card-holder-label {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(255, 255, 255, 0.65);
+    }
 
-        /* Segmented Control */
-        .segmented-control {
-            display: flex;
-            background-color: var(--color-surface-container-low);
-            border-radius: 12px;
-            padding: 2px;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
-            overflow-x: auto;
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-        
-        .segmented-control::-webkit-scrollbar { display: none; }
+    .card-holder-name {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-top: 2px;
+    }
 
-        .segmented-btn {
-            background: none;
-            border: none;
-            padding: 4px 12px;
-            font-size: var(--font-label-sm-size);
-            font-weight: 500;
-            color: var(--color-on-surface-variant);
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            white-space: nowrap;
-        }
+    .card-expiry-block {
+      text-align: center;
+    }
 
-        .segmented-btn.active {
-            background-color: white;
-            color: var(--color-primary);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
+    .card-expiry-label {
+      font-size: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: rgba(255, 255, 255, 0.65);
+    }
 
-        /* Bar Chart View */
-        .bar-chart-view {
-            display: none;
-            flex-direction: column;
-            gap: var(--spacing-sm);
-            margin-top: var(--spacing-sm);
-            animation: fadeIn 0.3s ease-in-out;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+    .card-expiry-val {
+      font-size: 11px;
+      font-weight: 600;
+      margin-top: 2px;
+    }
 
-        .bar-item {
-            display: flex;
-            flex-direction: column;
-            gap: var(--spacing-xs);
-        }
+    .mastercard-logo {
+      position: relative;
+      width: 40px;
+      height: 24px;
+    }
 
-        .bar-item-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: var(--font-label-sm-size);
-        }
+    .circle-red {
+      width: 24px;
+      height: 24px;
+      background: #eb001b;
+      border-radius: 50%;
+      position: absolute;
+      left: 0;
+      opacity: 0.9;
+    }
 
-        .bar-label {
-            color: var(--color-on-surface-variant);
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-xs);
-        }
-        
-        .bar-track {
-            height: 8px;
-            background-color: var(--color-surface-container);
-            border-radius: 4px;
-            overflow: hidden;
-            width: 100%;
-        }
+    .circle-yellow {
+      width: 24px;
+      height: 24px;
+      background: #f79e1b;
+      border-radius: 50%;
+      position: absolute;
+      right: 0;
+      opacity: 0.85;
+    }
 
-        .bar-fill {
-            height: 100%;
-            border-radius: 4px;
-            background: linear-gradient(90deg, #7B4DFF, #FF6B3D);
-            transition: width 0.5s ease-out;
-        }
+    /* Stat Cards Scroll Row */
+    .stat-cards-row {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
 
-        /* Transactions */
-        .pb-xl { padding-bottom: var(--spacing-xl); }
-        
-        .transactions-card {
-            background-color: white;
-            border-radius: 24px;
-            padding: var(--spacing-sm);
-            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            display: flex;
-            flex-direction: column;
-            gap: var(--spacing-xs);
-        }
+    .stat-cards-row::-webkit-scrollbar {
+      display: none;
+    }
 
-        .transaction-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: var(--spacing-sm);
-            border-radius: 12px;
-            transition: background-color 0.2s, transform 0.2s;
-            cursor: pointer;
-        }
+    .stat-tile {
+      flex: 1;
+      min-width: 96px;
+      background-color: var(--surface-card);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-sm);
+      padding: 10px 10px 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
 
-        .transaction-item:hover {
-            background-color: var(--color-surface-container-low);
-        }
+    .stat-icon-wrap {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      margin-bottom: 2px;
+    }
 
-        .transaction-item:active {
-            transform: scale(0.95);
-        }
+    .stat-tile-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
 
-        .tx-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background-color: var(--color-surface-container);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--color-on-surface-variant);
-        }
+    .stat-tile-amount {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-on-surface);
+      letter-spacing: -0.01em;
+    }
 
-        hr.divider {
-            border: none;
-            border-top: 1px solid var(--color-surface-container);
-            margin: 0 var(--spacing-sm);
-        }
+    /* Calendar Section */
+    .calendar-card {
+      background-color: var(--surface-card);
+      border-radius: var(--radius-xl);
+      padding: 16px;
+      border: 1px solid var(--border-card);
+      box-shadow: var(--shadow-md);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
 
-        /* Bottom Nav */
-        nav.bottom-nav {
-            background-color: rgba(252, 249, 248, 0.8);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 72px;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            padding: 0 16px;
-            padding-bottom: env(safe-area-inset-bottom);
-            border-radius: 12px 12px 0 0;
-            z-index: 50;
-            box-shadow: 0px -4px 20px rgba(0, 0, 0, 0.04);
-        }
+    .calendar-nav-bar {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 36px;
+    }
 
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: var(--color-on-surface-variant);
-            border: none;
-            background: none;
-            cursor: pointer;
-            transition: opacity 0.2s, transform 0.2s, color 0.2s;
-        }
-        
-        .nav-item.active {
-            color: var(--color-primary);
-            font-weight: 700;
-        }
+    .month-pill-selector {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--surface-container-low);
+      padding: 3px 8px;
+      border-radius: var(--radius-full);
+    }
 
-        .nav-item:hover {
-            color: var(--color-primary);
-            opacity: 0.8;
-        }
+    .btn-arrow {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+    }
 
-        .nav-item:active {
-            transform: scale(0.95);
-        }
+    .month-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-on-surface);
+      letter-spacing: 0.02em;
+      padding: 0 6px;
+    }
 
-        .fab {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #7B4DFF, #FF6B3D);
-            color: var(--color-on-primary);
-            border-radius: 50%;
-            transform: translateY(-24px);
-            width: 56px;
-            height: 56px;
-            box-shadow: 0px 20px 40px rgba(123, 77, 255, 0.15);
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
+    .btn-tune {
+      position: absolute;
+      right: 0;
+      background: var(--surface-container-low);
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      transition: all 0.2s;
+    }
 
-        .fab:active {
-            transform: translateY(-24px) scale(0.9);
-        }
-        
-        .fab .material-symbols-outlined {
-            font-size: 28px;
-        }
+    .btn-tune:active {
+      transform: scale(0.92);
+    }
 
-        /* Desktop Nav Fallback */
-        .desktop-nav { display: none; }
-        
-        @media (min-width: 768px) {
-            nav.bottom-nav { display: none; }
-            .desktop-nav {
-                display: flex;
-                flex-direction: column;
-                width: 256px;
-                height: 100vh;
-                position: fixed;
-                left: 0;
-                top: 0;
-                background-color: var(--color-surface);
-                border-right: 1px solid rgba(255, 255, 255, 0.2);
-                padding-top: 80px;
-                padding-left: var(--spacing-lg);
-                padding-right: var(--spacing-lg);
-                z-index: 40;
-            }
-            .desktop-nav-item {
-                display: flex;
-                align-items: center;
-                gap: var(--spacing-sm);
-                padding: var(--spacing-sm);
-                border-radius: 8px;
-                color: var(--color-on-surface-variant);
-                border: none;
-                background: none;
-                cursor: pointer;
-                transition: background-color 0.2s, color 0.2s;
-            }
-            .desktop-nav-item.active {
-                background-color: rgba(98, 44, 229, 0.1);
-                color: var(--color-primary);
-            }
-            .desktop-nav-item:not(.active):hover {
-                background-color: var(--color-surface-container);
-                color: var(--color-on-surface);
-            }
-            main {
-                padding-left: 276px; /* 256 + 20 margin */
-            }
-            header .header-content {
-                padding-left: 276px;
-            }
-        }
-        
-        button { font-family: inherit; }
-    </style>
-<!-- TopAppBar -->
+    .cal-weekdays {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+      text-align: center;
+    }
+
+    .cal-weekday {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+    }
+
+    .cal-day-cell {
+      aspect-ratio: 1 / 1;
+      border-radius: 10px;
+      background-color: #faf9fd;
+      border: 1px solid rgba(123, 77, 255, 0.12);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.15s ease, background-color 0.15s;
+    }
+
+    .cal-day-cell:active {
+      transform: scale(0.92);
+    }
+
+    .cal-day-cell.empty {
+      border: none;
+      background: transparent;
+      cursor: default;
+    }
+
+    .cal-day-num {
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--text-on-surface);
+    }
+
+    .cal-day-spend {
+      font-size: 8.5px;
+      font-weight: 500;
+      color: var(--primary-container);
+      margin-top: 2px;
+    }
+
+    /* Red highlight for > ₹500 spend */
+    .cal-day-cell.high-spend {
+      background: linear-gradient(135deg, rgba(254, 226, 226, 0.85), rgba(254, 202, 202, 0.65));
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      box-shadow: 0 1px 4px rgba(239, 68, 68, 0.1);
+    }
+
+    .cal-day-cell.high-spend .cal-day-spend {
+      color: #b91c1c;
+      font-weight: 700;
+      font-size: 8px;
+    }
+
+    /* Soft green for zero spend */
+    .cal-day-cell.zero-spend {
+      background: rgba(16, 185, 129, 0.09);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+    }
+
+    .cal-day-cell.zero-spend .cal-day-spend {
+      color: #059669;
+      font-weight: 700;
+    }
+
+    .cal-summary-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(135deg, rgba(123, 77, 255, 0.06), rgba(253, 106, 60, 0.04));
+      border: 1px solid rgba(123, 77, 255, 0.12);
+      border-radius: 14px;
+      padding: 10px 14px;
+      margin-top: 4px;
+    }
+
+    .cal-summary-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .cal-summary-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(123, 77, 255, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+    }
+
+    .cal-summary-label {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    .cal-summary-amount {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    /* SVG Chart Containers */
+    .chart-container-box {
+      width: 100%;
+      margin-top: 4px;
+    }
+
+    .chart-axis-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 8px;
+      font-weight: 500;
+    }
+
+    /* Category Breakdown */
+    .category-ring-layout {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 4px;
+    }
+
+    .donut-wrapper {
+      width: 100px;
+      height: 100px;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .donut-center-label {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-on-surface);
+    }
+
+    .category-legend-list {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .legend-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+    }
+
+    .legend-name-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-muted);
+    }
+
+    .color-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .legend-val-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .legend-amt {
+      font-weight: 700;
+      color: var(--text-on-surface);
+    }
+
+    .legend-badge {
+      font-size: 10.5px;
+      font-weight: 600;
+      padding: 1px 6px;
+      border-radius: 6px;
+    }
+
+    /* Category Bar Breakdown View */
+    .category-bars-layout {
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 6px;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .cat-bar-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .cat-bar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+    }
+
+    .cat-bar-track {
+      height: 8px;
+      background-color: var(--surface-container);
+      border-radius: 4px;
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .cat-bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Yearly Analysis Details */
+    .badge-chip {
+      background: rgba(123, 77, 255, 0.1);
+      color: var(--primary-container);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: var(--radius-full);
+    }
+
+    .stat-meta-block {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .stat-meta-label {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .stat-meta-amount {
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--text-on-surface);
+    }
+
+    /* Transactions Section */
+    .tx-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .tx-group-header {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .tx-item-card {
+      background: #ffffff;
+      border-radius: 16px;
+      border: 1px solid var(--border-subtle);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+      padding: 12px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: transform 0.15s, background-color 0.15s;
+      cursor: pointer;
+    }
+
+    .tx-item-card:active {
+      transform: scale(0.97);
+    }
+
+    .tx-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .tx-icon-bubble {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tx-text-col h4 {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-on-surface);
+    }
+
+    .tx-text-col p {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 1px;
+    }
+
+    .tx-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+    }
+
+    .tx-amount {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-on-surface);
+    }
+
+    .tx-status-pill {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      background-color: rgba(34, 197, 94, 0.12);
+      color: #16a34a;
+    }
+
+    .btn-view-all {
+      background: transparent;
+      border: none;
+      color: var(--primary);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* Bottom Navigation Dock */
+    .bottom-dock {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 72px;
+      background: rgba(252, 249, 248, 0.9);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.03);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 0 16px;
+      padding-bottom: env(safe-area-inset-bottom);
+      z-index: 50;
+    }
+
+    .dock-tab {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      gap: 2px;
+      transition: color 0.15s, transform 0.15s;
+    }
+
+    .dock-tab.active {
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .dock-tab.active .material-symbols-outlined {
+      font-variation-settings: 'FILL' 1;
+    }
+
+    .dock-tab span:last-child {
+      font-size: 11px;
+    }
+
+    .dock-tab:active {
+      transform: scale(0.92);
+    }
+
+    /* Floating Center FAB */
+    .fab-add {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      border: none;
+      background: var(--primary-gradient);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: translateY(-24px);
+      box-shadow: 0 14px 28px rgba(123, 77, 255, 0.35);
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .fab-add:active {
+      transform: translateY(-24px) scale(0.92);
+    }
+
+    .fab-add .material-symbols-outlined {
+      font-size: 28px;
+    }
+
+    /* Modal Confirmation */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-backdrop {
+      position: absolute;
+      inset: 0;
+      background-color: rgba(28, 27, 27, 0.45);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    .modal-card {
+      position: relative;
+      z-index: 101;
+      width: 100%;
+      max-width: 330px;
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 24px 20px 20px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.16);
+      border: 1px solid var(--border-card);
+      text-align: center;
+      transform: scale(0.92) translateY(10px);
+      opacity: 0;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+    }
+
+    .modal-icon-badge {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: rgba(239, 68, 68, 0.12);
+      color: var(--accent-red);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+    }
+
+    .modal-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-on-surface);
+      margin-bottom: 8px;
+    }
+
+    .modal-card p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.4;
+      margin-bottom: 24px;
+    }
+
+    .modal-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .btn-modal-cancel {
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(122, 116, 135, 0.2);
+      background: var(--surface-container-low);
+      color: var(--text-on-surface);
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .btn-modal-confirm {
+      padding: 12px;
+      border-radius: 12px;
+      border: none;
+      background: var(--primary-gradient);
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(123, 77, 255, 0.3);
+      font-family: inherit;
+    }
+  </style>
+</head>
+<body>
+<!-- Sticky Top Header -->
 <header>
 <div class="header-content">
-<div class="flex items-center gap-sm">
+<div class="user-info">
 <div class="profile-img-container">
-<img alt="Profile" class="" data-alt="A close-up profile photo of a professional young adult in soft studio lighting. High key, modern aesthetic with a clean white background. Sophisticated and energetic vibe." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTkMFu0bM26Zjxj_fC-ApgBFAOFfHoTz6jAzwMxgaMFwrUvAyT06rqLYb41RRRLXBEYFKZfwpv3TTOF8M3aCjgDDxv5aArr1gRQlFaCW_NWl9EYMwH13oyh6NfkF15zD3668F1TsmtfMKpwYUR04pSUlDCVFGMmhIap0gHtxQnAn3S2EoYOHcIktcXRO0a9486R368OadtQESXSarE_gM-Cks2jrJxKtzSX7oW2rVW9DVN4Hw-TbEG">
+<img alt="User Profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTkMFu0bM26Zjxj_fC-ApgBFAOFfHoTz6jAzwMxgaMFwrUvAyT06rqLYb41RRRLXBEYFKZfwpv3TTOF8M3aCjgDDxv5aArr1gRQlFaCW_NWl9EYMwH13oyh6NfkF15zD3668F1TsmtfMKpwYUR04pSUlDCVFGMmhIap0gHtxQnAn3S2EoYOHcIktcXRO0a9486R368OadtQESXSarE_gM-Cks2jrJxKtzSX7oW2rVW9DVN4Hw-TbEG" class="">
 </div>
-<div>
-<h1 class="text-label-sm text-on-surface-variant">Good Morning,</h1>
-<h2 class="font-bold text-primary text-label-sm" style="font-size: 12px; line-height: 16px;">BHANU</h2>
+<div class="user-name-group">
+<h1 class="">Good Morning,</h1>
+<h2 class="">BHANU</h2>
 </div>
 </div>
-<button class="icon-btn" id="btn-logout" aria-label="Log out" title="Log out" onclick="openLogoutModal()" style="background: transparent; box-shadow: none; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 0px; color: rgb(239, 68, 68); width: auto; height: auto; padding: 4px;">
-<span class="material-symbols-outlined" style="font-variation-settings: &quot;FILL&quot; 0;">logout</span>
+<button aria-label="Sign Out" class="btn-logout-icon" onclick="openLogoutModal()" title="Sign Out">
+<span class="material-symbols-outlined">logout</span>
 </button>
 </div>
 </header>
-<!-- Main Content Canvas -->
+<!-- Main Content Layout -->
 <main>
-<!-- Balance Card -->
-<section class="balance-card-perspective-container" style="perspective: 1000px;">
-<div class="balance-card" id="main-balance-card" style="background: linear-gradient(135deg, rgb(36, 37, 42) 0%, rgb(13, 14, 18) 35%, rgb(44, 45, 53) 60%, rgb(11, 12, 14) 100%); box-shadow: rgba(0, 0, 0, 0.6) 0px 25px 50px -12px, rgba(255, 255, 255, 0.15) 0px 0px 0px 1px, rgba(255, 255, 255, 0.25) 0px 1px 1px inset; border: 1px solid rgba(255, 255, 255, 0.15); position: relative; overflow: hidden; padding: 24px; border-radius: 24px; aspect-ratio: 1.586 / 1; display: flex; flex-direction: column; justify-content: space-between; font-family: &quot;JetBrains Mono&quot;, &quot;Roboto Mono&quot;, monospace; cursor: pointer; transform: rotateX(5deg) rotateY(-5deg) scale(1); transition: transform 0.15s ease-out; transform-style: preserve-3d;"><div class="" data-stitch-orig-opacity="0.9" style="position: absolute; inset: 0px; background: linear-gradient(125deg, transparent 0%, rgba(255, 255, 255, 0.15) 25%, rgba(255, 255, 255, 0.35) 30%, rgba(255, 255, 255, 0.12) 35%, transparent 100%); pointer-events: none; mix-blend-mode: overlay; transform: translateZ(1px);"></div><div class="twinkle-container" id="twinkle-container"><div class="twinkle-particle" style="top: 6.96237%; left: 21.0084%; transform: scale(1.0672);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 20.0998%; left: 36.5203%; transform: scale(1.00923);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 51.3311%; left: 35.3838%; transform: scale(1.04989);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 6.08674%; left: 59.276%; transform: scale(1.23212);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 72.1983%; left: 56.7743%; transform: scale(1.10296);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 57.4269%; left: 27.5548%; transform: scale(1.14751);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 40.6554%; left: 11.8249%; transform: scale(1.0471);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 54.525%; left: 3.34179%; transform: scale(0.838581);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 39.4072%; left: 88.7941%; transform: scale(0.834732);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 11.9163%; left: 8.66269%; transform: scale(0.872472);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 28.9336%; left: 8.88238%; transform: scale(1.18429);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 87.9888%; left: 40.3417%; transform: scale(1.21117);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 79.2396%; left: 83.8642%; transform: scale(0.912869);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 73.5163%; left: 2.62151%; transform: scale(0.913678);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 57.7473%; left: 45.4952%; transform: scale(1.07942);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 75.2382%; left: 31.6711%; transform: scale(1.00818);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 74.3347%; left: 55.6383%; transform: scale(1.04101);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 46.2728%; left: 7.09556%; transform: scale(0.96528);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 61.4534%; left: 84.9229%; transform: scale(1.00068);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 77.8984%; left: 63.7741%; transform: scale(1.22696);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 57.5501%; left: 57.8603%; transform: scale(0.883095);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 77.0326%; left: 60.432%; transform: scale(0.791099);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 8.77059%; left: 68.8023%; transform: scale(0.865689);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 56.5409%; left: 70.4933%; transform: scale(0.820475);"><div class="twinkle-particle-core"></div></div></div><div class="flex justify-between items-start" style="position: relative; z-index: 2; transform: translateZ(20px);"><div class="flex flex-col"><span class="text-label-sm font-bold" style="color: rgb(255, 255, 255); letter-spacing: 0.1em; text-transform: uppercase; font-size: 10px; font-family: inherit;">Smart Finance</span></div><div class="flex items-center gap-xs" style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(8px); padding: 2px 8px; border-radius: 9999px; border: 1px solid rgba(255, 255, 255, 0.2); display: flex; align-items: center; gap: 4px;"><span class="material-symbols-outlined" style="font-size: 12px; color: rgb(74, 222, 128);">trending_up</span><span class="text-label-sm font-semibold" style="color: rgb(255, 255, 255); font-size: 10px;">+2.4%</span></div></div><div style="position: relative; z-index: 2; margin-top: 12px; transform: translateZ(10px);"><div style="width: 42px; height: 32px; background: linear-gradient(135deg, #d4af37 0%, #fff2a8 50%, #aa820a 100%); border-radius: 6px; position: relative; box-shadow: inset 0 0 5px rgba(0,0,0,0.4), 0 2px 4px rgba(0,0,0,0.3);"><div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; border: 1px solid rgba(0,0,0,0.25); border-radius: 6px;"></div><div style="position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: rgba(0,0,0,0.35);"></div><div style="position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: rgba(0,0,0,0.35);"></div></div></div><div class="flex flex-col" style="position: relative; z-index: 2; margin-top: auto; transform: translateZ(30px);"><span class="text-label-sm" style="color: rgba(255, 255, 255, 0.7); letter-spacing: 0.05em; text-transform: uppercase; font-size: 9px; margin-bottom: 2px; margin-top: 8px; font-family: inherit;">AVAILABLE BALANCE</span><span class="text-headline-lg font-medium" style="color: rgb(255, 255, 255); font-size: 24px; letter-spacing: 2px; font-family: &quot;Courier New&quot;, Courier, monospace; text-shadow: rgba(0, 0, 0, 0.5) 0px 2px 4px;">*** *** *** <span class="" style="filter: none; cursor: default;">12,300</span></span></div><div class="flex justify-between items-end" style="position: relative; z-index: 2; margin-top: 16px; transform: translateZ(20px);"><div class="flex flex-col"><span class="text-label-sm" style="color: rgba(255, 255, 255, 0.65); letter-spacing: 0.1em; text-transform: uppercase; font-size: 10px; font-family: inherit;">Card Holder</span><span class="text-label-md font-semibold" style="color: rgb(255, 255, 255); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px; font-family: inherit;">CM BHANUTEJA</span></div><div class="flex flex-col items-center"><span class="text-label-sm" style="color: rgba(255, 255, 255, 0.65); font-size: 8px; letter-spacing: 0.05em; text-transform: uppercase;">Expires</span><span class="text-label-md font-semibold" style="color: rgb(255, 255, 255); letter-spacing: 0.05em; margin-top: 2px; font-family: inherit;">31/08/26</span></div><div class="flex items-center" style="position: relative; width: 40px; height: 24px;"><div style="width: 24px; height: 24px; background: rgb(235, 0, 27); border-radius: 50%; position: absolute; left: 0px; opacity: 0.9;"></div><div style="width: 24px; height: 24px; background: rgb(247, 158, 27); border-radius: 50%; position: absolute; right: 0px; opacity: 0.85;"></div></div></div></div>
-</section>
-<!-- Stats Scroll -->
-<section class="flex chart-section" style="padding: 12px 16px; gap: 10px;"><h3 class="text-label-md text-on-surface font-semibold" style="font-size: 14px; line-height: 20px; letter-spacing: 0.01em;">Quick Statistics</h3><div class="stats-scroll justify-between" style="margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px; gap: 8px;"><div class="stat-card" style="background-color: rgb(255, 255, 255); border: 1px solid rgba(0, 0, 0, 0.05); min-width: 100px; padding: 8px 8px 6px;"><div class="stat-icon" style="background-color: rgb(157, 78, 221); color: white; display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; margin-bottom: 2px;"><i class="fa-solid fa-sack-dollar" style="font-size: 14px; color: white;"></i></div><span class="text-label-sm text-on-surface-variant font-medium" style="font-size: 11px;">Income</span><span class="text-headline-md text-on-surface font-bold" style="font-size: 14px; line-height: 20px; font-weight: 700; letter-spacing: -0.01em;">₹21,000</span></div><div class="stat-card" style="background-color: rgb(255, 255, 255); border: 1px solid rgba(0, 0, 0, 0.05); min-width: 100px; padding: 8px 8px 6px;"><div class="stat-icon" style="background-color: rgb(201, 24, 74); color: white; display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; margin-bottom: 2px;"><i class="fa-solid fa-coins" style="font-size: 14px; color: white;"></i></div><span class="text-label-sm text-on-surface-variant font-medium" style="font-size: 11px;">Expenses</span><span class="text-headline-md text-on-surface font-bold" style="font-size: 16px; line-height: 22px; font-weight: 700; letter-spacing: -0.01em;">₹8,700</span></div><div class="stat-card" style="background-color: rgb(255, 255, 255); border: 1px solid rgba(0, 0, 0, 0.05); min-width: 100px; padding: 8px 8px 6px;"><div class="stat-icon" style="background-color: rgb(56, 134, 89); color: white; display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; margin-bottom: 2px;"><i class="fa-solid fa-wallet" style="font-size: 14px; color: white;"></i></div><span class="text-label-sm text-on-surface-variant font-medium" style="font-size: 11px;">Left Amount</span><span class="text-headline-md text-on-surface font-bold" style="font-size: 16px; line-height: 22px; font-weight: 700; letter-spacing: -0.01em;">₹12,300</span></div></div></section><section class="chart-section" style="padding: 12px 16px; gap: 10px;">
-<div class="flex justify-between items-center">
-<h3 class="text-label-md text-on-surface font-semibold" style="font-size: 14px; line-height: 20px; letter-spacing: 0.01em;">Budget - Planning</h3>
-<span class="material-symbols-outlined text-on-surface-variant" style="cursor: pointer;">chevron_right</span></div>
-<div class="stats-scroll justify-between" style="margin-left: 0; margin-right: 0; padding-left: 0; padding-right: 0; gap: 8px;"><div class="stat-card" style="background-color: rgb(255, 255, 255); border: 1px solid rgba(0, 0, 0, 0.05); min-width: 100px; padding: 8px 8px 6px;"><div class="stat-icon" style="background-color: rgb(253, 106, 60); color: rgb(255, 255, 255); width: 28px; height: 28px; margin-bottom: 2px;"><span class="material-symbols-outlined icon-sm" style="color: white; font-size: 16px;">pie_chart</span></div><span class="text-label-sm text-on-surface-variant" style="font-size: 11px;">Budget</span><span class="text-headline-md text-on-surface font-bold" style="font-size: 15px; line-height: 18px;">₹13,350</span></div><div class="stat-card" style="background-color: rgb(255, 255, 255); border: 1px solid rgba(0, 0, 0, 0.05); min-width: 100px; padding: 8px 8px 6px;"><div class="stat-icon bg-primary-light" style="background-color: rgb(26, 115, 232); color: rgb(255, 255, 255); width: 28px; height: 28px; margin-bottom: 2px;"><span class="material-symbols-outlined icon-sm" style="font-size: 16px;">account_balance_wallet</span></div><span class="text-label-sm text-on-surface-variant" style="font-size: 11px;">Spent</span><span class="text-headline-md text-on-surface font-bold" style="font-size: 15px; line-height: 18px;">₹8,700</span></div><div class="stat-card" style="background-color: rgb(255, 255, 255); border: 1px solid rgba(0, 0, 0, 0.05); min-width: 100px; padding: 8px 8px 6px;"><div class="stat-icon" style="background-color: var(--color-primary); color: white; width: 28px; height: 28px; margin-bottom: 2px;"><span class="material-symbols-outlined icon-sm" style="font-size: 16px;">savings</span></div><span class="text-label-sm text-on-surface-variant" style="font-size: 11px;">Left</span><span class="text-headline-md text-on-surface font-bold" style="font-size: 15px; line-height: 18px;">₹4,650</span></div></div>
-</section>
-<!-- Quick Statistics Bento -->
-
-<!-- Financial Overview -->
-<section class="chart-section" style="padding: 16px; gap: 14px; background: rgb(255, 255, 255); border-radius: 24px; box-shadow: rgba(0, 0, 0, 0.04) 0px 10px 30px; border: 1px solid rgba(255, 255, 255, 0.7);">
-  <!-- Header with Month Switcher & Micro Legend -->
-  <div class="flex flex-col gap-xs">
-    <div class="flex justify-between items-center" style="position: relative; display: flex; justify-content: center; align-items: center; min-height: 36px;">
-      <div class="flex items-center gap-xs" style="background: var(--color-surface-container-low); padding: 3px 6px; border-radius: 9999px;">
-        <button class="icon-btn" style="width: 26px; height: 26px; background: transparent; box-shadow: none; color: var(--color-on-surface-variant);" title="Previous Month" aria-label="Previous Month">
-          <span class="material-symbols-outlined" style="font-size: 18px;">chevron_left</span>
-        </button>
-        <span class="text-label-md font-bold text-primary" style="font-size: 10px; color: rgb(0, 0, 0); font-weight: 600; padding: 2px 8px; letter-spacing: 0.02em;">August 2026</span>
-        <button class="icon-btn" style="width: 26px; height: 26px; background: transparent; box-shadow: none; color: var(--color-on-surface-variant);" title="Next Month" aria-label="Next Month">
-          <span class="material-symbols-outlined" style="font-size: 18px;">chevron_right</span>
-        </button>
-      </div>
-      <div class="flex items-center gap-xs" style="position: absolute; right: 0px;">
-        <button class="flex items-center justify-center rounded-lg text-on-surface-variant hover:text-primary transition-all active:scale-95" title="Threshold Settings" aria-label="Threshold Settings" style="background: var(--color-surface-container-low); width: 32px; height: 32px; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 50%; cursor: pointer;">
-          <span class="material-symbols-outlined" style="font-size: 18px;">tune</span>
-        </button>
-      </div>
-    </div>
-    <!-- Micro Legend -->
-    <div class="flex items-center justify-between mt-2 pt-2" style="border-top: 1px dashed rgba(0, 0, 0, 0.06); font-size: 11px;">
-      
-      
-    </div>
-  </div>
-
-  <!-- Calendar Grid -->
-  <div class="flex flex-col gap-sm">
-    <!-- Weekday Row -->
-    <div class="grid" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; text-align: center;">
-      <span class="text-label-sm font-semibold" style="color: rgb(122, 116, 135); font-size: 11px; letter-spacing: 0.05em;">S</span>
-      <span class="text-label-sm font-semibold" style="color: rgb(122, 116, 135); font-size: 11px; letter-spacing: 0.05em;">M</span>
-      <span class="text-label-sm font-semibold" style="color: rgb(122, 116, 135); font-size: 11px; letter-spacing: 0.05em;">T</span>
-      <span class="text-label-sm font-semibold" style="color: rgb(122, 116, 135); font-size: 11px; letter-spacing: 0.05em;">W</span>
-      <span class="text-label-sm font-semibold" style="color: rgb(122, 116, 135); font-size: 11px; letter-spacing: 0.05em;">T</span>
-      <span class="text-label-sm font-semibold" style="color: rgb(122, 116, 135); font-size: 11px; letter-spacing: 0.05em;">F</span>
-      <span class="text-label-sm font-semibold" style="color: rgb(122, 116, 135); font-size: 11px; letter-spacing: 0.05em;">S</span>
-    </div>
-
-    <!-- Days Grid -->
-    <div class="grid" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px;"><!-- Empty offset cells (Aug 1 2026 is Saturday) -->
-      <div style="aspect-ratio: 1 / 1;" class=""></div>
-      <div style="aspect-ratio: 1 / 1;" class=""></div>
-      <div style="aspect-ratio: 1 / 1;" class=""></div>
-      <div style="aspect-ratio: 1 / 1;" class=""></div>
-      <div style="aspect-ratio: 1 / 1;" class=""></div>
-      <div style="aspect-ratio: 1 / 1;" class=""></div>
-
-      <!-- Day 1 -->
-      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background-color: rgb(251, 250, 255); border: 1px solid rgba(123, 77, 255, 0.12); cursor: pointer;">
-        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">1</span>
-        <span class="text-label-sm font-medium" style="font-size: 8.5px; color: rgb(123, 77, 255); margin-top: 2px;">₹150</span>
-      </div>
-
-      <!-- Week 2 -->
-      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background-color: rgb(251, 250, 255); border: 1px solid rgba(123, 77, 255, 0.12); cursor: pointer;">
-        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">2</span>
-        <span class="text-label-sm font-medium" style="font-size: 8.5px; color: rgb(123, 77, 255); margin-top: 2px;">₹450</span>
-      </div>
-      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background-color: rgb(251, 250, 255); border: 1px solid rgba(123, 77, 255, 0.12); cursor: pointer;">
-        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">3</span>
-        <span class="text-label-sm font-medium" style="font-size: 8.5px; color: rgb(123, 77, 255); margin-top: 2px;">₹120</span>
-      </div>
-      <!-- High Spend: Day 4 -->
-      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background: linear-gradient(135deg, rgba(254, 226, 226, 0.8), rgba(254, 202, 202, 0.6)); border: 1px solid rgba(239, 68, 68, 0.3); box-shadow: rgba(239, 68, 68, 0.08) 0px 1px 3px; cursor: pointer;">
-        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">4</span>
-        <span class="text-label-sm font-bold" style="font-size: 8px; color: rgb(185, 28, 28); margin-top: 2px;">₹1,200</span>
-      </div>
-      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background-color: rgb(251, 250, 255); border: 1px solid rgba(123, 77, 255, 0.12); cursor: pointer;">
-        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">5</span>
-        <span class="text-label-sm font-medium" style="font-size: 8.5px; color: rgb(123, 77, 255); margin-top: 2px;">₹80</span>
-      </div>
-      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background-color: rgb(251, 250, 255); border: 1px solid rgba(123, 77, 255, 0.12); cursor: pointer;">
-        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">6</span>
-        <span class="text-label-sm font-medium" style="font-size: 8.5px; color: rgb(123, 77, 255); margin-top: 2px;">₹200</span>
-      </div>
-      <!-- High Spend: Day 7 -->
-      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background: linear-gradient(135deg, rgba(254, 226, 226, 0.8), rgba(254, 202, 202, 0.6)); border: 1px solid rgba(239, 68, 68, 0.3); cursor: pointer;">
-        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">7</span>
-        <span class="text-label-sm font-bold" style="font-size: 8.5px; color: rgb(185, 28, 28); margin-top: 2px;">₹550</span>
-      </div>
-      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background-color: rgb(251, 250, 255); border: 1px solid rgba(123, 77, 255, 0.12); cursor: pointer;">
-        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">8</span>
-        <span class="text-label-sm font-medium" style="font-size: 8.5px; color: rgb(123, 77, 255); margin-top: 2px;">₹100</span>
-      </div>
-
-      <!-- Week 3 -->
-      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background-color: rgb(251, 250, 255); border: 1px solid rgba(123, 77, 255, 0.12); cursor: pointer;">
-        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">9</span>
-        <span class="text-label-sm font-medium" style="font-size: 8.5px; color: rgb(123, 77, 255); margin-top: 2px;">₹300</span>
-      </div>
-      <!-- High Spend: Day 10 -->
-      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background: linear-gradient(135deg, rgba(254, 226, 226, 0.8), rgba(254, 202, 202, 0.6)); border: 1px solid rgba(239, 68, 68, 0.3); box-shadow: rgba(239, 68, 68, 0.08) 0px 1px 3px; cursor: pointer;">
-        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">10</span>
-        <span class="text-label-sm font-bold" style="font-size: 8px; color: rgb(185, 28, 28); margin-top: 2px;">₹2,100</span>
-      </div>
-      <!-- Zero Spend: Day 11 -->
-      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background: rgba(16, 185, 129, 0.09); border: 1px solid rgba(16, 185, 129, 0.25); cursor: pointer;">
-        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">11</span>
-        <span class="text-label-sm font-semibold" style="font-size: 8.5px; color: rgb(5, 150, 105); margin-top: 2px;">₹0</span>
-      </div>
-      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background-color: rgb(251, 250, 255); border: 1px solid rgba(123, 77, 255, 0.12); cursor: pointer;">
-        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">12</span>
-        <span class="text-label-sm font-medium" style="font-size: 8.5px; color: rgb(123, 77, 255); margin-top: 2px;">₹150</span>
-      </div>
-      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background-color: rgb(251, 250, 255); border: 1px solid rgba(123, 77, 255, 0.12); cursor: pointer;">
-        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">13</span>
-        <span class="text-label-sm font-medium" style="font-size: 8.5px; color: rgb(123, 77, 255); margin-top: 2px;">₹400</span>
-      </div>
-      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background-color: rgb(251, 250, 255); border: 1px solid rgba(123, 77, 255, 0.12); cursor: pointer;">
-        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">14</span>
-        <span class="text-label-sm font-medium" style="font-size: 8.5px; color: rgb(123, 77, 255); margin-top: 2px;">₹220</span>
-      </div>
-      <!-- High Spend: Day 15 -->
-      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background: linear-gradient(135deg, rgba(254, 226, 226, 0.8), rgba(254, 202, 202, 0.6)); border: 1px solid rgba(239, 68, 68, 0.3); cursor: pointer;">
-        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">15</span>
-        <span class="text-label-sm font-bold" style="font-size: 8.5px; color: rgb(185, 28, 28); margin-top: 2px;">₹850</span>
-      </div>
-
-      <!-- Week 4 -->
-      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background-color: rgb(251, 250, 255); border: 1px solid rgba(123, 77, 255, 0.12); cursor: pointer;">
-        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">16</span>
-        <span class="text-label-sm font-medium" style="font-size: 8.5px; color: rgb(123, 77, 255); margin-top: 2px;">₹110</span>
-      </div>
-      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background-color: rgb(251, 250, 255); border: 1px solid rgba(123, 77, 255, 0.12); cursor: pointer;">
-        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">17</span>
-        <span class="text-label-sm font-medium" style="font-size: 8.5px; color: rgb(123, 77, 255); margin-top: 2px;">₹90</span>
-      </div>
-      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background-color: rgb(251, 250, 255); border: 1px solid rgba(123, 77, 255, 0.12); cursor: pointer;">
-        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">18</span>
-        <span class="text-label-sm font-medium" style="font-size: 8.5px; color: rgb(123, 77, 255); margin-top: 2px;">₹310</span>
-      </div>
-      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background-color: rgb(251, 250, 255); border: 1px solid rgba(123, 77, 255, 0.12); cursor: pointer;">
-        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">19</span>
-        <span class="text-label-sm font-medium" style="font-size: 8.5px; color: rgb(123, 77, 255); margin-top: 2px;">₹140</span>
-      </div>
-      <!-- High Spend: Day 20 -->
-      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background: linear-gradient(135deg, rgba(254, 226, 226, 0.85), rgba(254, 202, 202, 0.65)); border: 1px solid rgba(239, 68, 68, 0.35); box-shadow: rgba(239, 68, 68, 0.1) 0px 1px 3px; cursor: pointer;">
-        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">20</span>
-        <span class="text-label-sm font-bold" style="font-size: 8px; color: rgb(185, 28, 28); margin-top: 2px;">₹3,400</span>
-      </div>
-      <!-- Zero Spend: Day 21 -->
-      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background: rgba(16, 185, 129, 0.09); border: 1px solid rgba(16, 185, 129, 0.25); cursor: pointer;">
-        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">21</span>
-        <span class="text-label-sm font-semibold" style="font-size: 8.5px; color: rgb(5, 150, 105); margin-top: 2px;">₹0</span>
-      </div>
-      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background-color: rgb(251, 250, 255); border: 1px solid rgba(123, 77, 255, 0.12); cursor: pointer;">
-        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">22</span>
-        <span class="text-label-sm font-medium" style="font-size: 8.5px; color: rgb(123, 77, 255); margin-top: 2px;">₹180</span>
-      </div>
-
-      <!-- Week 5 -->
-      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background-color: rgb(251, 250, 255); border: 1px solid rgba(123, 77, 255, 0.12); cursor: pointer;">
-        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">23</span>
-        <span class="text-label-sm font-medium" style="font-size: 8.5px; color: rgb(123, 77, 255); margin-top: 2px;">₹250</span>
-      </div>
-      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background-color: rgb(251, 250, 255); border: 1px solid rgba(123, 77, 255, 0.12); cursor: pointer;">
-        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">24</span>
-        <span class="text-label-sm font-medium" style="font-size: 8.5px; color: rgb(123, 77, 255); margin-top: 2px;">₹100</span>
-      </div>
-      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background-color: rgb(251, 250, 255); border: 1px solid rgba(123, 77, 255, 0.12); cursor: pointer;">
-        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">25</span>
-        <span class="text-label-sm font-medium" style="font-size: 8.5px; color: rgb(123, 77, 255); margin-top: 2px;">₹150</span>
-      </div>
-      <!-- Zero Spend: Day 26 -->
-      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background: rgba(16, 185, 129, 0.09); border: 1px solid rgba(16, 185, 129, 0.25); cursor: pointer;">
-        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">26</span>
-        <span class="text-label-sm font-semibold" style="font-size: 8.5px; color: rgb(5, 150, 105); margin-top: 2px;">₹0</span>
-      </div>
-      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background-color: rgb(251, 250, 255); border: 1px solid rgba(123, 77, 255, 0.12); cursor: pointer;">
-        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">27</span>
-        <span class="text-label-sm font-medium" style="font-size: 8.5px; color: rgb(123, 77, 255); margin-top: 2px;">₹450</span>
-      </div>
-      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background-color: rgb(251, 250, 255); border: 1px solid rgba(123, 77, 255, 0.12); cursor: pointer;">
-        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">28</span>
-        <span class="text-label-sm font-medium" style="font-size: 8.5px; color: rgb(123, 77, 255); margin-top: 2px;">₹120</span>
-      </div>
-      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background-color: rgb(251, 250, 255); border: 1px solid rgba(123, 77, 255, 0.12); cursor: pointer;">
-        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">29</span>
-        <span class="text-label-sm font-medium" style="font-size: 8.5px; color: rgb(123, 77, 255); margin-top: 2px;">₹130</span>
-      </div>
-
-      <!-- Week 6 -->
-      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background-color: rgb(251, 250, 255); border: 1px solid rgba(123, 77, 255, 0.12); cursor: pointer;">
-        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">30</span>
-        <span class="text-label-sm font-medium" style="font-size: 8.5px; color: rgb(123, 77, 255); margin-top: 2px;">₹160</span>
-      </div>
-      <!-- Zero Spend: Day 31 -->
-      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background: rgba(16, 185, 129, 0.09); border: 1px solid rgba(16, 185, 129, 0.25); cursor: pointer;">
-        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">31</span>
-        <span class="text-label-sm font-semibold" style="font-size: 8.5px; color: rgb(5, 150, 105); margin-top: 2px;">₹0</span>
-      </div></div>
-  </div>
-
-  <!-- Modern Glassmorphic Spend Summary Card -->
-  <div class="flex justify-between items-center" style="background: linear-gradient(135deg, rgba(123, 77, 255, 0.06), rgba(253, 106, 60, 0.04)); border: 1px solid rgba(123, 77, 255, 0.1); border-radius: 14px; padding: 10px 14px; margin-top: 2px;">
-    <div class="flex items-center gap-xs">
-      <div style="width: 28px; height: 28px; border-radius: 50%; background: rgba(123, 77, 255, 0.12); display: flex; align-items: center; justify-content: center;">
-        <span class="material-symbols-outlined text-primary" style="font-size: 16px;">calendar_month</span>
-      </div>
-      <div class="flex flex-col">
-        <span class="text-on-surface-variant font-medium" style="font-size: 11px; line-height: 1;">Total Monthly Spend</span>
-        
-      </div>
-    </div>
-    <div class="flex items-center gap-xs">
-      <span class="text-headline-md font-bold text-primary" style="font-size: 11px; line-height: 14px; letter-spacing: -0.01em;">₹12,000</span>
-      
-    </div>
-  </div>
-</section><section class="chart-section">
-<div class="flex justify-between items-center">
-<h3 class="text-on-surface text-label-md font-semibold">Daily Spending Analysis.</h3>
-<div class="segmented-control"><button class="segmented-btn active" id="btn-trend" onclick="switchTrendView('trend')">Trend</button><button class="segmented-btn" id="btn-bar-trend" onclick="switchTrendView('bar')">Bar</button></div>
+<!-- 3D Obsidian Luxury Balance Card -->
+<section class="perspective-wrapper">
+<div class="balance-card" id="main-balance-card" style="transform: rotateX(4deg) rotateY(-4deg) scale(1);">
+<div class="card-overlay-sheen"></div>
+<div class="twinkle-container" id="twinkle-container"><div class="twinkle-particle" style="left: 90.333%; top: 69.7999%; transform: scale(0.983106);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="left: 35.2309%; top: 11.1232%; transform: scale(1.08498);"><div class="twinkle-particle-core"></div></div></div>
+<!-- Top Header row of Card -->
+<div class="card-top-row">
+<span class="card-brand">SMART FINANCE</span>
+<div class="card-growth-pill">
+<span class="material-symbols-outlined" style="font-size: 13px;">trending_up</span>
+<span class="">+2.4%</span>
 </div>
-<div class="chart-container">
-
+</div>
+<!-- Metallic Gold Chip -->
+<div class="card-chip">
+<div class="chip-line-h"></div>
+<div class="chip-line-v"></div>
+</div>
+<!-- Available Balance Block -->
+<div class="card-balance-block">
+<div class="card-balance-label">AVAILABLE BALANCE</div>
+<div class="card-balance-value">
+            *** *** *** <span class="obscured-amount" id="balance-amount">12,300</span>
+</div>
+</div>
+<!-- Bottom details row -->
+<div class="card-bottom-row">
+<div>
+<div class="card-holder-label">CARD HOLDER</div>
+<div class="card-holder-name">CM BHANUTEJA</div>
+</div>
+<div class="card-expiry-block">
+<div class="card-expiry-label">EXPIRES</div>
+<div class="card-expiry-val">31/08/26</div>
+</div>
+<div class="mastercard-logo">
+<div class="circle-red"></div>
+<div class="circle-yellow"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Quick Statistics Row -->
+<section class="card-box" style="padding: 14px 16px; gap: 10px;">
+<h3 class="card-title">Quick Statistics</h3>
+<div class="stat-cards-row">
+<!-- Income -->
+<div class="stat-tile">
+<div class="stat-icon-wrap" style="background-color: var(--accent-purple);">
+<span class="material-symbols-outlined" style="font-size: 16px;">savings</span>
+</div>
+<span class="stat-tile-label">Income</span>
+<span class="stat-tile-amount">₹21,000</span>
+</div>
+<!-- Expenses -->
+<div class="stat-tile">
+<div class="stat-icon-wrap" style="background-color: #c9184a;">
+<span class="material-symbols-outlined" style="font-size: 16px;">payments</span>
+</div>
+<span class="stat-tile-label">Expenses</span>
+<span class="stat-tile-amount">₹8,700</span>
+</div>
+<!-- Left Amount -->
+<div class="stat-tile">
+<div class="stat-icon-wrap" style="background-color: #388e3c;">
+<span class="material-symbols-outlined" style="font-size: 16px;">account_balance_wallet</span>
+</div>
+<span class="stat-tile-label">Left Amount</span>
+<span class="stat-tile-amount">₹12,300</span>
+</div>
+</div>
+</section>
+<!-- Budget - Planning Section -->
+<section class="card-box" style="padding: 14px 16px; gap: 10px;">
+<div class="card-header-row">
+<h3 class="card-title">Budget - Planning</h3>
+<span class="material-symbols-outlined" style="color: var(--text-muted); cursor: pointer; font-size: 20px;">chevron_right</span>
+</div>
+<div class="stat-cards-row">
+<!-- Budget -->
+<div class="stat-tile">
+<div class="stat-icon-wrap" style="background-color: #fd6a3c;">
+<span class="material-symbols-outlined" style="font-size: 16px;">pie_chart</span>
+</div>
+<span class="stat-tile-label">Budget</span>
+<span class="stat-tile-amount" style="font-size: 14px;">₹13,350</span>
+</div>
+<!-- Spent -->
+<div class="stat-tile">
+<div class="stat-icon-wrap" style="background-color: var(--accent-blue);">
+<span class="material-symbols-outlined" style="font-size: 16px;">account_balance_wallet</span>
+</div>
+<span class="stat-tile-label">Spent</span>
+<span class="stat-tile-amount" style="font-size: 14px;">₹8,700</span>
+</div>
+<!-- Left -->
+<div class="stat-tile">
+<div class="stat-icon-wrap" style="background-color: var(--primary);">
+<span class="material-symbols-outlined" style="font-size: 16px;">savings</span>
+</div>
+<span class="stat-tile-label">Left</span>
+<span class="stat-tile-amount" style="font-size: 14px;">₹4,650</span>
+</div>
+</div>
+</section>
+<!-- August 2026 Spending Calendar -->
+<section class="calendar-card">
+<div class="calendar-nav-bar">
+<div class="month-pill-selector">
+<button aria-label="Previous Month" class="btn-arrow">
+<span class="material-symbols-outlined" style="font-size: 18px;">chevron_left</span>
+</button>
+<span class="month-title">August 2026</span>
+<button aria-label="Next Month" class="btn-arrow">
+<span class="material-symbols-outlined" style="font-size: 18px;">chevron_right</span>
+</button>
+</div>
+<button aria-label="Threshold Settings" class="btn-tune" title="Threshold Settings">
+<span class="material-symbols-outlined" style="font-size: 18px;">tune</span>
+</button>
+</div>
+<div class="cal-weekdays">
+<span class="cal-weekday">S</span>
+<span class="cal-weekday">M</span>
+<span class="cal-weekday">T</span>
+<span class="cal-weekday">W</span>
+<span class="cal-weekday">T</span>
+<span class="cal-weekday">F</span>
+<span class="cal-weekday">S</span>
+</div>
+<div class="cal-grid">
+<!-- Aug 1 2026 is Saturday, so 6 leading empty spaces -->
+<div class="cal-day-cell empty"></div>
+<div class="cal-day-cell empty"></div>
+<div class="cal-day-cell empty"></div>
+<div class="cal-day-cell empty"></div>
+<div class="cal-day-cell empty"></div>
+<div class="cal-day-cell empty"></div>
+<!-- Day 1 -->
+<div class="cal-day-cell">
+<span class="cal-day-num">1</span>
+<span class="cal-day-spend">₹150</span>
+</div>
+<!-- Week 2 -->
+<div class="cal-day-cell">
+<span class="cal-day-num">2</span>
+<span class="cal-day-spend">₹450</span>
+</div>
+<div class="cal-day-cell">
+<span class="cal-day-num">3</span>
+<span class="cal-day-spend">₹120</span>
+</div>
+<!-- Day 4: High Spend > ₹500 -->
+<div class="cal-day-cell high-spend">
+<span class="cal-day-num">4</span>
+<span class="cal-day-spend">₹1,200</span>
+</div>
+<div class="cal-day-cell">
+<span class="cal-day-num">5</span>
+<span class="cal-day-spend">₹80</span>
+</div>
+<div class="cal-day-cell">
+<span class="cal-day-num">6</span>
+<span class="cal-day-spend">₹200</span>
+</div>
+<!-- Day 7: High Spend > ₹500 -->
+<div class="cal-day-cell high-spend">
+<span class="cal-day-num">7</span>
+<span class="cal-day-spend">₹550</span>
+</div>
+<div class="cal-day-cell">
+<span class="cal-day-num">8</span>
+<span class="cal-day-spend">₹100</span>
+</div>
+<!-- Week 3 -->
+<div class="cal-day-cell">
+<span class="cal-day-num">9</span>
+<span class="cal-day-spend">₹300</span>
+</div>
+<!-- Day 10: High Spend > ₹500 -->
+<div class="cal-day-cell high-spend">
+<span class="cal-day-num">10</span>
+<span class="cal-day-spend">₹2,100</span>
+</div>
+<!-- Day 11: Zero Spend -->
+<div class="cal-day-cell zero-spend">
+<span class="cal-day-num">11</span>
+<span class="cal-day-spend">₹0</span>
+</div>
+<div class="cal-day-cell">
+<span class="cal-day-num">12</span>
+<span class="cal-day-spend">₹150</span>
+</div>
+<div class="cal-day-cell">
+<span class="cal-day-num">13</span>
+<span class="cal-day-spend">₹400</span>
+</div>
+<div class="cal-day-cell">
+<span class="cal-day-num">14</span>
+<span class="cal-day-spend">₹220</span>
+</div>
+<!-- Day 15: High Spend > ₹500 -->
+<div class="cal-day-cell high-spend">
+<span class="cal-day-num">15</span>
+<span class="cal-day-spend">₹850</span>
+</div>
+<!-- Week 4 -->
+<div class="cal-day-cell">
+<span class="cal-day-num">16</span>
+<span class="cal-day-spend">₹110</span>
+</div>
+<div class="cal-day-cell">
+<span class="cal-day-num">17</span>
+<span class="cal-day-spend">₹90</span>
+</div>
+<div class="cal-day-cell">
+<span class="cal-day-num">18</span>
+<span class="cal-day-spend">₹310</span>
+</div>
+<div class="cal-day-cell">
+<span class="cal-day-num">19</span>
+<span class="cal-day-spend">₹140</span>
+</div>
+<!-- Day 20: High Spend > ₹500 -->
+<div class="cal-day-cell high-spend">
+<span class="cal-day-num">20</span>
+<span class="cal-day-spend">₹3,400</span>
+</div>
+<!-- Day 21: Zero Spend -->
+<div class="cal-day-cell zero-spend">
+<span class="cal-day-num">21</span>
+<span class="cal-day-spend">₹0</span>
+</div>
+<div class="cal-day-cell">
+<span class="cal-day-num">22</span>
+<span class="cal-day-spend">₹180</span>
+</div>
+<!-- Week 5 -->
+<div class="cal-day-cell">
+<span class="cal-day-num">23</span>
+<span class="cal-day-spend">₹250</span>
+</div>
+<div class="cal-day-cell">
+<span class="cal-day-num">24</span>
+<span class="cal-day-spend">₹100</span>
+</div>
+<div class="cal-day-cell">
+<span class="cal-day-num">25</span>
+<span class="cal-day-spend">₹150</span>
+</div>
+<!-- Day 26: Zero Spend -->
+<div class="cal-day-cell zero-spend">
+<span class="cal-day-num">26</span>
+<span class="cal-day-spend">₹0</span>
+</div>
+<div class="cal-day-cell">
+<span class="cal-day-num">27</span>
+<span class="cal-day-spend">₹450</span>
+</div>
+<div class="cal-day-cell">
+<span class="cal-day-num">28</span>
+<span class="cal-day-spend">₹120</span>
+</div>
+<div class="cal-day-cell">
+<span class="cal-day-num">29</span>
+<span class="cal-day-spend">₹130</span>
+</div>
+<!-- Week 6 -->
+<div class="cal-day-cell">
+<span class="cal-day-num">30</span>
+<span class="cal-day-spend">₹160</span>
+</div>
+<!-- Day 31: Zero Spend -->
+<div class="cal-day-cell zero-spend">
+<span class="cal-day-num">31</span>
+<span class="cal-day-spend">₹0</span>
+</div>
+</div>
+<!-- Glassmorphic Summary Bar -->
+<div class="cal-summary-bar">
+<div class="cal-summary-left">
+<div class="cal-summary-icon">
+<span class="material-symbols-outlined" style="font-size: 16px;">calendar_month</span>
+</div>
+<span class="cal-summary-label">Total Monthly Spend</span>
+</div>
+<span class="cal-summary-amount">₹12,000</span>
+</div>
+</section>
+<!-- Daily Spending Analysis -->
+<section class="card-box">
+<div class="card-header-row">
+<h3 class="card-title">Daily Spending Analysis.</h3>
+<div class="segmented-control">
+<button class="segmented-btn active" id="btn-trend" onclick="switchTrendView('trend')">Trend</button>
+<button class="segmented-btn" id="btn-bar-trend" onclick="switchTrendView('bar')">Bar</button>
+</div>
+</div>
+<!-- Trend View -->
 <div id="view-aug-trend" style="display: block;">
-<div class="line-chart-container" style="height: 160px;">
+<div class="chart-container-box" style="height: 160px;">
 <svg height="100%" preserveAspectRatio="none" viewBox="0 0 310 120" width="100%">
 <defs>
 <linearGradient id="augTrendGrad" x1="0" x2="1" y1="0" y2="0">
@@ -1000,29 +1448,30 @@
 <stop offset="100%" stop-color="#FF6B3D"></stop>
 </linearGradient>
 <linearGradient id="augFillGrad" x1="0" x2="0" y1="0" y2="1">
-<stop offset="0%" stop-color="#7B4DFF" stop-opacity="0.2"></stop>
+<stop offset="0%" stop-color="#7B4DFF" stop-opacity="0.22"></stop>
 <stop offset="100%" stop-color="#7B4DFF" stop-opacity="0"></stop>
 </linearGradient>
 </defs>
-<!-- Grid Lines -->
-<line stroke="#cac3d8" stroke-dasharray="4" stroke-width="0.5" x1="0" x2="310" y1="100" y2="100"></line>
-<line stroke="#cac3d8" stroke-dasharray="4" stroke-width="0.5" x1="0" x2="310" y1="60" y2="60"></line>
-<line stroke="#cac3d8" stroke-dasharray="4" stroke-width="0.5" x1="0" x2="310" y1="20" y2="20"></line>
+<!-- Background Grid Dashes -->
+<line stroke="#ece7e7" stroke-dasharray="4" stroke-width="1" x1="0" x2="310" y1="20" y2="20"></line>
+<line stroke="#ece7e7" stroke-dasharray="4" stroke-width="1" x1="0" x2="310" y1="60" y2="60"></line>
+<line stroke="#ece7e7" stroke-dasharray="4" stroke-width="1" x1="0" x2="310" y1="100" y2="100"></line>
 <!-- Area Fill -->
 <path d="M 0 110 L 10 105 L 20 100 L 30 102 L 40 70 L 50 105 L 60 100 L 70 85 L 80 102 L 90 95 L 100 40 L 110 110 L 120 105 L 130 95 L 140 100 L 150 80 L 160 105 L 170 108 L 180 102 L 190 105 L 200 10 L 210 110 L 220 105 L 230 102 L 240 105 L 250 102 L 260 110 L 270 95 L 280 102 L 290 100 L 300 105 L 310 110 L 310 120 L 0 120 Z" fill="url(#augFillGrad)"></path>
-<!-- Line Path (Peaks at Day 4, 10, 20) -->
+<!-- Line Stroke -->
 <path d="M 0 110 C 5 110, 5 105, 10 105 C 15 105, 15 100, 20 100 C 25 100, 35 102, 40 70 C 45 38, 45 105, 50 105 C 55 105, 65 100, 70 85 C 75 70, 85 102, 90 95 C 95 88, 95 40, 100 40 C 105 40, 105 110, 110 110 C 115 110, 125 105, 130 95 C 135 85, 145 100, 150 80 C 155 60, 155 105, 160 105 C 165 105, 195 105, 200 10 C 205 10, 205 110, 210 110 C 215 110, 305 105, 310 110" fill="none" stroke="url(#augTrendGrad)" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path>
 </svg>
 </div>
-<div class="chart-labels text-label-sm">
+<div class="chart-axis-labels">
 <span class="">1st</span>
 <span class="">10th</span>
 <span class="">20th</span>
 <span class="">31st</span>
 </div>
 </div>
+<!-- Bar View -->
 <div id="view-aug-bar" style="display: none;">
-<div class="line-chart-container" style="height: 160px; margin-top: var(--spacing-sm);">
+<div class="chart-container-box" style="height: 160px;">
 <svg height="100%" preserveAspectRatio="none" viewBox="0 0 310 160" width="100%">
 <defs>
 <linearGradient id="augBarGrad" x1="0" x2="0" y1="0" y2="1">
@@ -1030,7 +1479,6 @@
 <stop offset="100%" stop-color="#FF6B3D"></stop>
 </linearGradient>
 </defs>
-<!-- Bars representing daily fluctuations -->
 <rect fill="url(#augBarGrad)" height="7" rx="2" width="6" x="2" y="153"></rect>
 <rect fill="url(#augBarGrad)" height="21" rx="2" width="6" x="12" y="139"></rect>
 <rect fill="url(#augBarGrad)" height="6" rx="2" width="6" x="22" y="154"></rect>
@@ -1064,445 +1512,483 @@
 <rect fill="url(#augBarGrad)" height="0" rx="2" width="6" x="302" y="160"></rect>
 </svg>
 </div>
-<div class="chart-labels text-label-sm">
+<div class="chart-axis-labels">
 <span class="">1st</span>
 <span class="">10th</span>
 <span class="">20th</span>
 <span class="">31st</span>
 </div>
 </div>
-</div>
-</section><section class="chart-section" id="category-section">
-<div class="flex justify-between items-center">
-<h3 class="text-label-md text-on-surface font-semibold" style="font-size: 14px; line-height: 20px; letter-spacing: 0.01em;">Spending by Category</h3>
+</section>
+<!-- Spending by Category -->
+<section class="card-box" id="category-section">
+<div class="card-header-row">
+<h3 class="card-title">Spending by Category</h3>
 <div class="segmented-control">
-<button class="segmented-btn active" id="btn-ring" onclick="switchView('ring')">Ring</button>
-<button class="segmented-btn" id="btn-bar" onclick="switchView('bar')">Bar</button>
+<button class="segmented-btn active" id="btn-ring" onclick="switchCategoryView('ring')">Ring</button>
+<button class="segmented-btn" id="btn-bar" onclick="switchCategoryView('bar')">Bar</button>
 </div>
 </div>
-<!-- Ring Chart View -->
-<div class="category-breakdown" id="view-ring" style="display: flex;"><div class="donut-container"><svg height="100%" viewBox="0 0 36 36" width="100%"><path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#f0eded" stroke-width="4"></path><path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#7B4DFF" stroke-dasharray="30, 100" stroke-dashoffset="0" stroke-width="4"></path><path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#10B981" stroke-dasharray="15, 100" stroke-dashoffset="-30" stroke-width="4"></path><path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#FF6B3D" stroke-dasharray="15, 100" stroke-dashoffset="-45" stroke-width="4"></path><path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#0EA5E9" stroke-dasharray="10, 100" stroke-dashoffset="-60" stroke-width="4"></path><path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#E11D48" stroke-dasharray="10, 100" stroke-dashoffset="-70" stroke-width="4"></path><path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#D946EF" stroke-dasharray="10, 100" stroke-dashoffset="-80" stroke-width="4"></path><path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#cac3d8" stroke-dasharray="10, 100" stroke-dashoffset="-90" stroke-width="4"></path></svg><div class="donut-center"><span class="text-headline-md font-bold">₹12k</span></div></div><div class="legend-list"><div class="legend-item"><div class="legend-label"><div class="legend-dot" style="background-color: #7B4DFF;"></div>Groceries</div><div class="flex items-center gap-xs"><span class="font-bold text-on-surface">₹3,600</span><span class="text-on-surface-variant font-medium" style="margin-left: 8px; font-size: 11px; padding: 2px 6px; background-color: rgba(123, 77, 255, 0.08); border-radius: 6px; color: var(--color-primary);">30%</span></div></div><div class="legend-item"><div class="legend-label"><div class="legend-dot" style="background-color: #10B981;"></div>Vegetables</div><div class="flex items-center gap-xs"><span class="font-bold text-on-surface">₹1,800</span><span class="text-on-surface-variant font-medium" style="margin-left: 8px; font-size: 11px; padding: 2px 6px; background-color: rgba(16, 185, 129, 0.1); border-radius: 6px; color: rgb(16, 185, 129);">15%</span></div></div><div class="legend-item"><div class="legend-label"><div class="legend-dot" style="background-color: #FF6B3D;"></div>Petrol</div><div class="flex items-center gap-xs"><span class="font-bold text-on-surface">₹1,800</span><span class="text-on-surface-variant font-medium" style="margin-left: 8px; font-size: 11px; padding: 2px 6px; background-color: rgba(255, 107, 61, 0.1); border-radius: 6px; color: rgb(255, 107, 61);">15%</span></div></div><div class="legend-item"><div class="legend-label"><div class="legend-dot" style="background-color: #0EA5E9;"></div>Travelling</div><div class="flex items-center gap-xs"><span class="font-bold text-on-surface">₹1,200</span><span class="text-on-surface-variant font-medium" style="margin-left: 8px; font-size: 11px; padding: 2px 6px; background-color: rgba(14, 165, 233, 0.1); border-radius: 6px; color: rgb(14, 165, 233);">10%</span></div></div><div class="legend-item"><div class="legend-label"><div class="legend-dot" style="background-color: #E11D48;"></div>Medical</div><div class="flex items-center gap-xs"><span class="font-bold text-on-surface">₹1,200</span><span class="text-on-surface-variant font-medium" style="margin-left: 8px; font-size: 11px; padding: 2px 6px; background-color: rgba(225, 29, 72, 0.1); border-radius: 6px; color: rgb(225, 29, 72);">10%</span></div></div><div class="legend-item"><div class="legend-label"><div class="legend-dot" style="background-color: #D946EF;"></div>Clothes</div><div class="flex items-center gap-xs"><span class="font-bold text-on-surface">₹1,200</span><span class="text-on-surface-variant font-medium" style="margin-left: 8px; font-size: 11px; padding: 2px 6px; background-color: rgba(217, 70, 239, 0.1); border-radius: 6px; color: rgb(217, 70, 239);">10%</span></div></div><div class="legend-item"><div class="legend-label"><div class="legend-dot" style="background-color: #cac3d8;"></div>Others</div><div class="flex items-center gap-xs"><span class="font-bold text-on-surface">₹1,200</span><span class="text-on-surface-variant font-medium" style="margin-left: 8px; font-size: 11px; padding: 2px 6px; background-color: rgba(122, 116, 135, 0.15); border-radius: 6px; color: var(--color-outline);">10%</span></div></div></div></div>
-<!-- Bar Chart View -->
-<div class="bar-chart-view" id="view-bar" style="display: none;"><div class="bar-item"><div class="bar-item-header"><span class="bar-label"><div class="legend-dot" style="background-color: #7B4DFF;"></div>Groceries</span><div class="flex items-center gap-xs"><span class="font-bold text-on-surface">₹3,600</span><span class="text-on-surface-variant">(30%)</span></div></div><div class="bar-track"><div class="bar-fill" style="width: 30%; background: #7B4DFF;"></div></div></div><div class="bar-item"><div class="bar-item-header"><span class="bar-label"><div class="legend-dot" style="background-color: #10B981;"></div>Vegetables</span><div class="flex items-center gap-xs"><span class="font-bold text-on-surface">₹1,800</span><span class="text-on-surface-variant">(15%)</span></div></div><div class="bar-track"><div class="bar-fill" style="width: 15%; background: #10B981;"></div></div></div><div class="bar-item"><div class="bar-item-header"><span class="bar-label"><div class="legend-dot" style="background-color: #FF6B3D;"></div>Petrol</span><div class="flex items-center gap-xs"><span class="font-bold text-on-surface">₹1,800</span><span class="text-on-surface-variant">(15%)</span></div></div><div class="bar-track"><div class="bar-fill" style="width: 15%; background: #FF6B3D;"></div></div></div><div class="bar-item"><div class="bar-item-header"><span class="bar-label"><div class="legend-dot" style="background-color: #0EA5E9;"></div>Travelling</span><div class="flex items-center gap-xs"><span class="font-bold text-on-surface">₹1,200</span><span class="text-on-surface-variant">(10%)</span></div></div><div class="bar-track"><div class="bar-fill" style="width: 10%; background: #0EA5E9;"></div></div></div><div class="bar-item"><div class="bar-item-header"><span class="bar-label"><div class="legend-dot" style="background-color: #E11D48;"></div>Medical</span><div class="flex items-center gap-xs"><span class="font-bold text-on-surface">₹1,200</span><span class="text-on-surface-variant">(10%)</span></div></div><div class="bar-track"><div class="bar-fill" style="width: 10%; background: #E11D48;"></div></div></div><div class="bar-item"><div class="bar-item-header"><span class="bar-label"><div class="legend-dot" style="background-color: #D946EF;"></div>Clothes</span><div class="flex items-center gap-xs"><span class="font-bold text-on-surface">₹1,200</span><span class="text-on-surface-variant">(10%)</span></div></div><div class="bar-track"><div class="bar-fill" style="width: 10%; background: #D946EF;"></div></div></div><div class="bar-item"><div class="bar-item-header"><span class="bar-label"><div class="legend-dot" style="background-color: #cac3d8;"></div>Others</span><div class="flex items-center gap-xs"><span class="font-bold text-on-surface">₹1,200</span><span class="text-on-surface-variant">(10%)</span></div></div><div class="bar-track"><div class="bar-fill" style="width: 10%; background: #cac3d8;"></div></div></div></div>
-</section><section class="chart-section">
-<div class="flex justify-between items-center">
-<h3 class="text-label-md text-on-surface font-semibold" style="font-size: 14px; line-height: 20px; letter-spacing: 0.01em;">Yearly Analysis</h3>
-<span class="text-label-sm badge">This Month</span>
+<!-- Ring View (Donut Chart) -->
+<div class="category-ring-layout" id="view-ring" style="display: flex;">
+<div class="donut-wrapper">
+<svg height="100%" viewBox="0 0 36 36" width="100%">
+<path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#f0eded" stroke-width="4"></path>
+<!-- Groceries 30% -->
+<path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#7B4DFF" stroke-dasharray="30, 100" stroke-dashoffset="0" stroke-width="4"></path>
+<!-- Vegetables 15% -->
+<path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#10B981" stroke-dasharray="15, 100" stroke-dashoffset="-30" stroke-width="4"></path>
+<!-- Petrol 15% -->
+<path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#FF6B3D" stroke-dasharray="15, 100" stroke-dashoffset="-45" stroke-width="4"></path>
+<!-- Travelling 10% -->
+<path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#0EA5E9" stroke-dasharray="10, 100" stroke-dashoffset="-60" stroke-width="4"></path>
+<!-- Medical 10% -->
+<path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#E11D48" stroke-dasharray="10, 100" stroke-dashoffset="-70" stroke-width="4"></path>
+<!-- Clothes 10% -->
+<path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#D946EF" stroke-dasharray="10, 100" stroke-dashoffset="-80" stroke-width="4"></path>
+<!-- Others 10% -->
+<path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#cac3d8" stroke-dasharray="10, 100" stroke-dashoffset="-90" stroke-width="4"></path>
+</svg>
+<div class="donut-center-label">₹12k</div>
 </div>
-<div class="flex flex-col gap-xs">
-<span class="text-label-sm text-on-surface-variant">Average Monthly Spending</span>
-<span class="text-headline-md text-on-surface font-bold">₹3,240.00</span>
+<div class="category-legend-list">
+<div class="legend-row">
+<div class="legend-name-group"><div class="color-dot" style="background-color: #7B4DFF;"></div>Groceries</div>
+<div class="legend-val-group"><span class="legend-amt">₹3,600</span><span class="legend-badge" style="background: rgba(123, 77, 255, 0.08); color: var(--primary);">30%</span></div>
 </div>
-<div class="chart-container">
-<div class="line-chart-container" style="height: 140px;"><svg height="100%" viewBox="0 0 360 140" width="100%" style="overflow: visible;" class=""><defs class=""><linearGradient id="yearlyGrad" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#7B4DFF"></stop><stop offset="100%" stop-color="#FF6B3D"></stop></linearGradient></defs><g class=""><rect fill="url(#yearlyGrad)" height="90" rx="6" width="22" x="4" y="50"></rect><text x="15" y="118" fill="#ffffff" font-size="8" font-weight="600" font-family="Inter, sans-serif" text-anchor="middle" transform="rotate(-90 15 118)" letter-spacing="0.02em">11,800</text></g><g class=""><rect fill="url(#yearlyGrad)" height="102" rx="6" width="22" x="34" y="38"></rect><text x="45" y="118" fill="#ffffff" font-size="8" font-weight="600" font-family="Inter, sans-serif" text-anchor="middle" transform="rotate(-90 45 118)" letter-spacing="0.02em">12,400</text></g><g class=""><rect fill="url(#yearlyGrad)" height="78" rx="6" width="22" x="64" y="62"></rect><text x="75" y="118" fill="#ffffff" font-size="8" font-weight="600" font-family="Inter, sans-serif" text-anchor="middle" transform="rotate(-90 75 118)" letter-spacing="0.02em">10,900</text></g><g class=""><rect fill="url(#yearlyGrad)" height="112" rx="6" width="22" x="94" y="28"></rect><text x="105" y="118" fill="#ffffff" font-size="8" font-weight="600" font-family="Inter, sans-serif" text-anchor="middle" transform="rotate(-90 105 118)" letter-spacing="0.02em">12,850</text></g><g class=""><rect fill="url(#yearlyGrad)" height="84" rx="6" width="22" x="124" y="56"></rect><text x="135" y="118" fill="#ffffff" font-size="8" font-weight="600" font-family="Inter, sans-serif" text-anchor="middle" transform="rotate(-90 135 118)" letter-spacing="0.02em">11,200</text></g><g class=""><rect fill="url(#yearlyGrad)" height="106" rx="6" width="22" x="154" y="34"></rect><text x="165" y="118" fill="#ffffff" font-size="8" font-weight="600" font-family="Inter, sans-serif" text-anchor="middle" transform="rotate(-90 165 118)" letter-spacing="0.02em">12,600</text></g><g class=""><rect fill="url(#yearlyGrad)" height="118" rx="6" width="22" x="184" y="22"></rect><text x="195" y="118" fill="#ffffff" font-size="8" font-weight="600" font-family="Inter, sans-serif" text-anchor="middle" transform="rotate(-90 195 118)" letter-spacing="0.02em">13,000</text></g><g class=""><rect fill="url(#yearlyGrad)" height="86" rx="6" width="22" x="214" y="54"></rect><text x="225" y="118" fill="#ffffff" font-size="8" font-weight="600" font-family="Inter, sans-serif" text-anchor="middle" transform="rotate(-90 225 118)" letter-spacing="0.02em">11,400</text></g><g class=""><rect fill="url(#yearlyGrad)" height="74" rx="6" width="22" x="244" y="66"></rect><text x="255" y="118" fill="#ffffff" font-size="8" font-weight="600" font-family="Inter, sans-serif" text-anchor="middle" transform="rotate(-90 255 118)" letter-spacing="0.02em">10,600</text></g><g class=""><rect fill="url(#yearlyGrad)" height="114" rx="6" width="22" x="274" y="26"></rect><text x="285" y="118" fill="#ffffff" font-size="8" font-weight="600" font-family="Inter, sans-serif" text-anchor="middle" transform="rotate(-90 285 118)" letter-spacing="0.02em">12,900</text></g><g class=""><rect fill="url(#yearlyGrad)" height="92" rx="6" width="22" x="304" y="48"></rect><text x="315" y="118" fill="#ffffff" font-size="8" font-weight="600" font-family="Inter, sans-serif" text-anchor="middle" transform="rotate(-90 315 118)" letter-spacing="0.02em">11,750</text></g><g class=""><rect fill="url(#yearlyGrad)" height="104" rx="6" width="22" x="334" y="36"></rect><text x="345" y="118" fill="#ffffff" font-size="8" font-weight="600" font-family="Inter, sans-serif" text-anchor="middle" transform="rotate(-90 345 118)" letter-spacing="0.02em">12,300</text></g></svg></div>
-<div class="chart-labels text-label-sm" style="margin-top: 8px;"><span class="">Jan</span><span class="">Feb</span><span class="">Mar</span><span class="">Apr</span><span class="">May</span><span class="">Jun</span><span class="">Jul</span><span class="">Aug</span><span class="">Sep</span><span class="">Oct</span><span class="">Nov</span><span class="">Dec</span></div>
+<div class="legend-row">
+<div class="legend-name-group"><div class="color-dot" style="background-color: #10B981;"></div>Vegetables</div>
+<div class="legend-val-group"><span class="legend-amt">₹1,800</span><span class="legend-badge" style="background: rgba(16, 185, 129, 0.1); color: rgb(16, 185, 129);">15%</span></div>
+</div>
+<div class="legend-row">
+<div class="legend-name-group"><div class="color-dot" style="background-color: #FF6B3D;"></div>Petrol</div>
+<div class="legend-val-group"><span class="legend-amt">₹1,800</span><span class="legend-badge" style="background: rgba(255, 107, 61, 0.1); color: rgb(255, 107, 61);">15%</span></div>
+</div>
+<div class="legend-row">
+<div class="legend-name-group"><div class="color-dot" style="background-color: #0EA5E9;"></div>Travelling</div>
+<div class="legend-val-group"><span class="legend-amt">₹1,200</span><span class="legend-badge" style="background: rgba(14, 165, 233, 0.1); color: rgb(14, 165, 233);">10%</span></div>
+</div>
+<div class="legend-row">
+<div class="legend-name-group"><div class="color-dot" style="background-color: #E11D48;"></div>Medical</div>
+<div class="legend-val-group"><span class="legend-amt">₹1,200</span><span class="legend-badge" style="background: rgba(225, 29, 72, 0.1); color: rgb(225, 29, 72);">10%</span></div>
+</div>
+<div class="legend-row">
+<div class="legend-name-group"><div class="color-dot" style="background-color: #D946EF;"></div>Clothes</div>
+<div class="legend-val-group"><span class="legend-amt">₹1,200</span><span class="legend-badge" style="background: rgba(217, 70, 239, 0.1); color: rgb(217, 70, 239);">10%</span></div>
+</div>
+<div class="legend-row">
+<div class="legend-name-group"><div class="color-dot" style="background-color: #cac3d8;"></div>Others</div>
+<div class="legend-val-group"><span class="legend-amt">₹1,200</span><span class="legend-badge" style="background: rgba(122, 116, 135, 0.12); color: var(--text-muted);">10%</span></div>
+</div>
+</div>
+</div>
+<!-- Linear Horizontal Bar View -->
+<div class="category-bars-layout" id="view-bar" style="display: none;">
+<div class="cat-bar-item">
+<div class="cat-bar-header">
+<span class="legend-name-group"><div class="color-dot" style="background-color: #7B4DFF;"></div>Groceries</span>
+<div class="legend-val-group"><span class="legend-amt">₹3,600</span><span style="font-size: 11px; color: var(--text-muted);" class="">(30%)</span></div>
+</div>
+<div class="cat-bar-track"><div class="cat-bar-fill" style="width: 30%; background: #7B4DFF;"></div></div>
+</div>
+<div class="cat-bar-item">
+<div class="cat-bar-header">
+<span class="legend-name-group"><div class="color-dot" style="background-color: #10B981;"></div>Vegetables</span>
+<div class="legend-val-group"><span class="legend-amt">₹1,800</span><span style="font-size: 11px; color: var(--text-muted);" class="">(15%)</span></div>
+</div>
+<div class="cat-bar-track"><div class="cat-bar-fill" style="width: 15%; background: #10B981;"></div></div>
+</div>
+<div class="cat-bar-item">
+<div class="cat-bar-header">
+<span class="legend-name-group"><div class="color-dot" style="background-color: #FF6B3D;"></div>Petrol</span>
+<div class="legend-val-group"><span class="legend-amt">₹1,800</span><span style="font-size: 11px; color: var(--text-muted);" class="">(15%)</span></div>
+</div>
+<div class="cat-bar-track"><div class="cat-bar-fill" style="width: 15%; background: #FF6B3D;"></div></div>
+</div>
+<div class="cat-bar-item">
+<div class="cat-bar-header">
+<span class="legend-name-group"><div class="color-dot" style="background-color: #0EA5E9;"></div>Travelling</span>
+<div class="legend-val-group"><span class="legend-amt">₹1,200</span><span style="font-size: 11px; color: var(--text-muted);" class="">(10%)</span></div>
+</div>
+<div class="cat-bar-track"><div class="cat-bar-fill" style="width: 10%; background: #0EA5E9;"></div></div>
+</div>
+<div class="cat-bar-item">
+<div class="cat-bar-header">
+<span class="legend-name-group"><div class="color-dot" style="background-color: #E11D48;"></div>Medical</span>
+<div class="legend-val-group"><span class="legend-amt">₹1,200</span><span style="font-size: 11px; color: var(--text-muted);" class="">(10%)</span></div>
+</div>
+<div class="cat-bar-track"><div class="cat-bar-fill" style="width: 10%; background: #E11D48;"></div></div>
+</div>
+<div class="cat-bar-item">
+<div class="cat-bar-header">
+<span class="legend-name-group"><div class="color-dot" style="background-color: #D946EF;"></div>Clothes</span>
+<div class="legend-val-group"><span class="legend-amt">₹1,200</span><span style="font-size: 11px; color: var(--text-muted);" class="">(10%)</span></div>
+</div>
+<div class="cat-bar-track"><div class="cat-bar-fill" style="width: 10%; background: #D946EF;"></div></div>
+</div>
+<div class="cat-bar-item">
+<div class="cat-bar-header">
+<span class="legend-name-group"><div class="color-dot" style="background-color: #cac3d8;"></div>Others</span>
+<div class="legend-val-group"><span class="legend-amt">₹1,200</span><span style="font-size: 11px; color: var(--text-muted);" class="">(10%)</span></div>
+</div>
+<div class="cat-bar-track"><div class="cat-bar-fill" style="width: 10%; background: #cac3d8;"></div></div>
+</div>
+</div>
+</section>
+<!-- Yearly Analysis -->
+<section class="card-box">
+<div class="card-header-row">
+<h3 class="card-title">Yearly Analysis</h3>
+<span class="badge-chip">This Month</span>
+</div>
+<div class="stat-meta-block">
+<span class="stat-meta-label">Average Monthly Spending</span>
+<span class="stat-meta-amount">₹3,240.00</span>
+</div>
+<div class="chart-container-box">
+<div style="height: 140px; width: 100%;">
+<svg height="100%" style="overflow: visible;" viewBox="0 0 360 140" width="100%">
+<defs>
+<linearGradient id="yearlyGrad" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#7B4DFF"></stop>
+<stop offset="100%" stop-color="#FF6B3D"></stop>
+</linearGradient>
+</defs>
+<g>
+<rect fill="url(#yearlyGrad)" height="90" rx="6" width="22" x="4" y="50"></rect>
+<text fill="#ffffff" font-family="Inter, sans-serif" font-size="8" font-weight="600" letter-spacing="0.02em" text-anchor="middle" transform="rotate(-90 15 118)" x="15" y="118">11,800</text>
+</g>
+<g>
+<rect fill="url(#yearlyGrad)" height="102" rx="6" width="22" x="34" y="38"></rect>
+<text fill="#ffffff" font-family="Inter, sans-serif" font-size="8" font-weight="600" letter-spacing="0.02em" text-anchor="middle" transform="rotate(-90 45 118)" x="45" y="118">12,400</text>
+</g>
+<g>
+<rect fill="url(#yearlyGrad)" height="78" rx="6" width="22" x="64" y="62"></rect>
+<text fill="#ffffff" font-family="Inter, sans-serif" font-size="8" font-weight="600" letter-spacing="0.02em" text-anchor="middle" transform="rotate(-90 75 118)" x="75" y="118">10,900</text>
+</g>
+<g>
+<rect fill="url(#yearlyGrad)" height="112" rx="6" width="22" x="94" y="28"></rect>
+<text fill="#ffffff" font-family="Inter, sans-serif" font-size="8" font-weight="600" letter-spacing="0.02em" text-anchor="middle" transform="rotate(-90 105 118)" x="105" y="118">12,850</text>
+</g>
+<g>
+<rect fill="url(#yearlyGrad)" height="84" rx="6" width="22" x="124" y="56"></rect>
+<text fill="#ffffff" font-family="Inter, sans-serif" font-size="8" font-weight="600" letter-spacing="0.02em" text-anchor="middle" transform="rotate(-90 135 118)" x="135" y="118">11,200</text>
+</g>
+<g>
+<rect fill="url(#yearlyGrad)" height="106" rx="6" width="22" x="154" y="34"></rect>
+<text fill="#ffffff" font-family="Inter, sans-serif" font-size="8" font-weight="600" letter-spacing="0.02em" text-anchor="middle" transform="rotate(-90 165 118)" x="165" y="118">12,600</text>
+</g>
+<g>
+<rect fill="url(#yearlyGrad)" height="118" rx="6" width="22" x="184" y="22"></rect>
+<text fill="#ffffff" font-family="Inter, sans-serif" font-size="8" font-weight="600" letter-spacing="0.02em" text-anchor="middle" transform="rotate(-90 195 118)" x="195" y="118">13,000</text>
+</g>
+<g>
+<rect fill="url(#yearlyGrad)" height="86" rx="6" width="22" x="214" y="54"></rect>
+<text fill="#ffffff" font-family="Inter, sans-serif" font-size="8" font-weight="600" letter-spacing="0.02em" text-anchor="middle" transform="rotate(-90 225 118)" x="225" y="118">11,400</text>
+</g>
+<g>
+<rect fill="url(#yearlyGrad)" height="74" rx="6" width="22" x="244" y="66"></rect>
+<text fill="#ffffff" font-family="Inter, sans-serif" font-size="8" font-weight="600" letter-spacing="0.02em" text-anchor="middle" transform="rotate(-90 255 118)" x="255" y="118">10,600</text>
+</g>
+<g>
+<rect fill="url(#yearlyGrad)" height="114" rx="6" width="22" x="274" y="26"></rect>
+<text fill="#ffffff" font-family="Inter, sans-serif" font-size="8" font-weight="600" letter-spacing="0.02em" text-anchor="middle" transform="rotate(-90 285 118)" x="285" y="118">12,900</text>
+</g>
+<g>
+<rect fill="url(#yearlyGrad)" height="92" rx="6" width="22" x="304" y="48"></rect>
+<text fill="#ffffff" font-family="Inter, sans-serif" font-size="8" font-weight="600" letter-spacing="0.02em" text-anchor="middle" transform="rotate(-90 315 118)" x="315" y="118">11,750</text>
+</g>
+<g>
+<rect fill="url(#yearlyGrad)" height="104" rx="6" width="22" x="334" y="36"></rect>
+<text fill="#ffffff" font-family="Inter, sans-serif" font-size="8" font-weight="600" letter-spacing="0.02em" text-anchor="middle" transform="rotate(-90 345 118)" x="345" y="118">12,300</text>
+</g>
+</svg>
+</div>
+<div class="chart-axis-labels">
+<span class="">Jan</span><span class="">Feb</span><span class="">Mar</span><span class="">Apr</span><span class="">May</span><span class="">Jun</span><span class="">Jul</span><span class="">Aug</span><span class="">Sep</span><span class="">Oct</span><span class="">Nov</span><span class="">Dec</span>
+</div>
 </div>
 </section>
 <!-- Recent Transactions -->
-<section class="flex flex-col gap-md pb-xl"><div class="flex justify-between items-center w-full"><h3 class="text-label-md font-bold text-on-surface" style="font-size: 14px; line-height: 18px;">Recent Transactions</h3><button class="text-label-md font-semibold text-primary hover:opacity-80 transition-all" style="background: none; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; cursor: pointer;">View All</button></div><div class="flex flex-col gap-sm"><div class="flex justify-between items-center w-full"><h3 class="text-label-md font-semibold text-primary" style="color: rgb(123, 77, 255);">Today</h3></div><div class="flex flex-col gap-sm"><div class="flex items-center justify-between p-1 bg-white rounded-xl shadow-sm border border-outline-variant" style="padding: 12px 16px; border-radius: 16px; background-color: #ffffff; border: 1px solid rgba(0, 0, 0, 0.04); box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.03);"><div class="flex items-center gap-sm"><div class="flex items-center justify-center rounded-xl" style="width: 44px; height: 44px; border-radius: 50%; background-color: rgba(123, 77, 255, 0.12); color: #7B4DFF;"><span class="material-symbols-outlined" style="font-size: 22px;">shopping_basket</span></div><div class="flex flex-col"><span class="text-label-md font-bold text-on-surface" style="font-size: 14px;">Grocery</span><span class="text-label-sm text-on-surface-variant" style="font-size: 12px;">UPI • 09:15 AM</span></div></div><div class="flex flex-col items-end gap-xs"><span class="text-label-md font-bold text-on-surface" style="font-size: 14px;">- ₹1,240</span><span class="badge text-label-sm font-medium" style="background-color: rgba(34, 197, 94, 0.15); color: rgb(22, 163, 74); font-size: 10px; line-height: 12px; padding: 2px 8px; border-radius: 9999px;">Completed</span></div></div><div class="flex items-center justify-between p-1 bg-white rounded-xl shadow-sm border border-outline-variant" style="padding: 12px 16px; border-radius: 16px; background-color: #ffffff; border: 1px solid rgba(0, 0, 0, 0.04); box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.03);"><div class="flex items-center gap-sm"><div class="flex items-center justify-center rounded-xl" style="width: 44px; height: 44px; border-radius: 50%; background-color: rgba(255, 107, 61, 0.12); color: #FF6B3D;"><span class="material-symbols-outlined" style="font-size: 22px;">local_gas_station</span></div><div class="flex flex-col"><span class="text-label-md font-bold text-on-surface" style="font-size: 14px;">Petrol</span><span class="text-label-sm text-on-surface-variant" style="font-size: 12px;">Card • 11:30 AM</span></div></div><div class="flex flex-col items-end gap-xs"><span class="text-label-md font-bold text-on-surface" style="font-size: 14px;">- ₹2,500</span><span class="badge text-label-sm font-medium" style="background-color: rgba(34, 197, 94, 0.15); color: rgb(22, 163, 74); font-size: 10px; line-height: 12px; padding: 2px 8px; border-radius: 9999px;">Completed</span></div></div></div></div><div class="flex flex-col gap-sm mt-2"><div class="flex items-center w-full"><h3 class="text-label-md font-semibold text-primary" style="color: rgb(123, 77, 255);">Yesterday</h3></div><div class="flex flex-col gap-sm"><div class="flex items-center justify-between p-1 bg-white rounded-xl shadow-sm border border-outline-variant" style="padding: 12px 16px; border-radius: 16px; background-color: #ffffff; border: 1px solid rgba(0, 0, 0, 0.04); box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.03);"><div class="flex items-center gap-sm"><div class="flex items-center justify-center rounded-xl" style="width: 44px; height: 44px; border-radius: 50%; background-color: rgba(123, 77, 255, 0.12); color: #7B4DFF;"><span class="material-symbols-outlined" style="font-size: 22px;">restaurant</span></div><div class="flex flex-col"><span class="text-label-md font-bold text-on-surface" style="font-size: 14px;">Vegetables</span><span class="text-label-sm text-on-surface-variant" style="font-size: 12px;">UPI • 08:45 PM</span></div></div><div class="flex flex-col items-end gap-xs"><span class="text-label-md font-bold text-on-surface" style="font-size: 14px;">- ₹850</span><span class="badge text-label-sm font-medium" style="background-color: rgba(34, 197, 94, 0.15); color: rgb(22, 163, 74); font-size: 10px; line-height: 12px; padding: 2px 8px; border-radius: 9999px;">Completed</span></div></div><div class="flex items-center justify-between p-1 bg-white rounded-xl shadow-sm border border-outline-variant" style="padding: 12px 16px; border-radius: 16px; background-color: #ffffff; border: 1px solid rgba(0, 0, 0, 0.04); box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.03);"><div class="flex items-center gap-sm"><div class="flex items-center justify-center rounded-xl" style="width: 44px; height: 44px; border-radius: 50%; background-color: rgba(123, 77, 255, 0.12); color: #7B4DFF;"><span class="material-symbols-outlined" style="font-size: 22px;">checkroom</span></div><div class="flex flex-col"><span class="text-label-md font-bold text-on-surface" style="font-size: 14px;">Clothes</span><span class="text-label-sm text-on-surface-variant" style="font-size: 12px;">Cash • 10:00 AM</span></div></div><div class="flex flex-col items-end gap-xs"><span class="text-label-md font-bold text-on-surface" style="font-size: 14px;">- ₹499</span><span class="badge text-label-sm font-medium" style="background-color: rgba(34, 197, 94, 0.15); color: rgb(22, 163, 74); font-size: 10px; line-height: 12px; padding: 2px 8px; border-radius: 9999px;">Completed</span></div></div></div></div></section>
-</main>
-<!-- BottomNavBar -->
-<nav class="bottom-nav"><button class="nav-item active">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
-<span class="text-label-sm" style="margin-top: 4px;">Home</span>
-</button>
-<button class="nav-item">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">account_balance_wallet</span>
-<span class="text-label-sm" style="margin-top: 4px;">Budget</span>
-</button>
-<!-- FAB Add Button -->
-<button class="fab" aria-label="Add Expense" style="display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(135deg, rgb(123, 77, 255), rgb(255, 107, 61)); color: var(--color-on-primary); border-radius: 50%; transform: translateY(-24px); width: 56px; height: 56px; box-shadow: rgba(123, 77, 255, 0.35) 0px 14px 28px; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; cursor: pointer; transition: 0.3s;">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0; font-size: 28px;">add</span>
-</button>
-<button class="nav-item">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">history</span>
-<span class="text-label-sm" style="margin-top: 4px;">History</span>
-</button>
-<button class="nav-item">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">person</span>
-<span class="text-label-sm" style="margin-top: 4px;">Profile</span>
-</button></nav>
-<!-- Desktop Navigation Fallback -->
-<nav class="desktop-nav">
-<div class="flex flex-col gap-sm">
-<button class="desktop-nav-item active text-label-md">
-<span class="material-symbols-outlined" style="font-variation-settings: &quot;FILL&quot; 1;">home</span>
-            Home
-        </button>
-<button class="desktop-nav-item text-label-md">
-<span class="material-symbols-outlined">credit_card</span>
-            Cards
-        </button>
-<button class="desktop-nav-item text-label-md">
-<span class="material-symbols-outlined">leaderboard</span>
-            Stats
-        </button>
+<section style="display: flex; flex-direction: column; gap: 14px;">
+<div class="card-header-row">
+<h3 class="card-title">Recent Transactions</h3>
+<button class="btn-view-all">View All</button>
 </div>
+<!-- Today Group -->
+<div class="tx-group">
+<span class="tx-group-header">Today</span>
+<!-- Grocery -->
+<div class="tx-item-card">
+<div class="tx-left">
+<div class="tx-icon-bubble" style="background: rgba(123, 77, 255, 0.12); color: var(--primary);">
+<span class="material-symbols-outlined">shopping_basket</span>
+</div>
+<div class="tx-text-col">
+<h4 class="">Grocery</h4>
+<p class="">UPI • 09:15 AM</p>
+</div>
+</div>
+<div class="tx-right" style="align-items: center; text-align: center;">
+<span class="tx-amount">- ₹1,240</span>
+<span class="tx-status-pill">Completed</span>
+</div>
+</div>
+<!-- Petrol -->
+<div class="tx-item-card">
+<div class="tx-left">
+<div class="tx-icon-bubble" style="background: rgba(255, 107, 61, 0.12); color: #ff6b3d;">
+<span class="material-symbols-outlined">local_gas_station</span>
+</div>
+<div class="tx-text-col">
+<h4 class="">Petrol</h4>
+<p class="">Card • 11:30 AM</p>
+</div>
+</div>
+<div class="tx-right" style="align-items: center; text-align: center;">
+<span class="tx-amount">- ₹2,500</span>
+<span class="tx-status-pill">Completed</span>
+</div>
+</div>
+</div>
+<!-- Yesterday Group -->
+<div class="tx-group" style="margin-top: 4px;">
+<span class="tx-group-header">Yesterday</span>
+<!-- Vegetables -->
+<div class="tx-item-card">
+<div class="tx-left">
+<div class="tx-icon-bubble" style="background: rgba(123, 77, 255, 0.12); color: var(--primary);">
+<span class="material-symbols-outlined">restaurant</span>
+</div>
+<div class="tx-text-col">
+<h4 class="">Vegetables</h4>
+<p class="">UPI • 08:45 PM</p>
+</div>
+</div>
+<div class="tx-right" style="align-items: center; text-align: center;">
+<span class="tx-amount">- ₹850</span>
+<span class="tx-status-pill">Completed</span>
+</div>
+</div>
+<!-- Clothes -->
+<div class="tx-item-card">
+<div class="tx-left">
+<div class="tx-icon-bubble" style="background: rgba(123, 77, 255, 0.12); color: var(--primary);">
+<span class="material-symbols-outlined">checkroom</span>
+</div>
+<div class="tx-text-col">
+<h4 class="">Clothes</h4>
+<p class="">Cash • 10:00 AM</p>
+</div>
+</div>
+<div class="tx-right" style="align-items: center; text-align: center;">
+<span class="tx-amount">- ₹499</span>
+<span class="tx-status-pill">Completed</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Persistent Bottom Dock Navigation -->
+<nav class="bottom-dock">
+<button class="dock-tab active">
+<span class="material-symbols-outlined">home</span>
+<span class="">Home</span>
+</button>
+<button class="dock-tab">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="">Budget</span>
+</button>
+<!-- Radiant Add Button -->
+<button aria-label="Add Transaction" class="fab-add">
+<span class="material-symbols-outlined">add</span>
+</button>
+<button class="dock-tab">
+<span class="material-symbols-outlined">history</span>
+<span class="">History</span>
+</button>
+<button class="dock-tab">
+<span class="material-symbols-outlined">person</span>
+<span class="">Profile</span>
+</button>
 </nav>
+<!-- Log Out Confirmation Modal -->
+<div class="modal-overlay" id="logout-modal">
+<div class="modal-backdrop" id="logout-backdrop" onclick="closeLogoutModal()"></div>
+<div class="modal-card" id="logout-card">
+<div class="modal-icon-badge">
+<span class="material-symbols-outlined" style="font-size: 28px;">logout</span>
+</div>
+<h3 class="">Log Out</h3>
+<p class="">Are you sure you want to log out of your Smart Finance account?</p>
+<div class="modal-actions">
+<button class="btn-modal-cancel" onclick="closeLogoutModal()" type="button">Cancel</button>
+<button class="btn-modal-confirm" onclick="confirmLogout()" type="button">Log Out</button>
+</div>
+</div>
+</div>
+<!-- Native JavaScript Interaction Scripts -->
 <script>
-    function switchView(view) {
-        const ringView = document.getElementById('view-ring');
-        const barView = document.getElementById('view-bar');
-        const btnRing = document.getElementById('btn-ring');
-        const btnBar = document.getElementById('btn-bar');
-
-        if (view === 'ring') {
-            ringView.style.display = 'flex';
-            barView.style.display = 'none';
-            btnRing.classList.add('active');
-            btnBar.classList.remove('active');
-        } else if (view === 'bar') {
-            ringView.style.display = 'none';
-            barView.style.display = 'flex';
-            btnRing.classList.remove('active');
-            btnBar.classList.add('active');
-        }
-    }
-    
+    // Segmented toggle for Daily Spending (Trend vs Bar)
     function switchTrendView(view) {
-        const trendView = document.getElementById('view-aug-trend');
-        const barView = document.getElementById('view-aug-bar');
-        const btnTrend = document.getElementById('btn-trend');
-        const btnBar = document.getElementById('btn-bar-trend');
+      const trendView = document.getElementById('view-aug-trend');
+      const barView = document.getElementById('view-aug-bar');
+      const btnTrend = document.getElementById('btn-trend');
+      const btnBar = document.getElementById('btn-bar-trend');
 
-        if (view === 'trend') {
-            if(trendView) trendView.style.display = 'block';
-            if(barView) barView.style.display = 'none';
-            if(btnTrend) btnTrend.classList.add('active');
-            if(btnBar) btnBar.classList.remove('active');
-        } else if (view === 'bar') {
-            if(trendView) trendView.style.display = 'none';
-            if(barView) barView.style.display = 'block';
-            if(btnTrend) btnTrend.classList.remove('active');
-            if(btnBar) btnBar.classList.add('active');
+      if (view === 'trend') {
+        if (trendView) trendView.style.display = 'block';
+        if (barView) barView.style.display = 'none';
+        if (btnTrend) btnTrend.classList.add('active');
+        if (btnBar) btnBar.classList.remove('active');
+      } else {
+        if (trendView) trendView.style.display = 'none';
+        if (barView) barView.style.display = 'block';
+        if (btnTrend) btnTrend.classList.remove('active');
+        if (btnBar) btnBar.classList.add('active');
+      }
+    }
+
+    // Segmented toggle for Category Breakdown (Ring vs Bar)
+    function switchCategoryView(view) {
+      const ringView = document.getElementById('view-ring');
+      const barView = document.getElementById('view-bar');
+      const btnRing = document.getElementById('btn-ring');
+      const btnBar = document.getElementById('btn-bar');
+
+      if (view === 'ring') {
+        if (ringView) ringView.style.display = 'flex';
+        if (barView) barView.style.display = 'none';
+        if (btnRing) btnRing.classList.add('active');
+        if (btnBar) btnBar.classList.remove('active');
+      } else {
+        if (ringView) ringView.style.display = 'none';
+        if (barView) barView.style.display = 'flex';
+        if (btnRing) btnRing.classList.remove('active');
+        if (btnBar) btnBar.classList.add('active');
+      }
+    }
+
+    // Modal dialog controls
+    function openLogoutModal() {
+      const modal = document.getElementById('logout-modal');
+      const backdrop = document.getElementById('logout-backdrop');
+      const card = document.getElementById('logout-card');
+      if (!modal) return;
+      modal.style.display = 'flex';
+      requestAnimationFrame(() => {
+        if (backdrop) backdrop.style.opacity = '1';
+        if (card) {
+          card.style.opacity = '1';
+          card.style.transform = 'scale(1) translateY(0)';
         }
+      });
     }
-    
-    function switchWeekView(week) {
-        const views = ['week1', 'week2', 'week3', 'week4', 'week5', 'week6'];
-        views.forEach(v => {
-            document.getElementById('view-' + v).style.display = (v === week) ? 'block' : 'none';
-            document.getElementById('btn-' + v).classList.toggle('active', v === week);
-        });
-    }
-    
-    // Twinkle effect for balance card
-    document.addEventListener("DOMContentLoaded", function() {
-        const container = document.getElementById('twinkle-container');
-        if (!container) return;
 
+    function closeLogoutModal() {
+      const modal = document.getElementById('logout-modal');
+      const backdrop = document.getElementById('logout-backdrop');
+      const card = document.getElementById('logout-card');
+      if (!modal) return;
+      if (backdrop) backdrop.style.opacity = '0';
+      if (card) {
+        card.style.opacity = '0';
+        card.style.transform = 'scale(0.92) translateY(10px)';
+      }
+      setTimeout(() => {
+        modal.style.display = 'none';
+      }, 250);
+    }
+
+    function confirmLogout() {
+      closeLogoutModal();
+    }
+
+    // Interactive 3D Balance Card Tilt & Sparkle System
+    document.addEventListener('DOMContentLoaded', () => {
+      const card = document.getElementById('main-balance-card');
+      const container = document.getElementById('twinkle-container');
+
+      // Subtle twinkling star generation
+      if (container) {
         const maxTwinkles = 8;
-        let activeTwinkles = 0;
-        const gridCols = 4;
-        const gridRows = 3;
-        const cooldowns = new Set();
+        let activeCount = 0;
 
         function createTwinkle() {
-            if (activeTwinkles >= maxTwinkles) return;
+          if (activeCount >= maxTwinkles) return;
+          activeCount++;
 
-            const availableSpots = [];
-            for (let r = 0; r < gridRows; r++) {
-                for (let c = 0; c < gridCols; c++) {
-                    const spotId = `${r}-${c}`;
-                    if (!cooldowns.has(spotId)) {
-                        availableSpots.push({ r, c, id: spotId });
-                    }
-                }
-            }
+          const twinkle = document.createElement('div');
+          twinkle.className = 'twinkle-particle';
+          const core = document.createElement('div');
+          core.className = 'twinkle-particle-core';
+          twinkle.appendChild(core);
 
-            if (availableSpots.length === 0) return;
+          const randomX = Math.random() * 84 + 8;
+          const randomY = Math.random() * 80 + 10;
+          twinkle.style.left = `${randomX}%`;
+          twinkle.style.top = `${randomY}%`;
+          const scale = Math.random() * 0.45 + 0.8;
+          twinkle.style.transform = `scale(${scale})`;
 
-            const spot = availableSpots[Math.floor(Math.random() * availableSpots.length)];
-            cooldowns.add(spot.id);
-            activeTwinkles++;
+          container.appendChild(twinkle);
 
-            const twinkle = document.createElement('div');
-            twinkle.className = 'twinkle-particle';
-            
-            const core = document.createElement('div');
-            core.className = 'twinkle-particle-core';
-            twinkle.appendChild(core);
-
-            // Calculate position with some randomness within the grid cell
-            const cellW = 100 / gridCols;
-            const cellH = 100 / gridRows;
-            
-            const randomX = Math.random() * 0.8 + 0.1; // 10% to 90% of cell
-            const randomY = Math.random() * 0.8 + 0.1;
-            
-            const top = spot.r * cellH + (cellH * randomY);
-            const left = spot.c * cellW + (cellW * randomX);
-
-            twinkle.style.top = `${top}%`;
-            twinkle.style.left = `${left}%`;
-            
-            // Randomize size slightly
-            const scale = Math.random() * 0.5 + 0.75;
-            twinkle.style.transform = `scale(${scale})`;
-
-            container.appendChild(twinkle);
-
-            // Clean up and handle cooldown
-            setTimeout(() => {
-                twinkle.remove();
-                activeTwinkles--;
-                
-                // 10 second cooldown for this specific spot
-                setTimeout(() => {
-                    cooldowns.delete(spot.id);
-                }, 10000);
-            }, 2000); // 2s animation duration
+          setTimeout(() => {
+            twinkle.remove();
+            activeCount--;
+          }, 2200);
         }
 
-        // Spawn initially
-        for (let i = 0; i < maxTwinkles; i++) {
-            setTimeout(createTwinkle, Math.random() * 2000);
+        for (let i = 0; i < 4; i++) {
+          setTimeout(createTwinkle, Math.random() * 1200);
         }
+        setInterval(createTwinkle, 900);
+      }
 
-        // Continuously try to spawn
-        setInterval(createTwinkle, 800);
-        
-        // Balance Reveal Interaction setup
-        const obscuredAmount = document.querySelector('.obscured-amount');
-        if (obscuredAmount) {
-            let revealTimeout;
-            
-            const reveal = () => {
-                obscuredAmount.classList.add('revealed');
-                clearTimeout(revealTimeout);
-            };
+      // 3D Tilt Gesture Tracking
+      if (card) {
+        let isHolding = false;
 
-            const hide = () => {
-                revealTimeout = setTimeout(() => {
-                    obscuredAmount.classList.remove('revealed');
-                }, 1500);
-            };
+        function applyTilt(e) {
+          const rect = card.getBoundingClientRect();
+          let clientX, clientY;
 
-            obscuredAmount.addEventListener('touchstart', reveal, {passive: true});
-            obscuredAmount.addEventListener('touchmove', reveal, {passive: true});
-            obscuredAmount.addEventListener('touchend', hide);
-            
-            let isMousedown = false;
-            obscuredAmount.addEventListener('mousedown', () => { isMousedown = true; reveal(); });
-            window.addEventListener('mouseup', () => { 
-                if (isMousedown) {
-                    isMousedown = false;
-                    hide();
-                }
-            });
-            obscuredAmount.addEventListener('mousemove', () => {
-                if (isMousedown) reveal();
-            });
-        }
-    });
-
-    // 3D Tilt Interaction for Balance Card
-    const card = document.getElementById('main-balance-card');
-    let isPressed = false;
-
-    function handleMove(e) {
-        if (!card) return;
-        
-        let clientX, clientY;
-        if (e.type === 'touchmove' || e.type === 'touchstart') {
+          if (e.touches && e.touches[0]) {
             clientX = e.touches[0].clientX;
             clientY = e.touches[0].clientY;
-        } else {
+          } else {
             clientX = e.clientX;
             clientY = e.clientY;
+          }
+
+          const x = (clientX - rect.left) / rect.width - 0.5;
+          const y = (clientY - rect.top) / rect.height - 0.5;
+
+          const rotateY = x * 22;
+          const rotateX = -y * 22;
+          const scale = isHolding ? 0.96 : 1.02;
+
+          card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(${scale})`;
         }
 
-        const rect = card.getBoundingClientRect();
-        
-        // Calculate position relative to card center (normalized between -1 and 1)
-        const x = (clientX - rect.left) / rect.width - 0.5;
-        const y = (clientY - rect.top) / rect.height - 0.5;
-        
-        // Adjust these values to increase/decrease tilt intensity
-        const rotateY = x * 20; // max rotation degrees
-        const rotateX = y * -20;
-        
-        const scale = isPressed ? 0.95 : 1.02;
+        function resetTilt() {
+          isHolding = false;
+          card.style.transform = `rotateX(4deg) rotateY(-4deg) scale(1)`;
+        }
 
-        card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(${scale})`;
-    }
+        card.addEventListener('mousemove', applyTilt);
+        card.addEventListener('mouseleave', resetTilt);
+        card.addEventListener('mousedown', () => { isHolding = true; });
+        window.addEventListener('mouseup', () => { if (isHolding) { isHolding = false; } });
 
-    function handleLeave() {
-        if (!card) return;
-        isPressed = false;
-        // Reset to default isometric-ish view or flat depending on preference
-        // Returning to a subtle tilt for aesthetics
-        card.style.transform = `rotateX(5deg) rotateY(-5deg) scale(1)`;
-    }
-
-    function handleDown() {
-        isPressed = true;
-        if(card) card.style.transition = 'transform 0.05s ease-out';
-    }
-
-    function handleUp() {
-        isPressed = false;
-        if(card) card.style.transition = 'transform 0.1s ease-out';
-    }
-
-    if (card) {
-        // Initialize with a subtle tilt
-        card.style.transform = `rotateX(5deg) rotateY(-5deg) scale(1)`;
-
-        // Mouse events
-        card.addEventListener('mousemove', handleMove);
-        card.addEventListener('mouseleave', handleLeave);
-        card.addEventListener('mousedown', (e) => { handleDown(); handleMove(e); });
-        card.addEventListener('mouseup', handleUp);
-
-        // Touch events
         card.addEventListener('touchmove', (e) => {
-             // Prevent scrolling while tilting the card
-            e.preventDefault(); 
-            handleMove(e);
-        }, { passive: false });
-        card.addEventListener('touchstart', (e) => { handleDown(); handleMove(e); });
-        card.addEventListener('touchend', () => { handleUp(); handleLeave(); });
-    }
-</script>
-<script class="">
-function showAllWeeks() {
-    const chartSection = document.querySelector('main > section:nth-of-type(4)');
-    const segmentedControl = chartSection.querySelector('.segmented-control');
-    const buttons = segmentedControl.querySelectorAll('.segmented-btn');
-    
-    // Update active state
-    buttons.forEach(btn => btn.classList.remove('active'));
-    document.getElementById('btn-view-all').classList.add('active');
+          applyTilt(e);
+        }, { passive: true });
+        card.addEventListener('touchstart', () => { isHolding = true; }, { passive: true });
+        card.addEventListener('touchend', resetTilt);
+      }
+    });
+  </script>
 
-    // Hide existing single-view containers
-    const containers = chartSection.querySelectorAll('.chart-container');
-    containers.forEach(c => c.style.display = 'none');
-
-    // Check if 'all-weeks-view' already exists to avoid duplicates
-    let allWeeksView = document.getElementById('all-weeks-view');
-    if (!allWeeksView) {
-        allWeeksView = document.createElement('div');
-        allWeeksView.id = 'all-weeks-view';
-        allWeeksView.className = 'stats-scroll';
-        allWeeksView.style.cssText = 'display: flex; gap: 16px; overflow-x: auto; padding: 8px 0; margin-top: 8px;';
-
-        // Clone charts from W1 to W4 (and placeholders for W5/W6 if they existed in DOM)
-        const weekIds = ['view-week1', 'view-week2', 'view-week3', 'view-week4', 'view-week5', 'view-week6'];
-        weekIds.forEach(id => {
-            const original = document.getElementById(id);
-            if (original) {
-                const clone = original.cloneNode(true);
-                clone.style.display = 'block';
-                clone.style.minWidth = '280px';
-                clone.style.flexShrink = '0';
-                // Add a label for the week
-                const label = document.createElement('div');
-                label.className = 'text-label-md font-bold text-primary';
-                label.textContent = id.replace('view-', '').toUpperCase();
-                label.style.marginBottom = '4px';
-                clone.prepend(label);
-                allWeeksView.appendChild(clone);
-            }
-        });
-        chartSection.appendChild(allWeeksView);
-    } else {
-        allWeeksView.style.display = 'flex';
-    }
-}
-
-// Update existing switchWeekView to hide the 'all-weeks-view' when a specific week is selected
-const originalSwitchWeekView = window.switchWeekView;
-window.switchWeekView = function(week) {
-    const allWeeksView = document.getElementById('all-weeks-view');
-    if (allWeeksView) allWeeksView.style.display = 'none';
-    originalSwitchWeekView(week);
-};
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div id="logout-modal" style="display: none; position: fixed; inset: 0; z-index: 100; align-items: center; justify-content: center; padding: 20px;">
-  <div id="logout-backdrop" onclick="closeLogoutModal()" style="position: absolute; inset: 0; background-color: rgba(28, 27, 27, 0.45); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); opacity: 0; transition: opacity 0.25s ease;"></div>
-  <div id="logout-card" style="position: relative; z-index: 101; width: 100%; max-width: 340px; background: #ffffff; border-radius: 24px; padding: 24px 20px 20px; box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.15); border: 1px solid rgba(202, 195, 216, 0.4); text-align: center; transform: scale(0.92) translateY(8px); opacity: 0; transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;">
-    <div style="width: 52px; height: 52px; border-radius: 50%; background: rgba(174, 50, 3, 0.1); color: #ae3203; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
-      <span class="material-symbols-outlined" style="font-size: 28px;">logout</span>
-    </div>
-    <h3 class="text-headline-md font-bold text-on-surface" style="font-size: 18px; line-height: 24px; margin-bottom: 8px;">Log Out</h3>
-    <p class="text-label-sm text-on-surface-variant" style="font-size: 13px; line-height: 18px; margin-bottom: 24px;">Are you sure you want to log out of your account?</p>
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-      <button type="button" onclick="closeLogoutModal()" class="text-label-md font-semibold" style="padding: 12px; border-radius: 12px; border: 1px solid rgba(122, 116, 135, 0.2); background: rgb(246, 243, 242); color: rgb(73, 68, 86); cursor: pointer; transition: background-color 0.2s;">Cancel</button>
-      <button type="button" onclick="confirmLogout()" class="text-label-md font-bold" style="padding: 12px; border-radius: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; background: linear-gradient(135deg, rgb(123, 77, 255), rgb(255, 107, 61)); color: rgb(255, 255, 255); cursor: pointer; box-shadow: rgba(123, 77, 255, 0.3) 0px 4px 12px; transition: transform 0.1s;">Log Out</button>
-    </div>
-  </div>
-</div>
-<script class="">
-function openLogoutModal() {
-  var modal = document.getElementById('logout-modal');
-  var backdrop = document.getElementById('logout-backdrop');
-  var card = document.getElementById('logout-card');
-  if (!modal) return;
-  modal.style.display = 'flex';
-  requestAnimationFrame(function() {
-    if (backdrop) backdrop.style.opacity = '1';
-    if (card) {
-      card.style.opacity = '1';
-      card.style.transform = 'scale(1) translateY(0)';
-    }
-  });
-}
-
-function closeLogoutModal() {
-  var modal = document.getElementById('logout-modal');
-  var backdrop = document.getElementById('logout-backdrop');
-  var card = document.getElementById('logout-card');
-  if (!modal) return;
-  if (backdrop) backdrop.style.opacity = '0';
-  if (card) {
-    card.style.opacity = '0';
-    card.style.transform = 'scale(0.92) translateY(8px)';
-  }
-  setTimeout(function() {
-    modal.style.display = 'none';
-  }, 250);
-}
-
-function confirmLogout() {
-  closeLogoutModal();
-}
-</script>
 
 </body></html>
