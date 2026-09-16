@@ -1,44 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Luminous Smart Finance Tracker Dashboard - Modern, Secure Personal Financial Management">
-    <title>Smart Finance Tracker - Home Dashboard</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
-    
-    <style>
+<!DOCTYPE html><html lang="en" style=""><head><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"><style class="">
+  .segmented-control .segmented-btn.active {
+    background-color: white !important;
+    color: var(--color-primary) !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
+    font-weight: 700 !important;
+  }
+  .segmented-control .segmented-btn:not(.active) {
+    background: transparent !important;
+  }
+</style></head><body><svg aria-hidden="true" class="inline-defs-container" style="position:absolute;width:0;height:0;overflow:hidden"></svg>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport">
+<title>Smart Finance Tracker - Home Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
         :root {
-            /* Color Palette */
+            /* Colors */
             --color-primary: #622ce5;
             --color-primary-container: #7b4dff;
-            --color-primary-light: rgba(98, 44, 229, 0.1);
             --color-on-primary: #ffffff;
-            
             --color-secondary: #ae3203;
             --color-secondary-container: #fd6a3c;
-            --color-secondary-light: rgba(253, 106, 60, 0.1);
             --color-on-secondary: #ffffff;
-            
             --color-tertiary: #732ad3;
             --color-tertiary-container: #8d4aee;
-            --color-tertiary-light: rgba(115, 42, 211, 0.1);
             --color-on-tertiary: #ffffff;
-            
-            --color-success: #10b981;
-            --color-success-light: rgba(16, 185, 129, 0.12);
             --color-error: #ba1a1a;
-            --color-error-light: rgba(186, 26, 26, 0.12);
-            --color-warning: #f59e0b;
-            
             --color-background: #fcf9f8;
             --color-on-background: #1c1b1b;
-            --color-surface: #ffffff;
+            --color-surface: #fcf9f8;
             --color-on-surface: #1c1b1b;
             --color-surface-variant: #e5e2e1;
             --color-on-surface-variant: #494456;
@@ -47,71 +38,57 @@
             --color-outline: #7a7487;
             --color-outline-variant: #cac3d8;
 
-            /* Gradient Presets */
-            --gradient-brand: linear-gradient(135deg, #7b4dff 0%, #ff6b3d 100%);
-            --gradient-card-gold: linear-gradient(135deg, #f5e396 0%, #d4af37 20%, #f9f1c0 40%, #c5a028 60%, #e6be58 80%, #b8860b 100%);
-            --gradient-shimmer: linear-gradient(125deg, transparent 0%, rgba(255, 255, 255, 0.5) 25%, rgba(255, 255, 255, 0.8) 30%, rgba(255, 255, 255, 0.5) 35%, transparent 100%);
-            
-            /* Spacing Tokens */
-            --spacing-unit: 4px;
+            /* Spacing */
             --spacing-xs: 4px;
             --spacing-sm: 8px;
             --spacing-md: 16px;
             --spacing-lg: 24px;
             --spacing-xl: 32px;
             --spacing-container-margin: 20px;
+            --spacing-unit: 4px;
 
             /* Typography */
-            --font-family-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            --font-family-mono: 'JetBrains Mono', 'Courier New', monospace;
-            
-            /* Shadows & Elevations */
-            --shadow-subtle: 0px 4px 15px rgba(0, 0, 0, 0.03);
-            --shadow-card: 0px 10px 30px rgba(0, 0, 0, 0.04);
-            --shadow-card-elevated: 0px 18px 45px rgba(0, 0, 0, 0.08);
-            --shadow-gold-card: 0px 24px 50px rgba(184, 134, 11, 0.25), inset 0px 0px 20px rgba(255, 255, 255, 0.6);
-            --shadow-fab: 0px 12px 28px rgba(123, 77, 255, 0.35);
+            --font-family: 'Inter', sans-serif;
+            --font-body-md-size: 16px;
+            --font-body-md-lh: 24px;
+            --font-body-md-weight: 400;
 
-            /* Radii */
-            --radius-sm: 8px;
-            --radius-md: 12px;
-            --radius-lg: 16px;
-            --radius-xl: 24px;
-            --radius-full: 9999px;
-            
-            /* Transitions */
-            --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-bounce: 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --font-label-sm-size: 12px;
+            --font-label-sm-lh: 16px;
+            --font-label-sm-weight: 500;
+
+            --font-headline-md-size: 20px;
+            --font-headline-md-lh: 28px;
+            --font-headline-md-weight: 600;
+
+            --font-label-md-size: 14px;
+            --font-label-md-lh: 20px;
+            --font-label-md-weight: 600;
+
+            --font-headline-lg-size: 32px;
+            --font-headline-lg-lh: 40px;
+            --font-headline-lg-weight: 700;
         }
 
-        *, *::before, *::after {
+        * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
-        html {
-            font-size: 16px;
-            -webkit-text-size-adjust: 100%;
-            scroll-behavior: smooth;
-        }
-
         body {
-            font-family: var(--font-family-sans);
+            font-family: var(--font-family);
             background-color: var(--color-background);
             color: var(--color-on-background);
-            font-size: 1rem;
-            line-height: 1.5;
+            font-size: var(--font-body-md-size);
+            line-height: var(--font-body-md-lh);
+            font-weight: var(--font-body-md-weight);
             -webkit-tap-highlight-color: transparent;
             -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
             min-height: 100vh;
-            padding-bottom: 96px;
-            overflow-x: hidden;
+            padding-bottom: 90px;
         }
 
-        /* Google Material Symbols Font Setup */
         .material-symbols-outlined {
             font-family: 'Material Symbols Outlined';
             font-weight: normal;
@@ -127,539 +104,459 @@
             font-feature-settings: 'liga';
             -webkit-font-feature-settings: 'liga';
             -webkit-font-smoothing: antialiased;
-            user-select: none;
-            vertical-align: middle;
         }
 
-        .flex { display: flex; }
-        .flex-col { display: flex; flex-direction: column; }
-        .items-center { align-items: center; }
-        .items-start { align-items: flex-start; }
-        .items-end { align-items: flex-end; }
-        .justify-between { justify-content: space-between; }
-        .justify-center { justify-content: center; }
-        .justify-around { justify-content: space-around; }
-
-        .gap-xs { gap: var(--spacing-xs); }
-        .gap-sm { gap: var(--spacing-sm); }
-        .gap-md { gap: var(--spacing-md); }
-        .gap-lg { gap: var(--spacing-lg); }
-
-        .w-full { width: 100%; }
-        .relative { position: relative; }
-
-        .text-xs { font-size: 0.75rem; line-height: 1rem; }
-        .text-sm { font-size: 0.875rem; line-height: 1.25rem; }
-        .text-base { font-size: 1rem; line-height: 1.5rem; }
-        .text-lg { font-size: 1.125rem; line-height: 1.75rem; }
-        .text-xl { font-size: 1.25rem; line-height: 1.75rem; }
-        .text-2xl { font-size: 1.5rem; line-height: 2rem; }
-
-        .font-normal { font-weight: 400; }
+        /* Typography Classes */
+        .text-body-md { font-size: var(--font-body-md-size); line-height: var(--font-body-md-lh); font-weight: var(--font-body-md-weight); }
+        .text-label-sm { font-size: var(--font-label-sm-size); line-height: var(--font-label-sm-lh); font-weight: var(--font-label-sm-weight); }
+        .text-headline-md { font-size: var(--font-headline-md-size); line-height: var(--font-headline-md-lh); font-weight: var(--font-headline-md-weight); }
+        .text-label-md { font-size: var(--font-label-md-size); line-height: var(--font-label-md-lh); font-weight: var(--font-label-md-weight); }
+        .text-headline-lg { font-size: var(--font-headline-lg-size); line-height: var(--font-headline-lg-lh); font-weight: var(--font-headline-lg-weight); letter-spacing: -0.02em;}
+        
         .font-medium { font-weight: 500; }
         .font-semibold { font-weight: 600; }
         .font-bold { font-weight: 700; }
 
-        .text-primary { color: var(--color-primary); }
-        .text-on-surface { color: var(--color-on-surface); }
+        /* Colors */
         .text-on-surface-variant { color: var(--color-on-surface-variant); }
-        .text-secondary { color: var(--color-secondary); }
+        .text-primary { color: var(--color-primary); }
+        .text-on-primary { color: var(--color-on-primary); }
+        .text-on-surface { color: var(--color-on-surface); }
+        .text-tertiary { color: var(--color-tertiary); }
+        .text-secondary-container { color: var(--color-secondary-container); }
+        .text-error { color: var(--color-error); }
 
-        button {
-            font-family: inherit;
-            border: none;
-            background: none;
-            cursor: pointer;
-            outline: none;
-        }
+        /* Layout */
+        .flex { display: flex; }
+        .flex-col { display: flex; flex-direction: column; }
+        .items-center { align-items: center; }
+        .justify-between { justify-content: space-between; }
+        .justify-center { justify-content: center; }
+        .justify-around { justify-content: space-around; }
+        
+        .gap-unit { gap: var(--spacing-unit); }
+        .gap-xs { gap: var(--spacing-xs); }
+        .gap-sm { gap: var(--spacing-sm); }
+        .gap-md { gap: var(--spacing-md); }
 
-        header.app-header {
+        .w-full { width: 100%; }
+        .h-full { height: 100%; }
+
+        /* Header */
+        header {
             position: fixed;
             top: 0;
-            left: 0;
             width: 100%;
             z-index: 50;
-            background-color: rgba(252, 249, 248, 0.85);
+            background-color: rgba(252, 249, 248, 0.8);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.03);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.02);
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.04);
         }
-
-        .header-inner {
+        
+        .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 0 var(--spacing-container-margin);
-            height: 68px;
-            max-width: 1200px;
+            height: 64px;
+            max-width: 1280px;
             margin: 0 auto;
         }
 
-        .profile-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .profile-avatar {
-            width: 44px;
-            height: 44px;
-            border-radius: var(--radius-full);
+        .profile-img-container {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
             overflow: hidden;
             flex-shrink: 0;
-            border: 2px solid #ffffff;
-            box-shadow: var(--shadow-subtle);
+            border: 2px solid white;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.04);
         }
-
-        .profile-avatar img {
+        
+        .profile-img-container img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
 
-        .profile-greeting {
-            font-size: 0.8125rem;
-            color: var(--color-on-surface-variant);
-            font-weight: 500;
-        }
-
-        .profile-name {
-            font-size: 1.125rem;
-            font-weight: 700;
-            color: var(--color-primary);
-            letter-spacing: -0.01em;
-        }
-
-        .icon-circle-btn {
-            width: 42px;
-            height: 42px;
-            border-radius: var(--radius-full);
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
             background-color: var(--color-surface-container-low);
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--color-on-surface-variant);
-            transition: background-color var(--transition-fast), transform var(--transition-fast);
-            box-shadow: var(--shadow-subtle);
+            border: none;
+            cursor: pointer;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.04);
+            transition: opacity 0.2s, transform 0.2s;
         }
 
-        .icon-circle-btn:hover {
-            background-color: var(--color-surface-container);
-            color: var(--color-primary);
+        .icon-btn:active {
+            transform: scale(0.95);
         }
 
-        .icon-circle-btn:active {
-            transform: scale(0.93);
-        }
-
-        main.main-dashboard {
+        /* Main Content */
+        main {
             padding-top: 88px;
             padding-left: var(--spacing-container-margin);
             padding-right: var(--spacing-container-margin);
-            max-width: 1200px;
+            max-width: 1280px;
             margin: 0 auto;
             display: flex;
             flex-direction: column;
+            padding-bottom: var(--spacing-lg);
             gap: var(--spacing-md);
         }
 
-        .chart-card {
-            background-color: var(--color-surface);
-            border-radius: var(--radius-xl);
-            box-shadow: var(--shadow-card);
-            border: 1px solid rgba(255, 255, 255, 0.7);
+        /* Balance Card */
+        .balance-card {
+            border-radius: 24px;
+            background: linear-gradient(135deg, #7B4DFF, #FF6B3D);
+            color: var(--color-on-primary);
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.04);
+            position: relative;
+            overflow: hidden;
             padding: var(--spacing-md);
-            display: flex;
-            flex-direction: column;
-            gap: var(--spacing-md);
-            position: relative;
-        }
-
-        .badge-pill {
-            background-color: rgba(123, 77, 255, 0.1);
-            color: var(--color-primary-container);
-            padding: 4px 12px;
-            border-radius: var(--radius-full);
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .card-perspective-viewport {
-            perspective: 1200px;
-            width: 100%;
-        }
-
-        .metallic-balance-card {
-            background: var(--gradient-card-gold);
-            box-shadow: var(--shadow-gold-card);
-            border: 1px solid rgba(255, 255, 255, 0.75);
-            position: relative;
-            overflow: hidden;
-            padding: 24px;
-            border-radius: var(--radius-xl);
-            aspect-ratio: 1.586 / 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            font-family: var(--font-family-mono);
-            cursor: pointer;
-            transform: rotateX(5deg) rotateY(-5deg) scale(1);
-            transition: transform 0.15s ease-out;
+            /* Interactive settings will be managed by JS */
+            transition: transform 0.1s ease-out, box-shadow 0.1s ease-out;
             transform-style: preserve-3d;
-            user-select: none;
+        }
+        
+        .balance-card-perspective-container {
+            perspective: 1000px;
         }
 
-        .metallic-balance-card .card-shimmer {
+        .balance-card::before {
+            content: "";
             position: absolute;
             inset: 0;
-            background: var(--gradient-shimmer);
-            pointer-events: none;
-            mix-blend-mode: overlay;
-            transform: translateZ(1px);
+            background: rgba(255, 255, 255, 0.05);
+            opacity: 0;
+            transition: opacity 0.3s;
         }
 
-        .twinkle-overlay-container {
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            z-index: 2;
-            overflow: hidden;
+        .balance-card:hover::before {
+            opacity: 1;
         }
 
-        @keyframes sparkle-animation {
-            0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 0; }
-            30% { transform: translate(-50%, -50%) scale(1.15) rotate(45deg); opacity: 1; filter: blur(0px); }
-            55% { transform: translate(-50%, -50%) scale(0.95) rotate(90deg); opacity: 0.85; filter: blur(0.5px); }
-            100% { transform: translate(-50%, -50%) scale(0) rotate(180deg); opacity: 0; filter: blur(2px); }
-        }
-
-        .twinkle-star {
-            position: absolute;
-            width: 24px;
-            height: 24px;
-            animation: sparkle-animation 2s ease-in-out forwards;
-        }
-
-        .twinkle-star::before, .twinkle-star::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            background: radial-gradient(circle, #ffffff 0%, rgba(255,255,255,0.85) 30%, rgba(255,255,255,0) 80%);
-            transform: translate(-50%, -50%);
-            border-radius: var(--radius-full);
-            box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.7);
-        }
-
-        .twinkle-star::before { width: 100%; height: 2px; }
-        .twinkle-star::after { width: 2px; height: 100%; }
-
-        .twinkle-star-center {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 6px;
-            height: 6px;
-            background: #ffffff;
-            border-radius: var(--radius-full);
-            transform: translate(-50%, -50%);
-            box-shadow: 0 0 12px 4px rgba(255, 255, 255, 0.95);
-            z-index: 3;
-        }
-
-        .sim-chip {
-            width: 42px;
-            height: 32px;
-            background: linear-gradient(135deg, #b8860b 0%, #ffd700 50%, #b8860b 100%);
-            border-radius: 6px;
+        .balance-card-content {
             position: relative;
-            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.35);
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
         }
 
-        .sim-chip::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border: 1px solid rgba(0, 0, 0, 0.2);
-            border-radius: 6px;
-        }
-
-        .chip-grid-h {
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: rgba(0, 0, 0, 0.3);
-        }
-
-        .chip-grid-v {
-            position: absolute;
-            left: 50%;
-            top: 0;
-            bottom: 0;
-            width: 1px;
-            background: rgba(0, 0, 0, 0.3);
-        }
-
-        .obscured-balance-value {
+        .opacity-90 { opacity: 0.9; }
+        
+        /* Obscured Balance Amount */
+        .obscured-amount {
             filter: blur(8px);
             opacity: 0.85;
             transition: filter 0.3s ease-out, opacity 0.3s ease-out;
-            cursor: pointer;
+            cursor: crosshair;
             display: inline-block;
             user-select: none;
             -webkit-user-select: none;
         }
 
-        .obscured-balance-value.revealed,
-        .obscured-balance-value:hover {
+        @media (hover: hover) {
+            .obscured-amount:hover {
+                filter: blur(0px);
+                opacity: 1;
+            }
+        }
+
+        .obscured-amount.revealed {
             filter: blur(0px);
             opacity: 1;
         }
-
-        .dual-circle-badge {
-            position: relative;
-            width: 40px;
-            height: 24px;
+        
+        /* Twinkle Effect */
+        .twinkle-container {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
         }
 
-        .dual-circle-badge .circle-left {
+        @keyframes realistic-twinkle {
+            0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 0; }
+            30% { transform: translate(-50%, -50%) scale(1.2) rotate(45deg); opacity: 1; filter: blur(0px); }
+            50% { transform: translate(-50%, -50%) scale(1) rotate(90deg); opacity: 0.8; filter: blur(1px); }
+            100% { transform: translate(-50%, -50%) scale(0) rotate(180deg); opacity: 0; filter: blur(2px); }
+        }
+
+        .twinkle-particle {
+            position: absolute;
             width: 24px;
             height: 24px;
-            background: #eb001b;
-            border-radius: 50%;
+            animation: realistic-twinkle 2s ease-in-out forwards;
+        }
+
+        .twinkle-particle::before, .twinkle-particle::after {
+            content: '';
             position: absolute;
-            left: 0;
-            opacity: 0.9;
-        }
-
-        .dual-circle-badge .circle-right {
-            width: 24px;
-            height: 24px;
-            background: #f79e1b;
+            top: 50%;
+            left: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,255,255,0.8) 20%, rgba(255,255,255,0) 80%);
+            transform: translate(-50%, -50%);
             border-radius: 50%;
+            box-shadow: 0 0 8px 2px rgba(255,255,255,0.6);
+        }
+
+        .twinkle-particle::before {
+            width: 100%;
+            height: 2px;
+        }
+
+        .twinkle-particle::after {
+            width: 2px;
+            height: 100%;
+        }
+
+        .twinkle-particle-core {
             position: absolute;
-            right: 0;
-            opacity: 0.75;
-        }
-
-        .horizontal-stats-slider {
-            display: flex;
-            gap: var(--spacing-sm);
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-            padding: 2px 0;
-        }
-
-        .horizontal-stats-slider::-webkit-scrollbar {
-            display: none;
-        }
-
-        .stat-badge-card {
-            scroll-snap-align: center;
-            flex: 1;
-            min-width: 100px;
-            background-color: var(--color-surface);
-            border-radius: var(--radius-xl);
-            box-shadow: var(--shadow-card);
-            border: 1px solid rgba(0, 0, 0, 0.04);
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-            padding: 8px 10px 8px;
-            transition: transform var(--transition-fast);
-        }
-
-        .stat-badge-card:hover {
-            transform: translateY(-2px);
-        }
-
-        .stat-icon-wrapper {
-            width: 28px;
-            height: 28px;
-            border-radius: var(--radius-full);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 2px;
-            color: #ffffff;
-        }
-
-        .stat-icon-wrapper .material-symbols-outlined {
-            font-size: 16px;
-            color: #ffffff;
-        }
-
-        .calendar-days-header {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 4px;
-            text-align: center;
-        }
-
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 4px;
-        }
-
-        .calendar-cell {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            aspect-ratio: 1;
-            border-radius: var(--radius-sm);
-            background-color: rgba(123, 77, 255, 0.04);
-            transition: transform var(--transition-fast);
-        }
-
-        .calendar-cell:hover {
-            transform: scale(1.05);
+            top: 50%;
+            left: 50%;
+            width: 6px;
+            height: 6px;
+            background: white;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 12px 4px rgba(255, 255, 255, 0.9);
             z-index: 2;
         }
 
-        .calendar-cell.cell-peak {
-            background-color: #ffdad6;
-            border: 1px solid rgba(186, 26, 26, 0.2);
-        }
 
-        .calendar-cell.cell-zero {
-            background-color: #e8f5e9;
-            border: 1px solid #c8e6c9;
-        }
-
-        .calendar-cell.cell-empty {
-            background-color: transparent;
-            border: none;
-        }
-
-        .cell-date-num {
-            font-size: 0.75rem;
-            font-weight: 700;
-        }
-
-        .cell-spend-amount {
-            font-size: 8px;
-            font-weight: 500;
-        }
-
-        .segmented-control-bar {
+        /* Stats Scroll */
+        .stats-scroll {
             display: flex;
-            background-color: var(--color-surface-container-low);
-            border-radius: var(--radius-md);
-            padding: 3px;
-            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.04);
-            gap: 2px;
+            gap: var(--spacing-md);
+            overflow-x: auto;
+            padding-bottom: var(--spacing-unit);
+            margin-left: calc(-1 * var(--spacing-container-margin));
+            margin-right: calc(-1 * var(--spacing-container-margin));
+            padding-left: var(--spacing-container-margin);
+            padding-right: var(--spacing-container-margin);
+            scroll-snap-type: x mandatory;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
 
-        .segmented-tab-btn {
-            padding: 5px 14px;
-            font-size: 0.75rem;
-            font-weight: 500;
-            color: var(--color-on-surface-variant);
-            border-radius: 9px;
-            transition: all var(--transition-fast);
-            white-space: nowrap;
+        .stats-scroll::-webkit-scrollbar { display: none; }
+
+        .stat-card {
+            scroll-snap-align: center;
+            flex-shrink: 0;
+            flex: 1;
+            min-width: 120px;
+            background-color: white;
+            border-radius: 24px;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-unit);
+            padding: var(--spacing-sm);
         }
 
-        .segmented-tab-btn.active {
-            background-color: #ffffff;
-            color: var(--color-primary);
-            font-weight: 700;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+        .stat-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: var(--spacing-xs);
         }
 
-        .chart-view-panel {
+        .bg-primary-light { background-color: rgba(98, 44, 229, 0.1); }
+        .bg-tertiary-light { background-color: rgba(115, 42, 211, 0.1); }
+        .bg-secondary-light { background-color: rgba(253, 106, 60, 0.1); }
+        
+        .icon-sm { font-size: 18px; }
+        .icon-xs { font-size: 16px; }
+
+        /* Quick Stats */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-md);
+        }
+
+        .quick-stat {
+            background-color: white;
+            border-radius: 24px;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-xs);
+            padding: var(--spacing-sm);
+        }
+
+        /* Chart Section */
+        .chart-section {
+            background-color: white;
+            border-radius: 24px;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            padding: var(--spacing-md);
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+
+        .badge {
+            background-color: rgba(123, 77, 255, 0.1);
+            color: var(--color-primary-container);
+            padding: var(--spacing-unit) var(--spacing-sm);
+            border-radius: 9999px;
+        }
+
+        .chart-container {
             width: 100%;
             position: relative;
         }
-
-        .line-chart-box {
-            height: 180px;
+        
+        .line-chart-container {
+            height: 140px;
             width: 100%;
             margin-top: var(--spacing-sm);
         }
-
-        /* Donut Ring & Legend styling */
-        .category-view-ring {
+        
+        .chart-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: var(--spacing-sm);
+            color: var(--color-on-surface-variant);
+        }
+        
+        .category-breakdown {
             display: flex;
             align-items: center;
             gap: var(--spacing-md);
             margin-top: var(--spacing-sm);
+            transition: opacity 0.3s;
         }
-
-        .donut-wrapper {
+        
+        .donut-container {
             width: 100px;
             height: 100px;
             flex-shrink: 0;
             position: relative;
         }
-
-        .donut-center-label {
+        
+        .donut-center {
             position: absolute;
             inset: 0;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-direction: column;
-            pointer-events: none;
         }
-
-        .category-legend-list {
+        
+        .legend-list {
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: var(--spacing-xs);
             flex: 1;
         }
-
-        .legend-row {
+        
+        .legend-item {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            font-size: 0.75rem;
+            font-size: var(--font-label-sm-size);
         }
-
-        .legend-dot-indicator {
+        
+        .legend-label {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            color: var(--color-on-surface-variant);
+        }
+        
+        .legend-dot {
             width: 8px;
             height: 8px;
-            border-radius: var(--radius-full);
-            display: inline-block;
-            margin-right: 6px;
+            border-radius: 50%;
         }
 
-        /* Horizontal Category Bar styling */
-        .category-view-bar {
+        /* Segmented Control */
+        .segmented-control {
+            display: flex;
+            background-color: var(--color-surface-container-low);
+            border-radius: 12px;
+            padding: 2px;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+            overflow-x: auto;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        .segmented-control::-webkit-scrollbar { display: none; }
+
+        .segmented-btn {
+            background: none;
+            border: none;
+            padding: 4px 12px;
+            font-size: var(--font-label-sm-size);
+            font-weight: 500;
+            color: var(--color-on-surface-variant);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .segmented-btn.active {
+            background-color: white;
+            color: var(--color-primary);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        /* Bar Chart View */
+        .bar-chart-view {
             display: none;
             flex-direction: column;
-            gap: 10px;
+            gap: var(--spacing-sm);
             margin-top: var(--spacing-sm);
-            animation: fadeInSimple 0.25s ease-out;
+            animation: fadeIn 0.3s ease-in-out;
         }
-
-        @keyframes fadeInSimple {
-            from { opacity: 0; transform: translateY(4px); }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .cat-bar-item {
+        .bar-item {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: var(--spacing-xs);
         }
 
-        .cat-bar-header {
+        .bar-item-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.75rem;
+            font-size: var(--font-label-sm-size);
         }
 
-        .cat-bar-track {
+        .bar-label {
+            color: var(--color-on-surface-variant);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+        
+        .bar-track {
             height: 8px;
             background-color: var(--color-surface-container);
             border-radius: 4px;
@@ -667,135 +564,65 @@
             width: 100%;
         }
 
-        .cat-bar-fill {
+        .bar-fill {
             height: 100%;
             border-radius: 4px;
-            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            background: linear-gradient(90deg, #7B4DFF, #FF6B3D);
+            transition: width 0.5s ease-out;
         }
 
-        body.fullscreen-active {
-            overflow: hidden !important;
-            touch-action: none;
-        }
-
-        .fullscreen-landscape-mode {
-            position: fixed !important;
-            top: 0 !important;
-            left: 0 !important;
-            width: 100dvh !important;
-            height: 100dvw !important;
-            transform-origin: 0 0 !important;
-            transform: rotate(90deg) translateY(-100%) !important;
-            z-index: 99999 !important;
-            background-color: var(--color-surface) !important;
-            border-radius: 0 !important;
-            border: none !important;
-            margin: 0 !important;
-            padding: 16px 28px !important;
-            box-shadow: none !important;
-            display: flex !important;
-            flex-direction: column !important;
-            box-sizing: border-box !important;
-            overflow: hidden !important;
-        }
-
-        @supports not (height: 100dvh) {
-            .fullscreen-landscape-mode {
-                width: 100vh !important;
-                height: 100vw !important;
-            }
-        }
-
-        @media (orientation: landscape) {
-            .fullscreen-landscape-mode {
-                transform: none !important;
-                width: 100vw !important;
-                height: 100vh !important;
-            }
-            @supports (height: 100dvh) {
-                .fullscreen-landscape-mode {
-                    width: 100dvw !important;
-                    height: 100dvh !important;
-                }
-            }
-        }
-
-        .fullscreen-landscape-mode .chart-container {
-            flex: 1 !important;
-            display: flex !important;
-            flex-direction: column !important;
-            min-height: 0 !important;
-        }
-
-        .fullscreen-landscape-mode #view-aug-trend[style*="block"],
-        .fullscreen-landscape-mode #view-aug-bar[style*="block"] {
-            display: flex !important;
-            flex-direction: column !important;
-            flex: 1 !important;
-            min-height: 0 !important;
-        }
-
-        .fullscreen-landscape-mode #view-aug-trend[style*="none"],
-        .fullscreen-landscape-mode #view-aug-bar[style*="none"] {
-            display: none !important;
-        }
-
-        .fullscreen-landscape-mode .line-chart-box {
-            flex: 1 !important;
-            height: 100% !important;
-            min-height: 0 !important;
-            width: 100% !important;
-        }
-
+        /* Transactions */
+        .pb-xl { padding-bottom: var(--spacing-xl); }
+        
         .transactions-card {
-            background-color: var(--color-surface);
-            border-radius: var(--radius-xl);
+            background-color: white;
+            border-radius: 24px;
             padding: var(--spacing-sm);
-            box-shadow: var(--shadow-card);
-            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.5);
             display: flex;
             flex-direction: column;
-            gap: 2px;
+            gap: var(--spacing-xs);
         }
 
-        .tx-list-item {
+        .transaction-item {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: var(--spacing-sm) 12px;
-            border-radius: var(--radius-md);
-            transition: background-color var(--transition-fast), transform var(--transition-fast);
+            padding: var(--spacing-sm);
+            border-radius: 12px;
+            transition: background-color 0.2s, transform 0.2s;
             cursor: pointer;
         }
 
-        .tx-list-item:hover {
+        .transaction-item:hover {
             background-color: var(--color-surface-container-low);
         }
 
-        .tx-list-item:active {
-            transform: scale(0.98);
+        .transaction-item:active {
+            transform: scale(0.95);
         }
 
-        .tx-avatar-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: var(--radius-full);
+        .tx-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
             background-color: var(--color-surface-container);
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--color-on-surface-variant);
-            flex-shrink: 0;
         }
 
-        .divider-line {
+        hr.divider {
             border: none;
             border-top: 1px solid var(--color-surface-container);
-            margin: 0 12px;
+            margin: 0 var(--spacing-sm);
         }
 
-        nav.bottom-nav-bar {
-            background-color: rgba(252, 249, 248, 0.88);
+        /* Bottom Nav */
+        nav.bottom-nav {
+            background-color: rgba(252, 249, 248, 0.8);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             position: fixed;
@@ -808,1089 +635,874 @@
             align-items: center;
             padding: 0 16px;
             padding-bottom: env(safe-area-inset-bottom);
-            border-radius: 16px 16px 0 0;
+            border-radius: 12px 12px 0 0;
             z-index: 50;
             box-shadow: 0px -4px 20px rgba(0, 0, 0, 0.04);
-            border-top: 1px solid rgba(0, 0, 0, 0.03);
         }
 
-        .nav-action-btn {
+        .nav-item {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             color: var(--color-on-surface-variant);
-            transition: color var(--transition-fast), transform var(--transition-fast);
-            padding: 6px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.2s, color 0.2s;
         }
-
-        .nav-action-btn.active {
+        
+        .nav-item.active {
             color: var(--color-primary);
             font-weight: 700;
         }
 
-        .nav-action-btn:hover {
+        .nav-item:hover {
             color: var(--color-primary);
+            opacity: 0.8;
         }
 
-        .nav-action-btn:active {
-            transform: scale(0.92);
+        .nav-item:active {
+            transform: scale(0.95);
         }
 
-        .nav-label {
-            font-size: 0.6875rem;
-            margin-top: 4px;
-        }
-
-        .fab-center-btn {
+        .fab {
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            background: var(--gradient-brand);
-            color: #ffffff;
-            border-radius: var(--radius-full);
-            transform: translateY(-20px);
+            background: linear-gradient(135deg, #7B4DFF, #FF6B3D);
+            color: var(--color-on-primary);
+            border-radius: 50%;
+            transform: translateY(-24px);
             width: 56px;
             height: 56px;
-            box-shadow: var(--shadow-fab);
-            transition: transform var(--transition-bounce), box-shadow var(--transition-fast);
+            box-shadow: 0px 20px 40px rgba(123, 77, 255, 0.15);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
         }
 
-        .fab-center-btn:hover {
-            transform: translateY(-22px) scale(1.04);
-            box-shadow: 0px 16px 36px rgba(123, 77, 255, 0.45);
+        .fab:active {
+            transform: translateY(-24px) scale(0.9);
+        }
+        
+        .fab .material-symbols-outlined {
+            font-size: 28px;
         }
 
-        .fab-center-btn:active {
-            transform: translateY(-20px) scale(0.92);
-        }
-
-        /* Desktop Sidebar Navigation */
-        nav.desktop-sidebar-nav {
-            display: none;
-        }
-
-        @media (min-width: 840px) {
-            nav.bottom-nav-bar { display: none; }
-            nav.desktop-sidebar-nav {
+        /* Desktop Nav Fallback */
+        .desktop-nav { display: none; }
+        
+        @media (min-width: 768px) {
+            nav.bottom-nav { display: none; }
+            .desktop-nav {
                 display: flex;
                 flex-direction: column;
-                width: 250px;
+                width: 256px;
                 height: 100vh;
                 position: fixed;
                 left: 0;
                 top: 0;
                 background-color: var(--color-surface);
-                border-right: 1px solid var(--color-surface-container);
-                padding-top: 88px;
+                border-right: 1px solid rgba(255, 255, 255, 0.2);
+                padding-top: 80px;
                 padding-left: var(--spacing-lg);
                 padding-right: var(--spacing-lg);
                 z-index: 40;
-                gap: var(--spacing-sm);
             }
-            .desktop-sidebar-btn {
+            .desktop-nav-item {
                 display: flex;
                 align-items: center;
-                gap: 12px;
-                padding: 10px 16px;
-                border-radius: var(--radius-md);
+                gap: var(--spacing-sm);
+                padding: var(--spacing-sm);
+                border-radius: 8px;
                 color: var(--color-on-surface-variant);
-                font-size: 0.875rem;
-                font-weight: 500;
-                transition: background-color var(--transition-fast), color var(--transition-fast);
+                border: none;
+                background: none;
+                cursor: pointer;
+                transition: background-color 0.2s, color 0.2s;
             }
-            .desktop-sidebar-btn.active {
-                background-color: var(--color-primary-light);
+            .desktop-nav-item.active {
+                background-color: rgba(98, 44, 229, 0.1);
                 color: var(--color-primary);
-                font-weight: 700;
             }
-            .desktop-sidebar-btn:not(.active):hover {
+            .desktop-nav-item:not(.active):hover {
                 background-color: var(--color-surface-container);
                 color: var(--color-on-surface);
             }
-            main.main-dashboard {
-                padding-left: 274px;
+            main {
+                padding-left: 276px; /* 256 + 20 margin */
             }
-            header.app-header .header-inner {
-                padding-left: 274px;
+            header .header-content {
+                padding-left: 276px;
             }
         }
-    </style>
-</head>
-<body>
-
-<header class="app-header">
-    <div class="header-inner">
-        <div class="profile-wrapper">
-            <div class="profile-avatar">
-                <img alt="User profile" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=120&q=80">
-            </div>
-            <div>
-                <div class="profile-greeting">Good Morning,</div>
-                <div class="profile-name">BHANU</div>
-            </div>
-        </div>
-        <button class="icon-circle-btn" id="btn-notifications" aria-label="View notifications">
-            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">notifications</span>
-        </button>
-    </div>
-</header>
-
-<main class="main-dashboard">
-    <section class="card-perspective-viewport">
-        <div class="metallic-balance-card" id="main-balance-card" role="region" aria-label="Available Account Balance Card">
-            <div class="card-shimmer"></div>
-            <div class="twinkle-overlay-container" id="twinkle-container"></div>
-            
-            <div class="flex justify-between items-start" style="position: relative; z-index: 2; transform: translateZ(20px);">
-                <span class="text-xs font-bold" style="color: #1c1b1b; letter-spacing: 0.12em; text-transform: uppercase;">Smart Finance</span>
-                <div class="flex items-center gap-xs" style="background: rgba(0, 0, 0, 0.08); backdrop-filter: blur(8px); padding: 2px 8px; border-radius: var(--radius-full); border: 1px solid rgba(0, 0, 0, 0.08);">
-                    <span class="material-symbols-outlined" style="font-size: 14px; color: #1c1b1b;">trending_up</span>
-                    <span class="text-xs font-semibold" style="color: #1c1b1b; font-size: 10px;">+2.4%</span>
-                </div>
-            </div>
-
-            <div style="position: relative; z-index: 2; margin-top: 12px; transform: translateZ(12px);">
-                <div class="sim-chip">
-                    <div class="chip-grid-h"></div>
-                    <div class="chip-grid-v"></div>
-                </div>
-            </div>
-
-            <div class="flex flex-col" style="position: relative; z-index: 2; margin-top: auto; transform: translateZ(28px);">
-                <span style="color: rgba(28, 27, 27, 0.72); letter-spacing: 0.06em; text-transform: uppercase; font-size: 9px; margin-bottom: 2px; margin-top: 8px;">Available Balance</span>
-                <span class="font-medium" style="color: #1c1b1b; font-size: 24px; letter-spacing: 2px; text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.4);">
-                    *** *** *** <span class="obscured-balance-value" id="obscured-balance-target" title="Tap or hold to reveal amount">12,300</span>
-                </span>
-            </div>
-
-            <div class="flex justify-between items-end" style="position: relative; z-index: 2; margin-top: 16px; transform: translateZ(20px);">
-                <div class="flex flex-col">
-                    <span style="color: rgba(28, 27, 27, 0.75); letter-spacing: 0.08em; text-transform: uppercase; font-size: 9px;">Card Holder</span>
-                    <span class="font-semibold" style="color: #1c1b1b; letter-spacing: 0.08em; text-transform: uppercase; font-size: 13px; margin-top: 2px;">CM BHANUTEJA</span>
-                </div>
-                <div class="flex flex-col items-center">
-                    <span style="color: rgba(28, 27, 27, 0.75); font-size: 8px; letter-spacing: 0.06em; text-transform: uppercase;">Expires</span>
-                    <span class="font-semibold" style="color: #1c1b1b; letter-spacing: 0.05em; font-size: 13px; margin-top: 2px;">31/08/26</span>
-                </div>
-                <div class="dual-circle-badge" aria-hidden="true">
-                    <div class="circle-left"></div>
-                    <div class="circle-right"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="chart-card" style="padding: 14px 16px; gap: 10px;">
-        <h2 class="text-base font-bold text-on-surface" style="font-size: 1.125rem;">Quick Statistics</h2>
-        <div class="horizontal-stats-slider">
-            <div class="stat-badge-card">
-                <div class="stat-icon-wrapper" style="background-color: #9d4edd;">
-                    <span class="material-symbols-outlined">payments</span>
-                </div>
-                <span class="text-xs text-on-surface-variant font-medium">Income</span>
-                <span class="font-bold text-on-surface" style="font-size: 17px; line-height: 22px;">₹21,000</span>
-            </div>
-            <div class="stat-badge-card">
-                <div class="stat-icon-wrapper" style="background-color: #c9184a;">
-                    <span class="material-symbols-outlined">receipt_long</span>
-                </div>
-                <span class="text-xs text-on-surface-variant font-medium">Expenses</span>
-                <span class="font-bold text-on-surface" style="font-size: 17px; line-height: 22px;">₹8,700</span>
-            </div>
-            <div class="stat-badge-card">
-                <div class="stat-icon-wrapper" style="background-color: #388a59;">
-                    <span class="material-symbols-outlined">account_balance_wallet</span>
-                </div>
-                <span class="text-xs text-on-surface-variant font-medium">Left Amount</span>
-                <span class="font-bold text-on-surface" style="font-size: 17px; line-height: 22px;">₹12,300</span>
-            </div>
-        </div>
-    </section>
-
-    <section class="chart-card" style="padding: 14px 16px; gap: 10px;">
-        <div class="flex justify-between items-center">
-            <h2 class="text-base font-bold text-on-surface" style="font-size: 1.125rem;">Budget - Planning</h2>
-            <button aria-label="Open full budget plan" style="display: flex; align-items: center;">
-                <span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
-            </button>
-        </div>
-        <div class="horizontal-stats-slider">
-            <div class="stat-badge-card">
-                <div class="stat-icon-wrapper" style="background-color: #fd6a3c;">
-                    <span class="material-symbols-outlined">pie_chart</span>
-                </div>
-                <span class="text-xs text-on-surface-variant">Budget</span>
-                <span class="font-bold text-on-surface" style="font-size: 17px; line-height: 22px;">₹13,350</span>
-            </div>
-            <div class="stat-badge-card">
-                <div class="stat-icon-wrapper" style="background-color: #1a73e8;">
-                    <span class="material-symbols-outlined">account_balance_wallet</span>
-                </div>
-                <span class="text-xs text-on-surface-variant">Spent</span>
-                <span class="font-bold text-on-surface" style="font-size: 17px; line-height: 22px;">₹8,700</span>
-            </div>
-            <div class="stat-badge-card">
-                <div class="stat-icon-wrapper" style="background-color: var(--color-primary);">
-                    <span class="material-symbols-outlined">savings</span>
-                </div>
-                <span class="text-xs text-on-surface-variant">Left</span>
-                <span class="font-bold text-on-surface" style="font-size: 17px; line-height: 22px;">₹4,650</span>
-            </div>
-        </div>
-    </section>
-
-    <section class="chart-card">
-        <div class="flex justify-between items-center">
-            <span class="badge-pill">Aug 2026</span>
-            <button class="icon-circle-btn" style="width: 32px; height: 32px; box-shadow: none;" title="Set Spending Threshold" aria-label="Set Spending Threshold">
-                <span class="material-symbols-outlined" style="font-size: 18px;">tune</span>
-            </button>
-        </div>
         
-        <div class="flex flex-col gap-sm">
-            <div class="calendar-days-header">
-                <span class="text-xs text-on-surface-variant font-bold">S</span>
-                <span class="text-xs text-on-surface-variant font-bold">M</span>
-                <span class="text-xs text-on-surface-variant font-bold">T</span>
-                <span class="text-xs text-on-surface-variant font-bold">W</span>
-                <span class="text-xs text-on-surface-variant font-bold">T</span>
-                <span class="text-xs text-on-surface-variant font-bold">F</span>
-                <span class="text-xs text-on-surface-variant font-bold">S</span>
-            </div>
-            <div class="calendar-grid">
-                <!-- Empty day offsets for Aug 1 2026 (Saturday) -->
-                <div class="calendar-cell cell-empty"></div>
-                <div class="calendar-cell cell-empty"></div>
-                <div class="calendar-cell cell-empty"></div>
-                <div class="calendar-cell cell-empty"></div>
-                <div class="calendar-cell cell-empty"></div>
-                <div class="calendar-cell cell-empty"></div>
-                
-                <!-- 31 Days of August -->
-                <div class="calendar-cell"><span class="cell-date-num">1</span><span class="cell-spend-amount text-primary">₹150</span></div>
-                <div class="calendar-cell"><span class="cell-date-num">2</span><span class="cell-spend-amount text-primary">₹450</span></div>
-                <div class="calendar-cell"><span class="cell-date-num">3</span><span class="cell-spend-amount text-primary">₹120</span></div>
-                <div class="calendar-cell cell-peak"><span class="cell-date-num">4</span><span class="cell-spend-amount text-secondary">₹1,200</span></div>
-                <div class="calendar-cell"><span class="cell-date-num">5</span><span class="cell-spend-amount text-primary">₹80</span></div>
-                <div class="calendar-cell"><span class="cell-date-num">6</span><span class="cell-spend-amount text-primary">₹200</span></div>
-                <div class="calendar-cell cell-peak"><span class="cell-date-num">7</span><span class="cell-spend-amount text-secondary">₹550</span></div>
-                <div class="calendar-cell"><span class="cell-date-num">8</span><span class="cell-spend-amount text-primary">₹100</span></div>
-                <div class="calendar-cell"><span class="cell-date-num">9</span><span class="cell-spend-amount text-primary">₹300</span></div>
-                <div class="calendar-cell cell-peak"><span class="cell-date-num">10</span><span class="cell-spend-amount text-secondary">₹2,100</span></div>
-                <div class="calendar-cell cell-zero"><span class="cell-date-num">11</span><span class="cell-spend-amount text-primary">₹0</span></div>
-                <div class="calendar-cell"><span class="cell-date-num">12</span><span class="cell-spend-amount text-primary">₹150</span></div>
-                <div class="calendar-cell"><span class="cell-date-num">13</span><span class="cell-spend-amount text-primary">₹400</span></div>
-                <div class="calendar-cell"><span class="cell-date-num">14</span><span class="cell-spend-amount text-primary">₹220</span></div>
-                <div class="calendar-cell cell-peak"><span class="cell-date-num">15</span><span class="cell-spend-amount text-secondary">₹850</span></div>
-                <div class="calendar-cell"><span class="cell-date-num">16</span><span class="cell-spend-amount text-primary">₹110</span></div>
-                <div class="calendar-cell"><span class="cell-date-num">17</span><span class="cell-spend-amount text-primary">₹90</span></div>
-                <div class="calendar-cell"><span class="cell-date-num">18</span><span class="cell-spend-amount text-primary">₹310</span></div>
-                <div class="calendar-cell"><span class="cell-date-num">19</span><span class="cell-spend-amount text-primary">₹140</span></div>
-                <div class="calendar-cell cell-peak"><span class="cell-date-num">20</span><span class="cell-spend-amount text-secondary">₹3,400</span></div>
-                <div class="calendar-cell cell-zero"><span class="cell-date-num">21</span><span class="cell-spend-amount text-primary">₹0</span></div>
-                <div class="calendar-cell"><span class="cell-date-num">22</span><span class="cell-spend-amount text-primary">₹180</span></div>
-                <div class="calendar-cell"><span class="cell-date-num">23</span><span class="cell-spend-amount text-primary">₹250</span></div>
-                <div class="calendar-cell"><span class="cell-date-num">24</span><span class="cell-spend-amount text-primary">₹100</span></div>
-                <div class="calendar-cell"><span class="cell-date-num">25</span><span class="cell-spend-amount text-primary">₹150</span></div>
-                <div class="calendar-cell cell-zero"><span class="cell-date-num">26</span><span class="cell-spend-amount text-primary">₹0</span></div>
-                <div class="calendar-cell"><span class="cell-date-num">27</span><span class="cell-spend-amount text-primary">₹450</span></div>
-                <div class="calendar-cell"><span class="cell-date-num">28</span><span class="cell-spend-amount text-primary">₹120</span></div>
-                <div class="calendar-cell"><span class="cell-date-num">29</span><span class="cell-spend-amount text-primary">₹130</span></div>
-                <div class="calendar-cell"><span class="cell-date-num">30</span><span class="cell-spend-amount text-primary">₹160</span></div>
-                <div class="calendar-cell cell-zero"><span class="cell-date-num">31</span><span class="cell-spend-amount text-primary">₹0</span></div>
-            </div>
-            <div class="flex justify-between items-center" style="margin-top: 8px; padding-top: 10px; border-top: 1px solid var(--color-outline-variant);">
-                <span class="text-sm font-medium text-on-surface-variant">Total Monthly Spend</span>
-                <span class="font-bold text-primary" style="font-size: 1.125rem;">₹12,000</span>
-            </div>
-        </div>
-    </section>
+        button { font-family: inherit; }
+    </style>
+<!-- TopAppBar -->
+<header>
+<div class="header-content">
+<div class="flex items-center gap-sm">
+<div class="profile-img-container">
+<img alt="Profile" class="" data-alt="A close-up profile photo of a professional young adult in soft studio lighting. High key, modern aesthetic with a clean white background. Sophisticated and energetic vibe." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTkMFu0bM26Zjxj_fC-ApgBFAOFfHoTz6jAzwMxgaMFwrUvAyT06rqLYb41RRRLXBEYFKZfwpv3TTOF8M3aCjgDDxv5aArr1gRQlFaCW_NWl9EYMwH13oyh6NfkF15zD3668F1TsmtfMKpwYUR04pSUlDCVFGMmhIap0gHtxQnAn3S2EoYOHcIktcXRO0a9486R368OadtQESXSarE_gM-Cks2jrJxKtzSX7oW2rVW9DVN4Hw-TbEG">
+</div>
+<div>
+<h1 class="text-label-sm text-on-surface-variant">Good Morning,</h1>
+<h2 class="font-bold text-primary text-label-sm" style="font-size: 12px; line-height: 16px;">BHANU</h2>
+</div>
+</div>
+<button class="icon-btn" id="btn-logout" aria-label="Log out" title="Log out" onclick="openLogoutModal()" style="background: transparent; box-shadow: none; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 0px; color: rgb(239, 68, 68); width: auto; height: auto; padding: 4px;">
+<span class="material-symbols-outlined" style="font-variation-settings: &quot;FILL&quot; 0;">logout</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main>
+<!-- Balance Card -->
+<section class="balance-card-perspective-container" style="perspective: 1000px;">
+<div class="balance-card" id="main-balance-card" style="background: linear-gradient(135deg, rgb(36, 37, 42) 0%, rgb(13, 14, 18) 35%, rgb(44, 45, 53) 60%, rgb(11, 12, 14) 100%); box-shadow: rgba(0, 0, 0, 0.6) 0px 25px 50px -12px, rgba(255, 255, 255, 0.15) 0px 0px 0px 1px, rgba(255, 255, 255, 0.25) 0px 1px 1px inset; border: 1px solid rgba(255, 255, 255, 0.15); position: relative; overflow: hidden; padding: 24px; border-radius: 24px; aspect-ratio: 1.586 / 1; display: flex; flex-direction: column; justify-content: space-between; font-family: &quot;JetBrains Mono&quot;, &quot;Roboto Mono&quot;, monospace; cursor: pointer; transform: rotateX(5deg) rotateY(-5deg) scale(1); transition: transform 0.15s ease-out; transform-style: preserve-3d;"><div class="" data-stitch-orig-opacity="0.9" style="position: absolute; inset: 0px; background: linear-gradient(125deg, transparent 0%, rgba(255, 255, 255, 0.15) 25%, rgba(255, 255, 255, 0.35) 30%, rgba(255, 255, 255, 0.12) 35%, transparent 100%); pointer-events: none; mix-blend-mode: overlay; transform: translateZ(1px);"></div><div class="twinkle-container" id="twinkle-container"><div class="twinkle-particle" style="top: 6.96237%; left: 21.0084%; transform: scale(1.0672);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 20.0998%; left: 36.5203%; transform: scale(1.00923);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 51.3311%; left: 35.3838%; transform: scale(1.04989);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 6.08674%; left: 59.276%; transform: scale(1.23212);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 72.1983%; left: 56.7743%; transform: scale(1.10296);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 57.4269%; left: 27.5548%; transform: scale(1.14751);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 40.6554%; left: 11.8249%; transform: scale(1.0471);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 54.525%; left: 3.34179%; transform: scale(0.838581);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 39.4072%; left: 88.7941%; transform: scale(0.834732);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 11.9163%; left: 8.66269%; transform: scale(0.872472);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 28.9336%; left: 8.88238%; transform: scale(1.18429);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 87.9888%; left: 40.3417%; transform: scale(1.21117);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 79.2396%; left: 83.8642%; transform: scale(0.912869);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 73.5163%; left: 2.62151%; transform: scale(0.913678);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 57.7473%; left: 45.4952%; transform: scale(1.07942);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 75.2382%; left: 31.6711%; transform: scale(1.00818);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 74.3347%; left: 55.6383%; transform: scale(1.04101);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 46.2728%; left: 7.09556%; transform: scale(0.96528);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 61.4534%; left: 84.9229%; transform: scale(1.00068);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 77.8984%; left: 63.7741%; transform: scale(1.22696);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 57.5501%; left: 57.8603%; transform: scale(0.883095);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 77.0326%; left: 60.432%; transform: scale(0.791099);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 8.77059%; left: 68.8023%; transform: scale(0.865689);"><div class="twinkle-particle-core"></div></div><div class="twinkle-particle" style="top: 56.5409%; left: 70.4933%; transform: scale(0.820475);"><div class="twinkle-particle-core"></div></div></div><div class="flex justify-between items-start" style="position: relative; z-index: 2; transform: translateZ(20px);"><div class="flex flex-col"><span class="text-label-sm font-bold" style="color: rgb(255, 255, 255); letter-spacing: 0.1em; text-transform: uppercase; font-size: 10px; font-family: inherit;">Smart Finance</span></div><div class="flex items-center gap-xs" style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(8px); padding: 2px 8px; border-radius: 9999px; border: 1px solid rgba(255, 255, 255, 0.2); display: flex; align-items: center; gap: 4px;"><span class="material-symbols-outlined" style="font-size: 12px; color: rgb(74, 222, 128);">trending_up</span><span class="text-label-sm font-semibold" style="color: rgb(255, 255, 255); font-size: 10px;">+2.4%</span></div></div><div style="position: relative; z-index: 2; margin-top: 12px; transform: translateZ(10px);"><div style="width: 42px; height: 32px; background: linear-gradient(135deg, #d4af37 0%, #fff2a8 50%, #aa820a 100%); border-radius: 6px; position: relative; box-shadow: inset 0 0 5px rgba(0,0,0,0.4), 0 2px 4px rgba(0,0,0,0.3);"><div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; border: 1px solid rgba(0,0,0,0.25); border-radius: 6px;"></div><div style="position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: rgba(0,0,0,0.35);"></div><div style="position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: rgba(0,0,0,0.35);"></div></div></div><div class="flex flex-col" style="position: relative; z-index: 2; margin-top: auto; transform: translateZ(30px);"><span class="text-label-sm" style="color: rgba(255, 255, 255, 0.7); letter-spacing: 0.05em; text-transform: uppercase; font-size: 9px; margin-bottom: 2px; margin-top: 8px; font-family: inherit;">AVAILABLE BALANCE</span><span class="text-headline-lg font-medium" style="color: rgb(255, 255, 255); font-size: 24px; letter-spacing: 2px; font-family: &quot;Courier New&quot;, Courier, monospace; text-shadow: rgba(0, 0, 0, 0.5) 0px 2px 4px;">*** *** *** <span class="" style="filter: none; cursor: default;">12,300</span></span></div><div class="flex justify-between items-end" style="position: relative; z-index: 2; margin-top: 16px; transform: translateZ(20px);"><div class="flex flex-col"><span class="text-label-sm" style="color: rgba(255, 255, 255, 0.65); letter-spacing: 0.1em; text-transform: uppercase; font-size: 10px; font-family: inherit;">Card Holder</span><span class="text-label-md font-semibold" style="color: rgb(255, 255, 255); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px; font-family: inherit;">CM BHANUTEJA</span></div><div class="flex flex-col items-center"><span class="text-label-sm" style="color: rgba(255, 255, 255, 0.65); font-size: 8px; letter-spacing: 0.05em; text-transform: uppercase;">Expires</span><span class="text-label-md font-semibold" style="color: rgb(255, 255, 255); letter-spacing: 0.05em; margin-top: 2px; font-family: inherit;">31/08/26</span></div><div class="flex items-center" style="position: relative; width: 40px; height: 24px;"><div style="width: 24px; height: 24px; background: rgb(235, 0, 27); border-radius: 50%; position: absolute; left: 0px; opacity: 0.9;"></div><div style="width: 24px; height: 24px; background: rgb(247, 158, 27); border-radius: 50%; position: absolute; right: 0px; opacity: 0.85;"></div></div></div></div>
+</section>
+<!-- Stats Scroll -->
+<section class="flex chart-section" style="padding: 12px 16px; gap: 10px;"><h3 class="text-label-md text-on-surface font-semibold" style="font-size: 14px; line-height: 20px; letter-spacing: 0.01em;">Quick Statistics</h3><div class="stats-scroll justify-between" style="margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px; gap: 8px;"><div class="stat-card" style="background-color: rgb(255, 255, 255); border: 1px solid rgba(0, 0, 0, 0.05); min-width: 100px; padding: 8px 8px 6px;"><div class="stat-icon" style="background-color: rgb(157, 78, 221); color: white; display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; margin-bottom: 2px;"><i class="fa-solid fa-sack-dollar" style="font-size: 14px; color: white;"></i></div><span class="text-label-sm text-on-surface-variant font-medium" style="font-size: 11px;">Income</span><span class="text-headline-md text-on-surface font-bold" style="font-size: 14px; line-height: 20px; font-weight: 700; letter-spacing: -0.01em;">₹21,000</span></div><div class="stat-card" style="background-color: rgb(255, 255, 255); border: 1px solid rgba(0, 0, 0, 0.05); min-width: 100px; padding: 8px 8px 6px;"><div class="stat-icon" style="background-color: rgb(201, 24, 74); color: white; display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; margin-bottom: 2px;"><i class="fa-solid fa-coins" style="font-size: 14px; color: white;"></i></div><span class="text-label-sm text-on-surface-variant font-medium" style="font-size: 11px;">Expenses</span><span class="text-headline-md text-on-surface font-bold" style="font-size: 16px; line-height: 22px; font-weight: 700; letter-spacing: -0.01em;">₹8,700</span></div><div class="stat-card" style="background-color: rgb(255, 255, 255); border: 1px solid rgba(0, 0, 0, 0.05); min-width: 100px; padding: 8px 8px 6px;"><div class="stat-icon" style="background-color: rgb(56, 134, 89); color: white; display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; margin-bottom: 2px;"><i class="fa-solid fa-wallet" style="font-size: 14px; color: white;"></i></div><span class="text-label-sm text-on-surface-variant font-medium" style="font-size: 11px;">Left Amount</span><span class="text-headline-md text-on-surface font-bold" style="font-size: 16px; line-height: 22px; font-weight: 700; letter-spacing: -0.01em;">₹12,300</span></div></div></section><section class="chart-section" style="padding: 12px 16px; gap: 10px;">
+<div class="flex justify-between items-center">
+<h3 class="text-label-md text-on-surface font-semibold" style="font-size: 14px; line-height: 20px; letter-spacing: 0.01em;">Budget - Planning</h3>
+<span class="material-symbols-outlined text-on-surface-variant" style="cursor: pointer;">chevron_right</span></div>
+<div class="stats-scroll justify-between" style="margin-left: 0; margin-right: 0; padding-left: 0; padding-right: 0; gap: 8px;"><div class="stat-card" style="background-color: rgb(255, 255, 255); border: 1px solid rgba(0, 0, 0, 0.05); min-width: 100px; padding: 8px 8px 6px;"><div class="stat-icon" style="background-color: rgb(253, 106, 60); color: rgb(255, 255, 255); width: 28px; height: 28px; margin-bottom: 2px;"><span class="material-symbols-outlined icon-sm" style="color: white; font-size: 16px;">pie_chart</span></div><span class="text-label-sm text-on-surface-variant" style="font-size: 11px;">Budget</span><span class="text-headline-md text-on-surface font-bold" style="font-size: 15px; line-height: 18px;">₹13,350</span></div><div class="stat-card" style="background-color: rgb(255, 255, 255); border: 1px solid rgba(0, 0, 0, 0.05); min-width: 100px; padding: 8px 8px 6px;"><div class="stat-icon bg-primary-light" style="background-color: rgb(26, 115, 232); color: rgb(255, 255, 255); width: 28px; height: 28px; margin-bottom: 2px;"><span class="material-symbols-outlined icon-sm" style="font-size: 16px;">account_balance_wallet</span></div><span class="text-label-sm text-on-surface-variant" style="font-size: 11px;">Spent</span><span class="text-headline-md text-on-surface font-bold" style="font-size: 15px; line-height: 18px;">₹8,700</span></div><div class="stat-card" style="background-color: rgb(255, 255, 255); border: 1px solid rgba(0, 0, 0, 0.05); min-width: 100px; padding: 8px 8px 6px;"><div class="stat-icon" style="background-color: var(--color-primary); color: white; width: 28px; height: 28px; margin-bottom: 2px;"><span class="material-symbols-outlined icon-sm" style="font-size: 16px;">savings</span></div><span class="text-label-sm text-on-surface-variant" style="font-size: 11px;">Left</span><span class="text-headline-md text-on-surface font-bold" style="font-size: 15px; line-height: 18px;">₹4,650</span></div></div>
+</section>
+<!-- Quick Statistics Bento -->
 
-    <section class="chart-card" id="daily-spending-section">
-        <div class="flex justify-between items-center relative" style="z-index: 10;">
-            <div class="flex items-center gap-xs">
-                <h2 class="text-base font-bold text-on-surface">Daily Spending Analysis.</h2>
-                <button class="icon-circle-btn" id="btn-toggle-fullscreen" style="width: 32px; height: 32px; background: transparent; box-shadow: none;" title="Toggle Full Screen Landscape Mode" aria-label="Toggle Full Screen Landscape Mode">
-                    <span class="material-symbols-outlined" id="fullscreen-icon-indicator" style="font-size: 20px;">fullscreen</span>
-                </button>
-            </div>
-            <div class="segmented-control-bar" role="tablist" aria-label="Daily Chart View Selector">
-                <button class="segmented-tab-btn active" id="tab-btn-trend" role="tab" aria-selected="true">Trend</button>
-                <button class="segmented-tab-btn" id="tab-btn-bar" role="tab" aria-selected="false">Bar</button>
-            </div>
-        </div>
+<!-- Financial Overview -->
+<section class="chart-section" style="padding: 16px; gap: 14px; background: rgb(255, 255, 255); border-radius: 24px; box-shadow: rgba(0, 0, 0, 0.04) 0px 10px 30px; border: 1px solid rgba(255, 255, 255, 0.7);">
+  <!-- Header with Month Switcher & Micro Legend -->
+  <div class="flex flex-col gap-xs">
+    <div class="flex justify-between items-center" style="position: relative; display: flex; justify-content: center; align-items: center; min-height: 36px;">
+      <div class="flex items-center gap-xs" style="background: var(--color-surface-container-low); padding: 3px 6px; border-radius: 9999px;">
+        <button class="icon-btn" style="width: 26px; height: 26px; background: transparent; box-shadow: none; color: var(--color-on-surface-variant);" title="Previous Month" aria-label="Previous Month">
+          <span class="material-symbols-outlined" style="font-size: 18px;">chevron_left</span>
+        </button>
+        <span class="text-label-md font-bold text-primary" style="font-size: 10px; color: rgb(0, 0, 0); font-weight: 600; padding: 2px 8px; letter-spacing: 0.02em;">August 2026</span>
+        <button class="icon-btn" style="width: 26px; height: 26px; background: transparent; box-shadow: none; color: var(--color-on-surface-variant);" title="Next Month" aria-label="Next Month">
+          <span class="material-symbols-outlined" style="font-size: 18px;">chevron_right</span>
+        </button>
+      </div>
+      <div class="flex items-center gap-xs" style="position: absolute; right: 0px;">
+        <button class="flex items-center justify-center rounded-lg text-on-surface-variant hover:text-primary transition-all active:scale-95" title="Threshold Settings" aria-label="Threshold Settings" style="background: var(--color-surface-container-low); width: 32px; height: 32px; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 50%; cursor: pointer;">
+          <span class="material-symbols-outlined" style="font-size: 18px;">tune</span>
+        </button>
+      </div>
+    </div>
+    <!-- Micro Legend -->
+    <div class="flex items-center justify-between mt-2 pt-2" style="border-top: 1px dashed rgba(0, 0, 0, 0.06); font-size: 11px;">
+      
+      
+    </div>
+  </div>
 
-        <div class="chart-container" style="z-index: 1;">
-            <!-- Trend View Panel -->
-            <div class="chart-view-panel" id="view-aug-trend" style="display: block;">
-                <div class="line-chart-box">
-                    <svg width="100%" height="100%" viewBox="0 0 310 145" preserveAspectRatio="none">
-                        <defs>
-                            <linearGradient id="augTrendGrad" x1="0" y1="0" x2="1" y2="0">
-                                <stop offset="0%" stop-color="#7B4DFF"></stop>
-                                <stop offset="100%" stop-color="#FF6B3D"></stop>
-                            </linearGradient>
-                            <linearGradient id="augFillGrad" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="0%" stop-color="#7B4DFF" stop-opacity="0.2"></stop>
-                                <stop offset="100%" stop-color="#7B4DFF" stop-opacity="0"></stop>
-                            </linearGradient>
-                        </defs>
-                        <!-- Guidelines -->
-                        <line x1="0" y1="100" x2="310" y2="100" stroke="#cac3d8" stroke-dasharray="4" stroke-width="0.5"></line>
-                        <line x1="0" y1="60" x2="310" y2="60" stroke="#cac3d8" stroke-dasharray="4" stroke-width="0.5"></line>
-                        <line x1="0" y1="20" x2="310" y2="20" stroke="#cac3d8" stroke-dasharray="4" stroke-width="0.5"></line>
-                        <!-- Filled Polygon -->
-                        <path d="M 0 110 L 10 105 L 20 100 L 30 102 L 40 70 L 50 105 L 60 100 L 70 85 L 80 102 L 90 95 L 100 40 L 110 110 L 120 105 L 130 95 L 140 100 L 150 80 L 160 105 L 170 108 L 180 102 L 190 105 L 200 10 L 210 110 L 220 105 L 230 102 L 240 105 L 250 102 L 260 110 L 270 95 L 280 102 L 290 100 L 300 105 L 310 110 L 310 120 L 0 120 Z" fill="url(#augFillGrad)"></path>
-                        <!-- Curve Path -->
-                        <path d="M 0 110 C 5 110, 5 105, 10 105 C 15 105, 15 100, 20 100 C 25 100, 35 102, 40 70 C 45 38, 45 105, 50 105 C 55 105, 65 100, 70 85 C 75 70, 85 102, 90 95 C 95 88, 95 40, 100 40 C 105 40, 105 110, 110 110 C 115 110, 125 105, 130 95 C 135 85, 145 100, 150 80 C 155 60, 155 105, 160 105 C 165 105, 195 105, 200 10 C 205 10, 205 110, 210 110 C 215 110, 305 105, 310 110" fill="none" stroke="url(#augTrendGrad)" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" vector-effect="non-scaling-stroke"></path>
+  <!-- Calendar Grid -->
+  <div class="flex flex-col gap-sm">
+    <!-- Weekday Row -->
+    <div class="grid" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; text-align: center;">
+      <span class="text-label-sm font-semibold" style="color: rgb(122, 116, 135); font-size: 11px; letter-spacing: 0.05em;">S</span>
+      <span class="text-label-sm font-semibold" style="color: rgb(122, 116, 135); font-size: 11px; letter-spacing: 0.05em;">M</span>
+      <span class="text-label-sm font-semibold" style="color: rgb(122, 116, 135); font-size: 11px; letter-spacing: 0.05em;">T</span>
+      <span class="text-label-sm font-semibold" style="color: rgb(122, 116, 135); font-size: 11px; letter-spacing: 0.05em;">W</span>
+      <span class="text-label-sm font-semibold" style="color: rgb(122, 116, 135); font-size: 11px; letter-spacing: 0.05em;">T</span>
+      <span class="text-label-sm font-semibold" style="color: rgb(122, 116, 135); font-size: 11px; letter-spacing: 0.05em;">F</span>
+      <span class="text-label-sm font-semibold" style="color: rgb(122, 116, 135); font-size: 11px; letter-spacing: 0.05em;">S</span>
+    </div>
 
-                        <!-- Dates (1st to 31st rotated -90) -->
-                        <g font-size="6" font-family="var(--font-family-sans)" font-weight="500" fill="var(--color-outline)" text-anchor="end" dominant-baseline="central">
-                            <text transform="rotate(-90 5 126)" x="5" y="126">1st</text>
-                            <text transform="rotate(-90 15 126)" x="15" y="126">2nd</text>
-                            <text transform="rotate(-90 25 126)" x="25" y="126">3rd</text>
-                            <text transform="rotate(-90 35 126)" x="35" y="126">4th</text>
-                            <text transform="rotate(-90 45 126)" x="45" y="126">5th</text>
-                            <text transform="rotate(-90 55 126)" x="55" y="126">6th</text>
-                            <text transform="rotate(-90 65 126)" x="65" y="126">7th</text>
-                            <text transform="rotate(-90 75 126)" x="75" y="126">8th</text>
-                            <text transform="rotate(-90 85 126)" x="85" y="126">9th</text>
-                            <text transform="rotate(-90 95 126)" x="95" y="126">10th</text>
-                            <text transform="rotate(-90 105 126)" x="105" y="126">11th</text>
-                            <text transform="rotate(-90 115 126)" x="115" y="126">12th</text>
-                            <text transform="rotate(-90 125 126)" x="125" y="126">13th</text>
-                            <text transform="rotate(-90 135 126)" x="135" y="126">14th</text>
-                            <text transform="rotate(-90 145 126)" x="145" y="126">15th</text>
-                            <text transform="rotate(-90 155 126)" x="155" y="126">16th</text>
-                            <text transform="rotate(-90 165 126)" x="165" y="126">17th</text>
-                            <text transform="rotate(-90 175 126)" x="175" y="126">18th</text>
-                            <text transform="rotate(-90 185 126)" x="185" y="126">19th</text>
-                            <text transform="rotate(-90 195 126)" x="195" y="126">20th</text>
-                            <text transform="rotate(-90 205 126)" x="205" y="126">21st</text>
-                            <text transform="rotate(-90 215 126)" x="215" y="126">22nd</text>
-                            <text transform="rotate(-90 225 126)" x="225" y="126">23rd</text>
-                            <text transform="rotate(-90 235 126)" x="235" y="126">24th</text>
-                            <text transform="rotate(-90 245 126)" x="245" y="126">25th</text>
-                            <text transform="rotate(-90 255 126)" x="255" y="126">26th</text>
-                            <text transform="rotate(-90 265 126)" x="265" y="126">27th</text>
-                            <text transform="rotate(-90 275 126)" x="275" y="126">28th</text>
-                            <text transform="rotate(-90 285 126)" x="285" y="126">29th</text>
-                            <text transform="rotate(-90 295 126)" x="295" y="126">30th</text>
-                            <text transform="rotate(-90 305 126)" x="305" y="126">31st</text>
-                        </g>
-                    </svg>
-                </div>
-            </div>
+    <!-- Days Grid -->
+    <div class="grid" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px;"><!-- Empty offset cells (Aug 1 2026 is Saturday) -->
+      <div style="aspect-ratio: 1 / 1;" class=""></div>
+      <div style="aspect-ratio: 1 / 1;" class=""></div>
+      <div style="aspect-ratio: 1 / 1;" class=""></div>
+      <div style="aspect-ratio: 1 / 1;" class=""></div>
+      <div style="aspect-ratio: 1 / 1;" class=""></div>
+      <div style="aspect-ratio: 1 / 1;" class=""></div>
 
-            <div class="chart-view-panel" id="view-aug-bar" style="display: none;">
-                <div class="line-chart-box" style="margin-top: var(--spacing-sm);">
-                    <svg width="100%" height="100%" viewBox="0 0 310 190" preserveAspectRatio="none" style="overflow: visible;">
-                        <defs>
-                            <linearGradient id="augBarGrad" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="0%" stop-color="#7B4DFF"></stop>
-                                <stop offset="100%" stop-color="#FF6B3D"></stop>
-                            </linearGradient>
-                        </defs>
-                        <g font-size="7" font-family="var(--font-family-sans)" font-weight="600" fill="var(--color-on-surface-variant)" text-anchor="start" dominant-baseline="central">
-                            <rect fill="url(#augBarGrad)" height="5" rx="2" width="6" x="2" y="155"></rect>
-                            <text transform="rotate(-90 5 152)" x="5" y="152">150</text>
-                            <text transform="rotate(-90 5 166)" x="5" y="166" font-size="6" font-weight="500" fill="var(--color-outline)" text-anchor="end">1st</text>
+      <!-- Day 1 -->
+      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background-color: rgb(251, 250, 255); border: 1px solid rgba(123, 77, 255, 0.12); cursor: pointer;">
+        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">1</span>
+        <span class="text-label-sm font-medium" style="font-size: 8.5px; color: rgb(123, 77, 255); margin-top: 2px;">₹150</span>
+      </div>
 
-                            <rect fill="url(#augBarGrad)" height="16" rx="2" width="6" x="12" y="144"></rect>
-                            <text transform="rotate(-90 15 141)" x="15" y="141">450</text>
-                            <text transform="rotate(-90 15 166)" x="15" y="166" font-size="6" font-weight="500" fill="var(--color-outline)" text-anchor="end">2nd</text>
+      <!-- Week 2 -->
+      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background-color: rgb(251, 250, 255); border: 1px solid rgba(123, 77, 255, 0.12); cursor: pointer;">
+        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">2</span>
+        <span class="text-label-sm font-medium" style="font-size: 8.5px; color: rgb(123, 77, 255); margin-top: 2px;">₹450</span>
+      </div>
+      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background-color: rgb(251, 250, 255); border: 1px solid rgba(123, 77, 255, 0.12); cursor: pointer;">
+        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">3</span>
+        <span class="text-label-sm font-medium" style="font-size: 8.5px; color: rgb(123, 77, 255); margin-top: 2px;">₹120</span>
+      </div>
+      <!-- High Spend: Day 4 -->
+      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background: linear-gradient(135deg, rgba(254, 226, 226, 0.8), rgba(254, 202, 202, 0.6)); border: 1px solid rgba(239, 68, 68, 0.3); box-shadow: rgba(239, 68, 68, 0.08) 0px 1px 3px; cursor: pointer;">
+        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">4</span>
+        <span class="text-label-sm font-bold" style="font-size: 8px; color: rgb(185, 28, 28); margin-top: 2px;">₹1,200</span>
+      </div>
+      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background-color: rgb(251, 250, 255); border: 1px solid rgba(123, 77, 255, 0.12); cursor: pointer;">
+        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">5</span>
+        <span class="text-label-sm font-medium" style="font-size: 8.5px; color: rgb(123, 77, 255); margin-top: 2px;">₹80</span>
+      </div>
+      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background-color: rgb(251, 250, 255); border: 1px solid rgba(123, 77, 255, 0.12); cursor: pointer;">
+        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">6</span>
+        <span class="text-label-sm font-medium" style="font-size: 8.5px; color: rgb(123, 77, 255); margin-top: 2px;">₹200</span>
+      </div>
+      <!-- High Spend: Day 7 -->
+      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background: linear-gradient(135deg, rgba(254, 226, 226, 0.8), rgba(254, 202, 202, 0.6)); border: 1px solid rgba(239, 68, 68, 0.3); cursor: pointer;">
+        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">7</span>
+        <span class="text-label-sm font-bold" style="font-size: 8.5px; color: rgb(185, 28, 28); margin-top: 2px;">₹550</span>
+      </div>
+      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background-color: rgb(251, 250, 255); border: 1px solid rgba(123, 77, 255, 0.12); cursor: pointer;">
+        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">8</span>
+        <span class="text-label-sm font-medium" style="font-size: 8.5px; color: rgb(123, 77, 255); margin-top: 2px;">₹100</span>
+      </div>
 
-                            <rect fill="url(#augBarGrad)" height="4" rx="2" width="6" x="22" y="156"></rect>
-                            <text transform="rotate(-90 25 153)" x="25" y="153">120</text>
-                            <text transform="rotate(-90 25 166)" x="25" y="166" font-size="6" font-weight="500" fill="var(--color-outline)" text-anchor="end">3rd</text>
+      <!-- Week 3 -->
+      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background-color: rgb(251, 250, 255); border: 1px solid rgba(123, 77, 255, 0.12); cursor: pointer;">
+        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">9</span>
+        <span class="text-label-sm font-medium" style="font-size: 8.5px; color: rgb(123, 77, 255); margin-top: 2px;">₹300</span>
+      </div>
+      <!-- High Spend: Day 10 -->
+      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background: linear-gradient(135deg, rgba(254, 226, 226, 0.8), rgba(254, 202, 202, 0.6)); border: 1px solid rgba(239, 68, 68, 0.3); box-shadow: rgba(239, 68, 68, 0.08) 0px 1px 3px; cursor: pointer;">
+        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">10</span>
+        <span class="text-label-sm font-bold" style="font-size: 8px; color: rgb(185, 28, 28); margin-top: 2px;">₹2,100</span>
+      </div>
+      <!-- Zero Spend: Day 11 -->
+      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background: rgba(16, 185, 129, 0.09); border: 1px solid rgba(16, 185, 129, 0.25); cursor: pointer;">
+        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">11</span>
+        <span class="text-label-sm font-semibold" style="font-size: 8.5px; color: rgb(5, 150, 105); margin-top: 2px;">₹0</span>
+      </div>
+      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background-color: rgb(251, 250, 255); border: 1px solid rgba(123, 77, 255, 0.12); cursor: pointer;">
+        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">12</span>
+        <span class="text-label-sm font-medium" style="font-size: 8.5px; color: rgb(123, 77, 255); margin-top: 2px;">₹150</span>
+      </div>
+      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background-color: rgb(251, 250, 255); border: 1px solid rgba(123, 77, 255, 0.12); cursor: pointer;">
+        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">13</span>
+        <span class="text-label-sm font-medium" style="font-size: 8.5px; color: rgb(123, 77, 255); margin-top: 2px;">₹400</span>
+      </div>
+      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background-color: rgb(251, 250, 255); border: 1px solid rgba(123, 77, 255, 0.12); cursor: pointer;">
+        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">14</span>
+        <span class="text-label-sm font-medium" style="font-size: 8.5px; color: rgb(123, 77, 255); margin-top: 2px;">₹220</span>
+      </div>
+      <!-- High Spend: Day 15 -->
+      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background: linear-gradient(135deg, rgba(254, 226, 226, 0.8), rgba(254, 202, 202, 0.6)); border: 1px solid rgba(239, 68, 68, 0.3); cursor: pointer;">
+        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">15</span>
+        <span class="text-label-sm font-bold" style="font-size: 8.5px; color: rgb(185, 28, 28); margin-top: 2px;">₹850</span>
+      </div>
 
-                            <rect fill="url(#augBarGrad)" height="42" rx="2" width="6" x="32" y="118"></rect>
-                            <text transform="rotate(-90 35 115)" x="35" y="115">1,200</text>
-                            <text transform="rotate(-90 35 166)" x="35" y="166" font-size="6" font-weight="500" fill="var(--color-outline)" text-anchor="end">4th</text>
+      <!-- Week 4 -->
+      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background-color: rgb(251, 250, 255); border: 1px solid rgba(123, 77, 255, 0.12); cursor: pointer;">
+        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">16</span>
+        <span class="text-label-sm font-medium" style="font-size: 8.5px; color: rgb(123, 77, 255); margin-top: 2px;">₹110</span>
+      </div>
+      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background-color: rgb(251, 250, 255); border: 1px solid rgba(123, 77, 255, 0.12); cursor: pointer;">
+        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">17</span>
+        <span class="text-label-sm font-medium" style="font-size: 8.5px; color: rgb(123, 77, 255); margin-top: 2px;">₹90</span>
+      </div>
+      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background-color: rgb(251, 250, 255); border: 1px solid rgba(123, 77, 255, 0.12); cursor: pointer;">
+        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">18</span>
+        <span class="text-label-sm font-medium" style="font-size: 8.5px; color: rgb(123, 77, 255); margin-top: 2px;">₹310</span>
+      </div>
+      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background-color: rgb(251, 250, 255); border: 1px solid rgba(123, 77, 255, 0.12); cursor: pointer;">
+        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">19</span>
+        <span class="text-label-sm font-medium" style="font-size: 8.5px; color: rgb(123, 77, 255); margin-top: 2px;">₹140</span>
+      </div>
+      <!-- High Spend: Day 20 -->
+      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background: linear-gradient(135deg, rgba(254, 226, 226, 0.85), rgba(254, 202, 202, 0.65)); border: 1px solid rgba(239, 68, 68, 0.35); box-shadow: rgba(239, 68, 68, 0.1) 0px 1px 3px; cursor: pointer;">
+        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">20</span>
+        <span class="text-label-sm font-bold" style="font-size: 8px; color: rgb(185, 28, 28); margin-top: 2px;">₹3,400</span>
+      </div>
+      <!-- Zero Spend: Day 21 -->
+      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background: rgba(16, 185, 129, 0.09); border: 1px solid rgba(16, 185, 129, 0.25); cursor: pointer;">
+        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">21</span>
+        <span class="text-label-sm font-semibold" style="font-size: 8.5px; color: rgb(5, 150, 105); margin-top: 2px;">₹0</span>
+      </div>
+      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background-color: rgb(251, 250, 255); border: 1px solid rgba(123, 77, 255, 0.12); cursor: pointer;">
+        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">22</span>
+        <span class="text-label-sm font-medium" style="font-size: 8.5px; color: rgb(123, 77, 255); margin-top: 2px;">₹180</span>
+      </div>
 
-                            <rect fill="url(#augBarGrad)" height="3" rx="2" width="6" x="42" y="157"></rect>
-                            <text transform="rotate(-90 45 154)" x="45" y="154">80</text>
-                            <text transform="rotate(-90 45 166)" x="45" y="166" font-size="6" font-weight="500" fill="var(--color-outline)" text-anchor="end">5th</text>
+      <!-- Week 5 -->
+      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background-color: rgb(251, 250, 255); border: 1px solid rgba(123, 77, 255, 0.12); cursor: pointer;">
+        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">23</span>
+        <span class="text-label-sm font-medium" style="font-size: 8.5px; color: rgb(123, 77, 255); margin-top: 2px;">₹250</span>
+      </div>
+      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background-color: rgb(251, 250, 255); border: 1px solid rgba(123, 77, 255, 0.12); cursor: pointer;">
+        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">24</span>
+        <span class="text-label-sm font-medium" style="font-size: 8.5px; color: rgb(123, 77, 255); margin-top: 2px;">₹100</span>
+      </div>
+      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background-color: rgb(251, 250, 255); border: 1px solid rgba(123, 77, 255, 0.12); cursor: pointer;">
+        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">25</span>
+        <span class="text-label-sm font-medium" style="font-size: 8.5px; color: rgb(123, 77, 255); margin-top: 2px;">₹150</span>
+      </div>
+      <!-- Zero Spend: Day 26 -->
+      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background: rgba(16, 185, 129, 0.09); border: 1px solid rgba(16, 185, 129, 0.25); cursor: pointer;">
+        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">26</span>
+        <span class="text-label-sm font-semibold" style="font-size: 8.5px; color: rgb(5, 150, 105); margin-top: 2px;">₹0</span>
+      </div>
+      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background-color: rgb(251, 250, 255); border: 1px solid rgba(123, 77, 255, 0.12); cursor: pointer;">
+        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">27</span>
+        <span class="text-label-sm font-medium" style="font-size: 8.5px; color: rgb(123, 77, 255); margin-top: 2px;">₹450</span>
+      </div>
+      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background-color: rgb(251, 250, 255); border: 1px solid rgba(123, 77, 255, 0.12); cursor: pointer;">
+        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">28</span>
+        <span class="text-label-sm font-medium" style="font-size: 8.5px; color: rgb(123, 77, 255); margin-top: 2px;">₹120</span>
+      </div>
+      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background-color: rgb(251, 250, 255); border: 1px solid rgba(123, 77, 255, 0.12); cursor: pointer;">
+        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">29</span>
+        <span class="text-label-sm font-medium" style="font-size: 8.5px; color: rgb(123, 77, 255); margin-top: 2px;">₹130</span>
+      </div>
 
-                            <rect fill="url(#augBarGrad)" height="7" rx="2" width="6" x="52" y="153"></rect>
-                            <text transform="rotate(-90 55 150)" x="55" y="150">200</text>
-                            <text transform="rotate(-90 55 166)" x="55" y="166" font-size="6" font-weight="500" fill="var(--color-outline)" text-anchor="end">6th</text>
+      <!-- Week 6 -->
+      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background-color: rgb(251, 250, 255); border: 1px solid rgba(123, 77, 255, 0.12); cursor: pointer;">
+        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">30</span>
+        <span class="text-label-sm font-medium" style="font-size: 8.5px; color: rgb(123, 77, 255); margin-top: 2px;">₹160</span>
+      </div>
+      <!-- Zero Spend: Day 31 -->
+      <div class="flex flex-col items-center justify-center active:scale-95 transition-all" style="aspect-ratio: 1 / 1; border-radius: 10px; background: rgba(16, 185, 129, 0.09); border: 1px solid rgba(16, 185, 129, 0.25); cursor: pointer;">
+        <span class="text-label-sm font-bold" style="font-size: 12px; color: rgb(0, 0, 0); line-height: 1;">31</span>
+        <span class="text-label-sm font-semibold" style="font-size: 8.5px; color: rgb(5, 150, 105); margin-top: 2px;">₹0</span>
+      </div></div>
+  </div>
 
-                            <rect fill="url(#augBarGrad)" height="19" rx="2" width="6" x="62" y="141"></rect>
-                            <text transform="rotate(-90 65 138)" x="65" y="138">550</text>
-                            <text transform="rotate(-90 65 166)" x="65" y="166" font-size="6" font-weight="500" fill="var(--color-outline)" text-anchor="end">7th</text>
+  <!-- Modern Glassmorphic Spend Summary Card -->
+  <div class="flex justify-between items-center" style="background: linear-gradient(135deg, rgba(123, 77, 255, 0.06), rgba(253, 106, 60, 0.04)); border: 1px solid rgba(123, 77, 255, 0.1); border-radius: 14px; padding: 10px 14px; margin-top: 2px;">
+    <div class="flex items-center gap-xs">
+      <div style="width: 28px; height: 28px; border-radius: 50%; background: rgba(123, 77, 255, 0.12); display: flex; align-items: center; justify-content: center;">
+        <span class="material-symbols-outlined text-primary" style="font-size: 16px;">calendar_month</span>
+      </div>
+      <div class="flex flex-col">
+        <span class="text-on-surface-variant font-medium" style="font-size: 11px; line-height: 1;">Total Monthly Spend</span>
+        
+      </div>
+    </div>
+    <div class="flex items-center gap-xs">
+      <span class="text-headline-md font-bold text-primary" style="font-size: 11px; line-height: 14px; letter-spacing: -0.01em;">₹12,000</span>
+      
+    </div>
+  </div>
+</section><section class="chart-section">
+<div class="flex justify-between items-center">
+<h3 class="text-on-surface text-label-md font-semibold">Daily Spending Analysis.</h3>
+<div class="segmented-control"><button class="segmented-btn active" id="btn-trend" onclick="switchTrendView('trend')">Trend</button><button class="segmented-btn" id="btn-bar-trend" onclick="switchTrendView('bar')">Bar</button></div>
+</div>
+<div class="chart-container">
 
-                            <rect fill="url(#augBarGrad)" height="4" rx="2" width="6" x="72" y="156"></rect>
-                            <text transform="rotate(-90 75 153)" x="75" y="153">100</text>
-                            <text transform="rotate(-90 75 166)" x="75" y="166" font-size="6" font-weight="500" fill="var(--color-outline)" text-anchor="end">8th</text>
-
-                            <rect fill="url(#augBarGrad)" height="11" rx="2" width="6" x="82" y="149"></rect>
-                            <text transform="rotate(-90 85 146)" x="85" y="146">300</text>
-                            <text transform="rotate(-90 85 166)" x="85" y="166" font-size="6" font-weight="500" fill="var(--color-outline)" text-anchor="end">9th</text>
-
-                            <rect fill="url(#augBarGrad)" height="74" rx="2" width="6" x="92" y="86"></rect>
-                            <text transform="rotate(-90 95 83)" x="95" y="83">2,100</text>
-                            <text transform="rotate(-90 95 166)" x="95" y="166" font-size="6" font-weight="500" fill="var(--color-outline)" text-anchor="end">10th</text>
-
-                            <rect fill="url(#augBarGrad)" height="0" rx="2" width="6" x="102" y="160"></rect>
-                            <text transform="rotate(-90 105 166)" x="105" y="166" font-size="6" font-weight="500" fill="var(--color-outline)" text-anchor="end">11th</text>
-
-                            <rect fill="url(#augBarGrad)" height="5" rx="2" width="6" x="112" y="155"></rect>
-                            <text transform="rotate(-90 115 152)" x="115" y="152">150</text>
-                            <text transform="rotate(-90 115 166)" x="115" y="166" font-size="6" font-weight="500" fill="var(--color-outline)" text-anchor="end">12th</text>
-
-                            <rect fill="url(#augBarGrad)" height="14" rx="2" width="6" x="122" y="146"></rect>
-                            <text transform="rotate(-90 125 143)" x="125" y="143">400</text>
-                            <text transform="rotate(-90 125 166)" x="125" y="166" font-size="6" font-weight="500" fill="var(--color-outline)" text-anchor="end">13th</text>
-
-                            <rect fill="url(#augBarGrad)" height="8" rx="2" width="6" x="132" y="152"></rect>
-                            <text transform="rotate(-90 135 149)" x="135" y="149">220</text>
-                            <text transform="rotate(-90 135 166)" x="135" y="166" font-size="6" font-weight="500" fill="var(--color-outline)" text-anchor="end">14th</text>
-
-                            <rect fill="url(#augBarGrad)" height="30" rx="2" width="6" x="142" y="130"></rect>
-                            <text transform="rotate(-90 145 127)" x="145" y="127">850</text>
-                            <text transform="rotate(-90 145 166)" x="145" y="166" font-size="6" font-weight="500" fill="var(--color-outline)" text-anchor="end">15th</text>
-
-                            <rect fill="url(#augBarGrad)" height="4" rx="2" width="6" x="152" y="156"></rect>
-                            <text transform="rotate(-90 155 153)" x="155" y="153">110</text>
-                            <text transform="rotate(-90 155 166)" x="155" y="166" font-size="6" font-weight="500" fill="var(--color-outline)" text-anchor="end">16th</text>
-
-                            <rect fill="url(#augBarGrad)" height="3" rx="2" width="6" x="162" y="157"></rect>
-                            <text transform="rotate(-90 165 154)" x="165" y="154">90</text>
-                            <text transform="rotate(-90 165 166)" x="165" y="166" font-size="6" font-weight="500" fill="var(--color-outline)" text-anchor="end">17th</text>
-
-                            <rect fill="url(#augBarGrad)" height="11" rx="2" width="6" x="172" y="149"></rect>
-                            <text transform="rotate(-90 175 146)" x="175" y="146">310</text>
-                            <text transform="rotate(-90 175 166)" x="175" y="166" font-size="6" font-weight="500" fill="var(--color-outline)" text-anchor="end">18th</text>
-
-                            <rect fill="url(#augBarGrad)" height="5" rx="2" width="6" x="182" y="155"></rect>
-                            <text transform="rotate(-90 185 152)" x="185" y="152">140</text>
-                            <text transform="rotate(-90 185 166)" x="185" y="166" font-size="6" font-weight="500" fill="var(--color-outline)" text-anchor="end">19th</text>
-
-                            <rect fill="url(#augBarGrad)" height="120" rx="2" width="6" x="192" y="40"></rect>
-                            <text transform="rotate(-90 195 37)" x="195" y="37">3,400</text>
-                            <text transform="rotate(-90 195 166)" x="195" y="166" font-size="6" font-weight="500" fill="var(--color-outline)" text-anchor="end">20th</text>
-
-                            <rect fill="url(#augBarGrad)" height="0" rx="2" width="6" x="202" y="160"></rect>
-                            <text transform="rotate(-90 205 166)" x="205" y="166" font-size="6" font-weight="500" fill="var(--color-outline)" text-anchor="end">21st</text>
-
-                            <rect fill="url(#augBarGrad)" height="6" rx="2" width="6" x="212" y="154"></rect>
-                            <text transform="rotate(-90 215 151)" x="215" y="151">180</text>
-                            <text transform="rotate(-90 215 166)" x="215" y="166" font-size="6" font-weight="500" fill="var(--color-outline)" text-anchor="end">22nd</text>
-
-                            <rect fill="url(#augBarGrad)" height="9" rx="2" width="6" x="222" y="151"></rect>
-                            <text transform="rotate(-90 225 148)" x="225" y="148">250</text>
-                            <text transform="rotate(-90 225 166)" x="225" y="166" font-size="6" font-weight="500" fill="var(--color-outline)" text-anchor="end">23rd</text>
-
-                            <rect fill="url(#augBarGrad)" height="4" rx="2" width="6" x="232" y="156"></rect>
-                            <text transform="rotate(-90 235 153)" x="235" y="153">100</text>
-                            <text transform="rotate(-90 235 166)" x="235" y="166" font-size="6" font-weight="500" fill="var(--color-outline)" text-anchor="end">24th</text>
-
-                            <rect fill="url(#augBarGrad)" height="5" rx="2" width="6" x="242" y="155"></rect>
-                            <text transform="rotate(-90 245 152)" x="245" y="152">150</text>
-                            <text transform="rotate(-90 245 166)" x="245" y="166" font-size="6" font-weight="500" fill="var(--color-outline)" text-anchor="end">25th</text>
-
-                            <rect fill="url(#augBarGrad)" height="0" rx="2" width="6" x="252" y="160"></rect>
-                            <text transform="rotate(-90 255 166)" x="255" y="166" font-size="6" font-weight="500" fill="var(--color-outline)" text-anchor="end">26th</text>
-
-                            <rect fill="url(#augBarGrad)" height="16" rx="2" width="6" x="262" y="144"></rect>
-                            <text transform="rotate(-90 265 141)" x="265" y="141">450</text>
-                            <text transform="rotate(-90 265 166)" x="265" y="166" font-size="6" font-weight="500" fill="var(--color-outline)" text-anchor="end">27th</text>
-
-                            <rect fill="url(#augBarGrad)" height="4" rx="2" width="6" x="272" y="156"></rect>
-                            <text transform="rotate(-90 275 153)" x="275" y="153">120</text>
-                            <text transform="rotate(-90 275 166)" x="275" y="166" font-size="6" font-weight="500" fill="var(--color-outline)" text-anchor="end">28th</text>
-
-                            <rect fill="url(#augBarGrad)" height="5" rx="2" width="6" x="282" y="155"></rect>
-                            <text transform="rotate(-90 285 152)" x="285" y="152">130</text>
-                            <text transform="rotate(-90 285 166)" x="285" y="166" font-size="6" font-weight="500" fill="var(--color-outline)" text-anchor="end">29th</text>
-
-                            <rect fill="url(#augBarGrad)" height="6" rx="2" width="6" x="292" y="154"></rect>
-                            <text transform="rotate(-90 295 151)" x="295" y="151">160</text>
-                            <text transform="rotate(-90 295 166)" x="295" y="166" font-size="6" font-weight="500" fill="var(--color-outline)" text-anchor="end">30th</text>
-
-                            <rect fill="url(#augBarGrad)" height="0" rx="2" width="6" x="302" y="160"></rect>
-                            <text transform="rotate(-90 305 166)" x="305" y="166" font-size="6" font-weight="500" fill="var(--color-outline)" text-anchor="end">31st</text>
-                        </g>
-                    </svg>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="chart-card" id="category-section">
-        <div class="flex justify-between items-center">
-            <h2 class="text-sm font-semibold text-on-surface-variant">Spending by Category</h2>
-            <div class="segmented-control-bar" role="tablist" aria-label="Category Chart View Selector">
-                <button class="segmented-tab-btn active" id="btn-category-ring" role="tab" aria-selected="true">Ring</button>
-                <button class="segmented-tab-btn" id="btn-category-bar" role="tab" aria-selected="false">Bar</button>
-            </div>
-        </div>
-
-        <!-- Donut Ring Chart & Legend -->
-        <div class="category-view-ring" id="view-ring">
-            <div class="donut-wrapper">
-                <svg width="100%" height="100%" viewBox="0 0 36 36">
-                    <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#f0eded" stroke-width="4"></path>
-                    <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#7B4DFF" stroke-dasharray="30, 100" stroke-width="4"></path>
-                    <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#10B981" stroke-dasharray="15, 100" stroke-dashoffset="-30" stroke-width="4"></path>
-                    <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#FF6B3D" stroke-dasharray="15, 100" stroke-dashoffset="-45" stroke-width="4"></path>
-                    <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#0EA5E9" stroke-dasharray="10, 100" stroke-dashoffset="-60" stroke-width="4"></path>
-                    <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#E11D48" stroke-dasharray="10, 100" stroke-dashoffset="-70" stroke-width="4"></path>
-                    <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#D946EF" stroke-dasharray="10, 100" stroke-dashoffset="-80" stroke-width="4"></path>
-                    <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#cac3d8" stroke-dasharray="10, 100" stroke-dashoffset="-90" stroke-width="4"></path>
-                </svg>
-                <div class="donut-center-label">
-                    <span class="font-bold text-on-surface" style="font-size: 1.125rem;">₹11.5k</span>
-                </div>
-            </div>
-            <div class="category-legend-list">
-                <div class="legend-row">
-                    <div class="flex items-center text-on-surface-variant">
-                        <span class="legend-dot-indicator" style="background-color: #7B4DFF;"></span>Grocery
-                    </div>
-                    <div class="flex items-center gap-sm">
-                        <span class="font-medium text-on-surface">₹3,450</span>
-                        <span class="text-xs text-on-surface-variant" style="min-width: 28px; text-align: right;">30%</span>
-                    </div>
-                </div>
-                <div class="legend-row">
-                    <div class="flex items-center text-on-surface-variant">
-                        <span class="legend-dot-indicator" style="background-color: #10B981;"></span>Vegetables
-                    </div>
-                    <div class="flex items-center gap-sm">
-                        <span class="font-medium text-on-surface">₹1,725</span>
-                        <span class="text-xs text-on-surface-variant" style="min-width: 28px; text-align: right;">15%</span>
-                    </div>
-                </div>
-                <div class="legend-row">
-                    <div class="flex items-center text-on-surface-variant">
-                        <span class="legend-dot-indicator" style="background-color: #FF6B3D;"></span>Petrol
-                    </div>
-                    <div class="flex items-center gap-sm">
-                        <span class="font-medium text-on-surface">₹1,725</span>
-                        <span class="text-xs text-on-surface-variant" style="min-width: 28px; text-align: right;">15%</span>
-                    </div>
-                </div>
-                <div class="legend-row">
-                    <div class="flex items-center text-on-surface-variant">
-                        <span class="legend-dot-indicator" style="background-color: #0EA5E9;"></span>Travelling
-                    </div>
-                    <div class="flex items-center gap-sm">
-                        <span class="font-medium text-on-surface">₹1,150</span>
-                        <span class="text-xs text-on-surface-variant" style="min-width: 28px; text-align: right;">10%</span>
-                    </div>
-                </div>
-                <div class="legend-row">
-                    <div class="flex items-center text-on-surface-variant">
-                        <span class="legend-dot-indicator" style="background-color: #E11D48;"></span>Medical
-                    </div>
-                    <div class="flex items-center gap-sm">
-                        <span class="font-medium text-on-surface">₹1,150</span>
-                        <span class="text-xs text-on-surface-variant" style="min-width: 28px; text-align: right;">10%</span>
-                    </div>
-                </div>
-                <div class="legend-row">
-                    <div class="flex items-center text-on-surface-variant">
-                        <span class="legend-dot-indicator" style="background-color: #D946EF;"></span>Clothes
-                    </div>
-                    <div class="flex items-center gap-sm">
-                        <span class="font-medium text-on-surface">₹1,150</span>
-                        <span class="text-xs text-on-surface-variant" style="min-width: 28px; text-align: right;">10%</span>
-                    </div>
-                </div>
-                <div class="legend-row">
-                    <div class="flex items-center text-on-surface-variant">
-                        <span class="legend-dot-indicator" style="background-color: #cac3d8;"></span>Others
-                    </div>
-                    <div class="flex items-center gap-sm">
-                        <span class="font-medium text-on-surface">₹1,150</span>
-                        <span class="text-xs text-on-surface-variant" style="min-width: 28px; text-align: right;">10%</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="category-view-bar" id="view-bar">
-            <div class="cat-bar-item">
-                <div class="cat-bar-header">
-                    <span class="text-on-surface-variant flex items-center">
-                        <span class="legend-dot-indicator" style="background-color: #7B4DFF;"></span>Grocery
-                    </span>
-                    <div class="flex items-center gap-sm">
-                        <span class="font-medium text-on-surface">₹3,450</span>
-                        <span class="text-xs text-on-surface-variant" style="min-width: 28px; text-align: right;">30%</span>
-                    </div>
-                </div>
-                <div class="cat-bar-track"><div class="cat-bar-fill" style="width: 30%; background: #7B4DFF;"></div></div>
-            </div>
-            <div class="cat-bar-item">
-                <div class="cat-bar-header">
-                    <span class="text-on-surface-variant flex items-center">
-                        <span class="legend-dot-indicator" style="background-color: #10B981;"></span>Vegetables
-                    </span>
-                    <div class="flex items-center gap-sm">
-                        <span class="font-medium text-on-surface">₹1,725</span>
-                        <span class="text-xs text-on-surface-variant" style="min-width: 28px; text-align: right;">15%</span>
-                    </div>
-                </div>
-                <div class="cat-bar-track"><div class="cat-bar-fill" style="width: 15%; background: #10B981;"></div></div>
-            </div>
-            <div class="cat-bar-item">
-                <div class="cat-bar-header">
-                    <span class="text-on-surface-variant flex items-center">
-                        <span class="legend-dot-indicator" style="background-color: #FF6B3D;"></span>Petrol
-                    </span>
-                    <div class="flex items-center gap-sm">
-                        <span class="font-medium text-on-surface">₹1,725</span>
-                        <span class="text-xs text-on-surface-variant" style="min-width: 28px; text-align: right;">15%</span>
-                    </div>
-                </div>
-                <div class="cat-bar-track"><div class="cat-bar-fill" style="width: 15%; background: #FF6B3D;"></div></div>
-            </div>
-            <div class="cat-bar-item">
-                <div class="cat-bar-header">
-                    <span class="text-on-surface-variant flex items-center">
-                        <span class="legend-dot-indicator" style="background-color: #0EA5E9;"></span>Travelling
-                    </span>
-                    <div class="flex items-center gap-sm">
-                        <span class="font-medium text-on-surface">₹1,150</span>
-                        <span class="text-xs text-on-surface-variant" style="min-width: 28px; text-align: right;">10%</span>
-                    </div>
-                </div>
-                <div class="cat-bar-track"><div class="cat-bar-fill" style="width: 10%; background: #0EA5E9;"></div></div>
-            </div>
-            <div class="cat-bar-item">
-                <div class="cat-bar-header">
-                    <span class="text-on-surface-variant flex items-center">
-                        <span class="legend-dot-indicator" style="background-color: #E11D48;"></span>Medical
-                    </span>
-                    <div class="flex items-center gap-sm">
-                        <span class="font-medium text-on-surface">₹1,150</span>
-                        <span class="text-xs text-on-surface-variant" style="min-width: 28px; text-align: right;">10%</span>
-                    </div>
-                </div>
-                <div class="cat-bar-track"><div class="cat-bar-fill" style="width: 10%; background: #E11D48;"></div></div>
-            </div>
-            <div class="cat-bar-item">
-                <div class="cat-bar-header">
-                    <span class="text-on-surface-variant flex items-center">
-                        <span class="legend-dot-indicator" style="background-color: #D946EF;"></span>Clothes
-                    </span>
-                    <div class="flex items-center gap-sm">
-                        <span class="font-medium text-on-surface">₹1,150</span>
-                        <span class="text-xs text-on-surface-variant" style="min-width: 28px; text-align: right;">10%</span>
-                    </div>
-                </div>
-                <div class="cat-bar-track"><div class="cat-bar-fill" style="width: 10%; background: #D946EF;"></div></div>
-            </div>
-            <div class="cat-bar-item">
-                <div class="cat-bar-header">
-                    <span class="text-on-surface-variant flex items-center">
-                        <span class="legend-dot-indicator" style="background-color: #cac3d8;"></span>Others
-                    </span>
-                    <div class="flex items-center gap-sm">
-                        <span class="font-medium text-on-surface">₹1,150</span>
-                        <span class="text-xs text-on-surface-variant" style="min-width: 28px; text-align: right;">10%</span>
-                    </div>
-                </div>
-                <div class="cat-bar-track"><div class="cat-bar-fill" style="width: 10%; background: #cac3d8;"></div></div>
-            </div>
-        </div>
-    </section>
-
-    <section class="chart-card">
-        <div class="flex justify-between items-center">
-            <h2 class="text-base font-bold text-on-surface" style="font-size: 1.125rem;">Yearly Analysis</h2>
-            <span class="badge-pill">This Month</span>
-        </div>
-        <div class="flex flex-col">
-            <span class="text-xs text-on-surface-variant">Average Monthly Spending</span>
-            <span class="font-bold text-on-surface" style="font-size: 1.25rem;">₹3,240.00</span>
-        </div>
-        <div class="chart-container">
-            <div style="height: 120px; width: 100%;">
-                <svg width="100%" height="100%" viewBox="0 0 360 100" preserveAspectRatio="none" style="overflow: visible;">
-                    <defs>
-                        <linearGradient id="grad-jan" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8B5CF6"></stop><stop offset="100%" stop-color="#6366F1"></stop></linearGradient>
-                        <linearGradient id="grad-feb" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#EC4899"></stop><stop offset="100%" stop-color="#F43F5E"></stop></linearGradient>
-                        <linearGradient id="grad-mar" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3B82F6"></stop><stop offset="100%" stop-color="#06B6D4"></stop></linearGradient>
-                        <linearGradient id="grad-apr" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#10B981"></stop><stop offset="100%" stop-color="#059669"></stop></linearGradient>
-                        <linearGradient id="grad-may" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#F59E0B"></stop><stop offset="100%" stop-color="#D97706"></stop></linearGradient>
-                        <linearGradient id="grad-jun" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#6366F1"></stop><stop offset="100%" stop-color="#A855F7"></stop></linearGradient>
-                        <linearGradient id="grad-jul" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#7C3AED"></stop><stop offset="100%" stop-color="#C026D3"></stop></linearGradient>
-                        <linearGradient id="grad-aug" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#F97316"></stop><stop offset="100%" stop-color="#EF4444"></stop></linearGradient>
-                        <linearGradient id="grad-sep" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#14B8A6"></stop><stop offset="100%" stop-color="#0D9488"></stop></linearGradient>
-                        <linearGradient id="grad-oct" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0EA5E9"></stop><stop offset="100%" stop-color="#2563EB"></stop></linearGradient>
-                        <linearGradient id="grad-nov" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#D946EF"></stop><stop offset="100%" stop-color="#9333EA"></stop></linearGradient>
-                        <linearGradient id="grad-dec" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#E11D48"></stop><stop offset="100%" stop-color="#BE185D"></stop></linearGradient>
-                    </defs>
-
-                    <rect x="5" y="40" width="20" height="60" rx="4" fill="url(#grad-jan)"></rect>
-                    <rect x="35" y="30" width="20" height="70" rx="4" fill="url(#grad-feb)"></rect>
-                    <rect x="65" y="50" width="20" height="50" rx="4" fill="url(#grad-mar)"></rect>
-                    <rect x="95" y="20" width="20" height="80" rx="4" fill="url(#grad-apr)"></rect>
-                    <rect x="125" y="45" width="20" height="55" rx="4" fill="url(#grad-may)"></rect>
-                    <rect x="155" y="35" width="20" height="65" rx="4" fill="url(#grad-jun)"></rect>
-                    <rect x="185" y="15" width="20" height="85" rx="4" fill="url(#grad-jul)"></rect>
-                    <rect x="215" y="40" width="20" height="60" rx="4" fill="url(#grad-aug)"></rect>
-                    <rect x="245" y="55" width="20" height="45" rx="4" fill="url(#grad-sep)"></rect>
-                    <rect x="275" y="25" width="20" height="75" rx="4" fill="url(#grad-oct)"></rect>
-                    <rect x="305" y="45" width="20" height="55" rx="4" fill="url(#grad-nov)"></rect>
-                    <rect x="335" y="30" width="20" height="70" rx="4" fill="url(#grad-dec)"></rect>
-
-                    <g font-size="9" font-family="var(--font-family-sans)" font-weight="600" fill="#ffffff" text-anchor="start" dominant-baseline="central">
-                        <text transform="rotate(-90 15 95)" x="15" y="95">11,800</text>
-                        <text transform="rotate(-90 45 95)" x="45" y="95">13,200</text>
-                        <text transform="rotate(-90 75 95)" x="75" y="95">10,500</text>
-                        <text transform="rotate(-90 105 95)" x="105" y="95">14,800</text>
-                        <text transform="rotate(-90 135 95)" x="135" y="95">11,100</text>
-                        <text transform="rotate(-90 165 95)" x="165" y="95">12,500</text>
-                        <text transform="rotate(-90 195 95)" x="195" y="95">15,400</text>
-                        <text transform="rotate(-90 225 95)" x="225" y="95">11,800</text>
-                        <text transform="rotate(-90 255 95)" x="255" y="95">10,100</text>
-                        <text transform="rotate(-90 285 95)" x="285" y="95">14,100</text>
-                        <text transform="rotate(-90 315 95)" x="315" y="95">11,100</text>
-                        <text transform="rotate(-90 345 95)" x="345" y="95">13,200</text>
-                    </g>
-                </svg>
-            </div>
-            <div style="margin-top: 8px; display: grid; grid-template-columns: repeat(12, 1fr); text-align: center; width: 100%; font-size: 0.75rem; color: var(--color-on-surface-variant); font-weight: 500;">
-                <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span><span>Jul</span><span>Aug</span><span>Sep</span><span>Oct</span><span>Nov</span><span>Dec</span>
-            </div>
-        </div>
-    </section>
-
-    <section class="flex flex-col gap-sm" style="padding-bottom: var(--spacing-xl);">
-        <div class="flex justify-between items-center w-full">
-            <h2 class="text-base font-bold text-on-surface" style="font-size: 1.125rem;">Recent Transactions</h2>
-            <button class="text-sm font-semibold text-primary" style="padding: 4px;">See All</button>
-        </div>
-        <div class="transactions-card">
-            <div class="tx-list-item">
-                <div class="flex items-center gap-md">
-                    <div class="tx-avatar-icon">
-                        <span class="material-symbols-outlined">shopping_bag</span>
-                    </div>
-                    <div class="flex flex-col">
-                        <span class="text-sm font-semibold text-on-surface">Whole Foods</span>
-                        <span class="text-xs text-on-surface-variant">Groceries • Today, 10:24 AM</span>
-                    </div>
-                </div>
-                <span class="text-sm font-semibold text-on-surface">-₹124.50</span>
-            </div>
-            <hr class="divider-line">
-            <div class="tx-list-item">
-                <div class="flex items-center gap-md">
-                    <div class="tx-avatar-icon">
-                        <span class="material-symbols-outlined">subscriptions</span>
-                    </div>
-                    <div class="flex flex-col">
-                        <span class="text-sm font-semibold text-on-surface">Netflix</span>
-                        <span class="text-xs text-on-surface-variant">Entertainment • Yesterday</span>
-                    </div>
-                </div>
-                <span class="text-sm font-semibold text-on-surface">-₹15.99</span>
-            </div>
-        </div>
-    </section>
+<div id="view-aug-trend" style="display: block;">
+<div class="line-chart-container" style="height: 160px;">
+<svg height="100%" preserveAspectRatio="none" viewBox="0 0 310 120" width="100%">
+<defs>
+<linearGradient id="augTrendGrad" x1="0" x2="1" y1="0" y2="0">
+<stop offset="0%" stop-color="#7B4DFF"></stop>
+<stop offset="100%" stop-color="#FF6B3D"></stop>
+</linearGradient>
+<linearGradient id="augFillGrad" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#7B4DFF" stop-opacity="0.2"></stop>
+<stop offset="100%" stop-color="#7B4DFF" stop-opacity="0"></stop>
+</linearGradient>
+</defs>
+<!-- Grid Lines -->
+<line stroke="#cac3d8" stroke-dasharray="4" stroke-width="0.5" x1="0" x2="310" y1="100" y2="100"></line>
+<line stroke="#cac3d8" stroke-dasharray="4" stroke-width="0.5" x1="0" x2="310" y1="60" y2="60"></line>
+<line stroke="#cac3d8" stroke-dasharray="4" stroke-width="0.5" x1="0" x2="310" y1="20" y2="20"></line>
+<!-- Area Fill -->
+<path d="M 0 110 L 10 105 L 20 100 L 30 102 L 40 70 L 50 105 L 60 100 L 70 85 L 80 102 L 90 95 L 100 40 L 110 110 L 120 105 L 130 95 L 140 100 L 150 80 L 160 105 L 170 108 L 180 102 L 190 105 L 200 10 L 210 110 L 220 105 L 230 102 L 240 105 L 250 102 L 260 110 L 270 95 L 280 102 L 290 100 L 300 105 L 310 110 L 310 120 L 0 120 Z" fill="url(#augFillGrad)"></path>
+<!-- Line Path (Peaks at Day 4, 10, 20) -->
+<path d="M 0 110 C 5 110, 5 105, 10 105 C 15 105, 15 100, 20 100 C 25 100, 35 102, 40 70 C 45 38, 45 105, 50 105 C 55 105, 65 100, 70 85 C 75 70, 85 102, 90 95 C 95 88, 95 40, 100 40 C 105 40, 105 110, 110 110 C 115 110, 125 105, 130 95 C 135 85, 145 100, 150 80 C 155 60, 155 105, 160 105 C 165 105, 195 105, 200 10 C 205 10, 205 110, 210 110 C 215 110, 305 105, 310 110" fill="none" stroke="url(#augTrendGrad)" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path>
+</svg>
+</div>
+<div class="chart-labels text-label-sm">
+<span class="">1st</span>
+<span class="">10th</span>
+<span class="">20th</span>
+<span class="">31st</span>
+</div>
+</div>
+<div id="view-aug-bar" style="display: none;">
+<div class="line-chart-container" style="height: 160px; margin-top: var(--spacing-sm);">
+<svg height="100%" preserveAspectRatio="none" viewBox="0 0 310 160" width="100%">
+<defs>
+<linearGradient id="augBarGrad" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#7B4DFF"></stop>
+<stop offset="100%" stop-color="#FF6B3D"></stop>
+</linearGradient>
+</defs>
+<!-- Bars representing daily fluctuations -->
+<rect fill="url(#augBarGrad)" height="7" rx="2" width="6" x="2" y="153"></rect>
+<rect fill="url(#augBarGrad)" height="21" rx="2" width="6" x="12" y="139"></rect>
+<rect fill="url(#augBarGrad)" height="6" rx="2" width="6" x="22" y="154"></rect>
+<rect fill="url(#augBarGrad)" height="56" rx="2" width="6" x="32" y="104"></rect>
+<rect fill="url(#augBarGrad)" height="4" rx="2" width="6" x="42" y="156"></rect>
+<rect fill="url(#augBarGrad)" height="9" rx="2" width="6" x="52" y="151"></rect>
+<rect fill="url(#augBarGrad)" height="26" rx="2" width="6" x="62" y="134"></rect>
+<rect fill="url(#augBarGrad)" height="5" rx="2" width="6" x="72" y="155"></rect>
+<rect fill="url(#augBarGrad)" height="14" rx="2" width="6" x="82" y="146"></rect>
+<rect fill="url(#augBarGrad)" height="99" rx="2" width="6" x="92" y="61"></rect>
+<rect fill="url(#augBarGrad)" height="0" rx="2" width="6" x="102" y="160"></rect>
+<rect fill="url(#augBarGrad)" height="7" rx="2" width="6" x="112" y="153"></rect>
+<rect fill="url(#augBarGrad)" height="19" rx="2" width="6" x="122" y="141"></rect>
+<rect fill="url(#augBarGrad)" height="10" rx="2" width="6" x="132" y="150"></rect>
+<rect fill="url(#augBarGrad)" height="40" rx="2" width="6" x="142" y="120"></rect>
+<rect fill="url(#augBarGrad)" height="5" rx="2" width="6" x="152" y="155"></rect>
+<rect fill="url(#augBarGrad)" height="4" rx="2" width="6" x="162" y="156"></rect>
+<rect fill="url(#augBarGrad)" height="15" rx="2" width="6" x="172" y="145"></rect>
+<rect fill="url(#augBarGrad)" height="7" rx="2" width="6" x="182" y="153"></rect>
+<rect fill="url(#augBarGrad)" height="160" rx="2" width="6" x="192" y="0"></rect>
+<rect fill="url(#augBarGrad)" height="0" rx="2" width="6" x="202" y="160"></rect>
+<rect fill="url(#augBarGrad)" height="8" rx="2" width="6" x="212" y="152"></rect>
+<rect fill="url(#augBarGrad)" height="12" rx="2" width="6" x="222" y="148"></rect>
+<rect fill="url(#augBarGrad)" height="5" rx="2" width="6" x="232" y="155"></rect>
+<rect fill="url(#augBarGrad)" height="7" rx="2" width="6" x="242" y="153"></rect>
+<rect fill="url(#augBarGrad)" height="0" rx="2" width="6" x="252" y="160"></rect>
+<rect fill="url(#augBarGrad)" height="21" rx="2" width="6" x="262" y="139"></rect>
+<rect fill="url(#augBarGrad)" height="6" rx="2" width="6" x="272" y="154"></rect>
+<rect fill="url(#augBarGrad)" height="6" rx="2" width="6" x="282" y="154"></rect>
+<rect fill="url(#augBarGrad)" height="8" rx="2" width="6" x="292" y="152"></rect>
+<rect fill="url(#augBarGrad)" height="0" rx="2" width="6" x="302" y="160"></rect>
+</svg>
+</div>
+<div class="chart-labels text-label-sm">
+<span class="">1st</span>
+<span class="">10th</span>
+<span class="">20th</span>
+<span class="">31st</span>
+</div>
+</div>
+</div>
+</section><section class="chart-section" id="category-section">
+<div class="flex justify-between items-center">
+<h3 class="text-label-md text-on-surface font-semibold" style="font-size: 14px; line-height: 20px; letter-spacing: 0.01em;">Spending by Category</h3>
+<div class="segmented-control">
+<button class="segmented-btn active" id="btn-ring" onclick="switchView('ring')">Ring</button>
+<button class="segmented-btn" id="btn-bar" onclick="switchView('bar')">Bar</button>
+</div>
+</div>
+<!-- Ring Chart View -->
+<div class="category-breakdown" id="view-ring" style="display: flex;"><div class="donut-container"><svg height="100%" viewBox="0 0 36 36" width="100%"><path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#f0eded" stroke-width="4"></path><path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#7B4DFF" stroke-dasharray="30, 100" stroke-dashoffset="0" stroke-width="4"></path><path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#10B981" stroke-dasharray="15, 100" stroke-dashoffset="-30" stroke-width="4"></path><path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#FF6B3D" stroke-dasharray="15, 100" stroke-dashoffset="-45" stroke-width="4"></path><path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#0EA5E9" stroke-dasharray="10, 100" stroke-dashoffset="-60" stroke-width="4"></path><path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#E11D48" stroke-dasharray="10, 100" stroke-dashoffset="-70" stroke-width="4"></path><path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#D946EF" stroke-dasharray="10, 100" stroke-dashoffset="-80" stroke-width="4"></path><path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#cac3d8" stroke-dasharray="10, 100" stroke-dashoffset="-90" stroke-width="4"></path></svg><div class="donut-center"><span class="text-headline-md font-bold">₹12k</span></div></div><div class="legend-list"><div class="legend-item"><div class="legend-label"><div class="legend-dot" style="background-color: #7B4DFF;"></div>Groceries</div><div class="flex items-center gap-xs"><span class="font-bold text-on-surface">₹3,600</span><span class="text-on-surface-variant font-medium" style="margin-left: 8px; font-size: 11px; padding: 2px 6px; background-color: rgba(123, 77, 255, 0.08); border-radius: 6px; color: var(--color-primary);">30%</span></div></div><div class="legend-item"><div class="legend-label"><div class="legend-dot" style="background-color: #10B981;"></div>Vegetables</div><div class="flex items-center gap-xs"><span class="font-bold text-on-surface">₹1,800</span><span class="text-on-surface-variant font-medium" style="margin-left: 8px; font-size: 11px; padding: 2px 6px; background-color: rgba(16, 185, 129, 0.1); border-radius: 6px; color: rgb(16, 185, 129);">15%</span></div></div><div class="legend-item"><div class="legend-label"><div class="legend-dot" style="background-color: #FF6B3D;"></div>Petrol</div><div class="flex items-center gap-xs"><span class="font-bold text-on-surface">₹1,800</span><span class="text-on-surface-variant font-medium" style="margin-left: 8px; font-size: 11px; padding: 2px 6px; background-color: rgba(255, 107, 61, 0.1); border-radius: 6px; color: rgb(255, 107, 61);">15%</span></div></div><div class="legend-item"><div class="legend-label"><div class="legend-dot" style="background-color: #0EA5E9;"></div>Travelling</div><div class="flex items-center gap-xs"><span class="font-bold text-on-surface">₹1,200</span><span class="text-on-surface-variant font-medium" style="margin-left: 8px; font-size: 11px; padding: 2px 6px; background-color: rgba(14, 165, 233, 0.1); border-radius: 6px; color: rgb(14, 165, 233);">10%</span></div></div><div class="legend-item"><div class="legend-label"><div class="legend-dot" style="background-color: #E11D48;"></div>Medical</div><div class="flex items-center gap-xs"><span class="font-bold text-on-surface">₹1,200</span><span class="text-on-surface-variant font-medium" style="margin-left: 8px; font-size: 11px; padding: 2px 6px; background-color: rgba(225, 29, 72, 0.1); border-radius: 6px; color: rgb(225, 29, 72);">10%</span></div></div><div class="legend-item"><div class="legend-label"><div class="legend-dot" style="background-color: #D946EF;"></div>Clothes</div><div class="flex items-center gap-xs"><span class="font-bold text-on-surface">₹1,200</span><span class="text-on-surface-variant font-medium" style="margin-left: 8px; font-size: 11px; padding: 2px 6px; background-color: rgba(217, 70, 239, 0.1); border-radius: 6px; color: rgb(217, 70, 239);">10%</span></div></div><div class="legend-item"><div class="legend-label"><div class="legend-dot" style="background-color: #cac3d8;"></div>Others</div><div class="flex items-center gap-xs"><span class="font-bold text-on-surface">₹1,200</span><span class="text-on-surface-variant font-medium" style="margin-left: 8px; font-size: 11px; padding: 2px 6px; background-color: rgba(122, 116, 135, 0.15); border-radius: 6px; color: var(--color-outline);">10%</span></div></div></div></div>
+<!-- Bar Chart View -->
+<div class="bar-chart-view" id="view-bar" style="display: none;"><div class="bar-item"><div class="bar-item-header"><span class="bar-label"><div class="legend-dot" style="background-color: #7B4DFF;"></div>Groceries</span><div class="flex items-center gap-xs"><span class="font-bold text-on-surface">₹3,600</span><span class="text-on-surface-variant">(30%)</span></div></div><div class="bar-track"><div class="bar-fill" style="width: 30%; background: #7B4DFF;"></div></div></div><div class="bar-item"><div class="bar-item-header"><span class="bar-label"><div class="legend-dot" style="background-color: #10B981;"></div>Vegetables</span><div class="flex items-center gap-xs"><span class="font-bold text-on-surface">₹1,800</span><span class="text-on-surface-variant">(15%)</span></div></div><div class="bar-track"><div class="bar-fill" style="width: 15%; background: #10B981;"></div></div></div><div class="bar-item"><div class="bar-item-header"><span class="bar-label"><div class="legend-dot" style="background-color: #FF6B3D;"></div>Petrol</span><div class="flex items-center gap-xs"><span class="font-bold text-on-surface">₹1,800</span><span class="text-on-surface-variant">(15%)</span></div></div><div class="bar-track"><div class="bar-fill" style="width: 15%; background: #FF6B3D;"></div></div></div><div class="bar-item"><div class="bar-item-header"><span class="bar-label"><div class="legend-dot" style="background-color: #0EA5E9;"></div>Travelling</span><div class="flex items-center gap-xs"><span class="font-bold text-on-surface">₹1,200</span><span class="text-on-surface-variant">(10%)</span></div></div><div class="bar-track"><div class="bar-fill" style="width: 10%; background: #0EA5E9;"></div></div></div><div class="bar-item"><div class="bar-item-header"><span class="bar-label"><div class="legend-dot" style="background-color: #E11D48;"></div>Medical</span><div class="flex items-center gap-xs"><span class="font-bold text-on-surface">₹1,200</span><span class="text-on-surface-variant">(10%)</span></div></div><div class="bar-track"><div class="bar-fill" style="width: 10%; background: #E11D48;"></div></div></div><div class="bar-item"><div class="bar-item-header"><span class="bar-label"><div class="legend-dot" style="background-color: #D946EF;"></div>Clothes</span><div class="flex items-center gap-xs"><span class="font-bold text-on-surface">₹1,200</span><span class="text-on-surface-variant">(10%)</span></div></div><div class="bar-track"><div class="bar-fill" style="width: 10%; background: #D946EF;"></div></div></div><div class="bar-item"><div class="bar-item-header"><span class="bar-label"><div class="legend-dot" style="background-color: #cac3d8;"></div>Others</span><div class="flex items-center gap-xs"><span class="font-bold text-on-surface">₹1,200</span><span class="text-on-surface-variant">(10%)</span></div></div><div class="bar-track"><div class="bar-fill" style="width: 10%; background: #cac3d8;"></div></div></div></div>
+</section><section class="chart-section">
+<div class="flex justify-between items-center">
+<h3 class="text-label-md text-on-surface font-semibold" style="font-size: 14px; line-height: 20px; letter-spacing: 0.01em;">Yearly Analysis</h3>
+<span class="text-label-sm badge">This Month</span>
+</div>
+<div class="flex flex-col gap-xs">
+<span class="text-label-sm text-on-surface-variant">Average Monthly Spending</span>
+<span class="text-headline-md text-on-surface font-bold">₹3,240.00</span>
+</div>
+<div class="chart-container">
+<div class="line-chart-container" style="height: 140px;"><svg height="100%" viewBox="0 0 360 140" width="100%" style="overflow: visible;" class=""><defs class=""><linearGradient id="yearlyGrad" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#7B4DFF"></stop><stop offset="100%" stop-color="#FF6B3D"></stop></linearGradient></defs><g class=""><rect fill="url(#yearlyGrad)" height="90" rx="6" width="22" x="4" y="50"></rect><text x="15" y="118" fill="#ffffff" font-size="8" font-weight="600" font-family="Inter, sans-serif" text-anchor="middle" transform="rotate(-90 15 118)" letter-spacing="0.02em">11,800</text></g><g class=""><rect fill="url(#yearlyGrad)" height="102" rx="6" width="22" x="34" y="38"></rect><text x="45" y="118" fill="#ffffff" font-size="8" font-weight="600" font-family="Inter, sans-serif" text-anchor="middle" transform="rotate(-90 45 118)" letter-spacing="0.02em">12,400</text></g><g class=""><rect fill="url(#yearlyGrad)" height="78" rx="6" width="22" x="64" y="62"></rect><text x="75" y="118" fill="#ffffff" font-size="8" font-weight="600" font-family="Inter, sans-serif" text-anchor="middle" transform="rotate(-90 75 118)" letter-spacing="0.02em">10,900</text></g><g class=""><rect fill="url(#yearlyGrad)" height="112" rx="6" width="22" x="94" y="28"></rect><text x="105" y="118" fill="#ffffff" font-size="8" font-weight="600" font-family="Inter, sans-serif" text-anchor="middle" transform="rotate(-90 105 118)" letter-spacing="0.02em">12,850</text></g><g class=""><rect fill="url(#yearlyGrad)" height="84" rx="6" width="22" x="124" y="56"></rect><text x="135" y="118" fill="#ffffff" font-size="8" font-weight="600" font-family="Inter, sans-serif" text-anchor="middle" transform="rotate(-90 135 118)" letter-spacing="0.02em">11,200</text></g><g class=""><rect fill="url(#yearlyGrad)" height="106" rx="6" width="22" x="154" y="34"></rect><text x="165" y="118" fill="#ffffff" font-size="8" font-weight="600" font-family="Inter, sans-serif" text-anchor="middle" transform="rotate(-90 165 118)" letter-spacing="0.02em">12,600</text></g><g class=""><rect fill="url(#yearlyGrad)" height="118" rx="6" width="22" x="184" y="22"></rect><text x="195" y="118" fill="#ffffff" font-size="8" font-weight="600" font-family="Inter, sans-serif" text-anchor="middle" transform="rotate(-90 195 118)" letter-spacing="0.02em">13,000</text></g><g class=""><rect fill="url(#yearlyGrad)" height="86" rx="6" width="22" x="214" y="54"></rect><text x="225" y="118" fill="#ffffff" font-size="8" font-weight="600" font-family="Inter, sans-serif" text-anchor="middle" transform="rotate(-90 225 118)" letter-spacing="0.02em">11,400</text></g><g class=""><rect fill="url(#yearlyGrad)" height="74" rx="6" width="22" x="244" y="66"></rect><text x="255" y="118" fill="#ffffff" font-size="8" font-weight="600" font-family="Inter, sans-serif" text-anchor="middle" transform="rotate(-90 255 118)" letter-spacing="0.02em">10,600</text></g><g class=""><rect fill="url(#yearlyGrad)" height="114" rx="6" width="22" x="274" y="26"></rect><text x="285" y="118" fill="#ffffff" font-size="8" font-weight="600" font-family="Inter, sans-serif" text-anchor="middle" transform="rotate(-90 285 118)" letter-spacing="0.02em">12,900</text></g><g class=""><rect fill="url(#yearlyGrad)" height="92" rx="6" width="22" x="304" y="48"></rect><text x="315" y="118" fill="#ffffff" font-size="8" font-weight="600" font-family="Inter, sans-serif" text-anchor="middle" transform="rotate(-90 315 118)" letter-spacing="0.02em">11,750</text></g><g class=""><rect fill="url(#yearlyGrad)" height="104" rx="6" width="22" x="334" y="36"></rect><text x="345" y="118" fill="#ffffff" font-size="8" font-weight="600" font-family="Inter, sans-serif" text-anchor="middle" transform="rotate(-90 345 118)" letter-spacing="0.02em">12,300</text></g></svg></div>
+<div class="chart-labels text-label-sm" style="margin-top: 8px;"><span class="">Jan</span><span class="">Feb</span><span class="">Mar</span><span class="">Apr</span><span class="">May</span><span class="">Jun</span><span class="">Jul</span><span class="">Aug</span><span class="">Sep</span><span class="">Oct</span><span class="">Nov</span><span class="">Dec</span></div>
+</div>
+</section>
+<!-- Recent Transactions -->
+<section class="flex flex-col gap-md pb-xl"><div class="flex justify-between items-center w-full"><h3 class="text-label-md font-bold text-on-surface" style="font-size: 14px; line-height: 18px;">Recent Transactions</h3><button class="text-label-md font-semibold text-primary hover:opacity-80 transition-all" style="background: none; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; cursor: pointer;">View All</button></div><div class="flex flex-col gap-sm"><div class="flex justify-between items-center w-full"><h3 class="text-label-md font-semibold text-primary" style="color: rgb(123, 77, 255);">Today</h3></div><div class="flex flex-col gap-sm"><div class="flex items-center justify-between p-1 bg-white rounded-xl shadow-sm border border-outline-variant" style="padding: 12px 16px; border-radius: 16px; background-color: #ffffff; border: 1px solid rgba(0, 0, 0, 0.04); box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.03);"><div class="flex items-center gap-sm"><div class="flex items-center justify-center rounded-xl" style="width: 44px; height: 44px; border-radius: 50%; background-color: rgba(123, 77, 255, 0.12); color: #7B4DFF;"><span class="material-symbols-outlined" style="font-size: 22px;">shopping_basket</span></div><div class="flex flex-col"><span class="text-label-md font-bold text-on-surface" style="font-size: 14px;">Grocery</span><span class="text-label-sm text-on-surface-variant" style="font-size: 12px;">UPI • 09:15 AM</span></div></div><div class="flex flex-col items-end gap-xs"><span class="text-label-md font-bold text-on-surface" style="font-size: 14px;">- ₹1,240</span><span class="badge text-label-sm font-medium" style="background-color: rgba(34, 197, 94, 0.15); color: rgb(22, 163, 74); font-size: 10px; line-height: 12px; padding: 2px 8px; border-radius: 9999px;">Completed</span></div></div><div class="flex items-center justify-between p-1 bg-white rounded-xl shadow-sm border border-outline-variant" style="padding: 12px 16px; border-radius: 16px; background-color: #ffffff; border: 1px solid rgba(0, 0, 0, 0.04); box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.03);"><div class="flex items-center gap-sm"><div class="flex items-center justify-center rounded-xl" style="width: 44px; height: 44px; border-radius: 50%; background-color: rgba(255, 107, 61, 0.12); color: #FF6B3D;"><span class="material-symbols-outlined" style="font-size: 22px;">local_gas_station</span></div><div class="flex flex-col"><span class="text-label-md font-bold text-on-surface" style="font-size: 14px;">Petrol</span><span class="text-label-sm text-on-surface-variant" style="font-size: 12px;">Card • 11:30 AM</span></div></div><div class="flex flex-col items-end gap-xs"><span class="text-label-md font-bold text-on-surface" style="font-size: 14px;">- ₹2,500</span><span class="badge text-label-sm font-medium" style="background-color: rgba(34, 197, 94, 0.15); color: rgb(22, 163, 74); font-size: 10px; line-height: 12px; padding: 2px 8px; border-radius: 9999px;">Completed</span></div></div></div></div><div class="flex flex-col gap-sm mt-2"><div class="flex items-center w-full"><h3 class="text-label-md font-semibold text-primary" style="color: rgb(123, 77, 255);">Yesterday</h3></div><div class="flex flex-col gap-sm"><div class="flex items-center justify-between p-1 bg-white rounded-xl shadow-sm border border-outline-variant" style="padding: 12px 16px; border-radius: 16px; background-color: #ffffff; border: 1px solid rgba(0, 0, 0, 0.04); box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.03);"><div class="flex items-center gap-sm"><div class="flex items-center justify-center rounded-xl" style="width: 44px; height: 44px; border-radius: 50%; background-color: rgba(123, 77, 255, 0.12); color: #7B4DFF;"><span class="material-symbols-outlined" style="font-size: 22px;">restaurant</span></div><div class="flex flex-col"><span class="text-label-md font-bold text-on-surface" style="font-size: 14px;">Vegetables</span><span class="text-label-sm text-on-surface-variant" style="font-size: 12px;">UPI • 08:45 PM</span></div></div><div class="flex flex-col items-end gap-xs"><span class="text-label-md font-bold text-on-surface" style="font-size: 14px;">- ₹850</span><span class="badge text-label-sm font-medium" style="background-color: rgba(34, 197, 94, 0.15); color: rgb(22, 163, 74); font-size: 10px; line-height: 12px; padding: 2px 8px; border-radius: 9999px;">Completed</span></div></div><div class="flex items-center justify-between p-1 bg-white rounded-xl shadow-sm border border-outline-variant" style="padding: 12px 16px; border-radius: 16px; background-color: #ffffff; border: 1px solid rgba(0, 0, 0, 0.04); box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.03);"><div class="flex items-center gap-sm"><div class="flex items-center justify-center rounded-xl" style="width: 44px; height: 44px; border-radius: 50%; background-color: rgba(123, 77, 255, 0.12); color: #7B4DFF;"><span class="material-symbols-outlined" style="font-size: 22px;">checkroom</span></div><div class="flex flex-col"><span class="text-label-md font-bold text-on-surface" style="font-size: 14px;">Clothes</span><span class="text-label-sm text-on-surface-variant" style="font-size: 12px;">Cash • 10:00 AM</span></div></div><div class="flex flex-col items-end gap-xs"><span class="text-label-md font-bold text-on-surface" style="font-size: 14px;">- ₹499</span><span class="badge text-label-sm font-medium" style="background-color: rgba(34, 197, 94, 0.15); color: rgb(22, 163, 74); font-size: 10px; line-height: 12px; padding: 2px 8px; border-radius: 9999px;">Completed</span></div></div></div></div></section>
 </main>
-
-<nav class="bottom-nav-bar" aria-label="Bottom Navigation">
-    <button class="nav-action-btn active" id="btn-nav-home" aria-label="Home Dashboard">
-        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
-        <span class="nav-label">Home</span>
-    </button>
-    <button class="nav-action-btn" id="btn-nav-budget" aria-label="Budget Overview">
-        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">account_balance_wallet</span>
-        <span class="nav-label">Budget</span>
-    </button>
-    <button class="fab-center-btn" id="btn-fab-add" aria-label="Quick Add Transaction">
-        <span class="material-symbols-outlined" style="font-size: 30px;">add</span>
-    </button>
-    <button class="nav-action-btn" id="btn-nav-stats" aria-label="Financial Stats">
-        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">leaderboard</span>
-        <span class="nav-label">Stats</span>
-    </button>
-    <button class="nav-action-btn" id="btn-nav-history" aria-label="Transaction History">
-        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">history</span>
-        <span class="nav-label">History</span>
-    </button>
+<!-- BottomNavBar -->
+<nav class="bottom-nav"><button class="nav-item active">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="text-label-sm" style="margin-top: 4px;">Home</span>
+</button>
+<button class="nav-item">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">account_balance_wallet</span>
+<span class="text-label-sm" style="margin-top: 4px;">Budget</span>
+</button>
+<!-- FAB Add Button -->
+<button class="fab" aria-label="Add Expense" style="display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(135deg, rgb(123, 77, 255), rgb(255, 107, 61)); color: var(--color-on-primary); border-radius: 50%; transform: translateY(-24px); width: 56px; height: 56px; box-shadow: rgba(123, 77, 255, 0.35) 0px 14px 28px; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; cursor: pointer; transition: 0.3s;">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0; font-size: 28px;">add</span>
+</button>
+<button class="nav-item">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">history</span>
+<span class="text-label-sm" style="margin-top: 4px;">History</span>
+</button>
+<button class="nav-item">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">person</span>
+<span class="text-label-sm" style="margin-top: 4px;">Profile</span>
+</button></nav>
+<!-- Desktop Navigation Fallback -->
+<nav class="desktop-nav">
+<div class="flex flex-col gap-sm">
+<button class="desktop-nav-item active text-label-md">
+<span class="material-symbols-outlined" style="font-variation-settings: &quot;FILL&quot; 1;">home</span>
+            Home
+        </button>
+<button class="desktop-nav-item text-label-md">
+<span class="material-symbols-outlined">credit_card</span>
+            Cards
+        </button>
+<button class="desktop-nav-item text-label-md">
+<span class="material-symbols-outlined">leaderboard</span>
+            Stats
+        </button>
+</div>
 </nav>
-
-<nav class="desktop-sidebar-nav" aria-label="Sidebar Navigation">
-    <button class="desktop-sidebar-btn active">
-        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
-        <span>Home</span>
-    </button>
-    <button class="desktop-sidebar-btn">
-        <span class="material-symbols-outlined">account_balance_wallet</span>
-        <span>Budget</span>
-    </button>
-    <button class="desktop-sidebar-btn">
-        <span class="material-symbols-outlined">leaderboard</span>
-        <span>Stats</span>
-    </button>
-    <button class="desktop-sidebar-btn">
-        <span class="material-symbols-outlined">history</span>
-        <span>History</span>
-    </button>
-</nav>
-
 <script>
-(() => {
-    'use strict';
+    function switchView(view) {
+        const ringView = document.getElementById('view-ring');
+        const barView = document.getElementById('view-bar');
+        const btnRing = document.getElementById('btn-ring');
+        const btnBar = document.getElementById('btn-bar');
 
-    const trendView = document.getElementById('view-aug-trend');
-    const barView = document.getElementById('view-aug-bar');
-    const btnTrend = document.getElementById('tab-btn-trend');
-    const btnBar = document.getElementById('tab-btn-bar');
-
-    const switchDailyView = (targetView) => {
-        if (!trendView || !barView || !btnTrend || !btnBar) return;
-        if (targetView === 'trend') {
-            trendView.style.display = 'block';
+        if (view === 'ring') {
+            ringView.style.display = 'flex';
             barView.style.display = 'none';
-            btnTrend.classList.add('active');
-            btnTrend.setAttribute('aria-selected', 'true');
-            btnBar.classList.remove('active');
-            btnBar.setAttribute('aria-selected', 'false');
-        } else {
-            trendView.style.display = 'none';
-            barView.style.display = 'block';
-            btnBar.classList.add('active');
-            btnBar.setAttribute('aria-selected', 'true');
-            btnTrend.classList.remove('active');
-            btnTrend.setAttribute('aria-selected', 'false');
-        }
-    };
-
-    btnTrend?.addEventListener('click', () => switchDailyView('trend'));
-    btnBar?.addEventListener('click', () => switchDailyView('bar'));
-
-    // Category Tabs Switching
-    const ringCatView = document.getElementById('view-ring');
-    const barCatView = document.getElementById('view-bar');
-    const btnRing = document.getElementById('btn-category-ring');
-    const btnCategoryBar = document.getElementById('btn-category-bar');
-
-    const switchCategoryView = (targetView) => {
-        if (!ringCatView || !barCatView || !btnRing || !btnCategoryBar) return;
-        if (targetView === 'ring') {
-            ringCatView.style.display = 'flex';
-            barCatView.style.display = 'none';
             btnRing.classList.add('active');
-            btnRing.setAttribute('aria-selected', 'true');
-            btnCategoryBar.classList.remove('active');
-            btnCategoryBar.setAttribute('aria-selected', 'false');
-        } else {
-            ringCatView.style.display = 'none';
-            barCatView.style.display = 'flex';
-            btnCategoryBar.classList.add('active');
-            btnCategoryBar.setAttribute('aria-selected', 'true');
+            btnBar.classList.remove('active');
+        } else if (view === 'bar') {
+            ringView.style.display = 'none';
+            barView.style.display = 'flex';
             btnRing.classList.remove('active');
-            btnRing.setAttribute('aria-selected', 'false');
+            btnBar.classList.add('active');
         }
-    };
+    }
+    
+    function switchTrendView(view) {
+        const trendView = document.getElementById('view-aug-trend');
+        const barView = document.getElementById('view-aug-bar');
+        const btnTrend = document.getElementById('btn-trend');
+        const btnBar = document.getElementById('btn-bar-trend');
 
-    btnRing?.addEventListener('click', () => switchCategoryView('ring'));
-    btnCategoryBar?.addEventListener('click', () => switchCategoryView('bar'));
-
-    const dailySection = document.getElementById('daily-spending-section');
-    const btnFullscreen = document.getElementById('btn-toggle-fullscreen');
-    const fullscreenIcon = document.getElementById('fullscreen-icon-indicator');
-
-    const toggleDailyFullscreen = () => {
-        if (!dailySection || !fullscreenIcon) return;
-        const isCurrentlyFullscreen = dailySection.classList.contains('fullscreen-landscape-mode');
-
-        if (isCurrentlyFullscreen) {
-            dailySection.classList.remove('fullscreen-landscape-mode');
-            document.body.classList.remove('fullscreen-active');
-            fullscreenIcon.textContent = 'fullscreen';
-            btnFullscreen?.setAttribute('title', 'Enter Fullscreen');
-        } else {
-            dailySection.classList.add('fullscreen-landscape-mode');
-            document.body.classList.add('fullscreen-active');
-            fullscreenIcon.textContent = 'close_fullscreen';
-            btnFullscreen?.setAttribute('title', 'Exit Fullscreen');
+        if (view === 'trend') {
+            if(trendView) trendView.style.display = 'block';
+            if(barView) barView.style.display = 'none';
+            if(btnTrend) btnTrend.classList.add('active');
+            if(btnBar) btnBar.classList.remove('active');
+        } else if (view === 'bar') {
+            if(trendView) trendView.style.display = 'none';
+            if(barView) barView.style.display = 'block';
+            if(btnTrend) btnTrend.classList.remove('active');
+            if(btnBar) btnBar.classList.add('active');
         }
-    };
+    }
+    
+    function switchWeekView(week) {
+        const views = ['week1', 'week2', 'week3', 'week4', 'week5', 'week6'];
+        views.forEach(v => {
+            document.getElementById('view-' + v).style.display = (v === week) ? 'block' : 'none';
+            document.getElementById('btn-' + v).classList.toggle('active', v === week);
+        });
+    }
+    
+    // Twinkle effect for balance card
+    document.addEventListener("DOMContentLoaded", function() {
+        const container = document.getElementById('twinkle-container');
+        if (!container) return;
 
-    btnFullscreen?.addEventListener('click', toggleDailyFullscreen);
-
-    // Allow user to exit fullscreen using Escape key
-    window.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && dailySection?.classList.contains('fullscreen-landscape-mode')) {
-            toggleDailyFullscreen();
-        }
-    });
-
-    const twinkleContainer = document.getElementById('twinkle-container');
-    if (twinkleContainer) {
         const maxTwinkles = 8;
-        let activeCount = 0;
+        let activeTwinkles = 0;
         const gridCols = 4;
         const gridRows = 3;
-        const cooldownSet = new Set();
+        const cooldowns = new Set();
 
-        const spawnTwinkle = () => {
-            if (activeCount >= maxTwinkles) return;
+        function createTwinkle() {
+            if (activeTwinkles >= maxTwinkles) return;
 
-            const eligibleSpots = [];
+            const availableSpots = [];
             for (let r = 0; r < gridRows; r++) {
                 for (let c = 0; c < gridCols; c++) {
-                    const id = `${r}-${c}`;
-                    if (!cooldownSet.has(id)) eligibleSpots.push({ r, c, id });
+                    const spotId = `${r}-${c}`;
+                    if (!cooldowns.has(spotId)) {
+                        availableSpots.push({ r, c, id: spotId });
+                    }
                 }
             }
 
-            if (eligibleSpots.length === 0) return;
+            if (availableSpots.length === 0) return;
 
-            const chosen = eligibleSpots[Math.floor(Math.random() * eligibleSpots.length)];
-            cooldownSet.add(chosen.id);
-            activeCount++;
+            const spot = availableSpots[Math.floor(Math.random() * availableSpots.length)];
+            cooldowns.add(spot.id);
+            activeTwinkles++;
 
-            const star = document.createElement('div');
-            star.className = 'twinkle-star';
+            const twinkle = document.createElement('div');
+            twinkle.className = 'twinkle-particle';
+            
+            const core = document.createElement('div');
+            core.className = 'twinkle-particle-core';
+            twinkle.appendChild(core);
 
-            const centerCore = document.createElement('div');
-            centerCore.className = 'twinkle-star-center';
-            star.appendChild(centerCore);
-
+            // Calculate position with some randomness within the grid cell
             const cellW = 100 / gridCols;
             const cellH = 100 / gridRows;
-            const randomX = Math.random() * 0.75 + 0.12;
-            const randomY = Math.random() * 0.75 + 0.12;
+            
+            const randomX = Math.random() * 0.8 + 0.1; // 10% to 90% of cell
+            const randomY = Math.random() * 0.8 + 0.1;
+            
+            const top = spot.r * cellH + (cellH * randomY);
+            const left = spot.c * cellW + (cellW * randomX);
 
-            star.style.top = `${chosen.r * cellH + (cellH * randomY)}%`;
-            star.style.left = `${chosen.c * cellW + (cellW * randomX)}%`;
-            star.style.transform = `scale(${Math.random() * 0.45 + 0.75})`;
+            twinkle.style.top = `${top}%`;
+            twinkle.style.left = `${left}%`;
+            
+            // Randomize size slightly
+            const scale = Math.random() * 0.5 + 0.75;
+            twinkle.style.transform = `scale(${scale})`;
 
-            twinkleContainer.appendChild(star);
+            container.appendChild(twinkle);
 
+            // Clean up and handle cooldown
             setTimeout(() => {
-                star.remove();
-                activeCount--;
-                setTimeout(() => cooldownSet.delete(chosen.id), 8000);
-            }, 2000);
-        };
-
-        for (let i = 0; i < maxTwinkles; i++) {
-            setTimeout(spawnTwinkle, Math.random() * 1800);
+                twinkle.remove();
+                activeTwinkles--;
+                
+                // 10 second cooldown for this specific spot
+                setTimeout(() => {
+                    cooldowns.delete(spot.id);
+                }, 10000);
+            }, 2000); // 2s animation duration
         }
-        setInterval(spawnTwinkle, 750);
-    }
 
-    const obscuredBalance = document.getElementById('obscured-balance-target');
-    if (obscuredBalance) {
-        let hideTimer = null;
+        // Spawn initially
+        for (let i = 0; i < maxTwinkles; i++) {
+            setTimeout(createTwinkle, Math.random() * 2000);
+        }
 
-        const showBalance = () => {
-            obscuredBalance.classList.add('revealed');
-            if (hideTimer) clearTimeout(hideTimer);
-        };
+        // Continuously try to spawn
+        setInterval(createTwinkle, 800);
+        
+        // Balance Reveal Interaction setup
+        const obscuredAmount = document.querySelector('.obscured-amount');
+        if (obscuredAmount) {
+            let revealTimeout;
+            
+            const reveal = () => {
+                obscuredAmount.classList.add('revealed');
+                clearTimeout(revealTimeout);
+            };
 
-        const hideBalanceDelayed = () => {
-            hideTimer = setTimeout(() => {
-                obscuredBalance.classList.remove('revealed');
-            }, 1800);
-        };
+            const hide = () => {
+                revealTimeout = setTimeout(() => {
+                    obscuredAmount.classList.remove('revealed');
+                }, 1500);
+            };
 
-        obscuredBalance.addEventListener('touchstart', showBalance, { passive: true });
-        obscuredBalance.addEventListener('touchmove', showBalance, { passive: true });
-        obscuredBalance.addEventListener('touchend', hideBalanceDelayed);
-
-        let isPointerDown = false;
-        obscuredBalance.addEventListener('mousedown', () => {
-            isPointerDown = true;
-            showBalance();
-        });
-
-        window.addEventListener('mouseup', () => {
-            if (isPointerDown) {
-                isPointerDown = false;
-                hideBalanceDelayed();
-            }
-        });
-
-        obscuredBalance.addEventListener('mousemove', () => {
-            if (isPointerDown) showBalance();
-        });
-    }
-
-    const cardElement = document.getElementById('main-balance-card');
-    if (cardElement) {
-        let isCardPressed = false;
-
-        const handleCardMotion = (clientX, clientY) => {
-            const rect = cardElement.getBoundingClientRect();
-            const x = (clientX - rect.left) / rect.width - 0.5;
-            const y = (clientY - rect.top) / rect.height - 0.5;
-
-            const rotateY = x * 20;
-            const rotateX = y * -20;
-            const scale = isCardPressed ? 0.96 : 1.02;
-
-            cardElement.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(${scale})`;
-        };
-
-        const resetCardPosition = () => {
-            isCardPressed = false;
-            cardElement.style.transition = 'transform 0.25s ease-out';
-            cardElement.style.transform = 'rotateX(5deg) rotateY(-5deg) scale(1)';
-        };
-
-        cardElement.addEventListener('mousemove', (e) => {
-            cardElement.style.transition = 'transform 0.05s ease-out';
-            handleCardMotion(e.clientX, e.clientY);
-        });
-
-        cardElement.addEventListener('mouseleave', resetCardPosition);
-
-        cardElement.addEventListener('mousedown', (e) => {
-            isCardPressed = true;
-            cardElement.style.transition = 'transform 0.05s ease-out';
-            handleCardMotion(e.clientX, e.clientY);
-        });
-
-        cardElement.addEventListener('mouseup', () => {
-            isCardPressed = false;
-        });
-
-        cardElement.addEventListener('touchstart', (e) => {
-            isCardPressed = true;
-            cardElement.style.transition = 'transform 0.05s ease-out';
-            if (e.touches.length > 0) {
-                handleCardMotion(e.touches[0].clientX, e.touches[0].clientY);
-            }
-        }, { passive: true });
-
-        cardElement.addEventListener('touchmove', (e) => {
-            if (e.touches.length > 0) {
-                handleCardMotion(e.touches[0].clientX, e.touches[0].clientY);
-            }
-        }, { passive: true });
-
-        cardElement.addEventListener('touchend', resetCardPosition);
-    }
-
-    const navButtons = document.querySelectorAll('.nav-action-btn');
-    navButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            navButtons.forEach(b => {
-                b.classList.remove('active');
-                const symbol = b.querySelector('.material-symbols-outlined');
-                if (symbol) symbol.style.fontVariationSettings = "'FILL' 0";
+            obscuredAmount.addEventListener('touchstart', reveal, {passive: true});
+            obscuredAmount.addEventListener('touchmove', reveal, {passive: true});
+            obscuredAmount.addEventListener('touchend', hide);
+            
+            let isMousedown = false;
+            obscuredAmount.addEventListener('mousedown', () => { isMousedown = true; reveal(); });
+            window.addEventListener('mouseup', () => { 
+                if (isMousedown) {
+                    isMousedown = false;
+                    hide();
+                }
             });
-            btn.classList.add('active');
-            const activeSymbol = btn.querySelector('.material-symbols-outlined');
-            if (activeSymbol) activeSymbol.style.fontVariationSettings = "'FILL' 1";
-        });
+            obscuredAmount.addEventListener('mousemove', () => {
+                if (isMousedown) reveal();
+            });
+        }
     });
-})();
+
+    // 3D Tilt Interaction for Balance Card
+    const card = document.getElementById('main-balance-card');
+    let isPressed = false;
+
+    function handleMove(e) {
+        if (!card) return;
+        
+        let clientX, clientY;
+        if (e.type === 'touchmove' || e.type === 'touchstart') {
+            clientX = e.touches[0].clientX;
+            clientY = e.touches[0].clientY;
+        } else {
+            clientX = e.clientX;
+            clientY = e.clientY;
+        }
+
+        const rect = card.getBoundingClientRect();
+        
+        // Calculate position relative to card center (normalized between -1 and 1)
+        const x = (clientX - rect.left) / rect.width - 0.5;
+        const y = (clientY - rect.top) / rect.height - 0.5;
+        
+        // Adjust these values to increase/decrease tilt intensity
+        const rotateY = x * 20; // max rotation degrees
+        const rotateX = y * -20;
+        
+        const scale = isPressed ? 0.95 : 1.02;
+
+        card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(${scale})`;
+    }
+
+    function handleLeave() {
+        if (!card) return;
+        isPressed = false;
+        // Reset to default isometric-ish view or flat depending on preference
+        // Returning to a subtle tilt for aesthetics
+        card.style.transform = `rotateX(5deg) rotateY(-5deg) scale(1)`;
+    }
+
+    function handleDown() {
+        isPressed = true;
+        if(card) card.style.transition = 'transform 0.05s ease-out';
+    }
+
+    function handleUp() {
+        isPressed = false;
+        if(card) card.style.transition = 'transform 0.1s ease-out';
+    }
+
+    if (card) {
+        // Initialize with a subtle tilt
+        card.style.transform = `rotateX(5deg) rotateY(-5deg) scale(1)`;
+
+        // Mouse events
+        card.addEventListener('mousemove', handleMove);
+        card.addEventListener('mouseleave', handleLeave);
+        card.addEventListener('mousedown', (e) => { handleDown(); handleMove(e); });
+        card.addEventListener('mouseup', handleUp);
+
+        // Touch events
+        card.addEventListener('touchmove', (e) => {
+             // Prevent scrolling while tilting the card
+            e.preventDefault(); 
+            handleMove(e);
+        }, { passive: false });
+        card.addEventListener('touchstart', (e) => { handleDown(); handleMove(e); });
+        card.addEventListener('touchend', () => { handleUp(); handleLeave(); });
+    }
+</script>
+<script class="">
+function showAllWeeks() {
+    const chartSection = document.querySelector('main > section:nth-of-type(4)');
+    const segmentedControl = chartSection.querySelector('.segmented-control');
+    const buttons = segmentedControl.querySelectorAll('.segmented-btn');
+    
+    // Update active state
+    buttons.forEach(btn => btn.classList.remove('active'));
+    document.getElementById('btn-view-all').classList.add('active');
+
+    // Hide existing single-view containers
+    const containers = chartSection.querySelectorAll('.chart-container');
+    containers.forEach(c => c.style.display = 'none');
+
+    // Check if 'all-weeks-view' already exists to avoid duplicates
+    let allWeeksView = document.getElementById('all-weeks-view');
+    if (!allWeeksView) {
+        allWeeksView = document.createElement('div');
+        allWeeksView.id = 'all-weeks-view';
+        allWeeksView.className = 'stats-scroll';
+        allWeeksView.style.cssText = 'display: flex; gap: 16px; overflow-x: auto; padding: 8px 0; margin-top: 8px;';
+
+        // Clone charts from W1 to W4 (and placeholders for W5/W6 if they existed in DOM)
+        const weekIds = ['view-week1', 'view-week2', 'view-week3', 'view-week4', 'view-week5', 'view-week6'];
+        weekIds.forEach(id => {
+            const original = document.getElementById(id);
+            if (original) {
+                const clone = original.cloneNode(true);
+                clone.style.display = 'block';
+                clone.style.minWidth = '280px';
+                clone.style.flexShrink = '0';
+                // Add a label for the week
+                const label = document.createElement('div');
+                label.className = 'text-label-md font-bold text-primary';
+                label.textContent = id.replace('view-', '').toUpperCase();
+                label.style.marginBottom = '4px';
+                clone.prepend(label);
+                allWeeksView.appendChild(clone);
+            }
+        });
+        chartSection.appendChild(allWeeksView);
+    } else {
+        allWeeksView.style.display = 'flex';
+    }
+}
+
+// Update existing switchWeekView to hide the 'all-weeks-view' when a specific week is selected
+const originalSwitchWeekView = window.switchWeekView;
+window.switchWeekView = function(week) {
+    const allWeeksView = document.getElementById('all-weeks-view');
+    if (allWeeksView) allWeeksView.style.display = 'none';
+    originalSwitchWeekView(week);
+};
 </script>
 
-</body>
-</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="logout-modal" style="display: none; position: fixed; inset: 0; z-index: 100; align-items: center; justify-content: center; padding: 20px;">
+  <div id="logout-backdrop" onclick="closeLogoutModal()" style="position: absolute; inset: 0; background-color: rgba(28, 27, 27, 0.45); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); opacity: 0; transition: opacity 0.25s ease;"></div>
+  <div id="logout-card" style="position: relative; z-index: 101; width: 100%; max-width: 340px; background: #ffffff; border-radius: 24px; padding: 24px 20px 20px; box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.15); border: 1px solid rgba(202, 195, 216, 0.4); text-align: center; transform: scale(0.92) translateY(8px); opacity: 0; transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;">
+    <div style="width: 52px; height: 52px; border-radius: 50%; background: rgba(174, 50, 3, 0.1); color: #ae3203; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
+      <span class="material-symbols-outlined" style="font-size: 28px;">logout</span>
+    </div>
+    <h3 class="text-headline-md font-bold text-on-surface" style="font-size: 18px; line-height: 24px; margin-bottom: 8px;">Log Out</h3>
+    <p class="text-label-sm text-on-surface-variant" style="font-size: 13px; line-height: 18px; margin-bottom: 24px;">Are you sure you want to log out of your account?</p>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+      <button type="button" onclick="closeLogoutModal()" class="text-label-md font-semibold" style="padding: 12px; border-radius: 12px; border: 1px solid rgba(122, 116, 135, 0.2); background: rgb(246, 243, 242); color: rgb(73, 68, 86); cursor: pointer; transition: background-color 0.2s;">Cancel</button>
+      <button type="button" onclick="confirmLogout()" class="text-label-md font-bold" style="padding: 12px; border-radius: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; background: linear-gradient(135deg, rgb(123, 77, 255), rgb(255, 107, 61)); color: rgb(255, 255, 255); cursor: pointer; box-shadow: rgba(123, 77, 255, 0.3) 0px 4px 12px; transition: transform 0.1s;">Log Out</button>
+    </div>
+  </div>
+</div>
+<script class="">
+function openLogoutModal() {
+  var modal = document.getElementById('logout-modal');
+  var backdrop = document.getElementById('logout-backdrop');
+  var card = document.getElementById('logout-card');
+  if (!modal) return;
+  modal.style.display = 'flex';
+  requestAnimationFrame(function() {
+    if (backdrop) backdrop.style.opacity = '1';
+    if (card) {
+      card.style.opacity = '1';
+      card.style.transform = 'scale(1) translateY(0)';
+    }
+  });
+}
+
+function closeLogoutModal() {
+  var modal = document.getElementById('logout-modal');
+  var backdrop = document.getElementById('logout-backdrop');
+  var card = document.getElementById('logout-card');
+  if (!modal) return;
+  if (backdrop) backdrop.style.opacity = '0';
+  if (card) {
+    card.style.opacity = '0';
+    card.style.transform = 'scale(0.92) translateY(8px)';
+  }
+  setTimeout(function() {
+    modal.style.display = 'none';
+  }, 250);
+}
+
+function confirmLogout() {
+  closeLogoutModal();
+}
+</script>
+
+</body></html>
