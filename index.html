@@ -1,1 +1,1206 @@
+<!DOCTYPE html><html lang="en" style=""><head></head><body><svg class="inline-defs-container" aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden"></svg>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport">
+<title>Smart Finance - Vehicle Mileage &amp; Fuel Tracker</title>
+<!-- Icons & Typography -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        :root {
+            --color-primary: #7b4dff;
+            --color-primary-dark: #622ce5;
+            --color-secondary: #ff6b3d;
+            --color-success: #22c55e;
+            --color-warning: #f97316;
+            --color-background: #fcf8f8;
+            --color-surface: #ffffff;
+            --color-surface-container: #f7f2f2;
+            --color-on-surface: #1c1b1b;
+            --color-on-surface-variant: #5f5a6b;
+            --color-outline: #e2dcde;
+            --radius-card: 24px;
+            --radius-btn: 18px;
+            --font-main: 'Inter', -apple-system, sans-serif;
+        }
 
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--color-background);
+            color: var(--color-on-surface);
+            font-size: 14px;
+            line-height: 1.4;
+            min-height: 100vh;
+            padding-bottom: 100px;
+            overflow-x: hidden;
+        }
+
+        /* Material Icons */
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-size: 20px;
+            line-height: 1;
+            display: inline-block;
+            vertical-align: middle;
+            font-variation-settings: 'FILL' 0;
+        }
+
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            z-index: 50;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-logo-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(123, 77, 255, 0.25);
+        }
+
+        .header-title h1 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--color-on-surface);
+            line-height: 1.2;
+        }
+
+        .header-title p {
+            font-size: 11px;
+            color: var(--color-on-surface-variant);
+        }
+
+        .vehicle-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(123, 77, 255, 0.08);
+            border: 1px solid rgba(123, 77, 255, 0.15);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--color-primary);
+        }
+
+        /* Container */
+        .container {
+            padding: 16px 16px;
+            max-width: 480px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* Mode Selector Toggle Bar (3 options) */
+        .mode-toggle-card {
+            background: var(--color-surface);
+            padding: 6px;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(0,0,0,0.04);
+            display: flex;
+            gap: 4px;
+        }
+
+        .mode-btn {
+            flex: 1;
+            padding: 10px 6px;
+            border: none;
+            background: transparent;
+            border-radius: 14px;
+            font-family: inherit;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--color-on-surface-variant);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .mode-btn .material-symbols-outlined {
+            font-size: 20px;
+            transition: transform 0.2s;
+        }
+
+        .mode-btn.active {
+            background: linear-gradient(135deg, var(--color-primary), #9066ff);
+            color: #ffffff;
+            box-shadow: 0 4px 14px rgba(123, 77, 255, 0.35);
+        }
+
+        .mode-btn.active.reserve-mode {
+            background: linear-gradient(135deg, #ea580c, #f97316);
+            box-shadow: 0 4px 14px rgba(249, 115, 22, 0.35);
+        }
+
+        .mode-btn.active.refuel-mode {
+            background: linear-gradient(135deg, #15803d, #22c55e);
+            box-shadow: 0 4px 14px rgba(34, 197, 94, 0.35);
+        }
+
+        /* Card container */
+        .card {
+            background: var(--color-surface);
+            border-radius: var(--radius-card);
+            padding: 18px;
+            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            position: relative;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .card-header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-tag {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--color-primary);
+        }
+
+        .card-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--color-on-surface);
+        }
+
+        /* Location Strip */
+        .live-location-strip {
+            background: linear-gradient(135deg, #f4f0ff 0%, #faf8ff 100%);
+            border: 1px solid rgba(123, 77, 255, 0.15);
+            border-radius: 16px;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .live-loc-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .pulse-loc-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #22c55e;
+            box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+            animation: pulse-ring 1.8s infinite;
+        }
+
+        @keyframes pulse-ring {
+            0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+            70% { box-shadow: 0 0 0 8px rgba(34, 197, 94, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+        }
+
+        .loc-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .loc-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--color-primary);
+        }
+
+        .loc-address {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--color-on-surface);
+        }
+
+        .loc-coords {
+            font-size: 10px;
+            color: var(--color-on-surface-variant);
+            font-family: monospace;
+        }
+
+        /* Reading Entry Subcard */
+        .reading-block {
+            background: var(--color-surface-container);
+            border-radius: 18px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+
+        .reading-block-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .reading-type {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        .time-pill {
+            font-size: 11px;
+            font-weight: 600;
+            background: #ffffff;
+            padding: 3px 8px;
+            border-radius: 12px;
+            color: var(--color-on-surface-variant);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+        }
+
+        .reading-grid {
+            display: grid;
+            grid-template-columns: 1fr 110px;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .input-label {
+            font-size: 11px;
+            color: var(--color-on-surface-variant);
+            font-weight: 500;
+        }
+
+        .odo-input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .odo-input {
+            width: 100%;
+            background: #ffffff;
+            border: 1px solid var(--color-outline);
+            border-radius: 12px;
+            padding: 10px 36px 10px 12px;
+            font-size: 16px;
+            font-weight: 700;
+            font-family: inherit;
+            color: var(--color-on-surface);
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .odo-input:focus {
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(123, 77, 255, 0.15);
+        }
+
+        .odo-unit {
+            position: absolute;
+            right: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--color-on-surface-variant);
+            pointer-events: none;
+        }
+
+        /* Photo Upload Thumbnail */
+        .photo-uploader {
+            height: 48px;
+            background: #ffffff;
+            border: 1.5px dashed var(--color-primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            cursor: pointer;
+            color: var(--color-primary);
+            font-size: 11px;
+            font-weight: 600;
+            transition: all 0.2s;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .photo-uploader:hover {
+            background: rgba(123, 77, 255, 0.04);
+        }
+
+        .photo-preview {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .photo-badge-done {
+            position: absolute;
+            inset: 0;
+            background: rgba(17, 24, 39, 0.6);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        /* Net Distance Strip */
+        .net-distance-banner {
+            background: linear-gradient(135deg, rgba(123, 77, 255, 0.08), rgba(255, 107, 61, 0.08));
+            border: 1px solid rgba(123, 77, 255, 0.18);
+            border-radius: 16px;
+            padding: 10px 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .net-distance-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .net-distance-val {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            color: #ffffff;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 13px;
+            box-shadow: 0 2px 8px rgba(123, 77, 255, 0.25);
+        }
+
+        /* Primary Action Button */
+        .btn-submit {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            color: #ffffff;
+            border: none;
+            border-radius: var(--radius-btn);
+            padding: 14px 20px;
+            font-size: 14px;
+            font-weight: 700;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            box-shadow: 0 8px 24px rgba(123, 77, 255, 0.3);
+            transition: transform 0.15s, box-shadow 0.15s;
+            width: 100%;
+        }
+
+        .btn-submit:active {
+            transform: scale(0.98);
+            box-shadow: 0 4px 12px rgba(123, 77, 255, 0.2);
+        }
+
+        /* Segmented Control for Graph/Calendar Tabs */
+        .analytics-segmented {
+            display: flex;
+            background: var(--color-surface-container);
+            padding: 4px;
+            border-radius: 14px;
+            gap: 4px;
+        }
+
+        .analytics-tab-btn {
+            flex: 1;
+            padding: 8px 12px;
+            border: none;
+            background: transparent;
+            font-family: inherit;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--color-on-surface-variant);
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        .analytics-tab-btn.active {
+            background: #ffffff;
+            color: var(--color-primary);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Calendar Styling */
+        .calendar-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .calendar-month-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 2px 4px;
+        }
+
+        .calendar-month-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--color-on-surface);
+        }
+
+        .cal-legend {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 10.5px;
+            color: var(--color-on-surface-variant);
+            margin-top: -4px;
+        }
+
+        .legend-pill {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .dot-refuel {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background-color: var(--color-success);
+            box-shadow: 0 0 4px rgba(34, 197, 94, 0.6);
+        }
+
+        .dot-reserve {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background-color: var(--color-warning);
+            box-shadow: 0 0 4px rgba(249, 115, 22, 0.6);
+        }
+
+        .cal-grid-header {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+            text-align: center;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--color-on-surface-variant);
+        }
+
+        .cal-grid-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+        }
+
+        .cal-day-cell {
+            aspect-ratio: 1 / 1.1;
+            background: var(--color-surface-container);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.15s;
+            border: 1px solid transparent;
+        }
+
+        .cal-day-cell:hover {
+            border-color: rgba(123, 77, 255, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .cal-day-cell.inactive {
+            opacity: 0.35;
+            background: transparent;
+        }
+
+        .cal-day-cell.today {
+            background: linear-gradient(135deg, rgba(123, 77, 255, 0.15), rgba(255, 107, 61, 0.15));
+            border: 1.5px solid var(--color-primary);
+        }
+
+        .cal-day-num {
+            font-size: 11px;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .cal-day-km {
+            font-size: 8px;
+            color: var(--color-primary);
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        /* Dots on cell */
+        .cell-indicator-dots {
+            display: flex;
+            gap: 3px;
+            position: absolute;
+            bottom: 3px;
+        }
+
+        .cell-dot-green {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--color-success);
+        }
+
+        .cell-dot-orange {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--color-warning);
+        }
+
+        /* Monthly Summary metrics */
+        .monthly-metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-top: 4px;
+        }
+
+        .m-metric-card {
+            background: var(--color-surface-container);
+            border-radius: 14px;
+            padding: 10px 8px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .m-metric-label {
+            font-size: 10px;
+            color: var(--color-on-surface-variant);
+            font-weight: 500;
+        }
+
+        .m-metric-val {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--color-on-surface);
+        }
+
+        /* Bar Graph Styling */
+        .bargraph-view {
+            display: none;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .bargraph-container {
+            height: 180px;
+            width: 100%;
+            position: relative;
+        }
+
+        /* Toast Modal */
+        .toast-msg {
+            position: fixed;
+            bottom: 90px;
+            left: 50%;
+            transform: translateX(-50%) translateY(30px);
+            background: #1e1e24;
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 600;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 999;
+        }
+
+        .toast-msg.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Bottom Tab Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 72px;
+            background: rgba(255, 255, 255, 0.94);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 0 16px env(safe-area-inset-bottom);
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            z-index: 50;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.03);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            color: var(--color-on-surface-variant);
+            font-size: 10.5px;
+            font-weight: 600;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .nav-item.active {
+            color: var(--color-primary);
+        }
+
+        .nav-fab-btn {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: translateY(-16px);
+            box-shadow: 0 8px 24px rgba(123, 77, 255, 0.35);
+            border: 3px solid #ffffff;
+            cursor: pointer;
+        }
+    </style>
+
+
+<!-- Header -->
+<header>
+<div class="header-title">
+<div class="header-logo-icon">
+<span class="material-symbols-outlined" style="font-size: 22px;">two_wheeler</span>
+</div>
+<div>
+<h1 class="">Vehicle Tracker</h1>
+<p class="">Smart ODO Management</p>
+</div>
+</div>
+<div class="vehicle-badge">
+<span class="material-symbols-outlined" style="font-size: 15px;">two_wheeler</span>
+<span class="">AP xx xxx x 2</span>
+</div>
+</header>
+<div class="container">
+<!-- 3-Way Mode Toggle Bar -->
+<div class="mode-toggle-card">
+<button class="mode-btn active" id="mode-start-end" onclick="setTrackerMode('start-end')">
+<span class="material-symbols-outlined">sync_alt</span>
+<span class="">Start / End ODO</span>
+</button>
+<button class="mode-btn" id="mode-reserve" onclick="setTrackerMode('reserve')">
+<span class="material-symbols-outlined">error_outline</span>
+<span class="">Reserve Point</span>
+</button>
+<button class="mode-btn" id="mode-refuel" onclick="setTrackerMode('refuel')">
+<span class="material-symbols-outlined">local_gas_station</span>
+<span class="">Refueling</span>
+</button>
+</div>
+<!-- Dynamic Entry Form Card (Changes according to mode) -->
+<section class="card" id="active-log-card">
+<div class="card-header">
+<div class="card-header-left">
+<span class="section-tag" id="mode-tag-color" style="background-color: var(--color-primary);"></span>
+<span class="card-title" id="mode-card-title">Log Start &amp; Closing ODO</span>
+</div>
+<span class="time-pill" id="today-timestamp">Today, 18 Oct 2026</span>
+</div>
+<!-- Automatic Live Location Strip -->
+<div class="live-location-strip">
+<div class="live-loc-left">
+<div class="pulse-loc-dot" id="loc-status-dot"></div>
+<div class="loc-text">
+<span class="loc-label" id="loc-mode-label">Automatic GPS Live Location</span>
+<span class="loc-address" id="loc-address-text">Hitech City Road, Hyderabad, TS</span>
+</div>
+</div>
+<div class="loc-coords" id="loc-coords-text">17.4435° N, 78.3772° E</div>
+</div>
+<!-- SECTION 1: START / END ODO FORM -->
+<div id="form-start-end" style="display: flex; flex-direction: column; gap: 12px;">
+<!-- Start Reading -->
+<div class="reading-block">
+<div class="reading-block-header">
+<span class="reading-type" style="color: var(--color-primary);">
+<span class="material-symbols-outlined" style="font-size: 18px;">play_circle</span>
+<span class="">Start Reading</span>
+</span>
+<span class="time-pill">08:30 AM (Morning)</span>
+</div>
+<div class="reading-grid">
+<div class="input-group">
+<label class="input-label">Manual Odometer (Km)</label>
+<div class="odo-input-wrapper">
+<input class="odo-input" id="start-odo-input" oninput="calculateNetDistance()" type="number" value="42841.5">
+<span class="odo-unit">km</span>
+</div>
+</div>
+<div class="photo-uploader" onclick="triggerPhotoUpload('start')" style="width: 68px; height: 68px; aspect-ratio: 1 / 1; justify-self: end; background: linear-gradient(135deg, rgba(123, 77, 255, 0.08), rgba(98, 44, 229, 0.04)); border: 1.5px dashed var(--color-primary); color: var(--color-primary); display: flex; flex-direction: column; gap: 2px; align-items: center; justify-content: center; position: relative; border-radius: 12px; text-align: center; padding: 4px;"><span class="material-symbols-outlined" style="font-size: 20px;">photo_camera</span><span style="font-size: 9px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.1;" class="">Live ODO</span><span style="font-size: 8px; font-weight: 500; opacity: 0.8; line-height: 1;" class="">Tap Snap</span></div>
+</div>
+<button class="btn-save-sub" onclick="submitLog('Start Odometer')" style="margin-top: 2px; width: 100%; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; background: linear-gradient(135deg, rgb(123, 77, 255), rgb(255, 107, 61)); color: rgb(255, 255, 255); border-radius: 12px; padding: 10px 14px; font-size: 13px; font-weight: 700; font-family: inherit; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer; box-shadow: rgba(123, 77, 255, 0.35) 0px 4px 14px; transition: 0.2s;"><span class="material-symbols-outlined" style="font-size: 16px;">save</span>Save Start ODO Log</button></div>
+<!-- Closing Reading -->
+<div class="reading-block">
+<div class="reading-block-header">
+<span class="reading-type" style="color: var(--color-secondary);">
+<span class="material-symbols-outlined" style="font-size: 18px;">stop_circle</span>
+<span class="">Closing Reading</span>
+</span>
+<span class="time-pill">07:45 PM (Evening)</span>
+</div>
+<div class="reading-grid">
+<div class="input-group">
+<label class="input-label">Manual Odometer (Km)</label>
+<div class="odo-input-wrapper">
+<input class="odo-input" id="end-odo-input" oninput="calculateNetDistance()" type="number" value="42890.0">
+<span class="odo-unit">km</span>
+</div>
+</div>
+<div class="photo-uploader" onclick="triggerPhotoUpload('end')" style="width: 68px; height: 68px; aspect-ratio: 1 / 1; justify-self: end; background: linear-gradient(135deg, rgba(123, 77, 255, 0.08), rgba(98, 44, 229, 0.04)); border: 1.5px dashed var(--color-primary); color: var(--color-primary); display: flex; flex-direction: column; gap: 2px; align-items: center; justify-content: center; position: relative; border-radius: 12px; text-align: center; padding: 4px;"><span class="material-symbols-outlined" style="font-size: 20px;">photo_camera</span><span style="font-size: 9px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.1;" class="">Live ODO</span><span style="font-size: 8px; font-weight: 500; opacity: 0.8; line-height: 1;" class="">Tap Snap</span></div>
+</div>
+<button class="btn-save-sub" onclick="submitLog('Closing Odometer')" style="margin-top: 2px; width: 100%; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; background: linear-gradient(135deg, rgb(123, 77, 255), rgb(255, 107, 61)); color: rgb(255, 255, 255); border-radius: 12px; padding: 10px 14px; font-size: 13px; font-weight: 700; font-family: inherit; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer; box-shadow: rgba(255, 107, 61, 0.35) 0px 4px 14px; transition: 0.2s;"><span class="material-symbols-outlined" style="font-size: 16px;">save</span>Save Closing ODO Log</button></div>
+<!-- Net Distance Computed Banner -->
+
+
+</div>
+<!-- SECTION 2: RESERVE POINT ODO FORM -->
+<div id="form-reserve" style="display: none; flex-direction: column; gap: 12px;">
+<div class="reading-block" style="background: rgba(249, 115, 22, 0.05); border-color: rgba(249, 115, 22, 0.2);">
+<div class="reading-block-header">
+<span class="reading-type" style="color: #ea580c;">
+<span class="material-symbols-outlined" style="font-size: 18px;">warning</span>
+<span class="">Reserve Point Hit Record</span>
+</span>
+<span class="time-pill">Live Detection</span>
+</div>
+<div class="reading-grid">
+<div class="input-group">
+<label class="input-label">Reserve Odometer Reading</label>
+<div class="odo-input-wrapper">
+<input class="odo-input" id="reserve-odo-input" style="border-color: rgba(249, 115, 22, 0.3);" type="number" value="42875.2">
+<span class="odo-unit">km</span>
+</div>
+</div>
+<div class="photo-uploader" onclick="triggerPhotoUpload('reserve')" style="border-color: #ea580c; color: #ea580c;">
+<span class="material-symbols-outlined">photo_camera</span>
+<span class="">Snap Meter</span>
+</div>
+</div>
+<div style="font-size: 11px; color: #ea580c; background: rgba(249,115,22,0.1); padding: 8px 12px; border-radius: 10px; margin-top: 4px; display: flex; align-items: center; gap: 6px;">
+<span class="material-symbols-outlined" style="font-size: 16px;">info</span>
+<span class="">Reserve marker logs an <strong>Orange Dot</strong> on the Oct 2026 calendar.</span>
+</div>
+</div>
+<button class="btn-submit" onclick="submitLog('Reserve Point')" style="background: linear-gradient(135deg, #ea580c, #f97316); box-shadow: 0 8px 24px rgba(249, 115, 22, 0.3);">
+<span class="material-symbols-outlined">add_alert</span>
+<span class="">Submit Reserve Point ODO</span>
+</button>
+</div>
+<!-- SECTION 3: REFUELING ODO FORM -->
+<div id="form-refuel" style="display: none; flex-direction: column; gap: 12px;">
+<div class="reading-block" style="background: rgba(34, 197, 94, 0.05); border-color: rgba(34, 197, 94, 0.2);">
+<div class="reading-block-header">
+<span class="reading-type" style="color: #15803d;">
+<span class="material-symbols-outlined" style="font-size: 18px;">local_gas_station</span>
+<span class="">Fuel Refill Entry</span>
+</span>
+<span class="time-pill">Petrol / Diesel</span>
+</div>
+<div class="reading-grid">
+<div class="input-group">
+<label class="input-label">Odometer at Pump (Km)</label>
+<div class="odo-input-wrapper">
+<input class="odo-input" id="refuel-odo-input" style="border-color: rgba(34, 197, 94, 0.3);" type="number" value="42880.0">
+<span class="odo-unit">km</span>
+</div>
+</div>
+<div class="photo-uploader" onclick="triggerPhotoUpload('refuel')" style="border-color: #15803d; color: #15803d;">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="">Dispenser / Bill</span>
+</div>
+</div>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 4px;">
+<div class="input-group">
+<label class="input-label">Fuel Quantity</label>
+<div class="odo-input-wrapper">
+<input class="odo-input" style="font-size: 14px;" type="number" value="15.50">
+<span class="odo-unit">Ltr</span>
+</div>
+</div>
+<div class="input-group">
+<label class="input-label">Total Amount Paid</label>
+<div class="odo-input-wrapper">
+<input class="odo-input" style="font-size: 14px;" type="number" value="1650">
+<span class="odo-unit">₹</span>
+</div>
+</div>
+</div>
+<div style="font-size: 11px; color: #15803d; background: rgba(34, 197, 94, 0.1); padding: 8px 12px; border-radius: 10px; margin-top: 2px; display: flex; align-items: center; gap: 6px;">
+<span class="material-symbols-outlined" style="font-size: 16px;">check_circle</span>
+<span class="">Refueling marks a <strong>Green Dot</strong> on the Oct 2026 calendar.</span>
+</div>
+</div>
+<button class="btn-submit" onclick="submitLog('Refueling')" style="background: linear-gradient(135deg, #15803d, #22c55e); box-shadow: 0 8px 24px rgba(34, 197, 94, 0.3);">
+<span class="material-symbols-outlined">local_gas_station</span>
+<span class="">Submit Refueling ODO</span>
+</button>
+</div>
+</section>
+<!-- DASHBOARD: Daily Travel Analysis (Calendar & Bar Graph) -->
+<section class="card">
+<div class="card-header">
+<div>
+<h3 class="card-title">Daily Travel Analysis</h3>
+<p style="font-size: 11px; color: var(--color-on-surface-variant);" class="">October 2026 Mileage Analytics</p>
+</div>
+<!-- Segmented Switch between Calendar and Bar Graph -->
+
+</div>
+<!-- 1. CALENDAR VIEW -->
+<div class="calendar-wrapper" id="view-calendar" style="display: flex;">
+<div class="calendar-month-bar">
+<span class="calendar-month-title">October 2026</span>
+<!-- Dots Legend -->
+<div class="cal-legend">
+<div class="legend-pill">
+<span class="dot-refuel"></span>
+<span class="">Refueled</span>
+</div>
+<div class="legend-pill">
+<span class="dot-reserve"></span>
+<span class="">Reserve</span>
+</div>
+</div>
+</div>
+<!-- Day Headers -->
+<div class="cal-grid-header">
+<span class="">S</span><span class="">M</span><span class="">T</span><span class="">W</span><span class="">T</span><span class="">F</span><span class="">S</span>
+</div>
+<!-- 7-Column Calendar Grid for October 2026 -->
+<div class="cal-grid-days">
+<!-- Sep buffer days -->
+<div class="cal-day-cell inactive"><span class="cal-day-num">27</span></div>
+<div class="cal-day-cell inactive"><span class="cal-day-num">28</span></div>
+<div class="cal-day-cell inactive"><span class="cal-day-num">29</span></div>
+<div class="cal-day-cell inactive"><span class="cal-day-num">30</span></div>
+<!-- Oct 1 to 31 -->
+<div class="cal-day-cell"><span class="cal-day-num">1</span><span class="cal-day-km">32k</span></div>
+<div class="cal-day-cell"><span class="cal-day-num">2</span><span class="cal-day-km">44k</span></div>
+<div class="cal-day-cell"><span class="cal-day-num">3</span><span class="cal-day-km">18k</span></div>
+<!-- 4 to 10 -->
+<div class="cal-day-cell"><span class="cal-day-num">4</span><span class="cal-day-km">0k</span></div>
+<div class="cal-day-cell">
+<span class="cal-day-num">5</span>
+<span class="cal-day-km">68k</span>
+<div class="cell-indicator-dots"><span class="cell-dot-green" title="Refueled"></span></div>
+</div>
+<div class="cal-day-cell"><span class="cal-day-num">6</span><span class="cal-day-km">29k</span></div>
+<div class="cal-day-cell">
+<span class="cal-day-num">7</span>
+<span class="cal-day-km">55k</span>
+<div class="cell-indicator-dots"><span class="cell-dot-green"></span></div>
+</div>
+<div class="cal-day-cell"><span class="cal-day-num">8</span><span class="cal-day-km">40k</span></div>
+<div class="cal-day-cell"><span class="cal-day-num">9</span><span class="cal-day-km">35k</span></div>
+<div class="cal-day-cell"><span class="cal-day-num">10</span><span class="cal-day-km">12k</span></div>
+<!-- 11 to 17 -->
+<div class="cal-day-cell"><span class="cal-day-num">11</span><span class="cal-day-km">0k</span></div>
+<div class="cal-day-cell">
+<span class="cal-day-num">12</span>
+<span class="cal-day-km">74k</span>
+<div class="cell-indicator-dots"><span class="cell-dot-orange" title="Reserve Point"></span></div>
+</div>
+<div class="cal-day-cell">
+<span class="cal-day-num">13</span>
+<span class="cal-day-km">38k</span>
+<div class="cell-indicator-dots"><span class="cell-dot-green" title="Refueled"></span></div>
+</div>
+<div class="cal-day-cell"><span class="cal-day-num">14</span><span class="cal-day-km">42k</span></div>
+<div class="cal-day-cell"><span class="cal-day-num">15</span><span class="cal-day-km">26k</span></div>
+<div class="cal-day-cell"><span class="cal-day-num">16</span><span class="cal-day-km">49k</span></div>
+<div class="cal-day-cell"><span class="cal-day-num">17</span><span class="cal-day-km">15k</span></div>
+<!-- 18 (Today) with both dots as logged -->
+<div class="cal-day-cell today">
+<span class="cal-day-num" style="color: var(--color-primary);">18</span>
+<span class="cal-day-km" style="font-weight: 700;">48.5k</span>
+<div class="cell-indicator-dots">
+<span class="cell-dot-green" title="Refueled"></span>
+<span class="cell-dot-orange" title="Reserve warning"></span>
+</div>
+</div>
+<!-- 19 to 31 (Upcoming / Rest) -->
+<div class="cal-day-cell"><span class="cal-day-num">19</span><span class="cal-day-km">-</span></div>
+<div class="cal-day-cell"><span class="cal-day-num">20</span><span class="cal-day-km">-</span></div>
+<div class="cal-day-cell"><span class="cal-day-num">21</span><span class="cal-day-km">-</span></div>
+<div class="cal-day-cell"><span class="cal-day-num">22</span><span class="cal-day-km">-</span></div>
+<div class="cal-day-cell"><span class="cal-day-num">23</span><span class="cal-day-km">-</span></div>
+<div class="cal-day-cell"><span class="cal-day-num">24</span><span class="cal-day-km">-</span></div>
+<div class="cal-day-cell"><span class="cal-day-num">25</span><span class="cal-day-km">-</span></div>
+<div class="cal-day-cell"><span class="cal-day-num">26</span><span class="cal-day-km">-</span></div>
+<div class="cal-day-cell"><span class="cal-day-num">27</span><span class="cal-day-km">-</span></div>
+<div class="cal-day-cell"><span class="cal-day-num">28</span><span class="cal-day-km">-</span></div>
+<div class="cal-day-cell"><span class="cal-day-num">29</span><span class="cal-day-km">-</span></div>
+<div class="cal-day-cell"><span class="cal-day-num">30</span><span class="cal-day-km">-</span></div>
+<div class="cal-day-cell"><span class="cal-day-num">31</span><span class="cal-day-km">-</span></div>
+</div>
+</div>
+<!-- 2. BAR GRAPH VIEW (Day Wise Vehicle Travelled Km's) -->
+
+<!-- Monthly Overview Strip -->
+<div class="monthly-metrics-grid">
+<div class="m-metric-card">
+<span class="m-metric-label">Total Traveled</span>
+<span class="m-metric-val" style="color: var(--color-primary);">1,124 km</span>
+</div>
+<div class="m-metric-card">
+<span class="m-metric-label">Daily Average</span>
+<span class="m-metric-val" style="color: #2563eb;">37.5 km</span>
+</div>
+<div class="m-metric-card">
+<span class="m-metric-label">Active Drives</span>
+<span class="m-metric-val" style="color: var(--color-secondary);">22 Days</span>
+</div>
+</div>
+</section><section class="card" id="distance-bargraph-card">
+<div class="card-header">
+<div>
+<h3 class="card-title">Daily Distance Distribution</h3>
+<p style="font-size: 11px; color: var(--color-on-surface-variant);" class="">October 2026 Vehicle Travel Trend</p>
+</div>
+<div class="cal-legend" style="margin-top: 0;">
+<div class="legend-pill"><span class="dot-refuel"></span><span class="">Refueled</span></div>
+<div class="legend-pill"><span class="dot-reserve"></span><span class="">Reserve</span></div>
+</div>
+</div>
+<div class="bargraph-container" style="height: 200px; width: 100%; position: relative; background: rgb(255, 255, 255); border-radius: 16px; border: 1px solid rgba(0, 0, 0, 0.04); padding: 8px 4px;">
+<svg height="100%" preserveAspectRatio="xMidYMid meet" viewBox="0 0 360 170" width="100%">
+<defs>
+<linearGradient id="barGradStandard" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#7b4dff"></stop><stop offset="100%" stop-color="#ff6b3d"></stop></linearGradient>
+<linearGradient id="barGradToday" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#22c55e"></stop><stop offset="100%" stop-color="#15803d"></stop></linearGradient>
+</defs>
+<line stroke="#f3f0f3" stroke-dasharray="3" stroke-width="1" x1="8" x2="352" y1="25" y2="25"></line>
+<text fill="#9d96a8" font-size="7.5" font-weight="500" x="10" y="22">75 km</text>
+<line stroke="#f3f0f3" stroke-dasharray="3" stroke-width="1" x1="8" x2="352" y1="65" y2="65"></line>
+<text fill="#9d96a8" font-size="7.5" font-weight="500" x="10" y="62">50 km</text>
+<line stroke="#f3f0f3" stroke-dasharray="3" stroke-width="1" x1="8" x2="352" y1="105" y2="105"></line>
+<text fill="#9d96a8" font-size="7.5" font-weight="500" x="10" y="102">25 km</text>
+<line stroke="#e5dfeb" stroke-width="1" x1="8" x2="352" y1="142" y2="142"></line>
+<g transform="translate(10, 0)"><rect fill="url(#barGradStandard)" height="43" rx="3" width="10" x="0" y="99"></rect><text fill="#5f5a6b" font-size="6.5" font-weight="600" text-anchor="middle" x="5" y="94">32</text><text fill="#5f5a6b" font-size="8" font-weight="600" text-anchor="middle" x="5" y="154">1</text></g>
+<g transform="translate(29, 0)"><rect fill="url(#barGradStandard)" height="59" rx="3" width="10" x="0" y="83"></rect><text fill="#5f5a6b" font-size="6.5" font-weight="600" text-anchor="middle" x="5" y="78">44</text><text fill="#5f5a6b" font-size="8" font-weight="600" text-anchor="middle" x="5" y="154">2</text></g>
+<g transform="translate(48, 0)"><rect fill="url(#barGradStandard)" height="24" rx="3" width="10" x="0" y="118"></rect><text fill="#5f5a6b" font-size="6.5" font-weight="600" text-anchor="middle" x="5" y="113">18</text><text fill="#5f5a6b" font-size="8" font-weight="600" text-anchor="middle" x="5" y="154">3</text></g>
+<g transform="translate(67, 0)"><rect fill="#e2dcde" height="4" rx="2" width="10" x="0" y="138"></rect><text fill="#9d96a8" font-size="6.5" font-weight="500" text-anchor="middle" x="5" y="133">0</text><text fill="#9d96a8" font-size="8" font-weight="500" text-anchor="middle" x="5" y="154">4</text></g>
+<g transform="translate(86, 0)"><circle cx="5" cy="39" fill="#22c55e" r="3.5"></circle><rect fill="url(#barGradStandard)" height="91" rx="3" width="10" x="0" y="51"></rect><text fill="#22c55e" font-size="6.5" font-weight="700" text-anchor="middle" x="5" y="48">68</text><text fill="#5f5a6b" font-size="8" font-weight="600" text-anchor="middle" x="5" y="154">5</text></g>
+<g transform="translate(105, 0)"><rect fill="url(#barGradStandard)" height="39" rx="3" width="10" x="0" y="103"></rect><text fill="#5f5a6b" font-size="6.5" font-weight="600" text-anchor="middle" x="5" y="98">29</text><text fill="#5f5a6b" font-size="8" font-weight="600" text-anchor="middle" x="5" y="154">6</text></g>
+<g transform="translate(124, 0)"><circle cx="5" cy="56" fill="#22c55e" r="3.5"></circle><rect fill="url(#barGradStandard)" height="73" rx="3" width="10" x="0" y="69"></rect><text fill="#22c55e" font-size="6.5" font-weight="700" text-anchor="middle" x="5" y="65">55</text><text fill="#5f5a6b" font-size="8" font-weight="600" text-anchor="middle" x="5" y="154">7</text></g>
+<g transform="translate(143, 0)"><rect fill="url(#barGradStandard)" height="53" rx="3" width="10" x="0" y="89"></rect><text fill="#5f5a6b" font-size="6.5" font-weight="600" text-anchor="middle" x="5" y="84">40</text><text fill="#5f5a6b" font-size="8" font-weight="600" text-anchor="middle" x="5" y="154">8</text></g>
+<g transform="translate(162, 0)"><rect fill="url(#barGradStandard)" height="47" rx="3" width="10" x="0" y="95"></rect><text fill="#5f5a6b" font-size="6.5" font-weight="600" text-anchor="middle" x="5" y="90">35</text><text fill="#5f5a6b" font-size="8" font-weight="600" text-anchor="middle" x="5" y="154">9</text></g>
+<g transform="translate(181, 0)"><rect fill="url(#barGradStandard)" height="16" rx="3" width="10" x="0" y="126"></rect><text fill="#5f5a6b" font-size="6.5" font-weight="600" text-anchor="middle" x="5" y="121">12</text><text fill="#5f5a6b" font-size="8" font-weight="600" text-anchor="middle" x="5" y="154">10</text></g>
+<g transform="translate(200, 0)"><rect fill="#e2dcde" height="4" rx="2" width="10" x="0" y="138"></rect><text fill="#9d96a8" font-size="6.5" font-weight="500" text-anchor="middle" x="5" y="133">0</text><text fill="#9d96a8" font-size="8" font-weight="500" text-anchor="middle" x="5" y="154">11</text></g>
+<g transform="translate(219, 0)"><circle cx="5" cy="31" fill="#f97316" r="3.5"></circle><rect fill="url(#barGradStandard)" height="99" rx="3" width="10" x="0" y="43"></rect><text fill="#ea580c" font-size="6.5" font-weight="700" text-anchor="middle" x="5" y="40">74</text><text fill="#5f5a6b" font-size="8" font-weight="600" text-anchor="middle" x="5" y="154">12</text></g>
+<g transform="translate(238, 0)"><circle cx="5" cy="79" fill="#22c55e" r="3.5"></circle><rect fill="url(#barGradStandard)" height="51" rx="3" width="10" x="0" y="91"></rect><text fill="#22c55e" font-size="6.5" font-weight="700" text-anchor="middle" x="5" y="88">38</text><text fill="#5f5a6b" font-size="8" font-weight="600" text-anchor="middle" x="5" y="154">13</text></g>
+<g transform="translate(257, 0)"><rect fill="url(#barGradStandard)" height="56" rx="3" width="10" x="0" y="86"></rect><text fill="#5f5a6b" font-size="6.5" font-weight="600" text-anchor="middle" x="5" y="81">42</text><text fill="#5f5a6b" font-size="8" font-weight="600" text-anchor="middle" x="5" y="154">14</text></g>
+<g transform="translate(276, 0)"><rect fill="url(#barGradStandard)" height="35" rx="3" width="10" x="0" y="107"></rect><text fill="#5f5a6b" font-size="6.5" font-weight="600" text-anchor="middle" x="5" y="102">26</text><text fill="#5f5a6b" font-size="8" font-weight="600" text-anchor="middle" x="5" y="154">15</text></g>
+<g transform="translate(295, 0)"><rect fill="url(#barGradStandard)" height="65" rx="3" width="10" x="0" y="77"></rect><text fill="#5f5a6b" font-size="6.5" font-weight="600" text-anchor="middle" x="5" y="72">49</text><text fill="#5f5a6b" font-size="8" font-weight="600" text-anchor="middle" x="5" y="154">16</text></g>
+<g transform="translate(314, 0)"><rect fill="url(#barGradStandard)" height="20" rx="3" width="10" x="0" y="122"></rect><text fill="#5f5a6b" font-size="6.5" font-weight="600" text-anchor="middle" x="5" y="117">15</text><text fill="#5f5a6b" font-size="8" font-weight="600" text-anchor="middle" x="5" y="154">17</text></g>
+<g transform="translate(333, 0)"><circle cx="2" cy="65" fill="#22c55e" r="3.5"></circle><circle cx="10" cy="65" fill="#f97316" r="3.5"></circle><rect fill="url(#barGradToday)" height="65" rx="3" stroke="#7b4dff" stroke-width="1.5" width="12" x="0" y="77"></rect><text fill="#15803d" font-size="6.5" font-weight="700" text-anchor="middle" x="6" y="74">48.5</text><text fill="#7b4dff" font-size="8" font-weight="700" text-anchor="middle" x="6" y="154">18</text><text fill="#7b4dff" font-size="6" font-weight="700" text-anchor="middle" x="6" y="162">TODAY</text></g>
+</svg>
+</div>
+<div style="display: flex; justify-content: space-between; align-items: center; background: rgba(123, 77, 255, 0.05); padding: 8px 12px; border-radius: 12px; border: 1px solid rgba(123, 77, 255, 0.1); font-size: 11px;">
+<div style="display: flex; align-items: center; gap: 6px; color: var(--color-on-surface);">
+<span class="material-symbols-outlined" style="font-size: 15px; color: var(--color-primary);">insights</span>
+<span class="">Peak: <strong>74 km (Oct 12)</strong></span>
+</div>
+<div style="display: flex; align-items: center; gap: 8px; color: var(--color-on-surface-variant);">
+<span class="">Refuels: <strong style="color: var(--color-success);">4x</strong></span>
+<span class="">Reserves: <strong style="color: var(--color-warning);">2x</strong></span>
+</div>
+</div>
+</section>
+</div>
+<!-- Interactive Toast -->
+<div class="toast-msg" id="toast-notification">
+<span class="material-symbols-outlined" style="color: #22c55e; font-size: 18px;">check_circle</span>
+<span id="toast-text" class="">Start Odometer reading saved to vehicle ledger!</span>
+</div>
+<!-- Bottom Tab Navigation Bar -->
+
+<script>
+    // Current Active Mode State
+    let currentMode = 'start-end';
+
+    function setTrackerMode(mode) {
+        currentMode = mode;
+
+        // Reset button states
+        document.getElementById('mode-start-end').className = 'mode-btn';
+        document.getElementById('mode-reserve').className = 'mode-btn';
+        document.getElementById('mode-refuel').className = 'mode-btn';
+
+        // Hide all forms
+        document.getElementById('form-start-end').style.display = 'none';
+        document.getElementById('form-reserve').style.display = 'none';
+        document.getElementById('form-refuel').style.display = 'none';
+
+        const titleElem = document.getElementById('mode-card-title');
+        const tagElem = document.getElementById('mode-tag-color');
+        const locLabel = document.getElementById('loc-mode-label');
+
+        if (mode === 'start-end') {
+            document.getElementById('mode-start-end').classList.add('active');
+            document.getElementById('form-start-end').style.display = 'flex';
+            titleElem.textContent = 'Log Start & Closing ODO';
+            tagElem.style.backgroundColor = 'var(--color-primary)';
+            locLabel.textContent = 'Automatic GPS Live Location';
+        } else if (mode === 'reserve') {
+            const btn = document.getElementById('mode-reserve');
+            btn.classList.add('active', 'reserve-mode');
+            document.getElementById('form-reserve').style.display = 'flex';
+            titleElem.textContent = 'Log Reserve Fuel Point';
+            tagElem.style.backgroundColor = 'var(--color-warning)';
+            locLabel.textContent = 'Live Reserve Location Logged';
+        } else if (mode === 'refuel') {
+            const btn = document.getElementById('mode-refuel');
+            btn.classList.add('active', 'refuel-mode');
+            document.getElementById('form-refuel').style.display = 'flex';
+            titleElem.textContent = 'Log Fuel Refill Station';
+            tagElem.style.backgroundColor = 'var(--color-success)';
+            locLabel.textContent = 'Station GPS Coordinate Tagged';
+        }
+    }
+
+    function calculateNetDistance() {
+        const start = parseFloat(document.getElementById('start-odo-input').value) || 0;
+        const end = parseFloat(document.getElementById('end-odo-input').value) || 0;
+        const diff = Math.max(0, end - start);
+        document.getElementById('net-distance-display').textContent = diff.toFixed(1) + ' km';
+    }
+
+    function switchDashboardView(view) {
+        const calView = document.getElementById('view-calendar');
+        const barView = document.getElementById('view-bargraph');
+        const tabCal = document.getElementById('tab-cal');
+        const tabBar = document.getElementById('tab-bar');
+
+        if (view === 'cal') {
+            calView.style.display = 'flex';
+            barView.style.display = 'none';
+            tabCal.classList.add('active');
+            tabBar.classList.remove('active');
+        } else {
+            calView.style.display = 'none';
+            barView.style.display = 'flex';
+            tabCal.classList.remove('active');
+            tabBar.classList.add('active');
+        }
+    }
+
+    function triggerPhotoUpload(type) {
+        showToast('Photo captured & auto-scanned from camera!');
+    }
+
+    function submitLog(modeName) {
+        showToast(`${modeName} reading saved to vehicle ledger!`);
+    }
+
+    function showToast(text) {
+        const toast = document.getElementById('toast-notification');
+        const toastText = document.getElementById('toast-text');
+        toastText.textContent = text;
+        toast.classList.add('show');
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, 2600);
+    }
+
+    function scrollToLogCard() {
+        document.getElementById('active-log-card').scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
+
+
+
+
+
+
+
+
+</body></html>
